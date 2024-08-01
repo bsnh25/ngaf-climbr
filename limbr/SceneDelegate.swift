@@ -18,10 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        window = UIWindow(frame: windowScene.screen.bounds)
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         
-        windowScene.sizeRestrictions?.minimumSize = CGSize(width: 1560, height: 960)
-        windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1560, height: 960)
+        windowScene.sizeRestrictions?.minimumSize = CGSize(width: 1200, height: 760)
         
         window?.windowScene         = windowScene
         window?.rootViewController  = ViewController()
