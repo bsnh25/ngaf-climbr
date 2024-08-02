@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         windowScene.sizeRestrictions?.minimumSize = CGSize(width: 1200, height: 760)
         
         window?.windowScene         = windowScene
-        window?.rootViewController  = ViewController()
+        window?.rootViewController  = HomeViewController()
         window?.makeKeyAndVisible()
     }
 
