@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E781BF162C5CD0E300745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF152C5CD0E300745966 /* .gitkeep.rtf */; };
 		E781BF212C5CD1BB00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF202C5CD1BB00745966 /* .gitkeep.rtf */; };
 		E781BF232C5CD20A00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF222C5CD20A00745966 /* .gitkeep.rtf */; };
 		E781BF252C5CD21200745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF242C5CD21200745966 /* .gitkeep.rtf */; };
@@ -27,7 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E781BF152C5CD0E300745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = .gitkeep.rtf; path = limbr/.gitkeep.rtf; sourceTree = SOURCE_ROOT; };
 		E781BF202C5CD1BB00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
 		E781BF222C5CD20A00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
 		E781BF242C5CD21200745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
@@ -72,10 +70,8 @@
 		E781BF122C5CD05400745966 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E7C75E4B2C5B6B3E00344D24 /* HomeViewController.swift */,
 				E781BF242C5CD21200745966 /* .gitkeep.rtf */,
 				E781BF172C5CD0F900745966 /* SubViews */,
-				E781BF152C5CD0E300745966 /* .gitkeep.rtf */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -183,6 +179,7 @@
 				E781BF112C5CD04600745966 /* Screens */,
 				E7C75E5B2C5B6B4B00344D24 /* limbr.entitlements */,
 				E7C75E472C5B6B3E00344D24 /* AppDelegate.swift */,
+				E7C75E4B2C5B6B3E00344D24 /* HomeViewController.swift */,
 				E7C75E492C5B6B3E00344D24 /* SceneDelegate.swift */,
 				E7C75E522C5B6B3F00344D24 /* LaunchScreen.storyboard */,
 				E7C75E552C5B6B3F00344D24 /* Info.plist */,
@@ -255,7 +252,6 @@
 				E781BF232C5CD20A00745966 /* .gitkeep.rtf in Resources */,
 				E781BF312C5CD24000745966 /* .gitkeep.rtf in Resources */,
 				E781BF332C5CD24600745966 /* .gitkeep.rtf in Resources */,
-				E781BF162C5CD0E300745966 /* .gitkeep.rtf in Resources */,
 				E781BF2B2C5CD22C00745966 /* .gitkeep.rtf in Resources */,
 				E781BF2F2C5CD23B00745966 /* .gitkeep.rtf in Resources */,
 				E781BF292C5CD22400745966 /* .gitkeep.rtf in Resources */,
