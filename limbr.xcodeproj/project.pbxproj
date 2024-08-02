@@ -7,17 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E781BF212C5CD1BB00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF202C5CD1BB00745966 /* .gitkeep.rtf */; };
-		E781BF232C5CD20A00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF222C5CD20A00745966 /* .gitkeep.rtf */; };
-		E781BF252C5CD21200745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF242C5CD21200745966 /* .gitkeep.rtf */; };
-		E781BF272C5CD21D00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF262C5CD21D00745966 /* .gitkeep.rtf */; };
-		E781BF292C5CD22400745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF282C5CD22400745966 /* .gitkeep.rtf */; };
-		E781BF2B2C5CD22C00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF2A2C5CD22C00745966 /* .gitkeep.rtf */; };
-		E781BF2D2C5CD23400745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF2C2C5CD23400745966 /* .gitkeep.rtf */; };
-		E781BF2F2C5CD23B00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF2E2C5CD23B00745966 /* .gitkeep.rtf */; };
-		E781BF312C5CD24000745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF302C5CD24000745966 /* .gitkeep.rtf */; };
-		E781BF332C5CD24600745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF322C5CD24600745966 /* .gitkeep.rtf */; };
-		E781BF352C5CD25A00745966 /* .gitkeep.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E781BF342C5CD25A00745966 /* .gitkeep.rtf */; };
+		E74D14112C5CDEC600B82511 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14102C5CDEC600B82511 /* HomeVC.swift */; };
+		E74D14132C5CDED800B82511 /* SubVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14122C5CDED800B82511 /* SubVC.swift */; };
+		E74D14152C5CDEED00B82511 /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14142C5CDEED00B82511 /* Movement.swift */; };
+		E74D14172C5CDEF900B82511 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14162C5CDEF900B82511 /* Date+Extension.swift */; };
+		E74D14192C5CDF0800B82511 /* LrButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14182C5CDF0800B82511 /* LrButton.swift */; };
+		E74D141B2C5CDF1600B82511 /* AchievementCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D141A2C5CDF1600B82511 /* AchievementCoreDataManager.swift */; };
+		E74D141D2C5CDF2900B82511 /* AchievementServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D141C2C5CDF2900B82511 /* AchievementServiceProtocol.swift */; };
+		E74D141F2C5CDF4900B82511 /* sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D141E2C5CDF4900B82511 /* sample.swift */; };
 		E7C75E482C5B6B3E00344D24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C75E472C5B6B3E00344D24 /* AppDelegate.swift */; };
 		E7C75E4A2C5B6B3E00344D24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C75E492C5B6B3E00344D24 /* SceneDelegate.swift */; };
 		E7C75E4C2C5B6B3E00344D24 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C75E4B2C5B6B3E00344D24 /* HomeViewController.swift */; };
@@ -26,17 +23,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E781BF202C5CD1BB00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF222C5CD20A00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF242C5CD21200745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF262C5CD21D00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF282C5CD22400745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF2A2C5CD22C00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF2C2C5CD23400745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF2E2C5CD23B00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF302C5CD24000745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF322C5CD24600745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
-		E781BF342C5CD25A00745966 /* .gitkeep.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = .gitkeep.rtf; sourceTree = "<group>"; };
+		E74D14102C5CDEC600B82511 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		E74D14122C5CDED800B82511 /* SubVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubVC.swift; sourceTree = "<group>"; };
+		E74D14142C5CDEED00B82511 /* Movement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
+		E74D14162C5CDEF900B82511 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		E74D14182C5CDF0800B82511 /* LrButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LrButton.swift; sourceTree = "<group>"; };
+		E74D141A2C5CDF1600B82511 /* AchievementCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCoreDataManager.swift; sourceTree = "<group>"; };
+		E74D141C2C5CDF2900B82511 /* AchievementServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementServiceProtocol.swift; sourceTree = "<group>"; };
+		E74D141E2C5CDF4900B82511 /* sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sample.swift; sourceTree = "<group>"; };
 		E7C75E442C5B6B3E00344D24 /* limbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = limbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7C75E472C5B6B3E00344D24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7C75E492C5B6B3E00344D24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,7 +55,6 @@
 		E781BF112C5CD04600745966 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF222C5CD20A00745966 /* .gitkeep.rtf */,
 				E781BF122C5CD05400745966 /* Home */,
 			);
 			path = Screens;
@@ -70,8 +63,8 @@
 		E781BF122C5CD05400745966 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF242C5CD21200745966 /* .gitkeep.rtf */,
 				E781BF172C5CD0F900745966 /* SubViews */,
+				E74D14102C5CDEC600B82511 /* HomeVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -79,7 +72,7 @@
 		E781BF172C5CD0F900745966 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF202C5CD1BB00745966 /* .gitkeep.rtf */,
+				E74D14122C5CDED800B82511 /* SubVC.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -87,7 +80,7 @@
 		E781BF182C5CD12400745966 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF262C5CD21D00745966 /* .gitkeep.rtf */,
+				E74D14142C5CDEED00B82511 /* Movement.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -95,7 +88,6 @@
 		E781BF192C5CD13E00745966 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF282C5CD22400745966 /* .gitkeep.rtf */,
 				E781BF1B2C5CD14E00745966 /* Extensions */,
 				E781BF1A2C5CD14400745966 /* Components */,
 			);
@@ -105,7 +97,7 @@
 		E781BF1A2C5CD14400745966 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF2C2C5CD23400745966 /* .gitkeep.rtf */,
+				E74D14182C5CDF0800B82511 /* LrButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -113,7 +105,7 @@
 		E781BF1B2C5CD14E00745966 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF2A2C5CD22C00745966 /* .gitkeep.rtf */,
+				E74D14162C5CDEF900B82511 /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -121,7 +113,7 @@
 		E781BF1C2C5CD16C00745966 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF2E2C5CD23B00745966 /* .gitkeep.rtf */,
+				E74D141A2C5CDF1600B82511 /* AchievementCoreDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -129,7 +121,7 @@
 		E781BF1D2C5CD17200745966 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF302C5CD24000745966 /* .gitkeep.rtf */,
+				E74D141C2C5CDF2900B82511 /* AchievementServiceProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -138,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				E7C75E502C5B6B3F00344D24 /* Assets.xcassets */,
-				E781BF322C5CD24600745966 /* .gitkeep.rtf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -146,7 +137,7 @@
 		E781BF1F2C5CD17D00745966 /* LocalDataSources */ = {
 			isa = PBXGroup;
 			children = (
-				E781BF342C5CD25A00745966 /* .gitkeep.rtf */,
+				E74D141E2C5CDF4900B82511 /* sample.swift */,
 			);
 			path = LocalDataSources;
 			sourceTree = "<group>";
@@ -246,18 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7C75E542C5B6B3F00344D24 /* LaunchScreen.storyboard in Resources */,
-				E781BF212C5CD1BB00745966 /* .gitkeep.rtf in Resources */,
 				E7C75E512C5B6B3F00344D24 /* Assets.xcassets in Resources */,
-				E781BF2D2C5CD23400745966 /* .gitkeep.rtf in Resources */,
-				E781BF232C5CD20A00745966 /* .gitkeep.rtf in Resources */,
-				E781BF312C5CD24000745966 /* .gitkeep.rtf in Resources */,
-				E781BF332C5CD24600745966 /* .gitkeep.rtf in Resources */,
-				E781BF2B2C5CD22C00745966 /* .gitkeep.rtf in Resources */,
-				E781BF2F2C5CD23B00745966 /* .gitkeep.rtf in Resources */,
-				E781BF292C5CD22400745966 /* .gitkeep.rtf in Resources */,
-				E781BF252C5CD21200745966 /* .gitkeep.rtf in Resources */,
-				E781BF272C5CD21D00745966 /* .gitkeep.rtf in Resources */,
-				E781BF352C5CD25A00745966 /* .gitkeep.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,9 +248,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E74D141D2C5CDF2900B82511 /* AchievementServiceProtocol.swift in Sources */,
 				E7C75E4C2C5B6B3E00344D24 /* HomeViewController.swift in Sources */,
+				E74D14112C5CDEC600B82511 /* HomeVC.swift in Sources */,
+				E74D141F2C5CDF4900B82511 /* sample.swift in Sources */,
+				E74D14152C5CDEED00B82511 /* Movement.swift in Sources */,
+				E74D14192C5CDF0800B82511 /* LrButton.swift in Sources */,
 				E7C75E482C5B6B3E00344D24 /* AppDelegate.swift in Sources */,
+				E74D14172C5CDEF900B82511 /* Date+Extension.swift in Sources */,
 				E7C75E4A2C5B6B3E00344D24 /* SceneDelegate.swift in Sources */,
+				E74D141B2C5CDF1600B82511 /* AchievementCoreDataManager.swift in Sources */,
+				E74D14132C5CDED800B82511 /* SubVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
