@@ -1,0 +1,20 @@
+//
+//  LrButton.swift
+//  limbr
+//
+//  Created by Ivan Nur Ilham Syah on 02/08/24.
+//
+
+import UIKit
+
+class LrButton: UIButton {
+
+    /*
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+    }
+    */
+
+}
