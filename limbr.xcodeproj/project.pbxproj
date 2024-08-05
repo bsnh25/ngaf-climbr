@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A85E1F32C608919009912FE /* LrContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A85E1F22C608919009912FE /* LrContainerView.swift */; };
 		E74D14112C5CDEC600B82511 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14102C5CDEC600B82511 /* HomeVC.swift */; };
 		E74D14132C5CDED800B82511 /* SubVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14122C5CDED800B82511 /* SubVC.swift */; };
 		E74D14152C5CDEED00B82511 /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74D14142C5CDEED00B82511 /* Movement.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A85E1F22C608919009912FE /* LrContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LrContainerView.swift; sourceTree = "<group>"; };
 		E74D14102C5CDEC600B82511 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E74D14122C5CDED800B82511 /* SubVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubVC.swift; sourceTree = "<group>"; };
 		E74D14142C5CDEED00B82511 /* Movement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				E74D14182C5CDF0800B82511 /* LrButton.swift */,
+				8A85E1F22C608919009912FE /* LrContainerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A85E1F32C608919009912FE /* LrContainerView.swift in Sources */,
 				E74D141D2C5CDF2900B82511 /* AchievementServiceProtocol.swift in Sources */,
 				E7C75E4C2C5B6B3E00344D24 /* MainVC.swift in Sources */,
 				E74D14112C5CDEC600B82511 /* HomeVC.swift in Sources */,
