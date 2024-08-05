@@ -25,9 +25,9 @@ class LrContainerView: UIView {
     
     private func configure(){
         translatesAutoresizingMaskIntoConstraints   = false
-        layer.backgroundColor                       = UIColor(named: "containerBackground")?.cgColor
+        layer.backgroundColor                       = UIColor(resource: .containerBackground).cgColor
         layer.cornerRadius                          = 20
-        layer.borderColor                           = UIColor(named: "containerBackground")?.cgColor
+        layer.borderColor                           = UIColor(resource: .containerBackground).cgColor
     }
     
 }
