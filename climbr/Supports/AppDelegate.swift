@@ -7,14 +7,14 @@
 
 import Cocoa
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
+    let mainWindow = MainWindow()
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        mainWindow.makeKeyAndOrderFront(nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
