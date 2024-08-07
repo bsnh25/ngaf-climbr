@@ -28,6 +28,10 @@
 		E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */; };
 		E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB212C64362700DE2A7A /* CLButton.swift */; };
 		E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB232C64363200DE2A7A /* DateExtension.swift */; };
+		E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = E7FDDB262C64370E00DE2A7A /* RiveRuntime */; };
+		E7FDDB292C64378C00DE2A7A /* MovementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* MovementService.swift */; };
+		E7FDDB2D2C6437B600DE2A7A /* SampleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2C2C6437B600DE2A7A /* SampleDataSource.swift */; };
+		E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,9 @@
 		E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShopVC+Extension.swift"; sourceTree = "<group>"; };
 		E7FDDB212C64362700DE2A7A /* CLButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLButton.swift; sourceTree = "<group>"; };
 		E7FDDB232C64363200DE2A7A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		E7FDDB282C64378C00DE2A7A /* MovementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementService.swift; sourceTree = "<group>"; };
+		E7FDDB2C2C6437B600DE2A7A /* SampleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataSource.swift; sourceTree = "<group>"; };
+		E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				E7FDDAF22C64341F00DE2A7A /* LocalDataSources */,
-				E7FDDAF12C64341400DE2A7A /* ServiceProtocols */,
+				E7FDDAF12C64341400DE2A7A /* Services */,
 				E7FDDAF02C64340B00DE2A7A /* Managers */,
 				E7FDDAEF2C6433FD00DE2A7A /* Shared */,
 				E7FDDAEE2C6433F700DE2A7A /* Models */,
@@ -152,20 +160,23 @@
 		E7FDDAF02C64340B00DE2A7A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		E7FDDAF12C64341400DE2A7A /* ServiceProtocols */ = {
+		E7FDDAF12C64341400DE2A7A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E7FDDB282C64378C00DE2A7A /* MovementService.swift */,
 			);
-			path = ServiceProtocols;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		E7FDDAF22C64341F00DE2A7A /* LocalDataSources */ = {
 			isa = PBXGroup;
 			children = (
+				E7FDDB2C2C6437B600DE2A7A /* SampleDataSource.swift */,
 			);
 			path = LocalDataSources;
 			sourceTree = "<group>";
@@ -256,6 +267,9 @@
 			dependencies = (
 			);
 			name = climbr;
+			packageProductDependencies = (
+				E7FDDB262C64370E00DE2A7A /* RiveRuntime */,
+			);
 			productName = climbr;
 			productReference = E7FDDAD32C64301B00DE2A7A /* climbr.app */;
 			productType = "com.apple.product-type.application";
@@ -284,6 +298,9 @@
 				Base,
 			);
 			mainGroup = E7FDDACA2C64301B00DE2A7A;
+			packageReferences = (
+				E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */,
+			);
 			productRefGroup = E7FDDAD42C64301B00DE2A7A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -316,6 +333,7 @@
 				E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
+				E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
@@ -323,8 +341,10 @@
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
+				E7FDDB2D2C6437B600DE2A7A /* SampleDataSource.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
+				E7FDDB292C64378C00DE2A7A /* MovementService.swift in Sources */,
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
@@ -527,6 +547,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E7FDDB262C64370E00DE2A7A /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E7FDDACB2C64301B00DE2A7A /* Project object */;
 }
