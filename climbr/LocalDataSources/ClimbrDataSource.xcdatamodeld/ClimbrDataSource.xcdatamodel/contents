@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Character" representedClassName="Character" syncable="YES">
+        <attribute name="backEquipment" optional="YES" attributeType="String"/>
+        <attribute name="handEquipment" optional="YES" attributeType="String"/>
+        <attribute name="headEquipment" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="backEquipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipment" inverseName="charactersWithBackEquipment" inverseEntity="Equipment"/>
-        <relationship name="handEquipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipment" inverseName="charactersWithHandEquipment" inverseEntity="Equipment"/>
-        <relationship name="headEquipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipment" inverseName="charactersWithHeadEquipment" inverseEntity="Equipment"/>
         <relationship name="user" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="character" inverseEntity="User"/>
     </entity>
     <entity name="Equipment" representedClassName="Equipment" syncable="YES">
@@ -13,11 +13,7 @@
         <attribute name="isUnlocked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="riveAsset" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String" customClassName="[EquipmentType]"/>
-        <relationship name="charactersWithBackEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="backEquipment" inverseEntity="Character"/>
-        <relationship name="charactersWithHandEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="handEquipment" inverseEntity="Character"/>
-        <relationship name="charactersWithHeadEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="headEquipment" inverseEntity="Character"/>
     </entity>
     <entity name="Movement" representedClassName="Movement" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
