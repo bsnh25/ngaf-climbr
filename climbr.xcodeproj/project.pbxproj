@@ -29,7 +29,7 @@
 		AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78812C64CA1400028B36 /* CameraManager.swift */; };
 		E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
-		E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* ViewController.swift */; };
+		E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* MainVC.swift */; };
 		E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */; };
 		E7FDDAE62C64307900DE2A7A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAE52C64307900DE2A7A /* main.swift */; };
 		E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAE92C6430F700DE2A7A /* MainWindow.swift */; };
@@ -78,7 +78,7 @@
 		E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E7FDDAD82C64301B00DE2A7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E7FDDAD82C64301B00DE2A7A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7FDDADF2C64301F00DE2A7A /* climbr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = climbr.entitlements; sourceTree = "<group>"; };
 		E7FDDAE52C64307900DE2A7A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 			children = (
 				E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */,
 				E7FDDAE92C6430F700DE2A7A /* MainWindow.swift */,
-				E7FDDAD82C64301B00DE2A7A /* ViewController.swift */,
+				E7FDDAD82C64301B00DE2A7A /* MainVC.swift */,
 				E7FDDAE52C64307900DE2A7A /* main.swift */,
 			);
 			path = Supports;
@@ -426,7 +426,7 @@
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
-				E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */,
+				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
 				E7FDDB292C64378C00DE2A7A /* GuideMovementService.swift in Sources */,
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
@@ -569,11 +569,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbr/climbr.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -596,11 +597,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbr/climbr.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
