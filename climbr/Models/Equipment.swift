@@ -8,7 +8,13 @@
 import Foundation
 
 struct EquipmentModel {
-    
+    var id: UUID
+    var image: String
+    var isUnlocked: Bool
+    var name: String
+    var price: Int64
+    var riveAsset: String
+    var type: String
 }
 
 enum EquipmentType {

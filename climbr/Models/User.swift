@@ -8,5 +8,7 @@
 import Foundation
 
 struct UserModel {
-    
+    var id: UUID
+    var name: String
+    var point: Int64
 }

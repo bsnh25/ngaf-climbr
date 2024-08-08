@@ -8,5 +8,5 @@
 import Foundation
 
 struct CharacterModel {
-    
+    var id: UUID
 }
