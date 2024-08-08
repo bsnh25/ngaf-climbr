@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03889C852C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */; };
 		03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */; };
 		03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */; };
 		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
@@ -18,6 +17,7 @@
 		03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */; };
 		03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */; };
 		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
+		E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* ViewController.swift */; };
 		E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */; };
@@ -45,7 +45,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
 		03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7FDDAD82C64301B00DE2A7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 				E7FDDAEC2C6433C500DE2A7A /* Resources */,
 				E7FDDAEB2C6433B900DE2A7A /* Supports */,
 				E7FDDADF2C64301F00DE2A7A /* climbr.entitlements */,
-				03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */,
+				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
 			);
 			path = climbr;
 			sourceTree = "<group>";
@@ -357,7 +357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */,
-				03889C852C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
 				E7FDDB062C6434BD00DE2A7A /* SampleViewC.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
@@ -375,6 +374,7 @@
 				03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */,
 				03889CBD2C64688A004BC8C8 /* Character+CoreDataProperties.swift in Sources */,
 				03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */,
+				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */,
 				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
 				03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
@@ -612,14 +612,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */ = {
+		E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */,
+				E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */,
 			);
-			currentVersion = 03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */;
-			name = ClimbrDataSource.xcdatamodeld;
-			path = /Users/bayuseptyannurhidayat/Documents/Academy/MC3/tech/limbr/climbr/ClimbrDataSource.xcdatamodeld;
+			currentVersion = E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */;
+			path = ClimbrDataSource.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
