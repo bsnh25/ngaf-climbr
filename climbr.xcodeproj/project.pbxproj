@@ -17,6 +17,7 @@
 		03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */; };
 		03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */; };
 		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
+		8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12322C649D9A00616C57 /* modelfixv1.mlmodel */; };
 		E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* ViewController.swift */; };
@@ -55,6 +56,7 @@
 		03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8ABB12322C649D9A00616C57 /* modelfixv1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = modelfixv1.mlmodel; sourceTree = "<group>"; };
 		E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8ABB12332C649D9A00616C57 /* VisionModel */ = {
+			isa = PBXGroup;
+			children = (
+				8ABB12322C649D9A00616C57 /* modelfixv1.mlmodel */,
+			);
+			path = VisionModel;
+			sourceTree = "<group>";
+		};
 		E7FDDACA2C64301B00DE2A7A = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +151,7 @@
 		E7FDDAEC2C6433C500DE2A7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8ABB12332C649D9A00616C57 /* VisionModel */,
 				E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -389,6 +400,7 @@
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
 				E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */,
+				8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
