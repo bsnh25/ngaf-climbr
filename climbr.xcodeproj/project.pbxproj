@@ -123,7 +123,6 @@
 				E7FDDAEC2C6433C500DE2A7A /* Resources */,
 				E7FDDAEB2C6433B900DE2A7A /* Supports */,
 				E7FDDADF2C64301F00DE2A7A /* climbr.entitlements */,
-				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
 			);
 			path = climbr;
 			sourceTree = "<group>";
@@ -207,6 +206,7 @@
 				03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */,
 				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
 				03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */,
+				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
 			);
 			path = LocalDataSources;
 			sourceTree = "<group>";
