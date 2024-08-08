@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movement {
+struct MovementModel {
     
 }
 

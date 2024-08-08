@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Equipment {
+struct EquipmentModel {
     
 }
 

@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Character {
+struct CharacterModel {
     
 }
