@@ -17,10 +17,10 @@ extension UserPreferences {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var reminder_interval: Int64
-    @NSManaged public var start_working_hour: Date?
-    @NSManaged public var end_working_hour: Date?
-    @NSManaged public var launch_at_login: Bool
+    @NSManaged public var reminderInterval: Int64
+    @NSManaged public var startWorkingHour: Date?
+    @NSManaged public var endWorkingHour: Date?
+    @NSManaged public var launchAtLogin: Bool
 
 }
 

@@ -20,7 +20,7 @@ extension Movement {
     @NSManaged public var title: String?
     @NSManaged public var duration: Int64
     @NSManaged public var preview: String?
-    @NSManaged public var reward_point: Int64
+    @NSManaged public var rewardPoint: Int64
     @NSManaged public var type: String?
 
 }

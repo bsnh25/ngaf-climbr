@@ -8,16 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		03889C852C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */; };
-		03889CA42C6460FA004BC8C8 /* Movement+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9A2C6460FA004BC8C8 /* Movement+CoreDataClass.swift */; };
-		03889CA52C6460FA004BC8C8 /* Movement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9B2C6460FA004BC8C8 /* Movement+CoreDataProperties.swift */; };
-		03889CA62C6460FA004BC8C8 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9C2C6460FA004BC8C8 /* User+CoreDataClass.swift */; };
-		03889CA72C6460FA004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9D2C6460FA004BC8C8 /* User+CoreDataProperties.swift */; };
-		03889CA82C6460FA004BC8C8 /* Character+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9E2C6460FA004BC8C8 /* Character+CoreDataClass.swift */; };
-		03889CA92C6460FA004BC8C8 /* Character+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9F2C6460FA004BC8C8 /* Character+CoreDataProperties.swift */; };
-		03889CAA2C6460FA004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA02C6460FA004BC8C8 /* Equipment+CoreDataClass.swift */; };
-		03889CAB2C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA12C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift */; };
-		03889CAC2C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA22C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
-		03889CAD2C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA32C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift */; };
+		03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */; };
+		03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */; };
+		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
+		03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */; };
+		03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */; };
+		03889CBD2C64688A004BC8C8 /* Character+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB32C646889004BC8C8 /* Character+CoreDataProperties.swift */; };
+		03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */; };
+		03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */; };
+		03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */; };
+		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* ViewController.swift */; };
 		E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */; };
@@ -46,16 +46,16 @@
 
 /* Begin PBXFileReference section */
 		03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
-		03889C9A2C6460FA004BC8C8 /* Movement+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataClass.swift"; sourceTree = "<group>"; };
-		03889C9B2C6460FA004BC8C8 /* Movement+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		03889C9C2C6460FA004BC8C8 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
-		03889C9D2C6460FA004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		03889C9E2C6460FA004BC8C8 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
-		03889C9F2C6460FA004BC8C8 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		03889CA02C6460FA004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
-		03889CA12C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		03889CA22C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
-		03889CA32C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CB32C646889004BC8C8 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7FDDAD82C64301B00DE2A7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -197,16 +197,16 @@
 		E7FDDAF22C64341F00DE2A7A /* LocalDataSources */ = {
 			isa = PBXGroup;
 			children = (
-				03889C9A2C6460FA004BC8C8 /* Movement+CoreDataClass.swift */,
-				03889C9B2C6460FA004BC8C8 /* Movement+CoreDataProperties.swift */,
-				03889C9C2C6460FA004BC8C8 /* User+CoreDataClass.swift */,
-				03889C9D2C6460FA004BC8C8 /* User+CoreDataProperties.swift */,
-				03889C9E2C6460FA004BC8C8 /* Character+CoreDataClass.swift */,
-				03889C9F2C6460FA004BC8C8 /* Character+CoreDataProperties.swift */,
-				03889CA02C6460FA004BC8C8 /* Equipment+CoreDataClass.swift */,
-				03889CA12C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift */,
-				03889CA22C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift */,
-				03889CA32C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
+				03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */,
+				03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */,
+				03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */,
+				03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
+				03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */,
+				03889CB32C646889004BC8C8 /* Character+CoreDataProperties.swift */,
+				03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */,
+				03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */,
+				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
+				03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */,
 			);
 			path = LocalDataSources;
 			sourceTree = "<group>";
@@ -363,21 +363,21 @@
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
 				E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
-				03889CA42C6460FA004BC8C8 /* Movement+CoreDataClass.swift in Sources */,
-				03889CA52C6460FA004BC8C8 /* Movement+CoreDataProperties.swift in Sources */,
-				03889CA62C6460FA004BC8C8 /* User+CoreDataClass.swift in Sources */,
-				03889CA72C6460FA004BC8C8 /* User+CoreDataProperties.swift in Sources */,
-				03889CA82C6460FA004BC8C8 /* Character+CoreDataClass.swift in Sources */,
-				03889CA92C6460FA004BC8C8 /* Character+CoreDataProperties.swift in Sources */,
-				03889CAA2C6460FA004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
-				03889CAB2C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
-				03889CAC2C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */,
-				03889CAD2C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
+				03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */,
+				03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */,
+				03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */,
+				03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */,
+				03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */,
+				03889CBD2C64688A004BC8C8 /* Character+CoreDataProperties.swift in Sources */,
+				03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */,
+				03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */,
+				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
+				03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,

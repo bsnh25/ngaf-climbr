@@ -10,10 +10,10 @@
     <entity name="Equipment" representedClassName="Equipment" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="String"/>
-        <attribute name="is_unlocked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isUnlocked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="rive_asset" optional="YES" attributeType="String"/>
+        <attribute name="riveAsset" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String" customClassName="[EquipmentType]"/>
         <relationship name="charactersWithBackEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="backEquipment" inverseEntity="Character"/>
         <relationship name="charactersWithHandEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="handEquipment" inverseEntity="Character"/>
@@ -23,7 +23,7 @@
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="preview" optional="YES" attributeType="String"/>
-        <attribute name="reward_point" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="rewardPoint" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String" customClassName="[PainType]"/>
     </entity>
@@ -34,10 +34,10 @@
         <relationship name="character" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Character" inverseName="user" inverseEntity="Character"/>
     </entity>
     <entity name="UserPreferences" representedClassName="UserPreferences" syncable="YES">
-        <attribute name="end_working_hour" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endWorkingHour" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="launch_at_login" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="reminder_interval" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="start_working_hour" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="launchAtLogin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="reminderInterval" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startWorkingHour" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
 </model>

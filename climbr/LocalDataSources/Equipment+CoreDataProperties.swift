@@ -20,8 +20,8 @@ extension Equipment {
     @NSManaged public var name: String?
     @NSManaged public var image: String?
     @NSManaged public var type: String?
-    @NSManaged public var rive_asset: String?
-    @NSManaged public var is_unlocked: Bool
+    @NSManaged public var riveAsset: String?
+    @NSManaged public var isUnlocked: Bool
     @NSManaged public var price: Int64
     @NSManaged public var charactersWithBackEquipment: NSSet?
     @NSManaged public var charactersWithHeadEquipment: NSSet?
