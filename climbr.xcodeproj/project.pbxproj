@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03889C852C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */; };
+		03889CA42C6460FA004BC8C8 /* Movement+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9A2C6460FA004BC8C8 /* Movement+CoreDataClass.swift */; };
+		03889CA52C6460FA004BC8C8 /* Movement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9B2C6460FA004BC8C8 /* Movement+CoreDataProperties.swift */; };
+		03889CA62C6460FA004BC8C8 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9C2C6460FA004BC8C8 /* User+CoreDataClass.swift */; };
+		03889CA72C6460FA004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9D2C6460FA004BC8C8 /* User+CoreDataProperties.swift */; };
+		03889CA82C6460FA004BC8C8 /* Character+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9E2C6460FA004BC8C8 /* Character+CoreDataClass.swift */; };
+		03889CA92C6460FA004BC8C8 /* Character+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889C9F2C6460FA004BC8C8 /* Character+CoreDataProperties.swift */; };
+		03889CAA2C6460FA004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA02C6460FA004BC8C8 /* Equipment+CoreDataClass.swift */; };
+		03889CAB2C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA12C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift */; };
+		03889CAC2C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA22C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
+		03889CAD2C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CA32C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* ViewController.swift */; };
 		E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */; };
@@ -30,11 +41,21 @@
 		E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB232C64363200DE2A7A /* DateExtension.swift */; };
 		E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = E7FDDB262C64370E00DE2A7A /* RiveRuntime */; };
 		E7FDDB292C64378C00DE2A7A /* MovementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* MovementService.swift */; };
-		E7FDDB2D2C6437B600DE2A7A /* SampleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2C2C6437B600DE2A7A /* SampleDataSource.swift */; };
 		E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
+		03889C9A2C6460FA004BC8C8 /* Movement+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889C9B2C6460FA004BC8C8 /* Movement+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889C9C2C6460FA004BC8C8 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889C9D2C6460FA004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889C9E2C6460FA004BC8C8 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889C9F2C6460FA004BC8C8 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CA02C6460FA004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CA12C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03889CA22C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03889CA32C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7FDDAD82C64301B00DE2A7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,7 +80,6 @@
 		E7FDDB212C64362700DE2A7A /* CLButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLButton.swift; sourceTree = "<group>"; };
 		E7FDDB232C64363200DE2A7A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		E7FDDB282C64378C00DE2A7A /* MovementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementService.swift; sourceTree = "<group>"; };
-		E7FDDB2C2C6437B600DE2A7A /* SampleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataSource.swift; sourceTree = "<group>"; };
 		E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +123,7 @@
 				E7FDDAEC2C6433C500DE2A7A /* Resources */,
 				E7FDDAEB2C6433B900DE2A7A /* Supports */,
 				E7FDDADF2C64301F00DE2A7A /* climbr.entitlements */,
+				03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */,
 			);
 			path = climbr;
 			sourceTree = "<group>";
@@ -176,7 +197,16 @@
 		E7FDDAF22C64341F00DE2A7A /* LocalDataSources */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB2C2C6437B600DE2A7A /* SampleDataSource.swift */,
+				03889C9A2C6460FA004BC8C8 /* Movement+CoreDataClass.swift */,
+				03889C9B2C6460FA004BC8C8 /* Movement+CoreDataProperties.swift */,
+				03889C9C2C6460FA004BC8C8 /* User+CoreDataClass.swift */,
+				03889C9D2C6460FA004BC8C8 /* User+CoreDataProperties.swift */,
+				03889C9E2C6460FA004BC8C8 /* Character+CoreDataClass.swift */,
+				03889C9F2C6460FA004BC8C8 /* Character+CoreDataProperties.swift */,
+				03889CA02C6460FA004BC8C8 /* Equipment+CoreDataClass.swift */,
+				03889CA12C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift */,
+				03889CA22C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift */,
+				03889CA32C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
 			);
 			path = LocalDataSources;
 			sourceTree = "<group>";
@@ -282,7 +312,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					E7FDDAD22C64301B00DE2A7A = {
 						CreatedOnToolsVersion = 15.2;
@@ -327,11 +357,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */,
+				03889C852C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
 				E7FDDB062C6434BD00DE2A7A /* SampleViewC.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
 				E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
+				03889CA42C6460FA004BC8C8 /* Movement+CoreDataClass.swift in Sources */,
+				03889CA52C6460FA004BC8C8 /* Movement+CoreDataProperties.swift in Sources */,
+				03889CA62C6460FA004BC8C8 /* User+CoreDataClass.swift in Sources */,
+				03889CA72C6460FA004BC8C8 /* User+CoreDataProperties.swift in Sources */,
+				03889CA82C6460FA004BC8C8 /* Character+CoreDataClass.swift in Sources */,
+				03889CA92C6460FA004BC8C8 /* Character+CoreDataProperties.swift in Sources */,
+				03889CAA2C6460FA004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
+				03889CAB2C6460FA004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
+				03889CAC2C6460FA004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */,
+				03889CAD2C6460FA004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
@@ -341,7 +382,6 @@
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
-				E7FDDB2D2C6437B600DE2A7A /* SampleDataSource.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* ViewController.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
 				E7FDDB292C64378C00DE2A7A /* MovementService.swift in Sources */,
@@ -389,6 +429,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -452,6 +493,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -482,7 +524,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -508,7 +551,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -566,6 +610,20 @@
 			productName = RiveRuntime;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		03889C832C645448004BC8C8 /* ClimbrDataSource.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */,
+			);
+			currentVersion = 03889C842C645448004BC8C8 /* ClimbrDataSource.xcdatamodel */;
+			name = ClimbrDataSource.xcdatamodeld;
+			path = /Users/bayuseptyannurhidayat/Documents/Academy/MC3/tech/limbr/climbr/ClimbrDataSource.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E7FDDACB2C64301B00DE2A7A /* Project object */;
 }
