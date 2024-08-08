@@ -18,6 +18,15 @@
 		03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */; };
 		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
 		8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12322C649D9A00616C57 /* modelfixv1.mlmodel */; };
+		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
+		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
+		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
+		AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78772C64BB4F00028B36 /* AudioService.swift */; };
+		AB9A787A2C64C9E600028B36 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78792C64C9E600028B36 /* AudioManager.swift */; };
+		AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787B2C64C9EF00028B36 /* UserManager.swift */; };
+		AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */; };
+		AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787F2C64CA0900028B36 /* NotificationManager.swift */; };
+		AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78812C64CA1400028B36 /* CameraManager.swift */; };
 		E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* MainVC.swift */; };
@@ -41,8 +50,8 @@
 		E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB212C64362700DE2A7A /* CLButton.swift */; };
 		E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB232C64363200DE2A7A /* DateExtension.swift */; };
 		E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = E7FDDB262C64370E00DE2A7A /* RiveRuntime */; };
-		E7FDDB292C64378C00DE2A7A /* MovementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* MovementService.swift */; };
-		E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */; };
+		E7FDDB292C64378C00DE2A7A /* GuideMovementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */; };
+		E7FDDB2F2C6437C900DE2A7A /* GuideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +66,15 @@
 		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8ABB12322C649D9A00616C57 /* modelfixv1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = modelfixv1.mlmodel; sourceTree = "<group>"; };
+		AB9A78712C64BB2B00028B36 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		AB9A78732C64BB3800028B36 /* EquipmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentService.swift; sourceTree = "<group>"; };
+		AB9A78752C64BB4500028B36 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		AB9A78772C64BB4F00028B36 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
+		AB9A78792C64C9E600028B36 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		AB9A787B2C64C9EF00028B36 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentManager.swift; sourceTree = "<group>"; };
+		AB9A787F2C64CA0900028B36 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		AB9A78812C64CA1400028B36 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,8 +99,8 @@
 		E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShopVC+Extension.swift"; sourceTree = "<group>"; };
 		E7FDDB212C64362700DE2A7A /* CLButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLButton.swift; sourceTree = "<group>"; };
 		E7FDDB232C64363200DE2A7A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
-		E7FDDB282C64378C00DE2A7A /* MovementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementService.swift; sourceTree = "<group>"; };
-		E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
+		E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMovementService.swift; sourceTree = "<group>"; };
+		E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +209,12 @@
 		E7FDDAF02C64340B00DE2A7A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB2E2C6437C900DE2A7A /* MovementManager.swift */,
+				AB9A78792C64C9E600028B36 /* AudioManager.swift */,
+				E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */,
+				AB9A787B2C64C9EF00028B36 /* UserManager.swift */,
+				AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */,
+				AB9A787F2C64CA0900028B36 /* NotificationManager.swift */,
+				AB9A78812C64CA1400028B36 /* CameraManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -199,7 +222,11 @@
 		E7FDDAF12C64341400DE2A7A /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB282C64378C00DE2A7A /* MovementService.swift */,
+				E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */,
+				AB9A78712C64BB2B00028B36 /* UserService.swift */,
+				AB9A78732C64BB3800028B36 /* EquipmentService.swift */,
+				AB9A78752C64BB4500028B36 /* NotificationService.swift */,
+				AB9A78772C64BB4F00028B36 /* AudioService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -374,32 +401,41 @@
 				E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
-				E7FDDB2F2C6437C900DE2A7A /* MovementManager.swift in Sources */,
+				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
+				E7FDDB2F2C6437C900DE2A7A /* GuideManager.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
+				AB9A787A2C64C9E600028B36 /* AudioManager.swift in Sources */,
 				03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */,
 				03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */,
 				03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */,
 				03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */,
 				03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */,
+				AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */,
 				03889CBD2C64688A004BC8C8 /* Character+CoreDataProperties.swift in Sources */,
 				03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */,
 				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */,
 				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
+				AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */,
 				03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
+				AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */,
+				AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
-				E7FDDB292C64378C00DE2A7A /* MovementService.swift in Sources */,
+				E7FDDB292C64378C00DE2A7A /* GuideMovementService.swift in Sources */,
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
 				E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */,
+				AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */,
+				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
+				AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */,
 				8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
