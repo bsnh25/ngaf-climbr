@@ -8,5 +8,13 @@
 import Foundation
 
 class EquipmentManager: EquipmentService {
+    func getEquipments(equipmentType: EquipmentType) -> [Equipment] {
+        return []
+    }
+    
+    func purchaseEquipment(data: Equipment, userPoint: Int) {
+        
+    }
+    
     //MARK: TODO 
 }
