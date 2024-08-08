@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C715F2C64BFC50040AD4F /* CLImageButton.swift */; };
+		034C71622C64BFCF0040AD4F /* CLTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71612C64BFCF0040AD4F /* CLTextButton.swift */; };
+		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */; };
 		03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */; };
 		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
@@ -47,7 +50,6 @@
 		E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB172C64356B00DE2A7A /* HomeVC+Extension.swift */; };
 		E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB192C64359800DE2A7A /* StretchingVC+Extension.swift */; };
 		E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */; };
-		E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB212C64362700DE2A7A /* CLButton.swift */; };
 		E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB232C64363200DE2A7A /* DateExtension.swift */; };
 		E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = E7FDDB262C64370E00DE2A7A /* RiveRuntime */; };
 		E7FDDB292C64378C00DE2A7A /* GuideMovementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */; };
@@ -55,6 +57,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
+		034C71612C64BFCF0040AD4F /* CLTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextButton.swift; sourceTree = "<group>"; };
 		03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -97,7 +101,6 @@
 		E7FDDB172C64356B00DE2A7A /* HomeVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Extension.swift"; sourceTree = "<group>"; };
 		E7FDDB192C64359800DE2A7A /* StretchingVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StretchingVC+Extension.swift"; sourceTree = "<group>"; };
 		E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShopVC+Extension.swift"; sourceTree = "<group>"; };
-		E7FDDB212C64362700DE2A7A /* CLButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLButton.swift; sourceTree = "<group>"; };
 		E7FDDB232C64363200DE2A7A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMovementService.swift; sourceTree = "<group>"; };
 		E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideManager.swift; sourceTree = "<group>"; };
@@ -109,12 +112,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */,
+				034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		034C715E2C64BFB70040AD4F /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				034C715F2C64BFC50040AD4F /* CLImageButton.swift */,
+				034C71612C64BFCF0040AD4F /* CLTextButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		8ABB12332C649D9A00616C57 /* VisionModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,7 +327,7 @@
 		E7FDDB202C64360800DE2A7A /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB212C64362700DE2A7A /* CLButton.swift */,
+				034C715E2C64BFB70040AD4F /* Button */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -337,6 +350,7 @@
 			name = climbr;
 			packageProductDependencies = (
 				E7FDDB262C64370E00DE2A7A /* RiveRuntime */,
+				034C71642C64FAFF0040AD4F /* SnapKit */,
 			);
 			productName = climbr;
 			productReference = E7FDDAD32C64301B00DE2A7A /* climbr.app */;
@@ -368,6 +382,7 @@
 			mainGroup = E7FDDACA2C64301B00DE2A7A;
 			packageReferences = (
 				E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */,
+				034C71632C64FAFF0040AD4F /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = E7FDDAD42C64301B00DE2A7A /* Products */;
 			projectDirPath = "";
@@ -398,7 +413,6 @@
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
 				E7FDDB062C6434BD00DE2A7A /* SampleViewC.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
-				E7FDDB222C64362700DE2A7A /* CLButton.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
@@ -406,6 +420,7 @@
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
+				034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */,
 				AB9A787A2C64C9E600028B36 /* AudioManager.swift in Sources */,
 				03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */,
 				03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */,
@@ -432,6 +447,7 @@
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
+				034C71622C64BFCF0040AD4F /* CLTextButton.swift in Sources */,
 				E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */,
 				AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */,
 				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
@@ -645,6 +661,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		034C71632C64FAFF0040AD4F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 		E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
@@ -656,6 +680,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		034C71642C64FAFF0040AD4F /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 034C71632C64FAFF0040AD4F /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		E7FDDB262C64370E00DE2A7A /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */;
