@@ -14,18 +14,7 @@ class MainVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view                        = NSView()
-        view.wantsLayer             = true
-        view.layer?.backgroundColor = NSColor.systemPink.cgColor
-        
-        let label = NSTextField(labelWithString: "CLIMBR")
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-        
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+        configureAppLogo()
     }
     
     private func configureAppLogo() {
