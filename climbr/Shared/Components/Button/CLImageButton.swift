@@ -20,7 +20,7 @@ class CLImageButton: NSButton {
         self.wantsLayer = true
         self.bezelColor = bgColor //warna kontener
         self.symbolConfiguration = NSImage.SymbolConfiguration(hierarchicalColor: imgColor) //warna image
-//        self.symbolConfiguration = NSImage.SymbolConfiguration(scale: scale)
+//        self.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
         self.image = NSImage(systemSymbolName: imageName, accessibilityDescription: accesibilityName)
         self.bezelStyle = .flexiblePush
         self.isEnabled = true

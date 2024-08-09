@@ -32,6 +32,7 @@ class CLTextButton: NSButton {
         ]
         attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
         isEnabled = true
+        target = self
     }
     
 }
