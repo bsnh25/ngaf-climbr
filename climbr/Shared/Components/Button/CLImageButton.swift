@@ -24,7 +24,6 @@ class CLImageButton: NSButton {
         self.image = NSImage(systemSymbolName: imageName, accessibilityDescription: accesibilityName)
         self.bezelStyle = .flexiblePush
         self.isEnabled = true
-        self.target = self
         self.controlSize = .large
     }
     
