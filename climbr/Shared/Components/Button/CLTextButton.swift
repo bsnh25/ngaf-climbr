@@ -20,7 +20,7 @@ class CLTextButton: NSButton {
         wantsLayer = true
     }
     
-    init(titleBtn: String, labelColor: NSColor, bgColor: NSColor){
+    init(titleBtn: String, labelColor: NSColor, bgColor: NSColor, sizeFont: CGFloat){
         super.init(frame: .zero)
         self.wantsLayer = true
         self.title = titleBtn
@@ -28,7 +28,8 @@ class CLTextButton: NSButton {
         self.bezelStyle = .flexiblePush
         self.contentTintColor = .selectedTextColor
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: labelColor
+            .foregroundColor: labelColor,
+            .font: NSFont.boldSystemFont(ofSize: sizeFont),
         ]
         attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
         isEnabled = true
