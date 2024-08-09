@@ -15,7 +15,7 @@
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String" customClassName="[EquipmentType]"/>
     </entity>
-    <entity name="Movement" representedClassName="Movement" syncable="YES">
+    <entity name="Excercise" representedClassName="Excercise" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="preview" optional="YES" attributeType="String"/>

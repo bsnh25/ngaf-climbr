@@ -53,8 +53,8 @@
 		E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */; };
 		E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB232C64363200DE2A7A /* DateExtension.swift */; };
 		E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = E7FDDB262C64370E00DE2A7A /* RiveRuntime */; };
-		E7FDDB292C64378C00DE2A7A /* GuideMovementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */; };
-		E7FDDB2F2C6437C900DE2A7A /* GuideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */; };
+		E7FDDB292C64378C00DE2A7A /* ExcerciseGuidanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */; };
+		E7FDDB2F2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB2E2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,8 +104,8 @@
 		E7FDDB192C64359800DE2A7A /* StretchingVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StretchingVC+Extension.swift"; sourceTree = "<group>"; };
 		E7FDDB1B2C6435A700DE2A7A /* ShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShopVC+Extension.swift"; sourceTree = "<group>"; };
 		E7FDDB232C64363200DE2A7A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
-		E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMovementService.swift; sourceTree = "<group>"; };
-		E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideManager.swift; sourceTree = "<group>"; };
+		E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceService.swift; sourceTree = "<group>"; };
+		E7FDDB2E2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,7 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				AB9A78792C64C9E600028B36 /* AudioManager.swift */,
-				E7FDDB2E2C6437C900DE2A7A /* GuideManager.swift */,
+				E7FDDB2E2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift */,
 				AB9A787B2C64C9EF00028B36 /* UserManager.swift */,
 				AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */,
 				AB9A787F2C64CA0900028B36 /* NotificationManager.swift */,
@@ -238,7 +238,7 @@
 		E7FDDAF12C64341400DE2A7A /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB282C64378C00DE2A7A /* GuideMovementService.swift */,
+				E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */,
 				AB9A78712C64BB2B00028B36 /* UserService.swift */,
 				AB9A78732C64BB3800028B36 /* EquipmentService.swift */,
 				AB9A78752C64BB4500028B36 /* NotificationService.swift */,
@@ -420,7 +420,7 @@
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
-				E7FDDB2F2C6437C900DE2A7A /* GuideManager.swift in Sources */,
+				E7FDDB2F2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
@@ -447,7 +447,7 @@
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
-				E7FDDB292C64378C00DE2A7A /* GuideMovementService.swift in Sources */,
+				E7FDDB292C64378C00DE2A7A /* ExcerciseGuidanceService.swift in Sources */,
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
@@ -594,7 +594,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -623,7 +623,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;

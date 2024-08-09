@@ -8,6 +8,7 @@
 import Cocoa
 
 class StretchingVC: NSViewController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

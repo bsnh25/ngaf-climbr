@@ -7,6 +7,6 @@
 
 import Foundation
 
-class GuideManager: GuideMovementService {
-    //MARK: TODO 
+class ExcerciseGuidanceManager: ExcerciseGuidanceService {
+    //MARK: TODO
 }
