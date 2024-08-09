@@ -8,14 +8,16 @@
 import AppKit
 
 class StretchingVC: NSViewController {
-    let cameraPreview = NSView()
-    let excerciseInfoView = NSView()
+    let cameraPreview           = NSView()
+    let excerciseInfoView       = NSView()
+    let videoPreview            = NSView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureExcerciseInfoView()
         configureCameraPreview()
+        configureVideoPreview()
     }
     
     private func configureCameraPreview() {
@@ -54,6 +56,21 @@ class StretchingVC: NSViewController {
             excerciseInfoView.topAnchor.constraint(equalTo: view.topAnchor),
             excerciseInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             excerciseInfoView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+        ])
+    }
+    
+    private func configureVideoPreview() {
+        excerciseInfoView.addSubview(videoPreview)
+        
+        videoPreview.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubViewController(ExcerciseVideoVC(), to: videoPreview)
+        
+        NSLayoutConstraint.activate([
+            videoPreview.topAnchor.constraint(equalTo: excerciseInfoView.topAnchor, constant: 24),
+            videoPreview.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: 24),
+            videoPreview.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -24),
+            videoPreview.heightAnchor.constraint(equalToConstant: 256)
         ])
     }
     
