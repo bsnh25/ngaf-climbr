@@ -68,12 +68,3 @@ class CLTextButtonV2: NSButton {
     }
     
 }
-
-
-#Preview(traits: .defaultLayout, body: {
-    let button = CLTextButtonV2()
-    button.isEnabled = false
-    
-    return button
-})
-
