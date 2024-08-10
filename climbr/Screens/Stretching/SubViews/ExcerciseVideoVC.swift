@@ -46,7 +46,7 @@ class ExcerciseVideoVC: NSViewController {
     private func configureExcerciseVideoPreview() {
         excerciseVideoPreview.translatesAutoresizingMaskIntoConstraints = false
         excerciseVideoPreview.wantsLayer                = true
-        excerciseVideoPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor
+        excerciseVideoPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor.copy(alpha: 0.5)
         excerciseVideoPreview.layer?.cornerRadius       = 10
         
         NSLayoutConstraint.activate([
