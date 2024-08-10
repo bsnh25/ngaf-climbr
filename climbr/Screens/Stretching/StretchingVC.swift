@@ -6,19 +6,24 @@
 //
 
 import AppKit
+import Combine
 
 class StretchingVC: NSViewController {
     let cameraPreview           = NSView()
     let excerciseInfoView       = NSView()
-    let videoPreview            = NSView()
-    let nextExcerciseView       = NSView()
+    let currentMovementView     = CurrentMovementView()
+    let nextMovementView        = NextMovementView()
     let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     
     let padding: CGFloat        = 24
     
-    var currentMovement: Int           = 0
-    var completedMovement: [Movement]  = []
+    @Published var currentIndex: Int               = 0
+    @Published var nextIndex: Int                  = 1
+    
+    var completedMovement: [Movement]   = []
+    
+    var bags: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +32,21 @@ class StretchingVC: NSViewController {
         configureCameraPreview()
         configureStack()
         configureButton()
+        
+        $currentIndex.sink { index in
+            let movement = Movement.items[index]
+            
+            self.currentMovementView.updateData(movement)
+        }
+        .store(in: &bags)
+        
+        $nextIndex.sink { index in
+            let movement = Movement.items[index]
+            
+            self.nextMovementView.updateData(movement)
+        }
+        .store(in: &bags)
+
     }
     
     private func configureStack() {
@@ -34,24 +54,23 @@ class StretchingVC: NSViewController {
         let divider             = Divider()
         
         /// Arrange video preview, divider, and next excercise vertically
-        let stack               = NSStackView(views: [videoPreview, divider, nextExcerciseView])
+        let stack               = NSStackView(views: [currentMovementView, divider, nextMovementView])
         stack.orientation       = .vertical
         stack.spacing           = 24
         stack.alignment         = .leading
         
         view.addSubview(stack)
         
-        /// Add the child VC to the corresponding view
-        self.addSubViewController(ExcerciseVideoVC(movement: Movement.items[currentMovement]), to: videoPreview)
-        self.addSubViewController(NextExcerciseVC(), to: nextExcerciseView)
-        
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: excerciseInfoView.topAnchor, constant: padding),
             stack.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
             stack.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
             
-            videoPreview.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            videoPreview.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            currentMovementView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            currentMovementView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            
+            nextMovementView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            nextMovementView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
             
             divider.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
             divider.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
@@ -112,6 +131,13 @@ class StretchingVC: NSViewController {
         
         skipButton.translatesAutoresizingMaskIntoConstraints    = false
         finishButton.translatesAutoresizingMaskIntoConstraints  = false
+        
+        /// Configure target button
+        skipButton.target = self
+        skipButton.action = #selector(skip)
+        
+        finishButton.target = self
+        finishButton.action = #selector(skip)
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
