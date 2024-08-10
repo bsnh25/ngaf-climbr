@@ -9,11 +9,15 @@ import AppKit
 
 class NextExcerciseVC: NSViewController {
 
+    let labelContainer      = NSStackView()
+    
     let imageView           = NSImageView()
     let nextLabel           = NSTextField(labelWithString: "Next")
     let excerciseLabel      = NSTextField(labelWithString: "Neck Deep Right")
-    let durationIcon        = NSImageView()
-    let durationLabel       = NSTextField(labelWithString: "15 seconds")
+    
+    let durationContainerView   = NSStackView()
+    let durationIcon            = NSImageView()
+    let durationLabel           = NSTextField(labelWithString: "15 seconds")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +27,12 @@ class NextExcerciseVC: NSViewController {
     }
     
     private func configureUI() {
-        let views = [imageView, nextLabel, excerciseLabel, durationIcon, durationLabel]
+        view.addSubview(imageView)
+        view.addSubview(labelContainer)
+        
+        let views = [labelContainer, imageView, nextLabel, excerciseLabel, durationContainerView]
         
         for item in views {
-            view.addSubview(item)
             item.translatesAutoresizingMaskIntoConstraints = false
         }
     }
@@ -45,11 +51,25 @@ class NextExcerciseVC: NSViewController {
     }
     
     private func configureLabel() {
+        /// Configure the label container
+        let views = [nextLabel, excerciseLabel, durationContainerView]
+        labelContainer.setViews(views, in: .center)
+        labelContainer.orientation          = .vertical
+        labelContainer.alignment            = .leading
+        labelContainer.spacing              = 10
         
+        /// Next label
         nextLabel.font                      = NSFont.systemFont(ofSize: 12, weight: .bold)
         nextLabel.textColor                 = .gray
         
+        /// Excercise label
         excerciseLabel.font                 = NSFont.systemFont(ofSize: 16, weight: .bold)
+        
+        /// Configure the duration label
+        durationContainerView.setViews([durationIcon, durationLabel], in: .center)
+        durationContainerView.orientation   = .horizontal
+        durationContainerView.spacing       = 8
+        durationContainerView.distribution  = .fill
         
         let iconConfig                      = NSImage.SymbolConfiguration(pointSize: 16, weight: .bold)
         durationIcon.image                  = NSImage(systemSymbolName: "timer", accessibilityDescription: "Duration")
@@ -57,19 +77,11 @@ class NextExcerciseVC: NSViewController {
         
         durationLabel.font                  = NSFont.systemFont(ofSize: 16, weight: .bold)
         
+        /// Configure the constraint
         NSLayoutConstraint.activate([
-            nextLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 16),
-            nextLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
-            
-            excerciseLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
-            excerciseLabel.leadingAnchor.constraint(equalTo: nextLabel.leadingAnchor),
-            
-            durationIcon.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -16),
-            durationIcon.leadingAnchor.constraint(equalTo: nextLabel.leadingAnchor),
-            
-            durationLabel.centerYAnchor.constraint(equalTo: durationIcon.centerYAnchor),
-            durationLabel.leadingAnchor.constraint(equalTo: durationIcon.trailingAnchor, constant: 8),
-
+            labelContainer.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
+            labelContainer.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
+            labelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
