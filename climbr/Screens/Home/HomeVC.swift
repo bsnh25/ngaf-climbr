@@ -19,7 +19,7 @@ class HomeVC: NSViewController {
     private let textB = NSTextField(string: "Today’s session goal")
     private let progressStretch = NSProgressIndicator()
     private let containerView = NSView()
-    private let stackView = NSStackView()
+    private let progressLayer = CALayer()
     
     
     override func viewDidLoad() {
@@ -75,43 +75,44 @@ class HomeVC: NSViewController {
     }
     
     private func stackConfig(){
-        stackView.orientation = .horizontal
-        stackView.distribution = .equalSpacing
         
-        progressStretch.style = .bar
-        progressStretch.wantsLayer = true
+        let padding = 20
         
-        progressStretch.minValue = 0
-        progressStretch.maxValue = 4
+        containerView.snp.makeConstraints { container in
+            container.trailing.equalToSuperview().inset(padding)
+            container.top.equalTo(settingButton.snp.top)
+            container.width.equalTo(435)
+            container.height.equalTo(135)
+        }
         
-        stackView.addArrangedSubview(progressStretch)
-        stackView.addArrangedSubview(textA)
-        
-        textA.wantsLayer = false
-        textA.isBordered = false
-        textA.isEditable = false
-        textA.isBezeled = false
-        textA.backgroundColor = .clear
-//        textA.layer?.borderColor = .black
-        textA.textColor = .black
-        textA.font = NSFont.boldSystemFont(ofSize: 10)
-        
-        
-        progressStretch.wantsLayer = true
-        progressStretch.minValue = 0
-        progressStretch.maxValue = 4
-        progressStretch.doubleValue = 0
-        
-        textA.snp.makeConstraints { text in
-            text.trailing.equalTo(stackView.snp.trailing)
-            text.width.equalTo(75)
-            text.height.equalTo(20)
+        textB.snp.makeConstraints { title in
+            title.top.equalTo(containerView.snp.top).inset(padding)
+            title.leading.equalTo(containerView.snp.leading).inset(padding)
+            title.height.equalTo(padding)
         }
         
         progressStretch.snp.makeConstraints { progress in
-            progress.leading.equalTo(stackView.snp.leading)
-            progress.width.equalTo(480)
-            progress.height.equalTo(textA.snp.height)
+            progress.top.equalTo(textB.snp.bottom).inset(-10)
+            progress.leading.equalTo(textB.snp.leading)
+            progress.width.equalTo(300)
+            progress.height.equalTo(4)
+        }
+        
+        textA.snp.makeConstraints { text in
+            text.top.equalTo(textB.snp.bottom).inset(-5)
+            text.leading.equalTo(progressStretch.snp.trailing).offset(10)
+            text.trailing.equalTo(containerView.snp.trailing).inset(padding)
+            text.width.equalTo(76)
+            text.height.equalTo(20)
+        }
+        
+        startStretchButton.snp.makeConstraints { btn in
+            btn.top.equalTo(progressStretch.snp.bottom).offset(padding)
+            btn.leading.equalTo(containerView.snp.leading).inset(padding)
+            btn.trailing.equalTo(containerView.snp.trailing).inset(padding)
+            btn.bottom.equalTo(containerView.snp.bottom).inset(padding)
+            btn.height.equalTo(50)
+            btn.width.equalTo(435-20-20)
         }
         
     }
@@ -119,19 +120,37 @@ class HomeVC: NSViewController {
     private func viewStretchConfig(){
         view.addSubview(containerView)
         
-        containerView.addSubview(stackView)
-        containerView.addSubview(startStretchButton)
         containerView.addSubview(textB)
+        containerView.addSubview(progressStretch)
+        containerView.addSubview(textA)
+        containerView.addSubview(startStretchButton)
         
-        stackView.wantsLayer = true
         containerView.wantsLayer = true
-        
-        containerView.layer?.backgroundColor = CGColor.init(red: 246, green: 246, blue: 246, alpha: 84)
+        containerView.layer?.backgroundColor = NSColor.gray.cgColor
         containerView.layer?.opacity = 1
         containerView.layer?.cornerRadius = 20
-        stackView.layer?.borderColor = .black
         
-        stackConfig()
+        progressStretch.wantsLayer = true
+        progressStretch.isIndeterminate = false
+        progressStretch.isDisplayedWhenStopped = true
+        progressStretch.style = .bar
+        progressStretch.minValue = 0
+        progressStretch.maxValue = 100
+        progressStretch.doubleValue = 50
+        progressStretch.layer?.backgroundColor = NSColor.white.cgColor
+        progressStretch.layer?.cornerRadius = 5
+        progressStretch.layer?.masksToBounds = true
+        progressStretch.displayIfNeeded()
+        
+//        print("Progress value set to: \(progressStretch.doubleValue)")
+        
+        textA.wantsLayer = false
+        textA.isBordered = false
+        textA.isEditable = false
+        textA.isBezeled = false
+        textA.backgroundColor = .clear
+        textA.textColor = .black
+        textA.font = NSFont.boldSystemFont(ofSize: 10)
         
         textB.wantsLayer = true
         textB.isBordered = true
@@ -144,39 +163,12 @@ class HomeVC: NSViewController {
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
         
-        containerView.snp.makeConstraints { container in
-            container.trailing.equalToSuperview().inset(20)
-            container.top.equalTo(settingButton.snp.top)
-            container.width.equalTo(435)
-            container.height.equalTo(137)
-        }
-        
-        stackView.snp.makeConstraints { stack in
-            stack.leading.equalTo(containerView.snp.leading).inset(20)
-            stack.trailing.equalTo(containerView.snp.trailing).inset(20)
-            stack.height.equalTo(19.44)
-        }
-        
-        startStretchButton.snp.makeConstraints { btn in
-            btn.leading.equalTo(stackView.snp.leading)
-            btn.trailing.equalTo(stackView.snp.trailing)
-            btn.top.equalTo(stackView.snp.bottom).offset(11)
-            btn.bottom.equalTo(containerView.snp.bottom).inset(18)
-            btn.height.equalTo(49.57)
-            btn.width.equalTo(stackView.snp.width)
-        }
-        
-        textB.snp.makeConstraints { title in
-            title.top.equalTo(containerView.snp.top).inset(18)
-            title.leading.equalTo(stackView.snp.leading)
-            title.bottom.equalTo(stackView.snp.top)
-        }
+        stackConfig()
     }
     
     @objc
     private func actionSetting(){
-        let settingsVC = SettingsView()
-        settingsVC.title = "Settings Preference"
+        let settingsVC = SettingVC()
         settingsVC.preferredContentSize = CGSize(width: 412, height: 358)
         self.presentAsModalWindow(settingsVC)
     }

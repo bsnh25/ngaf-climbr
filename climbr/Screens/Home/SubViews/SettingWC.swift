@@ -8,7 +8,29 @@
 import AppKit
 import SnapKit
 
-class SettingsView: NSViewController {
+
+//class SettingWC: NSWindowController {
+//    
+//    init(contentVC: NSViewController) {
+//        let window = NSWindow(contentViewController: contentVC)
+//        window.titleVisibility = .visible
+//        window.styleMask.remove(.titled)
+//        window.styleMask.remove(.miniaturizable)
+//        window.styleMask.remove(.resizable)
+//        window.styleMask.insert(.closable)
+//        
+//        super.init(window: window)
+//        
+//        window.level = .modalPanel
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//}
+
+
+class SettingVC: NSViewController {
     
     private let settingText = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Setting Preference")
     private let subTitleA = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Your work hours")
@@ -37,6 +59,21 @@ class SettingsView: NSViewController {
         view.wantsLayer = true
         view.layer?.backgroundColor = .white
         
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+
+        // Check if the view is hosted in a window
+        if let window = self.view.window {
+            // Remove the minimize button
+            window.styleMask.remove(.miniaturizable)
+            window.titleVisibility = .hidden
+            
+            // Optionally, remove the close and zoom buttons
+            // window.styleMask.remove(.closable)
+             window.styleMask.remove(.resizable)
+        }
     }
     
     private func configureUI(){
@@ -252,72 +289,5 @@ class SettingsView: NSViewController {
 }
 
 #Preview(traits: .defaultLayout, body: {
-    SettingsView()
+    SettingVC()
 })
-
-//startTime.target = self
-//startTime.action = #selector(timeSelected)
-
-//@objc private func timeSelected(_ sender: NSDatePicker) {
-//        let selectedDate = sender.dateValue
-//        let formattedTime = formatTimeToGMT7(date: selectedDate)
-//        selectedTimeLabel.stringValue = "Selected Time: \(formattedTime)"
-//    }
-//
-//    private func formatTimeToGMT7(date: Date) -> String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "HH:mm"
-//
-//        // Set the time zone to GMT+7
-//        if let gmt7 = TimeZone(secondsFromGMT: 7 * 3600) {
-//            formatter.timeZone = gmt7
-//        }
-//
-//        return formatter.string(from: date)
-//    }
-
-
-//
-//class SettingsVC: NSWindowController {
-//
-//    convenience init() {
-//        let contentRect = NSRect(x: 0, y: 0, width: 300, height: 200)
-//        let panel = NSPanel(contentRect: contentRect,
-//                            styleMask: [.titled, .closable],
-//                            backing: .buffered,
-//                            defer: false)
-//
-//        self.init(window: panel)
-//        self.window?.title = "Pop-up Window"
-//
-////        let settingView = SettingsView(frame: panel.contentView!.bounds)
-//        let settingView = SettingsView()
-////        settingView.autoresizingMask = [.width, .height]
-////        panel.contentView?.addSubview(settingView)
-//
-////        disableMainWindowControls()
-//        self.window?.contentViewController = settingView
-//
-//    }
-//
-////    func show() {
-////        self.window?.makeKeyAndOrderFront(nil)
-////        self.window?.beginSheet(self.window!) { _ in
-////            //Thre sheet is dismissed, and main window becomes active again
-////        }
-////    }
-//
-////    private func disableMainWindowControls() {
-//////        mainWindow?.isEnabled = false
-////    }
-////
-////    private func enableMainWindowControls() {
-//////        mainWindow?.isEnabled = true
-////    }
-//}
-//
-////extension SettingsVC: NSWindowDelegate {
-////    func windowWillClose(_ notification: Notification) {
-////        enableMainWindowControls()
-////    }
-////}
