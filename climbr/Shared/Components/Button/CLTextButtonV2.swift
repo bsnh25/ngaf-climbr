@@ -15,7 +15,6 @@ class CLTextButtonV2: NSButton {
         self.isBordered = false // Remove default button border
         self.wantsLayer = true // Ensure the layer is available for custom drawing
     }
-
     init(title: String, backgroundColor: NSColor, foregroundColorText: NSColor, fontText: NSFont) {
         super.init(frame: .zero)
         wantsLayer = true
