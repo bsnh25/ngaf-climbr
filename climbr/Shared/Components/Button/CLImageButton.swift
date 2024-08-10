@@ -11,28 +11,42 @@ class CLImageButton: NSButton {
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        wantsLayer = true
-        
-    }
-    
-    init(imageName: String, accesibilityName: String, imgColor: NSColor, bgColor: NSColor) {
-        super.init(frame: .zero)
         self.wantsLayer = true
-        self.bezelColor = bgColor //warna kontener
-        self.symbolConfiguration = NSImage.SymbolConfiguration(hierarchicalColor: imgColor) //warna image
-//        self.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
-        self.image = NSImage(systemSymbolName: imageName, accessibilityDescription: accesibilityName)
-        self.bezelStyle = .flexiblePush
-        self.isEnabled = true
         self.controlSize = .large
+        self.cell?.isBezeled = false
+        self.isBordered = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    init(imageName: String, accesibilityName: String, imgColor: NSColor, bgColor: NSColor) {
+        super.init(frame: .zero)
+        self.wantsLayer = true
+        self.controlSize = .large
+        self.bezelStyle = .automatic
+        self.isBordered = false
+        
+        configureUI(imageName: imageName, accesibilityName: accesibilityName, imgColor: imgColor, bgColor: bgColor)
+    }
+    
+    private func configureUI(imageName: String, accesibilityName: String, imgColor: NSColor, bgColor: NSColor){
+        
+        layer?.cornerRadius = 10
+        layer?.backgroundColor = bgColor.cgColor
+        contentTintColor = .white
+        self.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
+        self.image = NSImage(systemSymbolName: imageName, accessibilityDescription: accesibilityName)
+    }
+    
+    override func updateLayer() {
+        super.updateLayer()
 
+        if isHighlighted {
+            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+        } else {
+            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+        }
+    }
 }
-
-#Preview(traits: .defaultLayout, body: {
-    CLImageButton()
-})

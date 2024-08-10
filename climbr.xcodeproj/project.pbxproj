@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C715F2C64BFC50040AD4F /* CLImageButton.swift */; };
-		034C71622C64BFCF0040AD4F /* CLTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71612C64BFCF0040AD4F /* CLTextButton.swift */; };
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
+		034C71692C664D210040AD4F /* SettingWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71682C664D210040AD4F /* SettingWC.swift */; };
+		034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C716A2C6736040040AD4F /* CLTextLabelV2.swift */; };
 		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
 		03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */; };
 		03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */; };
@@ -20,10 +21,6 @@
 		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
 		8ABB12342C649D9A00616C57 /* ModelFixV1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12322C649D9A00616C57 /* ModelFixV1.mlmodel */; };
 		8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */; };
-		8ABB12802C66074C00616C57 /* ModelFixV1+Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB127F2C66074C00616C57 /* ModelFixV1+Singleton.swift */; };
-		8ABB12822C66099200616C57 /* ModelFixV1+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12812C66099200616C57 /* ModelFixV1+Label.swift */; };
-		8ABB12882C661B1000616C57 /* ModelFixV1+FrameRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12872C661B1000616C57 /* ModelFixV1+FrameRate.swift */; };
-		8ABB128A2C661D1500616C57 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12892C661D1500616C57 /* Pose.swift */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -37,7 +34,6 @@
 		E76E63132C675AC9001906A9 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63072C675AC9001906A9 /* Pose.swift */; };
 		E76E63142C675AC9001906A9 /* Pose+Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63082C675AC9001906A9 /* Pose+Connection.swift */; };
 		E76E63152C675AC9001906A9 /* Pose+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63092C675AC9001906A9 /* Pose+Empty.swift */; };
-		E76E63162C675AC9001906A9 /* GuideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E630A2C675AC9001906A9 /* GuideManager.swift */; };
 		E76E63172C675AC9001906A9 /* ModelFixV1+LabelCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E630C2C675AC9001906A9 /* ModelFixV1+LabelCheck.swift */; };
 		E76E63182C675AC9001906A9 /* ModelFixV1+Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E630D2C675AC9001906A9 /* ModelFixV1+Singleton.swift */; };
 		E76E63192C675AC9001906A9 /* ActionPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E630E2C675AC9001906A9 /* ActionPrediction.swift */; };
@@ -59,7 +55,6 @@
 		E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAF62C64346900DE2A7A /* ShopVC.swift */; };
 		E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB002C64349400DE2A7A /* StretchingVC.swift */; };
 		E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB022C64349D00DE2A7A /* HomeVC.swift */; };
-		E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB052C6434BD00DE2A7A /* ProgressIndicatorView.swift */; };
 		E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB092C6434E700DE2A7A /* SampleViewB.swift */; };
 		E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB0B2C6434EC00DE2A7A /* SampleViewA.swift */; };
 		E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB0D2C64351300DE2A7A /* User.swift */; };
@@ -78,7 +73,8 @@
 
 /* Begin PBXFileReference section */
 		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
-		034C71612C64BFCF0040AD4F /* CLTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextButton.swift; sourceTree = "<group>"; };
+		034C71682C664D210040AD4F /* SettingWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWC.swift; sourceTree = "<group>"; };
+		034C716A2C6736040040AD4F /* CLTextLabelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextLabelV2.swift; sourceTree = "<group>"; };
 		03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -106,7 +102,6 @@
 		E76E63072C675AC9001906A9 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
 		E76E63082C675AC9001906A9 /* Pose+Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pose+Connection.swift"; sourceTree = "<group>"; };
 		E76E63092C675AC9001906A9 /* Pose+Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pose+Empty.swift"; sourceTree = "<group>"; };
-		E76E630A2C675AC9001906A9 /* GuideManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideManager.swift; sourceTree = "<group>"; };
 		E76E630C2C675AC9001906A9 /* ModelFixV1+LabelCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+LabelCheck.swift"; sourceTree = "<group>"; };
 		E76E630D2C675AC9001906A9 /* ModelFixV1+Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Singleton.swift"; sourceTree = "<group>"; };
 		E76E630E2C675AC9001906A9 /* ActionPrediction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPrediction.swift; sourceTree = "<group>"; };
@@ -130,7 +125,6 @@
 		E7FDDAF62C64346900DE2A7A /* ShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopVC.swift; sourceTree = "<group>"; };
 		E7FDDB002C64349400DE2A7A /* StretchingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingVC.swift; sourceTree = "<group>"; };
 		E7FDDB022C64349D00DE2A7A /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
-		E7FDDB052C6434BD00DE2A7A /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
 		E7FDDB092C6434E700DE2A7A /* SampleViewB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewB.swift; sourceTree = "<group>"; };
 		E7FDDB0B2C6434EC00DE2A7A /* SampleViewA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewA.swift; sourceTree = "<group>"; };
 		E7FDDB0D2C64351300DE2A7A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -163,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				034C715F2C64BFC50040AD4F /* CLImageButton.swift */,
-				034C71612C64BFCF0040AD4F /* CLTextButton.swift */,
 				8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */,
 			);
 			path = Button;
@@ -191,8 +184,8 @@
 		E76E63042C675AC9001906A9 /* GuideManager */ = {
 			isa = PBXGroup;
 			children = (
+				E7FDDB2E2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift */,
 				E76E63052C675AC9001906A9 /* Pose */,
-				E76E630A2C675AC9001906A9 /* GuideManager.swift */,
 				E76E630B2C675AC9001906A9 /* ActionClassifier */,
 			);
 			path = GuideManager;
@@ -233,6 +226,7 @@
 		E7ABBA4A2C6746B4007A702F /* Labels */ = {
 			isa = PBXGroup;
 			children = (
+				034C716A2C6736040040AD4F /* CLTextLabelV2.swift */,
 				E7ABBA4B2C6746D0007A702F /* CLLabel.swift */,
 			);
 			path = Labels;
@@ -335,7 +329,6 @@
 			children = (
 				E76E63042C675AC9001906A9 /* GuideManager */,
 				AB9A78792C64C9E600028B36 /* AudioManager.swift */,
-				E7FDDB2E2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift */,
 				AB9A787B2C64C9EF00028B36 /* UserManager.swift */,
 				AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */,
 				AB9A787F2C64CA0900028B36 /* NotificationManager.swift */,
@@ -405,7 +398,7 @@
 		E7FDDB042C6434A300DE2A7A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB052C6434BD00DE2A7A /* ProgressIndicatorView.swift */,
+				034C71682C664D210040AD4F /* SettingWC.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -528,7 +521,6 @@
 				E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */,
 				E76E63192C675AC9001906A9 /* ActionPrediction.swift in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
-				E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */,
 				E7ABBA462C670605007A702F /* NextExcerciseVC.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
 				E76E63172C675AC9001906A9 /* ModelFixV1+LabelCheck.swift in Sources */,
@@ -541,8 +533,6 @@
 				E7FDDB2F2C6437C900DE2A7A /* ExcerciseGuidanceManager.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E76E63152C675AC9001906A9 /* Pose+Empty.swift in Sources */,
-				8ABB12822C66099200616C57 /* ModelFixV1+Label.swift in Sources */,
-				8ABB12882C661B1000616C57 /* ModelFixV1+FrameRate.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
 				034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */,
@@ -569,26 +559,24 @@
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
-				8ABB12802C66074C00616C57 /* ModelFixV1+Singleton.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
 				E7ABBA492C673F4B007A702F /* Divider.swift in Sources */,
 				E7FDDB292C64378C00DE2A7A /* ExcerciseGuidanceService.swift in Sources */,
-				E76E63162C675AC9001906A9 /* GuideManager.swift in Sources */,
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E76E631A2C675AC9001906A9 /* ModelFixV1+PredictAction.swift in Sources */,
 				E76E631C2C675AC9001906A9 /* ModelFixV1+FrameRate.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
-				034C71622C64BFCF0040AD4F /* CLTextButton.swift in Sources */,
 				E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */,
 				AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */,
-				8ABB128A2C661D1500616C57 /* Pose.swift in Sources */,
 				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
 				AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */,
 				E7ABBA4C2C6746D0007A702F /* CLLabel.swift in Sources */,
 				8ABB12342C649D9A00616C57 /* ModelFixV1.mlmodel in Sources */,
+				034C71692C664D210040AD4F /* SettingWC.swift in Sources */,
+				034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,7 +714,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -755,7 +743,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
