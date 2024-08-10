@@ -12,8 +12,8 @@ class StretchingVC: NSViewController {
     let excerciseInfoView       = NSView()
     let videoPreview            = NSView()
     let nextExcerciseView       = NSView()
-    let skipButton              = CLTextButton(titleBtn: "Skip This Move", labelColor: .white, bgColor: .black, sizeFont: 16)
-    let finishButton            = CLTextButton(titleBtn: "Finish Early", labelColor: .white, bgColor: .black, sizeFont: 16)
+    let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
+    let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     
     let padding: CGFloat        = 24
 
@@ -76,7 +76,7 @@ class StretchingVC: NSViewController {
         NSLayoutConstraint.activate([
             videoPreview.topAnchor.constraint(equalTo: excerciseInfoView.topAnchor, constant: padding),
             videoPreview.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
-            videoPreview.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
+            videoPreview.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -16),
 //            videoPreview.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
@@ -97,21 +97,24 @@ class StretchingVC: NSViewController {
     }
     
     private func configureButton() {
-        view.addSubview(skipButton)
-        view.addSubview(finishButton)
+        let buttonStack = NSStackView(views: [skipButton, finishButton])
+        
+        buttonStack.distribution = .fillEqually
+        buttonStack.spacing = 10
+        
+        view.addSubview(buttonStack)
+        
+        buttonStack.translatesAutoresizingMaskIntoConstraints   = false
         
         skipButton.translatesAutoresizingMaskIntoConstraints    = false
         finishButton.translatesAutoresizingMaskIntoConstraints  = false
         
         NSLayoutConstraint.activate([
-            skipButton.bottomAnchor.constraint(equalTo: excerciseInfoView.bottomAnchor, constant: -padding),
-            skipButton.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
-            skipButton.widthAnchor.constraint(equalTo: excerciseInfoView.widthAnchor, multiplier: 0.4),
-            skipButton.heightAnchor.constraint(equalToConstant: 48),
+            buttonStack.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
+            buttonStack.bottomAnchor.constraint(equalTo: excerciseInfoView.bottomAnchor, constant: -padding),
+            buttonStack.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant:  -padding),
             
-            finishButton.bottomAnchor.constraint(equalTo: skipButton.bottomAnchor),
-            finishButton.leadingAnchor.constraint(equalTo: skipButton.trailingAnchor, constant: padding),
-            finishButton.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
+            skipButton.heightAnchor.constraint(equalToConstant: 48),
             finishButton.heightAnchor.constraint(equalToConstant: 48),
         ])
     }
