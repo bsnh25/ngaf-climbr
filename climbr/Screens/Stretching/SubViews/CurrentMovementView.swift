@@ -43,6 +43,7 @@ class CurrentMovementView: NSStackView {
     
     func updateData(_ data: Movement) {
         movementLabel.setText(data.title)
+        durationLabel.setText("\(data.duration) seconds")
     }
     
     private func configureMovementLabel() {
