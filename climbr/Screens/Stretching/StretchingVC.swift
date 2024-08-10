@@ -11,7 +11,9 @@ import Combine
 class StretchingVC: NSViewController {
     let cameraPreview           = NSView()
     let movementInfoView        = NSView()
+    let movementStack           = NSStackView()
     let currentMovementView     = CurrentMovementView()
+    let movementDivider         = Divider()
     let nextMovementView        = NextMovementView()
     let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
@@ -37,14 +39,27 @@ class StretchingVC: NSViewController {
             let movement = Movement.items[index]
             
             self.currentMovementView.updateData(movement)
+            
+            /// Disable skip button and remove next movement view
+            /// if next index equals to items last index
+            if index == Movement.items.count - 1 {
+                self.skipButton.isEnabled = false
+                
+                self.movementStack.removeView(self.movementDivider)
+                self.movementStack.removeView(self.nextMovementView)
+            }
         }
         .store(in: &bags)
         
         /// Stream the next index and update on its changed
         $nextIndex.sink { index in
-            let movement = Movement.items[index]
+            guard let movement = Movement.items[safe: index] else {
+                
+                return
+            }
             
             self.nextMovementView.updateData(movement)
+            
         }
         .store(in: &bags)
 
@@ -95,30 +110,28 @@ class StretchingVC: NSViewController {
     }
     
     private func configureMovementStack() {
-        /// Create divider
-        let divider             = Divider()
-        
         /// Arrange current movement view, divider, and next movement vertically
-        let stack               = NSStackView(views: [currentMovementView, divider, nextMovementView])
-        stack.orientation       = .vertical
-        stack.spacing           = 24
-        stack.alignment         = .leading
+        movementStack.setViews([currentMovementView, movementDivider, nextMovementView], in: .leading)
+        movementStack.orientation       = .vertical
+        movementStack.spacing           = 24
+        movementStack.alignment         = .leading
+        movementStack.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(stack)
+        movementInfoView.addSubview(movementStack)
         
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: movementInfoView.topAnchor, constant: padding),
-            stack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
-            stack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+            movementStack.topAnchor.constraint(equalTo: movementInfoView.topAnchor, constant: padding),
+            movementStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
+            movementStack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
             
-            currentMovementView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            currentMovementView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            currentMovementView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+            currentMovementView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
             
-            nextMovementView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            nextMovementView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            nextMovementView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+            nextMovementView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
             
-            divider.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            movementDivider.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+            movementDivider.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
         ])
     }
     
