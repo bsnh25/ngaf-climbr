@@ -42,7 +42,7 @@
 		E76E631C2C675AC9001906A9 /* ModelFixV1+FrameRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63112C675AC9001906A9 /* ModelFixV1+FrameRate.swift */; };
 		E76E63202C6792D0001906A9 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E631F2C6792D0001906A9 /* CollectionExtension.swift */; };
 		E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */; };
-		E7ABBA422C660A31007A702F /* ExcerciseVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA412C660A31007A702F /* ExcerciseVideoVC.swift */; };
+		E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA412C660A31007A702F /* CurrentMovementView.swift */; };
 		E7ABBA442C660AAF007A702F /* NSViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */; };
 		E7ABBA462C670605007A702F /* NextExcerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA452C670605007A702F /* NextExcerciseVC.swift */; };
 		E7ABBA492C673F4B007A702F /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA482C673F4B007A702F /* Divider.swift */; };
@@ -111,7 +111,7 @@
 		E76E63112C675AC9001906A9 /* ModelFixV1+FrameRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+FrameRate.swift"; sourceTree = "<group>"; };
 		E76E631F2C6792D0001906A9 /* CollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtension.swift; sourceTree = "<group>"; };
 		E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
-		E7ABBA412C660A31007A702F /* ExcerciseVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseVideoVC.swift; sourceTree = "<group>"; };
+		E7ABBA412C660A31007A702F /* CurrentMovementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMovementView.swift; sourceTree = "<group>"; };
 		E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSViewControllerExtension.swift; sourceTree = "<group>"; };
 		E7ABBA452C670605007A702F /* NextExcerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextExcerciseVC.swift; sourceTree = "<group>"; };
 		E7ABBA482C673F4B007A702F /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
@@ -409,7 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				E7FDDB092C6434E700DE2A7A /* SampleViewB.swift */,
-				E7ABBA412C660A31007A702F /* ExcerciseVideoVC.swift */,
+				E7ABBA412C660A31007A702F /* CurrentMovementView.swift */,
 				E7ABBA452C670605007A702F /* NextExcerciseVC.swift */,
 			);
 			path = SubViews;
@@ -532,7 +532,7 @@
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
 				E76E63122C675AC9001906A9 /* Pose+Landmark.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
-				E7ABBA422C660A31007A702F /* ExcerciseVideoVC.swift in Sources */,
+				E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */,
 				8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
