@@ -8,5 +8,12 @@
 import Foundation
 
 extension StretchingVC {
-    
+    @objc func skip() {
+        guard let _ = Movement.items[safe: currentIndex+1] else {
+            return
+        }
+        
+        currentIndex += 1
+        nextIndex     = currentIndex+1
+    }
 }
