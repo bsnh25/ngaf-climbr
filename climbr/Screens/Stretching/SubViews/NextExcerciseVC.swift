@@ -45,8 +45,8 @@ class NextExcerciseVC: NSViewController {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: view.topAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 100),
-            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.widthAnchor.constraint(equalToConstant: 88),
+            imageView.heightAnchor.constraint(equalToConstant: 88),
         ])
     }
     

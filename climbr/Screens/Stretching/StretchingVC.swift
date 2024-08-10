@@ -22,9 +22,37 @@ class StretchingVC: NSViewController {
         
         configureExcerciseInfoView()
         configureCameraPreview()
-        configureVideoPreview()
-        configureNextExcerciseView()
+        configureStack()
         configureButton()
+    }
+    
+    private func configureStack() {
+        /// Create divider
+        let divider             = Divider()
+        
+        /// Arrange video preview, divider, and next excercise vertically
+        let stack               = NSStackView(views: [videoPreview, divider, nextExcerciseView])
+        stack.orientation       = .vertical
+        stack.spacing           = 24
+        stack.alignment         = .leading
+        
+        view.addSubview(stack)
+        
+        /// Add the child VC to the corresponding view
+        self.addSubViewController(ExcerciseVideoVC(), to: videoPreview)
+        self.addSubViewController(NextExcerciseVC(), to: nextExcerciseView)
+        
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: excerciseInfoView.topAnchor, constant: padding),
+            stack.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
+            stack.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
+            
+            videoPreview.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            videoPreview.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            
+            divider.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+        ])
     }
     
     private func configureCameraPreview() {
@@ -66,43 +94,16 @@ class StretchingVC: NSViewController {
         ])
     }
     
-    private func configureVideoPreview() {
-        excerciseInfoView.addSubview(videoPreview)
-        
-        videoPreview.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubViewController(ExcerciseVideoVC(), to: videoPreview)
-        
-        NSLayoutConstraint.activate([
-            videoPreview.topAnchor.constraint(equalTo: excerciseInfoView.topAnchor, constant: padding),
-            videoPreview.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
-            videoPreview.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -16),
-//            videoPreview.heightAnchor.constraint(equalToConstant: 300)
-        ])
-    }
-    
-    private func configureNextExcerciseView() {
-        view.addSubview(nextExcerciseView)
-        
-        nextExcerciseView.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubViewController(NextExcerciseVC(), to: nextExcerciseView)
-        
-        NSLayoutConstraint.activate([
-            nextExcerciseView.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
-            nextExcerciseView.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
-            nextExcerciseView.topAnchor.constraint(equalTo: videoPreview.bottomAnchor, constant: 32),
-            nextExcerciseView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-    }
-    
     private func configureButton() {
-        let buttonStack = NSStackView(views: [skipButton, finishButton])
         
-        buttonStack.distribution = .fillEqually
-        buttonStack.spacing = 10
+        let divider                 = Divider()
+        let buttonStack             = NSStackView(views: [skipButton, finishButton])
+        
+        buttonStack.distribution    = .fillEqually
+        buttonStack.spacing         = 10
         
         view.addSubview(buttonStack)
+        view.addSubview(divider)
         
         buttonStack.translatesAutoresizingMaskIntoConstraints   = false
         
@@ -116,7 +117,10 @@ class StretchingVC: NSViewController {
             
             skipButton.heightAnchor.constraint(equalToConstant: 48),
             finishButton.heightAnchor.constraint(equalToConstant: 48),
+            
+            divider.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
+            divider.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
+            divider.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -padding),
         ])
     }
-    
 }

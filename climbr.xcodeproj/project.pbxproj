@@ -35,6 +35,7 @@
 		E7ABBA422C660A31007A702F /* ExcerciseVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA412C660A31007A702F /* ExcerciseVideoVC.swift */; };
 		E7ABBA442C660AAF007A702F /* NSViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */; };
 		E7ABBA462C670605007A702F /* NextExcerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA452C670605007A702F /* NextExcerciseVC.swift */; };
+		E7ABBA492C673F4B007A702F /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA482C673F4B007A702F /* Divider.swift */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* MainVC.swift */; };
 		E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		E7ABBA412C660A31007A702F /* ExcerciseVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseVideoVC.swift; sourceTree = "<group>"; };
 		E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSViewControllerExtension.swift; sourceTree = "<group>"; };
 		E7ABBA452C670605007A702F /* NextExcerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextExcerciseVC.swift; sourceTree = "<group>"; };
+		E7ABBA482C673F4B007A702F /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7FDDAD82C64301B00DE2A7A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 				8ABB12322C649D9A00616C57 /* modelfixv1.mlmodel */,
 			);
 			path = VisionModel;
+			sourceTree = "<group>";
+		};
+		E7ABBA472C673F3B007A702F /* Dividers */ = {
+			isa = PBXGroup;
+			children = (
+				E7ABBA482C673F4B007A702F /* Divider.swift */,
+			);
+			path = Dividers;
 			sourceTree = "<group>";
 		};
 		E7FDDACA2C64301B00DE2A7A = {
@@ -339,6 +349,7 @@
 		E7FDDB202C64360800DE2A7A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E7ABBA472C673F3B007A702F /* Dividers */,
 				034C715E2C64BFB70040AD4F /* Button */,
 			);
 			path = Components;
@@ -459,6 +470,7 @@
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
+				E7ABBA492C673F4B007A702F /* Divider.swift in Sources */,
 				E7FDDB292C64378C00DE2A7A /* ExcerciseGuidanceService.swift in Sources */,
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
