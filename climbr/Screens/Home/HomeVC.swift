@@ -19,15 +19,26 @@ class HomeVC: NSViewController {
     private let textB = CLTextLabelV2(sizeOfFont: 13, weightOfFont: .bold, contentLabel: "Today’s session goal")
     private let progressStretch = NSProgressIndicator()
     private let containerView = NSView()
-    private let progressLayer = CALayer()
+    private let previewAnimation = NSView()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()
+    }
+    
+    private func previewAnimaConfig(){
+        view.addSubview(previewAnimation)
+        previewAnimation.wantsLayer                = true
+        previewAnimation.layer?.backgroundColor    = NSColor.red.cgColor.copy(alpha: 0.5)
         
+        previewAnimation.snp.makeConstraints { anime in
+            anime.top.leading.trailing.bottom.equalToSuperview()
+            anime.centerX.centerY.equalToSuperview()
+        }
     }
     
     private func ButtonConfigure(){
