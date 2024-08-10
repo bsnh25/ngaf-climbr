@@ -34,6 +34,8 @@
 		E7ABBA442C660AAF007A702F /* NSViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */; };
 		E7ABBA462C670605007A702F /* NextExcerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA452C670605007A702F /* NextExcerciseVC.swift */; };
 		E7ABBA492C673F4B007A702F /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA482C673F4B007A702F /* Divider.swift */; };
+		E7ABBA4C2C6746D0007A702F /* CLLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA4B2C6746D0007A702F /* CLLabel.swift */; };
+		E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA4E2C674960007A702F /* CLSFSymbol.swift */; };
 		E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */; };
 		E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAD82C64301B00DE2A7A /* MainVC.swift */; };
 		E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */; };
@@ -86,6 +88,8 @@
 		E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSViewControllerExtension.swift; sourceTree = "<group>"; };
 		E7ABBA452C670605007A702F /* NextExcerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextExcerciseVC.swift; sourceTree = "<group>"; };
 		E7ABBA482C673F4B007A702F /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
+		E7ABBA4B2C6746D0007A702F /* CLLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLabel.swift; sourceTree = "<group>"; };
+		E7ABBA4E2C674960007A702F /* CLSFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSFSymbol.swift; sourceTree = "<group>"; };
 		E7FDDAD32C64301B00DE2A7A /* climbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7FDDAD82C64301B00DE2A7A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -149,6 +153,22 @@
 				E7ABBA482C673F4B007A702F /* Divider.swift */,
 			);
 			path = Dividers;
+			sourceTree = "<group>";
+		};
+		E7ABBA4A2C6746B4007A702F /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				E7ABBA4B2C6746D0007A702F /* CLLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		E7ABBA4D2C67494C007A702F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E7ABBA4E2C674960007A702F /* CLSFSymbol.swift */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		E7FDDACA2C64301B00DE2A7A = {
@@ -343,6 +363,8 @@
 		E7FDDB202C64360800DE2A7A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E7ABBA4D2C67494C007A702F /* Images */,
+				E7ABBA4A2C6746B4007A702F /* Labels */,
 				E7ABBA472C673F3B007A702F /* Dividers */,
 				034C715E2C64BFB70040AD4F /* Button */,
 			);
@@ -451,6 +473,7 @@
 				03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */,
 				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */,
+				E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */,
 				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
 				AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */,
 				03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
@@ -472,6 +495,7 @@
 				AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */,
 				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
 				AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */,
+				E7ABBA4C2C6746D0007A702F /* CLLabel.swift in Sources */,
 				8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
