@@ -10,6 +10,7 @@ import AppKit
 class ExcerciseVideoVC: NSViewController {
     let currentExcerciseLabel   = NSTextField(labelWithString: "Now: Upper Back Stretch")
     let excerciseVideoPreview   = NSView()
+    let durationContainerView   = NSStackView()
     let durationImageView       = NSImageView()
     let durationLabel           = NSTextField(labelWithString: "15 seconds")
     
@@ -23,7 +24,7 @@ class ExcerciseVideoVC: NSViewController {
     }
     
     private func configureUI() {
-        let views = [currentExcerciseLabel, excerciseVideoPreview, durationImageView, durationLabel]
+        let views = [currentExcerciseLabel, excerciseVideoPreview, durationContainerView]
         
         for itemView in views {
             view.addSubview(itemView)
@@ -33,7 +34,7 @@ class ExcerciseVideoVC: NSViewController {
     
     private func configureCurrentExcerciseLabel() {
         currentExcerciseLabel.translatesAutoresizingMaskIntoConstraints = false
-        currentExcerciseLabel.font = NSFont.systemFont(ofSize: 22, weight: .bold)
+        currentExcerciseLabel.font = NSFont.systemFont(ofSize: 20, weight: .bold)
         
         NSLayoutConstraint.activate([
             currentExcerciseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -50,7 +51,7 @@ class ExcerciseVideoVC: NSViewController {
         excerciseVideoPreview.layer?.cornerRadius       = 10
         
         NSLayoutConstraint.activate([
-            excerciseVideoPreview.topAnchor.constraint(equalTo: currentExcerciseLabel.bottomAnchor, constant: 24),
+            excerciseVideoPreview.topAnchor.constraint(equalTo: currentExcerciseLabel.bottomAnchor, constant: 16),
             excerciseVideoPreview.trailingAnchor.constraint(equalTo: currentExcerciseLabel.trailingAnchor),
             excerciseVideoPreview.leadingAnchor.constraint(equalTo: currentExcerciseLabel.leadingAnchor),
             excerciseVideoPreview.heightAnchor.constraint(equalToConstant: 200)
@@ -58,21 +59,24 @@ class ExcerciseVideoVC: NSViewController {
     }
     
     private func configureDurationLabel() {
-        let iconConfig                          = NSImage.SymbolConfiguration(pointSize: 26, weight: .bold)
+//        durationContainerView.addSubview(durationImageView)
+//        durationContainerView.addSubview(durationLabel)
+        
+        let iconConfig                          = NSImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         durationImageView.image                 = NSImage(systemSymbolName: "timer", accessibilityDescription: "Duration")
         durationImageView.symbolConfiguration   = iconConfig
         
-        durationLabel.font                      = NSFont.systemFont(ofSize: 26, weight: .bold)
+        durationContainerView.setViews([durationImageView, durationLabel], in: .center)
+        durationContainerView.spacing           = 8
+        durationContainerView.orientation       = .horizontal
+        
+        durationLabel.font                      = NSFont.systemFont(ofSize: 20, weight: .bold)
         
         NSLayoutConstraint.activate([
-            durationImageView.leadingAnchor.constraint(equalTo: excerciseVideoPreview.leadingAnchor),
-            durationImageView.topAnchor.constraint(equalTo: excerciseVideoPreview.bottomAnchor, constant: 24),
-            durationImageView.widthAnchor.constraint(equalToConstant: 32),
-            durationImageView.heightAnchor.constraint(equalToConstant: 32),
-            
-            durationLabel.leadingAnchor.constraint(equalTo: durationImageView.trailingAnchor, constant: 8),
-            durationLabel.centerYAnchor.constraint(equalTo: durationImageView.centerYAnchor),
-            durationLabel.trailingAnchor.constraint(equalTo: excerciseVideoPreview.trailingAnchor)
+            durationContainerView.centerXAnchor.constraint(equalTo: excerciseVideoPreview.centerXAnchor),
+            durationContainerView.topAnchor.constraint(equalTo: excerciseVideoPreview.bottomAnchor, constant: 16),
+            durationContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            durationContainerView.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
     

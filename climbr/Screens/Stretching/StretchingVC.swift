@@ -73,14 +73,11 @@ class StretchingVC: NSViewController {
         
         self.addSubViewController(ExcerciseVideoVC(), to: videoPreview)
         
-        videoPreview.autoresizingMask = [.height]
-        videoPreview.autoresizesSubviews = true
-        
         NSLayoutConstraint.activate([
             videoPreview.topAnchor.constraint(equalTo: excerciseInfoView.topAnchor, constant: padding),
             videoPreview.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
             videoPreview.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
-            videoPreview.heightAnchor.constraint(equalToConstant: 328)
+//            videoPreview.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
     
