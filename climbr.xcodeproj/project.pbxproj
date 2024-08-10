@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C715F2C64BFC50040AD4F /* CLImageButton.swift */; };
-		034C71622C64BFCF0040AD4F /* CLTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71612C64BFCF0040AD4F /* CLTextButton.swift */; };
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
+		034C71692C664D210040AD4F /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71682C664D210040AD4F /* SettingsVC.swift */; };
+		034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C716A2C6736040040AD4F /* CLTextLabelV2.swift */; };
 		03889CB82C64688A004BC8C8 /* Movement+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */; };
 		03889CB92C64688A004BC8C8 /* Movement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */; };
 		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
@@ -40,7 +41,6 @@
 		E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDAF62C64346900DE2A7A /* ShopVC.swift */; };
 		E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB002C64349400DE2A7A /* StretchingVC.swift */; };
 		E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB022C64349D00DE2A7A /* HomeVC.swift */; };
-		E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB052C6434BD00DE2A7A /* ProgressIndicatorView.swift */; };
 		E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB092C6434E700DE2A7A /* SampleViewB.swift */; };
 		E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB0B2C6434EC00DE2A7A /* SampleViewA.swift */; };
 		E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB0D2C64351300DE2A7A /* User.swift */; };
@@ -59,7 +59,8 @@
 
 /* Begin PBXFileReference section */
 		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
-		034C71612C64BFCF0040AD4F /* CLTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextButton.swift; sourceTree = "<group>"; };
+		034C71682C664D210040AD4F /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		034C716A2C6736040040AD4F /* CLTextLabelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextLabelV2.swift; sourceTree = "<group>"; };
 		03889CAE2C646889004BC8C8 /* Movement+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CAF2C646889004BC8C8 /* Movement+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movement+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -92,7 +93,6 @@
 		E7FDDAF62C64346900DE2A7A /* ShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopVC.swift; sourceTree = "<group>"; };
 		E7FDDB002C64349400DE2A7A /* StretchingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingVC.swift; sourceTree = "<group>"; };
 		E7FDDB022C64349D00DE2A7A /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
-		E7FDDB052C6434BD00DE2A7A /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
 		E7FDDB092C6434E700DE2A7A /* SampleViewB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewB.swift; sourceTree = "<group>"; };
 		E7FDDB0B2C6434EC00DE2A7A /* SampleViewA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewA.swift; sourceTree = "<group>"; };
 		E7FDDB0D2C64351300DE2A7A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -125,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				034C715F2C64BFC50040AD4F /* CLImageButton.swift */,
-				034C71612C64BFCF0040AD4F /* CLTextButton.swift */,
 				8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */,
 			);
 			path = Button;
@@ -298,7 +297,7 @@
 		E7FDDB042C6434A300DE2A7A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				E7FDDB052C6434BD00DE2A7A /* ProgressIndicatorView.swift */,
+				034C71682C664D210040AD4F /* SettingsVC.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -331,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				034C715E2C64BFB70040AD4F /* Button */,
+				034C716A2C6736040040AD4F /* CLTextLabelV2.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -414,7 +414,6 @@
 			files = (
 				E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
-				E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
@@ -451,12 +450,13 @@
 				E7FDDAD72C64301B00DE2A7A /* AppDelegate.swift in Sources */,
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
-				034C71622C64BFCF0040AD4F /* CLTextButton.swift in Sources */,
 				E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */,
 				AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */,
 				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
 				AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */,
 				8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */,
+				034C71692C664D210040AD4F /* SettingsVC.swift in Sources */,
+				034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

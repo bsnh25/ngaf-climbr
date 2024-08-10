@@ -43,7 +43,7 @@ class CLTextButtonV2: NSButton {
             .foregroundColor: foregroundColorText,
             .font: font
         ]
-        layer?.cornerRadius = 20
+        layer?.cornerRadius = 10
         layer?.backgroundColor = backgroundColor.cgColor
         attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
         translatesAutoresizingMaskIntoConstraints = false
