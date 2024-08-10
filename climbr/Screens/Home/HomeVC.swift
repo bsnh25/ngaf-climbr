@@ -38,37 +38,39 @@ class HomeVC: NSViewController {
         //MARK: Settings Button Action
         settingButton.action = #selector(actionSetting)
         settingButton.target = self
-        settingButton.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
         
         //MARK: Audio Button Action
         audioButton.action = #selector(actionAudio)
         audioButton.target = self
-        audioButton.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
         
         //MARK: Store Button Action
         storeButton.action = #selector(actionHome)
         storeButton.target = self
-        storeButton.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
         
         let vPadding = view.bounds.height * 0.08
         let hPadding = view.bounds.width * 0.02
+        let widthBtn = view.bounds.width * 0.08
+        let heightBtn = view.bounds.height * 0.06
         
         settingButton.snp.makeConstraints { setting in
             setting.leading.equalToSuperview().inset(hPadding)
             setting.top.equalToSuperview().inset(vPadding)
-            setting.height.width.equalTo(38)
+            setting.width.equalTo(widthBtn)
+            setting.height.equalTo(heightBtn)
         }
         
         audioButton.snp.makeConstraints { audio in
             audio.leading.equalTo(settingButton.snp.trailing).offset(hPadding)
             audio.top.equalTo(settingButton.snp.top)
-            audio.height.width.equalTo(38)
+            audio.width.equalTo(settingButton.snp.width)
+            audio.height.equalTo(settingButton.snp.height)
         }
         
         storeButton.snp.makeConstraints { store in
             store.leading.equalTo(audioButton.snp.trailing).offset(hPadding)
-            store.top.equalTo(audioButton.snp.top)
-            store.height.width.equalTo(38)
+            store.top.equalTo(settingButton.snp.top)
+            store.width.equalTo(settingButton.snp.width)
+            store.height.equalTo(settingButton.snp.height)
         }
     }
     
@@ -173,7 +175,10 @@ class HomeVC: NSViewController {
     
     @objc
     private func actionSetting(){
-        print("hallo setting")
+        let settingsVC = SettingsView()
+        settingsVC.title = "Settings Preference"
+        settingsVC.preferredContentSize = CGSize(width: 412, height: 358)
+        self.presentAsModalWindow(settingsVC)
     }
 
     @objc

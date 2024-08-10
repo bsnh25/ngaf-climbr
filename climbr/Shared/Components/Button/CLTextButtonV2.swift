@@ -51,9 +51,3 @@ class CLTextButtonV2: NSButton {
     }
     
 }
-
-
-#Preview(traits: .defaultLayout, body: {
-    CLTextButtonV2()
-})
-

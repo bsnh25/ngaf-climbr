@@ -468,10 +468,8 @@
 			files = (
 				E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
-				E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */,
 				8ABB128C2C661EE100616C57 /* Pose+Landmark.swift in Sources */,
 				8ABB127E2C66042000616C57 /* ActionPrediction.swift in Sources */,
-				E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
 				E7FDDB1C2C6435A700DE2A7A /* ShopVC+Extension.swift in Sources */,
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
@@ -520,7 +518,7 @@
 				8ABB128A2C661D1500616C57 /* Pose.swift in Sources */,
 				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
 				AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */,
-				8ABB12342C649D9A00616C57 /* modelfixv1.mlmodel in Sources */,
+				8ABB12342C649D9A00616C57 /* ModelFixV1.mlmodel in Sources */,
 				034C71692C664D210040AD4F /* SettingsVC.swift in Sources */,
 				034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */,
 			);
@@ -660,7 +658,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -689,7 +687,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;

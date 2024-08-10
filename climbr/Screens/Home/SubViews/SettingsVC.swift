@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import SnapKit
 
 class SettingsView: NSViewController {
     
@@ -17,18 +18,19 @@ class SettingsView: NSViewController {
     private let toText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "to")
     private let endTime = NSDatePicker()
     private let everyText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
-    private let min30 = CLTextButtonV2(title: "30", backgroundColor: .black, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min60 = NSButton()
-    private let min90 = NSButton()
-    private let min120 = NSButton()
+    private let min30 = CLTextButtonV2(title: "30", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min60 = CLTextButtonV2(title: "60", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min90 = CLTextButtonV2(title: "90", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min120 = CLTextButtonV2(title: "120", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
     private let minutesText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "minutes")
-    private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: SettingsView.self, action: #selector(actionCheckbox))
+    private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    private let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .black, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
     
     private var startTimeValue: Date?
     private var endTimeValue: Date?
     
-    var isTapped: Bool = false
-
+    var isChecked: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -38,7 +40,6 @@ class SettingsView: NSViewController {
     }
     
     private func configureUI(){
-//        configureStackA()
         view.addSubview(settingText)
         view.addSubview(subTitleA)
         view.addSubview(fromText)
@@ -55,13 +56,17 @@ class SettingsView: NSViewController {
         view.addSubview(minutesText)
         
         view.addSubview(checkboxButton)
+        view.addSubview(saveButton)
         
         //MARK: Start Time Picker
         startTime.datePickerMode = .single
         startTime.datePickerStyle = .textField
         startTime.datePickerElements = .hourMinute
         startTime.wantsLayer = true
-        startTime.layer?.backgroundColor = CGColor(red: 118, green: 118, blue: 128, alpha: 12)
+        startTime.layer?.backgroundColor = .black
+        startTime.layer?.opacity = 0.9
+        //        startTime.frame = NSRect(x: 0, y: 0, width: 200, height: 50)
+        startTime.textColor = .white
         startTime.layer?.cornerRadius = 5
         startTime.isBezeled = false
         startTime.maxDate = .distantFuture
@@ -74,7 +79,9 @@ class SettingsView: NSViewController {
         endTime.datePickerStyle = .textField
         endTime.datePickerElements = .hourMinute
         endTime.wantsLayer = true
-        endTime.layer?.backgroundColor = CGColor(red: 118, green: 118, blue: 128, alpha: 12)
+        endTime.layer?.backgroundColor = .black
+        endTime.layer?.opacity = 0.9
+        endTime.textColor = .white
         endTime.layer?.cornerRadius = 5
         endTime.isBezeled = false
         endTime.maxDate = .distantFuture
@@ -82,23 +89,24 @@ class SettingsView: NSViewController {
         endTimeValue = endTime.dateValue
         endTime.font = NSFont.systemFont(ofSize: 17)
         
-//        min30.title = "30"
-//        min30.bezelColor = .black
-//        min30.bezelStyle = .flexiblePush
-//        min30.isHighlighted = true
-//        min30.font = NSFont.systemFont(ofSize: 13.68, weight: .bold)
-//        min30.layer?.opacity = 0.8
-        min30.isEnabled = isTapped
+        
         min30.target = self
         min30.action = #selector(action30min)
         
-        min60.title = "60"
-        min60.bezelColor = .black
-        min60.bezelStyle = .flexiblePush
-        min60.isHighlighted = false
-        min60.font = NSFont.systemFont(ofSize: 13.68, weight: .bold)
+        min60.target = self
+        min60.action = #selector(action60min)
+        
+        min90.target = self
+        min90.action = #selector(action90min)
+        
+        min120.target = self
+        min120.action = #selector(action120min)
         
         checkboxButton.font = NSFont.systemFont(ofSize: 17, weight: .bold)
+        checkboxButton.contentTintColor = .black
+        
+        saveButton.target = self
+        saveButton.action = #selector(actionSave)
         
         let topPaddingSetting = view.bounds.height * 0.1
         let leadingPaddingSetting = view.bounds.height * 0.05
@@ -149,23 +157,23 @@ class SettingsView: NSViewController {
             min30.leading.equalTo(everyText.snp.trailing).offset(padding)
             min30.width.height.equalTo(30)
         }
-
+        
         min60.snp.makeConstraints { min60 in
             min60.top.equalTo(subTitleB.snp.bottom).offset(padding)
             min60.leading.equalTo(min30.snp.trailing).offset(padding)
             min60.height.width.equalTo(30)
         }
-
+        
         min90.snp.makeConstraints { min90 in
             min90.top.equalTo(subTitleB.snp.bottom).offset(padding)
             min90.leading.equalTo(min60.snp.trailing).offset(padding)
-            min90.height.width.equalTo(17)
+            min90.height.width.equalTo(30)
         }
-
+        
         min120.snp.makeConstraints { min120 in
             min120.top.equalTo(subTitleB.snp.bottom).offset(padding)
             min120.leading.equalTo(min90.snp.trailing).offset(padding)
-            min120.height.width.equalTo(17)
+            min120.height.width.equalTo(30)
         }
         
         minutesText.snp.makeConstraints { minutes in
@@ -175,57 +183,130 @@ class SettingsView: NSViewController {
         
         checkboxButton.snp.makeConstraints { chx in
             chx.leading.equalTo(settingText.snp.leading)
-            chx.top.equalTo(everyText.snp.bottom).offset(padding)
+            chx.top.equalTo(min30.snp.bottom).offset(padding)
+        }
+        
+        saveButton.snp.makeConstraints { save in
+            save.trailing.equalToSuperview().inset(leadingPaddingSetting)
+            save.top.equalTo(checkboxButton.snp.bottom).offset(20)
+            save.height.equalTo(36)
+            save.width.equalTo(80)
         }
     }
     
     @objc
     private func actionCheckbox(){
+        // Check the state of the checkbox
+        isChecked = checkboxButton.state == .on
         
+        // Perform actions based on checkbox state
+        if isChecked {
+            print("Checkbox is checked")
+            // Handle the case when the checkbox is checked
+        } else {
+            print("Checkbox is unchecked")
+            // Handle the case when the checkbox is unchecked
+        }
     }
     
     @objc
     private func action30min(){
-        isTapped = true
-        print(isTapped)
+        resetButtonColors()
+        min30.layer?.backgroundColor = .black
+        print("\(min30.title) choose")
     }
     
+    @objc
+    private func action60min(){
+        resetButtonColors()
+        min60.layer?.backgroundColor = .black
+        print("\(min60.title) choose")
+    }
+    
+    @objc
+    private func action90min(){
+        resetButtonColors()
+        min90.layer?.backgroundColor = .black
+        print("\(min90.title) choose")
+    }
+    
+    @objc
+    private func action120min(){
+        resetButtonColors()
+        min120.layer?.backgroundColor = .black
+        print("\(min120.title) choose")
+    }
+    
+    private func resetButtonColors() {
+        // Reset all buttons to gray
+        min30.layer?.backgroundColor = NSColor.gray.cgColor
+        min60.layer?.backgroundColor = NSColor.gray.cgColor
+        min90.layer?.backgroundColor = NSColor.gray.cgColor
+        min120.layer?.backgroundColor = NSColor.gray.cgColor
+    }
+    
+    @objc
+    private func actionSave(){
+        self.dismiss(self)
+    }
 }
 
 #Preview(traits: .defaultLayout, body: {
     SettingsView()
 })
 
+//startTime.target = self
+//startTime.action = #selector(timeSelected)
+
+//@objc private func timeSelected(_ sender: NSDatePicker) {
+//        let selectedDate = sender.dateValue
+//        let formattedTime = formatTimeToGMT7(date: selectedDate)
+//        selectedTimeLabel.stringValue = "Selected Time: \(formattedTime)"
+//    }
+//
+//    private func formatTimeToGMT7(date: Date) -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "HH:mm"
+//
+//        // Set the time zone to GMT+7
+//        if let gmt7 = TimeZone(secondsFromGMT: 7 * 3600) {
+//            formatter.timeZone = gmt7
+//        }
+//
+//        return formatter.string(from: date)
+//    }
+
+
 //
 //class SettingsVC: NSWindowController {
-//    
+//
 //    convenience init() {
 //        let contentRect = NSRect(x: 0, y: 0, width: 300, height: 200)
 //        let panel = NSPanel(contentRect: contentRect,
 //                            styleMask: [.titled, .closable],
 //                            backing: .buffered,
 //                            defer: false)
-//        
+//
 //        self.init(window: panel)
 //        self.window?.title = "Pop-up Window"
-//        
+//
 ////        let settingView = SettingsView(frame: panel.contentView!.bounds)
 //        let settingView = SettingsView()
 ////        settingView.autoresizingMask = [.width, .height]
 ////        panel.contentView?.addSubview(settingView)
-//        
+//
 ////        disableMainWindowControls()
 //        self.window?.contentViewController = settingView
-//        
+//
 //    }
-//    
+//
 ////    func show() {
 ////        self.window?.makeKeyAndOrderFront(nil)
 ////        self.window?.beginSheet(self.window!) { _ in
 ////            //Thre sheet is dismissed, and main window becomes active again
 ////        }
 ////    }
-//    
+//
 ////    private func disableMainWindowControls() {
 //////        mainWindow?.isEnabled = false
 ////    }
