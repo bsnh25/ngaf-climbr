@@ -20,7 +20,7 @@ class CLTextButtonV2: NSButton {
         } else {
             NSColor.clear.setFill()
         }
-        let path = NSBezierPath(roundedRect: bounds, xRadius: 20, yRadius: 20)
+        let path = NSBezierPath(roundedRect: bounds, xRadius: 10, yRadius: 10)
         path.fill()
         super.draw(dirtyRect)
     }
@@ -43,7 +43,7 @@ class CLTextButtonV2: NSButton {
             .foregroundColor: foregroundColorText,
             .font: font
         ]
-        layer?.cornerRadius = 20
+        layer?.cornerRadius = 10
         layer?.backgroundColor = backgroundColor.cgColor
         attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
         translatesAutoresizingMaskIntoConstraints = false
