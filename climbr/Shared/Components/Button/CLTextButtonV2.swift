@@ -15,7 +15,6 @@ class CLTextButtonV2: NSButton {
         self.isBordered = false // Remove default button border
         self.wantsLayer = true // Ensure the layer is available for custom drawing
     }
-
     init(title: String, backgroundColor: NSColor, foregroundColorText: NSColor, fontText: NSFont) {
         super.init(frame: .zero)
         wantsLayer = true
@@ -34,7 +33,7 @@ class CLTextButtonV2: NSButton {
             .foregroundColor: foregroundColorText,
             .font: font
         ]
-        layer?.cornerRadius = 20
+        layer?.cornerRadius = 10
         layer?.backgroundColor = backgroundColor.cgColor
         attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
         translatesAutoresizingMaskIntoConstraints = false
