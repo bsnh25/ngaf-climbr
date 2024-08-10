@@ -12,12 +12,12 @@ class NextExcerciseVC: NSViewController {
     let labelContainer      = NSStackView()
     
     let imageView           = NSImageView()
-    let nextLabel           = NSTextField(labelWithString: "Next")
-    let excerciseLabel      = NSTextField(labelWithString: "Neck Deep Right")
+    let nextLabel           = CLLabel(text: "Up Next", foregroundColor: .gray)
+    let excerciseLabel      = CLLabel(text: "Neck Deep Right", foregroundColor: .black)
     
     let durationContainerView   = NSStackView()
-    let durationIcon            = NSImageView()
-    let durationLabel           = NSTextField(labelWithString: "15 seconds")
+    let durationIcon            = CLSFSymbol(symbolName: "timer", description: "Duration")
+    let durationLabel           = CLLabel(text: "15 seconds", foregroundColor: .black)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +59,10 @@ class NextExcerciseVC: NSViewController {
         labelContainer.spacing              = 10
         
         /// Next label
-        nextLabel.font                      = NSFont.systemFont(ofSize: 12, weight: .bold)
-        nextLabel.textColor                 = .gray
+        nextLabel.setFont(ofSize: 12, weight: .bold)
         
         /// Excercise label
-        excerciseLabel.font                 = NSFont.systemFont(ofSize: 16, weight: .bold)
+        excerciseLabel.setFont(ofSize: 16, weight: .bold)
         
         /// Configure the duration label
         durationContainerView.setViews([durationIcon, durationLabel], in: .center)
@@ -71,11 +70,9 @@ class NextExcerciseVC: NSViewController {
         durationContainerView.spacing       = 8
         durationContainerView.distribution  = .fill
         
-        let iconConfig                      = NSImage.SymbolConfiguration(pointSize: 16, weight: .bold)
-        durationIcon.image                  = NSImage(systemSymbolName: "timer", accessibilityDescription: "Duration")
-        durationIcon.symbolConfiguration    = iconConfig
-        
-        durationLabel.font                  = NSFont.systemFont(ofSize: 16, weight: .bold)
+        /// Duration label
+        durationIcon.setConfiguration(size: 16, weight: .bold)
+        durationLabel.setFont(ofSize: 16, weight: .bold)
         
         /// Configure the constraint
         NSLayoutConstraint.activate([

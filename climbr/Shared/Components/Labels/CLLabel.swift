@@ -50,6 +50,10 @@ class CLLabel: NSTextField {
         textColor   = color
     }
     
+    func setFont(ofSize: CGFloat, weight: NSFont.Weight) {
+        font    = NSFont.systemFont(ofSize: ofSize, weight: weight)
+    }
+    
     private func configure() {
         isBordered      = false
         isEditable      = false

@@ -8,11 +8,11 @@
 import AppKit
 
 class ExcerciseVideoVC: NSViewController {
-    let currentExcerciseLabel   = NSTextField()
+    let currentExcerciseLabel   = CLLabel(fontSize: 20, fontWeight: .bold)
     let excerciseVideoPreview   = NSView()
     let durationContainerView   = NSStackView()
-    let durationImageView       = NSImageView()
-    let durationLabel           = NSTextField(labelWithString: "15 seconds")
+    let durationImageView       = CLSFSymbol(symbolName: "timer", description: "Duration")
+    let durationLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
     
     var movement: Movement!
     
@@ -46,10 +46,7 @@ class ExcerciseVideoVC: NSViewController {
     private func configureCurrentExcerciseLabel() {
         currentExcerciseLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        currentExcerciseLabel.isEditable    = false
-        currentExcerciseLabel.stringValue   = movement.title
-        currentExcerciseLabel.isBordered    = false
-        currentExcerciseLabel.font          = NSFont.systemFont(ofSize: 20, weight: .bold)
+        currentExcerciseLabel.setText(movement.title)
         
         NSLayoutConstraint.activate([
             currentExcerciseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -75,18 +72,12 @@ class ExcerciseVideoVC: NSViewController {
     
     private func configureDurationLabel() {
         
-        let iconConfig                          = NSImage.SymbolConfiguration(pointSize: 20, weight: .bold)
-        durationImageView.image                 = NSImage(systemSymbolName: "timer", accessibilityDescription: "Duration")
-        durationImageView.symbolConfiguration   = iconConfig
-        
         durationContainerView.setViews([durationImageView, durationLabel], in: .center)
         durationContainerView.spacing           = 8
         durationContainerView.orientation       = .horizontal
         
-        durationLabel.isEditable                = false
-        durationLabel.isBordered                = false
-        durationLabel.stringValue               = "\(movement.duration) seconds"
-        durationLabel.font                      = NSFont.systemFont(ofSize: 20, weight: .bold)
+        durationLabel.setText("\(movement.duration) seconds")
+        durationImageView.setConfiguration(size: 20, weight: .bold)
         
         NSLayoutConstraint.activate([
             durationContainerView.centerXAnchor.constraint(equalTo: excerciseVideoPreview.centerXAnchor),
