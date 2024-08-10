@@ -12,6 +12,8 @@ class StretchingVC: NSViewController {
     let excerciseInfoView       = NSView()
     let videoPreview            = NSView()
     let nextExcerciseView       = NSView()
+    let skipButton              = CLTextButton(titleBtn: "Skip This Move", labelColor: .white, bgColor: .black, sizeFont: 16)
+    let finishButton            = CLTextButton(titleBtn: "Finish Early", labelColor: .white, bgColor: .black, sizeFont: 16)
     
     let padding: CGFloat        = 24
 
@@ -22,6 +24,7 @@ class StretchingVC: NSViewController {
         configureCameraPreview()
         configureVideoPreview()
         configureNextExcerciseView()
+        configureButton()
     }
     
     private func configureCameraPreview() {
@@ -93,6 +96,26 @@ class StretchingVC: NSViewController {
             nextExcerciseView.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
             nextExcerciseView.topAnchor.constraint(equalTo: videoPreview.bottomAnchor, constant: 32),
             nextExcerciseView.heightAnchor.constraint(equalToConstant: 100)
+        ])
+    }
+    
+    private func configureButton() {
+        view.addSubview(skipButton)
+        view.addSubview(finishButton)
+        
+        skipButton.translatesAutoresizingMaskIntoConstraints    = false
+        finishButton.translatesAutoresizingMaskIntoConstraints  = false
+        
+        NSLayoutConstraint.activate([
+            skipButton.bottomAnchor.constraint(equalTo: excerciseInfoView.bottomAnchor, constant: -padding),
+            skipButton.leadingAnchor.constraint(equalTo: excerciseInfoView.leadingAnchor, constant: padding),
+            skipButton.widthAnchor.constraint(equalTo: excerciseInfoView.widthAnchor, multiplier: 0.4),
+            skipButton.heightAnchor.constraint(equalToConstant: 48),
+            
+            finishButton.bottomAnchor.constraint(equalTo: skipButton.bottomAnchor),
+            finishButton.leadingAnchor.constraint(equalTo: skipButton.trailingAnchor, constant: padding),
+            finishButton.trailingAnchor.constraint(equalTo: excerciseInfoView.trailingAnchor, constant: -padding),
+            finishButton.heightAnchor.constraint(equalToConstant: 48),
         ])
     }
     
