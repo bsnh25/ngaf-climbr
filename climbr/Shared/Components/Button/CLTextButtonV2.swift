@@ -9,6 +9,9 @@ import Cocoa
 
 class CLTextButtonV2: NSButton {
 
+    var backgroundColor: NSColor!
+    var foregroundColorText: NSColor!
+    var fontText: NSFont!
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -37,6 +40,10 @@ class CLTextButtonV2: NSButton {
         layer?.backgroundColor = backgroundColor.cgColor
         attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
         translatesAutoresizingMaskIntoConstraints = false
+        
+        self.backgroundColor        = backgroundColor
+        self.foregroundColorText    = foregroundColorText
+        self.fontText               = font
     }
 
     override func updateLayer() {
@@ -47,12 +54,26 @@ class CLTextButtonV2: NSButton {
         } else {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
         }
+        
+        if !isEnabled {
+            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.1)
+            
+            let attributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: layer?.backgroundColor,
+                .font: fontText!
+            ]
+            
+            attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
+        }
     }
     
 }
 
 
 #Preview(traits: .defaultLayout, body: {
-    CLTextButtonV2()
+    let button = CLTextButtonV2()
+    button.isEnabled = false
+    
+    return button
 })
 
