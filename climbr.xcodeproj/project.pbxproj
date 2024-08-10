@@ -30,6 +30,7 @@
 		AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */; };
 		AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787F2C64CA0900028B36 /* NotificationManager.swift */; };
 		AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78812C64CA1400028B36 /* CameraManager.swift */; };
+		AB9A78B42C67D81200028B36 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78B32C67D81200028B36 /* Predictor.swift */; };
 		E70C20DA2C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */; };
 		E76E63122C675AC9001906A9 /* Pose+Landmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63062C675AC9001906A9 /* Pose+Landmark.swift */; };
 		E76E63132C675AC9001906A9 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63072C675AC9001906A9 /* Pose.swift */; };
@@ -99,6 +100,7 @@
 		AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentManager.swift; sourceTree = "<group>"; };
 		AB9A787F2C64CA0900028B36 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		AB9A78812C64CA1400028B36 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		AB9A78B32C67D81200028B36 /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
 		E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceManager.swift; sourceTree = "<group>"; };
 		E76E63062C675AC9001906A9 /* Pose+Landmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pose+Landmark.swift"; sourceTree = "<group>"; };
 		E76E63072C675AC9001906A9 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				8ABB12322C649D9A00616C57 /* ModelFixV1.mlmodel */,
+				AB9A78B32C67D81200028B36 /* Predictor.swift */,
 			);
 			path = VisionModel;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */,
 				E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */,
+				AB9A78B42C67D81200028B36 /* Predictor.swift in Sources */,
 				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
 				E76E631B2C675AC9001906A9 /* ModelFixV1+Label.swift in Sources */,
 				AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */,
