@@ -14,9 +14,9 @@ class HomeVC: NSViewController {
     private let audioButton = CLImageButton(imageName: "speaker.wave.2", accesibilityName: "sound", imgColor: .white, bgColor: .black)
     private let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .white, bgColor: .black)
     private let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .black
-                                                    , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .bold))
-    private let textA = NSTextField(string: "0 / 4 sessions")
-    private let textB = NSTextField(string: "Today’s session goal")
+                                                    , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
+    private let textA = CLTextLabelV2(sizeOfFont: 10, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
+    private let textB = CLTextLabelV2(sizeOfFont: 13, weightOfFont: .bold, contentLabel: "Today’s session goal")
     private let progressStretch = NSProgressIndicator()
     private let containerView = NSView()
     private let progressLayer = CALayer()
@@ -76,7 +76,9 @@ class HomeVC: NSViewController {
     
     private func stackConfig(){
         
-        let padding = 20
+        let padding = view.bounds.height * 0.04
+        let minPadding = view.bounds.height * 0.02
+//        textB.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         
         containerView.snp.makeConstraints { container in
             container.trailing.equalToSuperview().inset(padding)
@@ -86,24 +88,24 @@ class HomeVC: NSViewController {
         }
         
         textB.snp.makeConstraints { title in
-            title.top.equalTo(containerView.snp.top).inset(padding)
-            title.leading.equalTo(containerView.snp.leading).inset(padding)
-            title.height.equalTo(padding)
+            title.top.equalTo(containerView.snp.top).offset(padding)
+            title.leading.equalTo(containerView.snp.leading).offset(padding)
+            title.trailing.equalTo(containerView.snp.trailing).offset(padding)
+//            title.height.equalTo(padding)
         }
         
         progressStretch.snp.makeConstraints { progress in
-            progress.top.equalTo(textB.snp.bottom).inset(-10)
+            progress.top.equalTo(textB.snp.bottom).offset(minPadding)
             progress.leading.equalTo(textB.snp.leading)
-            progress.width.equalTo(300)
             progress.height.equalTo(4)
         }
         
         textA.snp.makeConstraints { text in
-            text.top.equalTo(textB.snp.bottom).inset(-5)
-            text.leading.equalTo(progressStretch.snp.trailing).offset(10)
+            text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.01))
+            text.leading.equalTo(progressStretch.snp.trailing).offset(minPadding)
             text.trailing.equalTo(containerView.snp.trailing).inset(padding)
-            text.width.equalTo(76)
-            text.height.equalTo(20)
+//            text.width.equalTo(76)
+//            text.height.equalTo(20)
         }
         
         startStretchButton.snp.makeConstraints { btn in
@@ -111,8 +113,8 @@ class HomeVC: NSViewController {
             btn.leading.equalTo(containerView.snp.leading).inset(padding)
             btn.trailing.equalTo(containerView.snp.trailing).inset(padding)
             btn.bottom.equalTo(containerView.snp.bottom).inset(padding)
-            btn.height.equalTo(50)
-            btn.width.equalTo(435-20-20)
+//            btn.height.equalTo(padding)
+//            btn.width.equalTo(containerView.snp.width).inset(padding)
         }
         
     }
@@ -133,33 +135,16 @@ class HomeVC: NSViewController {
         progressStretch.wantsLayer = true
         progressStretch.isIndeterminate = false
         progressStretch.isDisplayedWhenStopped = true
+        progressStretch.layer?.masksToBounds = true
         progressStretch.style = .bar
         progressStretch.minValue = 0
         progressStretch.maxValue = 100
         progressStretch.doubleValue = 50
-        progressStretch.layer?.backgroundColor = NSColor.white.cgColor
+        progressStretch.layer?.backgroundColor = NSColor.darkGray.cgColor
         progressStretch.layer?.cornerRadius = 5
-        progressStretch.layer?.masksToBounds = true
         progressStretch.displayIfNeeded()
-        
 //        print("Progress value set to: \(progressStretch.doubleValue)")
-        
-        textA.wantsLayer = false
-        textA.isBordered = false
-        textA.isEditable = false
-        textA.isBezeled = false
-        textA.backgroundColor = .clear
-        textA.textColor = .black
-        textA.font = NSFont.boldSystemFont(ofSize: 10)
-        
-        textB.wantsLayer = true
-        textB.isBordered = true
-        textB.isEditable = false
-        textB.isBezeled = false
-        textB.backgroundColor = .clear
-        textB.textColor = .black
-        textB.font = NSFont.boldSystemFont(ofSize: 13)
-        
+
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
         

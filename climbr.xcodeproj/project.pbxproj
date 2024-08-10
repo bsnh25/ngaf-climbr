@@ -226,6 +226,7 @@
 		E7ABBA4A2C6746B4007A702F /* Labels */ = {
 			isa = PBXGroup;
 			children = (
+				034C716A2C6736040040AD4F /* CLTextLabelV2.swift */,
 				E7ABBA4B2C6746D0007A702F /* CLLabel.swift */,
 			);
 			path = Labels;
@@ -436,7 +437,6 @@
 				E7ABBA4A2C6746B4007A702F /* Labels */,
 				E7ABBA472C673F3B007A702F /* Dividers */,
 				034C715E2C64BFB70040AD4F /* Button */,
-				034C716A2C6736040040AD4F /* CLTextLabelV2.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
