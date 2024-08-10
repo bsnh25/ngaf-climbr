@@ -44,7 +44,7 @@
 		E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */; };
 		E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA412C660A31007A702F /* CurrentMovementView.swift */; };
 		E7ABBA442C660AAF007A702F /* NSViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */; };
-		E7ABBA462C670605007A702F /* NextExcerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA452C670605007A702F /* NextExcerciseVC.swift */; };
+		E7ABBA462C670605007A702F /* NextMovementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA452C670605007A702F /* NextMovementView.swift */; };
 		E7ABBA492C673F4B007A702F /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA482C673F4B007A702F /* Divider.swift */; };
 		E7ABBA4C2C6746D0007A702F /* CLLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA4B2C6746D0007A702F /* CLLabel.swift */; };
 		E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABBA4E2C674960007A702F /* CLSFSymbol.swift */; };
@@ -113,7 +113,7 @@
 		E7826F462C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClimbrDataSource.xcdatamodel; sourceTree = "<group>"; };
 		E7ABBA412C660A31007A702F /* CurrentMovementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMovementView.swift; sourceTree = "<group>"; };
 		E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSViewControllerExtension.swift; sourceTree = "<group>"; };
-		E7ABBA452C670605007A702F /* NextExcerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextExcerciseVC.swift; sourceTree = "<group>"; };
+		E7ABBA452C670605007A702F /* NextMovementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextMovementView.swift; sourceTree = "<group>"; };
 		E7ABBA482C673F4B007A702F /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		E7ABBA4B2C6746D0007A702F /* CLLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLabel.swift; sourceTree = "<group>"; };
 		E7ABBA4E2C674960007A702F /* CLSFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSFSymbol.swift; sourceTree = "<group>"; };
@@ -410,7 +410,7 @@
 			children = (
 				E7FDDB092C6434E700DE2A7A /* SampleViewB.swift */,
 				E7ABBA412C660A31007A702F /* CurrentMovementView.swift */,
-				E7ABBA452C670605007A702F /* NextExcerciseVC.swift */,
+				E7ABBA452C670605007A702F /* NextMovementView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -525,7 +525,7 @@
 				E76E63192C675AC9001906A9 /* ActionPrediction.swift in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
 				E7FDDB062C6434BD00DE2A7A /* ProgressIndicatorView.swift in Sources */,
-				E7ABBA462C670605007A702F /* NextExcerciseVC.swift in Sources */,
+				E7ABBA462C670605007A702F /* NextMovementView.swift in Sources */,
 				E76E63202C6792D0001906A9 /* CollectionExtension.swift in Sources */,
 				E7FDDB0A2C6434E700DE2A7A /* SampleViewB.swift in Sources */,
 				E76E63172C675AC9001906A9 /* ModelFixV1+LabelCheck.swift in Sources */,
