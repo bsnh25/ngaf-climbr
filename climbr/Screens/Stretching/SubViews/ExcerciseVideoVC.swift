@@ -8,11 +8,22 @@
 import AppKit
 
 class ExcerciseVideoVC: NSViewController {
-    let currentExcerciseLabel   = NSTextField(labelWithString: "Now: Upper Back Stretch")
+    let currentExcerciseLabel   = NSTextField()
     let excerciseVideoPreview   = NSView()
     let durationContainerView   = NSStackView()
     let durationImageView       = NSImageView()
     let durationLabel           = NSTextField(labelWithString: "15 seconds")
+    
+    var movement: Movement!
+    
+    init(movement: Movement) {
+        super.init(nibName: nil, bundle: nil)
+        self.movement = movement
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +45,11 @@ class ExcerciseVideoVC: NSViewController {
     
     private func configureCurrentExcerciseLabel() {
         currentExcerciseLabel.translatesAutoresizingMaskIntoConstraints = false
-        currentExcerciseLabel.font = NSFont.systemFont(ofSize: 20, weight: .bold)
+        
+        currentExcerciseLabel.isEditable    = false
+        currentExcerciseLabel.stringValue   = movement.title
+        currentExcerciseLabel.isBordered    = false
+        currentExcerciseLabel.font          = NSFont.systemFont(ofSize: 20, weight: .bold)
         
         NSLayoutConstraint.activate([
             currentExcerciseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -59,8 +74,6 @@ class ExcerciseVideoVC: NSViewController {
     }
     
     private func configureDurationLabel() {
-//        durationContainerView.addSubview(durationImageView)
-//        durationContainerView.addSubview(durationLabel)
         
         let iconConfig                          = NSImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         durationImageView.image                 = NSImage(systemSymbolName: "timer", accessibilityDescription: "Duration")
@@ -70,6 +83,9 @@ class ExcerciseVideoVC: NSViewController {
         durationContainerView.spacing           = 8
         durationContainerView.orientation       = .horizontal
         
+        durationLabel.isEditable                = false
+        durationLabel.isBordered                = false
+        durationLabel.stringValue               = "\(movement.duration) seconds"
         durationLabel.font                      = NSFont.systemFont(ofSize: 20, weight: .bold)
         
         NSLayoutConstraint.activate([
@@ -81,7 +97,3 @@ class ExcerciseVideoVC: NSViewController {
     }
     
 }
-
-#Preview(traits: .defaultLayout, body: {
-    ExcerciseVideoVC()
-})

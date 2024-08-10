@@ -16,6 +16,9 @@ class StretchingVC: NSViewController {
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     
     let padding: CGFloat        = 24
+    
+    var currentMovement: Int           = 0
+    var completedMovement: [Movement]  = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +42,7 @@ class StretchingVC: NSViewController {
         view.addSubview(stack)
         
         /// Add the child VC to the corresponding view
-        self.addSubViewController(ExcerciseVideoVC(), to: videoPreview)
+        self.addSubViewController(ExcerciseVideoVC(movement: Movement.items[currentMovement]), to: videoPreview)
         self.addSubViewController(NextExcerciseVC(), to: nextExcerciseView)
         
         NSLayoutConstraint.activate([
