@@ -18,6 +18,7 @@ class StretchingVC: NSViewController {
     let nextMovementView        = NextMovementView()
     let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
+    var pointsLayer             = CAShapeLayer()
     
     let padding: CGFloat        = 24
     
@@ -35,6 +36,8 @@ class StretchingVC: NSViewController {
         
         configureCameraPreview()
         configureMovementView()
+        cameraManager.predictor.delegate = self
+        
         configureButton()
         
         /// Stream the current index and update on its changed
@@ -80,10 +83,29 @@ class StretchingVC: NSViewController {
         
     }
     
+    private func setupVideoPreview(){
+//        videoCapture.startSession()
+//        previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
+        
+        guard let previewLayer = cameraManager.previewLayer else {return}
+        
+        cameraPreview.layer?.addSublayer(previewLayer)
+        previewLayer.frame = view.frame
+        
+        cameraPreview.layer?.addSublayer(pointsLayer)
+        pointsLayer.frame = view.frame
+        pointsLayer.strokeColor = NSColor.red.cgColor
+    }
+    
     private func configureCameraPreview() {
         cameraPreview.wantsLayer = true
         cameraPreview.setupPreviewLayer(with: cameraManager)
+        cameraPreview.addOtherSubLayer(layer: pointsLayer)
+        
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false
+        
+        setupVideoPreview()
+        
         view.addSubview(cameraPreview)
         
         NSLayoutConstraint.activate([

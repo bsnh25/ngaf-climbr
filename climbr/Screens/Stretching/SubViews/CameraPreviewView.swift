@@ -35,6 +35,12 @@ class CameraPreviewView: NSView {
         }
     }
     
+    func addOtherSubLayer(layer: CAShapeLayer){
+        self.layer?.addSublayer(layer)
+        layer.frame = self.frame
+        layer.strokeColor = NSColor.red.cgColor
+    }
+    
     override func layout() {
         super.layout()
         // Ensure the preview layer resizes with the view
