@@ -13,6 +13,32 @@ extension NSViewController {
         
         view.addSubview(vc.view)
         vc.view.frame = view.bounds
-//        vc.move
+    }
+    
+    func push(_ vc: NSViewController) {
+        let currentVC = children.first
+        
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            
+            currentVC?.view.animator().alphaValue = 0
+        } completionHandler: {
+            currentVC?.view.removeFromSuperview()
+            currentVC?.removeFromParent()
+            
+            self.addChild(vc)
+            self.view.addSubview(vc.view)
+            vc.view.frame = self.view.bounds
+            vc.view.autoresizingMask = [.height, .width]
+            
+            vc.view.animator().alphaValue = 0
+            
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.3
+                
+                vc.view.animator().alphaValue = 1
+            }
+        }
+
     }
 }
