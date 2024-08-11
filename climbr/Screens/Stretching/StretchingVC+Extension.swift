@@ -16,4 +16,8 @@ extension StretchingVC {
         currentIndex += 1
         nextIndex     = currentIndex+1
     }
+    
+    @objc func finishEarly() {
+        push(StretchingResultVC())
+    }
 }
