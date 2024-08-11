@@ -12,7 +12,7 @@ import AVFoundation
 private let kBackgroundVolume = "kBackgroundVolume"
 private let kSFXVolume = "kSFXVolume"
 
-class AudioManager {
+class AudioManager: AudioService {
     
     static let shared = AudioManager()
     private var backgroundPlayer: AVAudioPlayer?
@@ -88,33 +88,6 @@ class AudioManager {
         return volume
     }
     
-    private func playBackground(fileName: String) {
-        guard let path = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
-        
-        do {
-            backgroundPlayer = try AVAudioPlayer(contentsOf: path)
-            backgroundPlayer?.numberOfLoops = -1 // Loop indefinitely
-            backgroundPlayer?.volume = backgroundMusicVolume
-            backgroundPlayer?.play()
-            print("Background music started")
-        } catch {
-            print("Error playing background sound: \(error.localizedDescription)")
-        }
-    }
-    
-    private func playEffect(fileName: String) {
-        guard let path = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
-        
-        do {
-            effectPlayer = try AVAudioPlayer(contentsOf: path)
-            effectPlayer?.volume = sfxVolume
-            effectPlayer?.play()
-            print("Effect sound played")
-        } catch {
-            print("Error playing effect sound: \(error.localizedDescription)")
-        }
-    }
-    
     func muteSound(){
         backgroundMusicVolume = 0
         sfxVolume = 0
@@ -128,5 +101,32 @@ class AudioManager {
     
     func stopBackground() {
         backgroundPlayer?.stop()
+    }
+    
+    func playBackgroundMusic(fileName: String) {
+        guard let path = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
+        
+        do {
+            backgroundPlayer = try AVAudioPlayer(contentsOf: path)
+            backgroundPlayer?.numberOfLoops = -1 // Loop indefinitely
+            backgroundPlayer?.volume = backgroundMusicVolume
+            backgroundPlayer?.play()
+            print("Background music started")
+        } catch {
+            print("Error playing background sound: \(error.localizedDescription)")
+        }
+    }
+    
+    func playSFX(fileName: String) {
+        guard let path = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
+        
+        do {
+            effectPlayer = try AVAudioPlayer(contentsOf: path)
+            effectPlayer?.volume = sfxVolume
+            effectPlayer?.play()
+            print("Effect sound played")
+        } catch {
+            print("Error playing effect sound: \(error.localizedDescription)")
+        }
     }
 }
