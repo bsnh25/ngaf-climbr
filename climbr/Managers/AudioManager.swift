@@ -119,4 +119,14 @@ class AudioManager {
         backgroundMusicVolume = 0
         sfxVolume = 0
     }
+    
+    func unmuteSound(){
+        guard let volumeDevice = getVolumeDevice() else {return}
+        backgroundMusicVolume = volumeDevice
+        sfxVolume = (volumeDevice + 1)/2
+    }
+    
+    func stopBackground() {
+        backgroundPlayer?.stop()
+    }
 }

@@ -38,6 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+        // AudioManager.shared.stopBackground()
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
@@ -46,12 +47,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openApp() {
         /// Make sure the window is not nill
-        ///
         /// Show the window and make window key, then activate the app
         if let window = NSApplication.shared.windows.first {
             window.makeKeyAndOrderFront(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
+//        AudioManager.shared.playBackground(fileName: "musicPath")
     }
 
 }

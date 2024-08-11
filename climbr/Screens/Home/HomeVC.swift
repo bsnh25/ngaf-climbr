@@ -11,7 +11,7 @@ import SnapKit
 class HomeVC: NSViewController {
     
     private let settingButton = CLImageButton(imageName: "gear", accesibilityName: "settings", imgColor: .white, bgColor: .black)
-    private let audioButton = CLImageButton(imageName: "speaker.wave.2", accesibilityName: "sound", imgColor: .white, bgColor: .black)
+    private let audioButton = CLImageButton(imageName: "speaker.wave.2", accesibilityName: "Music Play", imgColor: .white, bgColor: .black)
     private let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .white, bgColor: .black)
     private let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .black
                                                     , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
@@ -20,6 +20,7 @@ class HomeVC: NSViewController {
     private let progressStretch = NSProgressIndicator()
     private let containerView = NSView()
     private let previewAnimation = NSView()
+    private var isSoundTapped: Bool = false
     
     
     override func viewDidLoad() {
@@ -55,7 +56,7 @@ class HomeVC: NSViewController {
         audioButton.target = self
         
         //MARK: Store Button Action
-        storeButton.action = #selector(actionHome)
+        storeButton.action = #selector(actionStore)
         storeButton.target = self
         
         let vPadding = view.bounds.height * 0.08
@@ -171,17 +172,25 @@ class HomeVC: NSViewController {
 
     @objc
     private func actionAudio(){
-        print("hallo audio")
+        isSoundTapped.toggle()
+        if isSoundTapped{
+            audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")
+            AudioManager.shared.muteSound()
+        } else {
+            audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")
+            AudioManager.shared.unmuteSound()
+        }
     }
 
     @objc
-    private func actionHome(){
-        print("hallo home")
+    private func actionStore(){
+        print("go to shop")
     }
 
     @objc
     private func actionStartSession(){
-        print("hallo start session")
+        push(StretchingVC())
+        print("go to stretching session")
     }
     
 }
