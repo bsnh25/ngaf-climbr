@@ -23,8 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem   = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         /// Make sure the button is not nil
         if let button = statusBarItem.button {
-            /// Set the image with SFSymbol
-            button.image    = NSImage(systemSymbolName: "figure.hiking", accessibilityDescription: "Climbr")
+            /// Set the image with custom icon
+            let image       = NSImage.stretchingIcon
+            image.size      = CGSize(width: 16, height: 16)
+            button.image    = image
             /// Set the action button to run openApp function
             button.action   = #selector(openApp)
             button.target   = self
