@@ -22,6 +22,8 @@ class HomeVC: NSViewController {
     private let previewAnimation = NSView()
     private var isSoundTapped: Bool = false
     
+    var audioService: AudioService?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +92,6 @@ class HomeVC: NSViewController {
         
         let padding = view.bounds.height * 0.04
         let minPadding = view.bounds.height * 0.02
-//        textB.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         
         containerView.snp.makeConstraints { container in
             container.trailing.equalToSuperview().inset(padding)
@@ -103,7 +104,6 @@ class HomeVC: NSViewController {
             title.top.equalTo(containerView.snp.top).offset(padding)
             title.leading.equalTo(containerView.snp.leading).offset(padding)
             title.trailing.equalTo(containerView.snp.trailing).offset(padding)
-//            title.height.equalTo(padding)
         }
         
         progressStretch.snp.makeConstraints { progress in
@@ -116,8 +116,6 @@ class HomeVC: NSViewController {
             text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.01))
             text.leading.equalTo(progressStretch.snp.trailing).offset(minPadding)
             text.trailing.equalTo(containerView.snp.trailing).inset(padding)
-//            text.width.equalTo(76)
-//            text.height.equalTo(20)
         }
         
         startStretchButton.snp.makeConstraints { btn in
@@ -125,8 +123,6 @@ class HomeVC: NSViewController {
             btn.leading.equalTo(containerView.snp.leading).inset(padding)
             btn.trailing.equalTo(containerView.snp.trailing).inset(padding)
             btn.bottom.equalTo(containerView.snp.bottom).inset(padding)
-//            btn.height.equalTo(padding)
-//            btn.width.equalTo(containerView.snp.width).inset(padding)
         }
         
     }
@@ -175,10 +171,10 @@ class HomeVC: NSViewController {
         isSoundTapped.toggle()
         if isSoundTapped{
             audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")
-            AudioManager.shared.muteSound()
+            audioService?.muteSound()
         } else {
             audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")
-            AudioManager.shared.unmuteSound()
+            audioService?.unmuteSound()
         }
     }
 
