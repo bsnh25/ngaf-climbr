@@ -8,7 +8,13 @@
 import Cocoa
 
 class CLTextButtonV2: NSButton {
+    var isSelected: Bool = false {
+            didSet {
+                updateLayer()
+            }
+        }
 
+    var shouldRespondToHighlight: Bool = true
     var backgroundColor: NSColor!
     var foregroundColorText: NSColor!
     var fontText: NSFont!
@@ -47,24 +53,26 @@ class CLTextButtonV2: NSButton {
     }
 
     override func updateLayer() {
-        super.updateLayer()
+           super.updateLayer()
 
-        if isHighlighted {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
-        } else {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
-        }
+            if isSelected {
+                   layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
+               } else {
+                   layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+               }
         
-        if !isEnabled {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.1)
-            
-            let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: layer?.backgroundColor,
-                .font: fontText!
-            ]
-            
-            attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
-        }
-    }
+            if shouldRespondToHighlight {
+                if isHighlighted {
+                    layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
+                } else {
+                    layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+                }
+            }
+       }
     
+    override func mouseDown(with event: NSEvent) {
+            super.mouseDown(with: event)
+            // Trigger the action manually if needed
+            sendAction(action, to: target)
+    }
 }
