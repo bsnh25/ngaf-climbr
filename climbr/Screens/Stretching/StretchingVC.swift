@@ -158,7 +158,8 @@ class StretchingVC: NSViewController {
         skipButton.action = #selector(skip)
         
         finishButton.target = self
-        finishButton.action = #selector(finishEarly)
+        finishButton.action = #selector(showEndSessionAlert)
+        finishButton.hasDestructiveAction = true
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
