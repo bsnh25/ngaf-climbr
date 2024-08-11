@@ -55,7 +55,7 @@ class Predictor {
     func labelActionType(){
         guard let stretchingClassifier = try? stretchClassifier(configuration: MLModelConfiguration()),
             let poseMultiArray = prepareInputWithObservations(posesWindow),
-            let predictions = try? stretchingClassifier.prediction(poses    : poseMultiArray)
+            let predictions = try? stretchingClassifier.prediction(poses : poseMultiArray)
         else {return}
         
         let label = predictions.label
@@ -64,7 +64,7 @@ class Predictor {
         delegate?.predictor(self, didLabelAction: label, with: confident)
     }
     
-    func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
+    func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation]) -> MLMultiArray?{
         let numAvailableFrames = observations.count
         let observationNeeded = 30
         var multiArrayBuffer = [MLMultiArray]()
@@ -95,7 +95,7 @@ class Predictor {
     }
     
     func resetMultiArray(_ predictionWindow: MLMultiArray, with value: Double = 0.0) throws{
-        let pointer = try UnsafeMutableBufferPointer<Double>(predictionWindow )
+        let pointer = try UnsafeMutableBufferPointer<Double>(predictionWindow)
         pointer.initialize(repeating: value)
     }
     

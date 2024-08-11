@@ -31,6 +31,8 @@
 		AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787F2C64CA0900028B36 /* NotificationManager.swift */; };
 		AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78812C64CA1400028B36 /* CameraManager.swift */; };
 		AB9A78B42C67D81200028B36 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78B32C67D81200028B36 /* Predictor.swift */; };
+		AB9A78B62C6873D500028B36 /* CameraTestingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78B52C6873D500028B36 /* CameraTestingManager.swift */; };
+		AB9A78B82C6881DB00028B36 /* CameraTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78B72C6881DB00028B36 /* CameraTesting.swift */; };
 		E70C20DA2C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */; };
 		E76E63122C675AC9001906A9 /* Pose+Landmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63062C675AC9001906A9 /* Pose+Landmark.swift */; };
 		E76E63132C675AC9001906A9 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63072C675AC9001906A9 /* Pose.swift */; };
@@ -101,6 +103,8 @@
 		AB9A787F2C64CA0900028B36 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		AB9A78812C64CA1400028B36 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		AB9A78B32C67D81200028B36 /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
+		AB9A78B52C6873D500028B36 /* CameraTestingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTestingManager.swift; sourceTree = "<group>"; };
+		AB9A78B72C6881DB00028B36 /* CameraTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTesting.swift; sourceTree = "<group>"; };
 		E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceManager.swift; sourceTree = "<group>"; };
 		E76E63062C675AC9001906A9 /* Pose+Landmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pose+Landmark.swift"; sourceTree = "<group>"; };
 		E76E63072C675AC9001906A9 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
@@ -338,6 +342,8 @@
 				AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */,
 				AB9A787F2C64CA0900028B36 /* NotificationManager.swift */,
 				AB9A78812C64CA1400028B36 /* CameraManager.swift */,
+				AB9A78B52C6873D500028B36 /* CameraTestingManager.swift */,
+				AB9A78B72C6881DB00028B36 /* CameraTesting.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -555,6 +561,7 @@
 				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */,
 				E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */,
+				AB9A78B82C6881DB00028B36 /* CameraTesting.swift in Sources */,
 				AB9A78B42C67D81200028B36 /* Predictor.swift in Sources */,
 				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
 				E76E631B2C675AC9001906A9 /* ModelFixV1+Label.swift in Sources */,
@@ -563,6 +570,7 @@
 				AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */,
 				AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */,
 				E76E63182C675AC9001906A9 /* ModelFixV1+Singleton.swift in Sources */,
+				AB9A78B62C6873D500028B36 /* CameraTestingManager.swift in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDB182C64356B00DE2A7A /* HomeVC+Extension.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
@@ -722,7 +730,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -732,6 +740,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -751,7 +760,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -761,6 +770,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
