@@ -10,7 +10,7 @@ import Combine
 
 class StretchingVC: NSViewController {
     let cameraManager           = CameraManager()
-    let cameraPreview           = NSView()
+    let cameraPreview           = CameraPreviewView()
     let movementInfoView        = NSView()
     let movementStack           = NSStackView()
     let currentMovementView     = CurrentMovementView()
@@ -69,88 +69,29 @@ class StretchingVC: NSViewController {
     }
     
     override func viewDidAppear() {
-        super.viewDidAppear()
         cameraManager.startSession()
+        super.viewDidAppear()
+        
     }
     
     override func viewDidDisappear() {
-        super.viewDidDisappear()
         cameraManager.stopSession()
+        super.viewDidDisappear()
+        
     }
     
     private func configureCameraPreview() {
         cameraPreview.wantsLayer = true
+        cameraPreview.setupPreviewLayer(with: cameraManager)
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cameraPreview)
-        
-        print("Success 1")
-        
-        if let captureSession = cameraManager.captureSession {
-            captureSession.sessionPreset = .high
-        }
-            
-        if let preview = cameraManager.previewLayer {
-            preview.videoGravity = .resizeAspectFill
-            preview.frame = cameraPreview.bounds
-            cameraPreview.layer?.addSublayer(preview)
-            print("Success preview")
-        }
-        
-        print("Success 2")
-        
-//        super.viewDidLoad()
-//                cameraView?.wantsLayer = true
-//                cameraView?.layer?.backgroundColor = NSColor.black.cgColor
-//                session.sessionPreset = AVCaptureSession.Preset.low
-//                let input: AVCaptureInput = try! AVCaptureDeviceInput(device: AVCaptureDevice.default(for: .video)!)
-//                session.addInput(input)
-//                let previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-//                previewLayer.frame = cameraView!.bounds
-//                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-//
-//                cameraView?.layer?.addSublayer(previewLayer)
-        
-        
-//        cameraPreview.wantsLayer = true
-//        cameraPreview.layer?.backgroundColor = NSColor.black.cgColor
-//        cameraManager.previewLayer.frame = cameraPreview.bounds
-//        cameraPreview.layer?.addSublayer(cameraManager.previewLayer)
-        
-        
-        
-//        view.addSubview(cameraPreview)
-        
-//        cameraPreview.translatesAutoresizingMaskIntoConstraints = false
-//         view.addSubview(cameraPreview)
-//        cameraPreview.wantsLayer                = true
-//        cameraPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor.copy(alpha: 0.1)
-        
-//        if let previewLayer = cameraManager.previewLayer {
-//            cameraPreview.layer?.addSublayer(previewLayer)
-//            previewLayer.frame = cameraPreview.frame
-//        }
-//
-//        let sampleText = NSTextField(labelWithString: "Camera Preview Goes Here")
-//        
-//        sampleText.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        cameraPreview.addSubview(sampleText)
         
         NSLayoutConstraint.activate([
             cameraPreview.topAnchor.constraint(equalTo: view.topAnchor),
             cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             cameraPreview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            cameraPreview.trailingAnchor.constraint(equalTo: movementInfoView.leadingAnchor),
-//            
-//            sampleText.centerXAnchor.constraint(equalTo: cameraPreview.centerXAnchor),
-//            sampleText.centerYAnchor.constraint(equalTo: cameraPreview.centerYAnchor),
+            cameraPreview.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-//        
-//        cameraPreview.wantsLayer = true
-//        cameraPreview.layer?.backgroundColor = NSColor.black.cgColor
-//        cameraManager.previewLayer.frame = cameraPreview.bounds
-//        cameraPreview.layer?.addSublayer(cameraManager.previewLayer)
-        print("Success 3")
     }
     
 //    / Configure the movement sidebar info
