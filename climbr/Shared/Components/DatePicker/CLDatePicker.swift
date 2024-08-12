@@ -17,7 +17,6 @@ class CLDatePicker: NSDatePicker {
     init(backgroundColor: NSColor, textColor: NSColor, datePickerStyleElement: NSDatePicker.ElementFlags, font: NSFont) {
          super.init(frame: .zero)
          self.font = font
-         self.wantsLayer = true
          self.layer?.backgroundColor = backgroundColor.cgColor
          self.textColor = textColor
          self.datePickerElements = datePickerStyleElement
@@ -29,11 +28,13 @@ class CLDatePicker: NSDatePicker {
     }
     
     private func configure(){
+        self.wantsLayer = true
         translatesAutoresizingMaskIntoConstraints = false
         layer?.cornerRadius = 5
         isBordered = false
         isBezeled = false
         datePickerStyle = .textField
+        datePickerMode = .single
     }
     
 }

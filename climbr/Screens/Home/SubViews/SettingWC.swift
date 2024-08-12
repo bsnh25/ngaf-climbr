@@ -36,9 +36,9 @@ class SettingVC: NSViewController {
     private let subTitleA = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Your work hours")
     private let subTitleB = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
     private let fromText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "From")
-    private let startTime = NSDatePicker()
+    private let startTime = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
     private let toText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "to")
-    private let endTime = NSDatePicker()
+    private let endTime = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
     private let everyText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
     private let min30 = CLTextButtonV2(title: "30", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
     private let min60 = CLTextButtonV2(title: "60", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
@@ -47,9 +47,6 @@ class SettingVC: NSViewController {
     private let minutesText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "minutes")
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     private let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .black, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
-    
-    private var startTimeValue: Date?
-    private var endTimeValue: Date?
     
     var isChecked: Bool = false
     
@@ -96,35 +93,16 @@ class SettingVC: NSViewController {
         view.addSubview(saveButton)
         
         //MARK: Start Time Picker
-        startTime.datePickerMode = .single
-        startTime.datePickerStyle = .textField
-        startTime.datePickerElements = .hourMinute
-        startTime.wantsLayer = true
-        startTime.layer?.backgroundColor = .black
-        startTime.layer?.opacity = 0.9
-        //        startTime.frame = NSRect(x: 0, y: 0, width: 200, height: 50)
-        startTime.textColor = .white
-        startTime.layer?.cornerRadius = 5
-        startTime.isBezeled = false
         startTime.maxDate = .distantFuture
         startTime.minDate = .now
-        startTimeValue = startTime.dateValue
-        startTime.font = NSFont.systemFont(ofSize: 17)
         
         //MARK: End Time Picker
-        endTime.datePickerMode = .single
-        endTime.datePickerStyle = .textField
-        endTime.datePickerElements = .hourMinute
-        endTime.wantsLayer = true
-        endTime.layer?.backgroundColor = .black
-        endTime.layer?.opacity = 0.9
-        endTime.textColor = .white
-        endTime.layer?.cornerRadius = 5
-        endTime.isBezeled = false
         endTime.maxDate = .distantFuture
-        endTime.minDate = startTimeValue
-        endTimeValue = endTime.dateValue
-        endTime.font = NSFont.systemFont(ofSize: 17)
+        if let startMinDate = startTime.minDate {
+            let calendar = Calendar.current
+            let oneHourLater = calendar.date(byAdding: .hour, value: 2, to: startMinDate)
+            endTime.minDate = oneHourLater
+        }
         
         
         min30.target = self

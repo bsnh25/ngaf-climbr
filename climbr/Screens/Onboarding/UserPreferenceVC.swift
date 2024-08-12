@@ -166,10 +166,10 @@ class UserPreferenceVC: NSViewController {
         view.addSubview(stopWorkHour)
         stopWorkHour.maxDate = .distantFuture
         if let startMinDate = startWorkHour.minDate {
-                let calendar = Calendar.current
-                let oneHourLater = calendar.date(byAdding: .hour, value: 1, to: startMinDate)
-                stopWorkHour.minDate = oneHourLater
-            }
+            let calendar = Calendar.current
+            let oneHourLater = calendar.date(byAdding: .hour, value: 2, to: startMinDate)
+            stopWorkHour.minDate = oneHourLater
+        }
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
