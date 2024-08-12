@@ -43,6 +43,8 @@ class StretchingVC: NSViewController {
         configureButton()
         configurePositionStateLabel()
         
+        view.wantsLayer = true
+        
         /// Stream the current index and update on its changed
         $currentIndex.sink { index in
             let movement = Movement.items[index]
@@ -89,22 +91,20 @@ class StretchingVC: NSViewController {
     }
     
     private func setupVideoPreview(){
-//        videoCapture.startSession()
-//        previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
         
-        guard let previewLayer = cameraManager.previewLayer else {return}
+        guard let previewLayer  = cameraManager.previewLayer else {return}
         
         cameraPreview.layer?.addSublayer(previewLayer)
-        previewLayer.frame = view.frame
+        previewLayer.frame      = view.frame
         
-//        print(pointsLayer)
-//        cameraPreview.layer?.addSublayer(pointsLayer)
-        pointsLayer.frame = view.frame
+        pointsLayer.frame       = view.frame
         pointsLayer.strokeColor = NSColor.red.cgColor
     }
     
     private func configureCameraPreview() {
-        cameraPreview.wantsLayer = true
+        cameraPreview.wantsLayer                = true
+        cameraPreview.layer?.backgroundColor    = .black
+        
         cameraPreview.setupPreviewLayer(with: cameraManager)
         cameraPreview.addOtherSubLayer(layer: pointsLayer)
         
@@ -122,8 +122,8 @@ class StretchingVC: NSViewController {
         ])
     }
     
-//    / Configure the movement sidebar info
-//    / Set the background to white, width equal to 0.3 of the window width
+    /// Configure the movement sidebar info
+    /// Set the background to white, width equal to 0.3 of the window width
     
     private func configureMovementView() {
         view.addSubview(movementInfoView)
