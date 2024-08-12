@@ -18,6 +18,32 @@ extension StretchingVC {
         currentIndex += 1
         nextIndex     = currentIndex+1
     }
+    
+    func finishEarly() {
+        push(StretchingResultVC())
+    }
+    
+    @objc func showEndSessionAlert() {
+        let alert                   = NSAlert()
+        alert.messageText           = "Leaving So Soon?"
+        alert.informativeText       = "Finishing the session early will reduce the amount of reward you will receive"
+        alert.alertStyle            = .informational
+        alert.icon                  = NSImage.appLogo
+        alert.addButton(withTitle: "Stay")
+        alert.addButton(withTitle: "End Session")
+        
+        if #available(macOS 11.0,*) {
+            alert.buttons.last?.hasDestructiveAction = true
+        }
+        
+        let result = alert.runModal()
+        
+        if result == .alertSecondButtonReturn {
+            finishEarly()
+        }
+    }
+    
+    
 }
 
 extension StretchingVC : PredictorDelegate {

@@ -8,6 +8,9 @@
 import Foundation
 
 protocol AudioService {
-    func playBackgroundMusic()
-    func playSFX()
+    func playBackgroundMusic(fileName: String)
+    func playSFX(fileName: String)
+    func muteSound()
+    func unmuteSound()
+    func stopBackground()
 }

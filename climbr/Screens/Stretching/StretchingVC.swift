@@ -18,6 +18,8 @@ class StretchingVC: NSViewController {
     let nextMovementView        = NextMovementView()
     let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
+    let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
+    
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
     var exerciseName : ExerciseName = .Still
@@ -38,6 +40,7 @@ class StretchingVC: NSViewController {
         cameraManager.predictor.delegate = self
         
         configureButton()
+        configurePositionStateLabel()
         
         /// Stream the current index and update on its changed
         $currentIndex.sink { index in
@@ -145,7 +148,7 @@ class StretchingVC: NSViewController {
         movementInfoView.addSubview(movementStack)
         
         NSLayoutConstraint.activate([
-            movementStack.topAnchor.constraint(equalTo: movementInfoView.topAnchor, constant: padding),
+            movementStack.topAnchor.constraint(equalTo: movementInfoView.safeAreaLayoutGuide.topAnchor, constant: padding),
             movementStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
             movementStack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
             
@@ -181,7 +184,8 @@ class StretchingVC: NSViewController {
         skipButton.action = #selector(skip)
         
         finishButton.target = self
-        finishButton.action = #selector(skip)
+        finishButton.action = #selector(showEndSessionAlert)
+        finishButton.hasDestructiveAction = true
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
@@ -194,6 +198,32 @@ class StretchingVC: NSViewController {
             divider.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
             divider.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
             divider.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -padding),
+        ])
+    }
+    
+    private func configurePositionStateLabel() {
+        let container = NSView()
+        cameraPreview.addSubview(container)
+        
+        container.translatesAutoresizingMaskIntoConstraints          = false
+        positionStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        positionStateLabel.setText("Position Incorrect")
+        positionStateLabel.backgroundColor  = .clear
+        
+        container.addSubview(positionStateLabel)
+        container.wantsLayer                = true
+        container.layer?.backgroundColor    = .white
+        container.layer?.cornerRadius       = 10
+        
+        NSLayoutConstraint.activate([
+            container.topAnchor.constraint(equalTo: cameraPreview.safeAreaLayoutGuide.topAnchor, constant: padding),
+            container.centerXAnchor.constraint(equalTo: cameraPreview.centerXAnchor),
+            container.widthAnchor.constraint(equalTo: cameraPreview.widthAnchor, multiplier: 0.3),
+            container.heightAnchor.constraint(equalToConstant: 48),
+            
+            positionStateLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            positionStateLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
         ])
     }
 }
