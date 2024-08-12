@@ -9,19 +9,19 @@ import Foundation
 
 struct Movement {
     var id: UUID                = UUID()
-    var title: String
+    var name: ExerciseName
     var type: ExerciseType
     var duration: TimeInterval  = 15
     var preview: String
     var rewardPoint: Int
     
     static var items: [Movement] = [
-        Movement(title: "Neck Rotation Left", type: .neck, preview: "", rewardPoint: 5),
-        Movement(title: "Neck Rotation Right", type: .neck, preview: "", rewardPoint: 5),
-        Movement(title: "Neck Deep Left", type: .neck, preview: "", rewardPoint: 5),
-        Movement(title: "Neck Deep Right", type: .neck, preview: "", rewardPoint: 5),
-        Movement(title: "Neck Extension Back", type: .neck, preview: "", rewardPoint: 5),
-        Movement(title: "Neck Extension Front", type: .neck, preview: "", rewardPoint: 5),
+        Movement(name: .NeckDeepLeft, type: .neck, preview: "", rewardPoint: 5),
+        Movement(name: .NeckDeepRight, type: .neck, preview: "", rewardPoint: 5),
+        Movement(name: .NeckRotationLeft, type: .neck, preview: "", rewardPoint: 5),
+        Movement(name: .NeckRotationRight, type: .neck, preview: "", rewardPoint: 5),
+        Movement(name: .NeckExtensionBack, type: .neck, preview: "", rewardPoint: 5),
+        Movement(name: .NeckExtensionFront, type: .neck, preview: "", rewardPoint: 5),
     ]
 }
 
