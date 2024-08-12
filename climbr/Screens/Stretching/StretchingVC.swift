@@ -19,9 +19,7 @@ class StretchingVC: NSViewController {
     let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     var pointsLayer             = CAShapeLayer()
-    
     let padding: CGFloat        = 24
-    
     var exerciseName : ExerciseName = .Still
     
     @Published var currentIndex: Int               = 0
@@ -32,7 +30,6 @@ class StretchingVC: NSViewController {
     var bags: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
-        
         
         super.viewDidLoad()
         
@@ -74,15 +71,13 @@ class StretchingVC: NSViewController {
     }
     
     override func viewDidAppear() {
-        cameraManager.startSession()
         super.viewDidAppear()
-        
+        cameraManager.startSession()
     }
     
     override func viewDidDisappear() {
-        cameraManager.stopSession()
         super.viewDidDisappear()
-        
+        cameraManager.stopSession()
     }
     
     private func setupVideoPreview(){
@@ -113,15 +108,15 @@ class StretchingVC: NSViewController {
         
         NSLayoutConstraint.activate([
             cameraPreview.topAnchor.constraint(equalTo: view.topAnchor),
-            cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -300),
             cameraPreview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             cameraPreview.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
 //    / Configure the movement sidebar info
-//    /
 //    / Set the background to white, width equal to 0.3 of the window width
+    
     private func configureMovementView() {
         view.addSubview(movementInfoView)
         
