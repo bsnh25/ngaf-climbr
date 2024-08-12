@@ -16,7 +16,10 @@ extension NSViewController {
     }
     
     func push(_ vc: NSViewController) {
+        
         let currentVC = children.first
+        
+        print(self.children)
         
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.3
@@ -40,5 +43,50 @@ extension NSViewController {
             }
         }
 
+    }
+    
+    func pop() {
+        
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            
+            /// Set current view opacity to zero
+            self.view.animator().alphaValue = 0
+        } completionHandler: {
+            /// After animation complete, remove current VC from parent and remove current view from superview
+            self.removeFromParent()
+            self.view.removeFromSuperview()
+        }
+        
+    }
+    
+    func replace(with nextViewController: NSViewController) {
+        if let contentVC = self.view.window?.contentViewController {
+            guard let currentVC = contentVC.children.first else {
+                return
+            }
+            
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.3
+                
+                /// Set next vc view opacity to zero
+                nextViewController.view.animator().alphaValue = 0
+            } completionHandler: {
+                /// Add next vc to the content vc
+                contentVC.addSubViewController(nextViewController, to: contentVC.view)
+                
+                NSAnimationContext.runAnimationGroup { context in
+                    context.duration = 0.3
+                    
+                    /// Set back next vc view opacity to one
+                    nextViewController.view.animator().alphaValue = 1
+                } completionHandler: {
+                    /// After animation comple, remove current vc from parent and remove current view from super view
+                    currentVC.removeFromParent()
+                    currentVC.view.removeFromSuperview()
+                }
+                
+            }
+        }
     }
 }
