@@ -17,8 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        mainWindow = MainWindow(audioService: audioService)
         guard let mainWindow = mainWindow else {return}
-        mainWindow.audioService = audioService
+//        mainWindow.audioService = audioService
         /// Create status bar instance
         statusBar       = NSStatusBar()
         /// Create status item with dynamic size (depends on its content)

@@ -22,7 +22,8 @@ class StretchingVC: NSViewController {
     
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
-    var exerciseName : ExerciseName = .Still
+    
+    @Published var exerciseName : ExerciseName = .Still
     
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
@@ -58,6 +59,10 @@ class StretchingVC: NSViewController {
             }
         }
         .store(in: &bags)
+        
+        $exerciseName.sink { name in
+            self.positionStateLabel.setText(name.rawValue)
+        }.store(in: &bags)
         
         /// Stream the next index and update on its changed
         $nextIndex.sink { index in
@@ -208,12 +213,12 @@ class StretchingVC: NSViewController {
         container.translatesAutoresizingMaskIntoConstraints          = false
         positionStateLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        positionStateLabel.setText("Position Incorrect")
+        positionStateLabel.setText("test \(exerciseName.rawValue)")
         positionStateLabel.backgroundColor  = .clear
         
         container.addSubview(positionStateLabel)
         container.wantsLayer                = true
-        container.layer?.backgroundColor    = .white
+        container.layer?.backgroundColor    = .black
         container.layer?.cornerRadius       = 10
         
         NSLayoutConstraint.activate([
