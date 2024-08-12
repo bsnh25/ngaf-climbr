@@ -21,11 +21,10 @@ class UserPreferenceVC: NSViewController {
     private let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
     private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
     private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
-    private lazy var buttonManager: ButtonManager = ButtonManager(viewController: self)
-    private let button1 = CLTextButtonV2(title: "30", backgroundColor: .lightGray, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button2 = CLTextButtonV2(title: "60", backgroundColor: .lightGray, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button3 = CLTextButtonV2(title: "90", backgroundColor: .lightGray, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button4 = CLTextButtonV2(title: "120", backgroundColor: .lightGray, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button1 = CLTextButtonV2(title: "30", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button2 = CLTextButtonV2(title: "60", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button3 = CLTextButtonV2(title: "90", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button4 = CLTextButtonV2(title: "120", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     var isChecked: Bool = false
     
@@ -191,9 +190,8 @@ class UserPreferenceVC: NSViewController {
     
     private func configureButton1(){
         view.addSubview(button1)
-        buttonManager.addButton(button1, action: #selector(func30min))
-       
-        button1.shouldRespondToHighlight = false
+        button1.target = self
+        button1.action = #selector(action30min)
         
         NSLayoutConstraint.activate([
             button1.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
@@ -205,8 +203,8 @@ class UserPreferenceVC: NSViewController {
 
     private func configureButton2(){
         view.addSubview(button2)
-        buttonManager.addButton(button2, action: #selector(func60min))
-        button2.shouldRespondToHighlight = false
+        button2.target = self
+        button2.action = #selector(action60min)
         
         NSLayoutConstraint.activate([
             button2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
@@ -218,8 +216,8 @@ class UserPreferenceVC: NSViewController {
 
     private func configureButton3(){
         view.addSubview(button3)
-        buttonManager.addButton(button3, action: #selector(func90min))
-        button3.shouldRespondToHighlight = false
+        button3.target = self
+        button3.action = #selector(action90min)
         
         NSLayoutConstraint.activate([
             button3.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
@@ -231,8 +229,8 @@ class UserPreferenceVC: NSViewController {
 
     private func configureButton4(){
         view.addSubview(button4)
-        buttonManager.addButton(button4, action: #selector(func120min))
-        button4.shouldRespondToHighlight = false
+        button4.target = self
+        button4.action = #selector(action120min)
         
         NSLayoutConstraint.activate([
             button4.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
@@ -266,20 +264,40 @@ class UserPreferenceVC: NSViewController {
         
     }
     
-    @objc private func func30min() {
-        print("30 minutes selected")
+    @objc
+    private func action30min(){
+        resetButtonColors()
+        button1.layer?.backgroundColor = .black
+        print("\(button1.title) choose")
     }
-
-    @objc private func func60min() {
-        print("60 minutes selected")
+    
+    @objc
+    private func action60min(){
+        resetButtonColors()
+        button2.layer?.backgroundColor = .black
+        print("\(button2.title) choose")
     }
-
-    @objc private func func90min() {
-        print("90 minutes selected")
+    
+    @objc
+    private func action90min(){
+        resetButtonColors()
+        button3.layer?.backgroundColor = .black
+        print("\(button3.title) choose")
     }
-
-    @objc private func func120min() {
-        print("120 minutes selected")
+    
+    @objc
+    private func action120min(){
+        resetButtonColors()
+        button4.layer?.backgroundColor = .black
+        print("\(button4.title) choose")
+    }
+    
+    private func resetButtonColors() {
+        // Reset all buttons to gray
+        button1.layer?.backgroundColor = NSColor.gray.cgColor
+        button2.layer?.backgroundColor = NSColor.gray.cgColor
+        button3.layer?.backgroundColor = NSColor.gray.cgColor
+        button4.layer?.backgroundColor = NSColor.gray.cgColor
     }
     
     @objc
