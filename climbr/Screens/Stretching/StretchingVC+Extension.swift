@@ -6,6 +6,8 @@
 //
 
 import AppKit
+import AVFoundation
+import AudioToolbox
 
 extension StretchingVC {
     @objc func skip() {
@@ -43,3 +45,41 @@ extension StretchingVC {
     
     
 }
+
+extension StretchingVC : PredictorDelegate {
+    func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double) {
+        
+        for name in ExerciseName.allCases {
+            if name.rawValue == action && confidence > 0.5{
+                if exerciseName != name {
+                    exerciseName = name
+                    print("\(name) and the confidence is \(confidence)")
+                }
+            }
+        }
+    }
+    
+    func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
+        guard let previewLayer = cameraManager.previewLayer else {return}
+        
+        let convertedPoints = points.map{
+            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
+        }
+        
+        let combinePath = CGMutablePath()
+        
+        for point in convertedPoints {
+            let doPath = NSBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
+            combinePath.addPath(doPath.cgPath)
+        }
+        
+        pointsLayer.path = combinePath
+        
+        DispatchQueue.main.async{
+            self.pointsLayer.didChangeValue(for: \.path)
+        }
+    }
+    
+    
+}
+

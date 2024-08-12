@@ -9,7 +9,8 @@ import AppKit
 import Combine
 
 class StretchingVC: NSViewController {
-    let cameraPreview           = NSView()
+    let cameraManager           = CameraManager()
+    let cameraPreview           = CameraPreviewView()
     let movementInfoView        = NSView()
     let movementStack           = NSStackView()
     let currentMovementView     = CurrentMovementView()
@@ -19,7 +20,10 @@ class StretchingVC: NSViewController {
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     
+    var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
+    
+    @Published var exerciseName : ExerciseName = .Still
     
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
@@ -29,10 +33,13 @@ class StretchingVC: NSViewController {
     var bags: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        configureMovementView()
         configureCameraPreview()
+        configureMovementView()
+        cameraManager.predictor.delegate = self
+        
         configureButton()
         configurePositionStateLabel()
         
@@ -53,6 +60,10 @@ class StretchingVC: NSViewController {
         }
         .store(in: &bags)
         
+        $exerciseName.sink { name in
+            self.positionStateLabel.setText(name.rawValue)
+        }.store(in: &bags)
+        
         /// Stream the next index and update on its changed
         $nextIndex.sink { index in
             guard let movement = Movement.items[safe: index] else {
@@ -67,33 +78,53 @@ class StretchingVC: NSViewController {
 
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        cameraManager.startSession()
+    }
+    
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        cameraManager.stopSession()
+    }
+    
+    private func setupVideoPreview(){
+//        videoCapture.startSession()
+//        previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
+        
+        guard let previewLayer = cameraManager.previewLayer else {return}
+        
+        cameraPreview.layer?.addSublayer(previewLayer)
+        previewLayer.frame = view.frame
+        
+//        print(pointsLayer)
+//        cameraPreview.layer?.addSublayer(pointsLayer)
+        pointsLayer.frame = view.frame
+        pointsLayer.strokeColor = NSColor.red.cgColor
+    }
+    
     private func configureCameraPreview() {
-        view.addSubview(cameraPreview)
+        cameraPreview.wantsLayer = true
+        cameraPreview.setupPreviewLayer(with: cameraManager)
+        cameraPreview.addOtherSubLayer(layer: pointsLayer)
         
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false
-        cameraPreview.wantsLayer                = true
-        cameraPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor.copy(alpha: 0.1)
         
-        let sampleText = NSTextField(labelWithString: "Camera Preview Goes Here")
+        setupVideoPreview()
         
-        sampleText.translatesAutoresizingMaskIntoConstraints = false
-        
-        cameraPreview.addSubview(sampleText)
+        view.addSubview(cameraPreview)
         
         NSLayoutConstraint.activate([
             cameraPreview.topAnchor.constraint(equalTo: view.topAnchor),
-            cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -300),
             cameraPreview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            cameraPreview.trailingAnchor.constraint(equalTo: movementInfoView.leadingAnchor),
-            
-            sampleText.centerXAnchor.constraint(equalTo: cameraPreview.centerXAnchor),
-            sampleText.centerYAnchor.constraint(equalTo: cameraPreview.centerYAnchor),
+            cameraPreview.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
-    /// Configure the movement sidebar info
-    ///
-    /// Set the background to white, width equal to 0.3 of the window width
+//    / Configure the movement sidebar info
+//    / Set the background to white, width equal to 0.3 of the window width
+    
     private func configureMovementView() {
         view.addSubview(movementInfoView)
         
@@ -182,12 +213,12 @@ class StretchingVC: NSViewController {
         container.translatesAutoresizingMaskIntoConstraints          = false
         positionStateLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        positionStateLabel.setText("Position Incorrect")
+        positionStateLabel.setText("test \(exerciseName.rawValue)")
         positionStateLabel.backgroundColor  = .clear
         
         container.addSubview(positionStateLabel)
         container.wantsLayer                = true
-        container.layer?.backgroundColor    = .white
+        container.layer?.backgroundColor    = .black
         container.layer?.cornerRadius       = 10
         
         NSLayoutConstraint.activate([
