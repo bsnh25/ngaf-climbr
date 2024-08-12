@@ -22,6 +22,8 @@ class StretchingVC: NSViewController {
     
     let padding: CGFloat        = 24
     
+    var exerciseName : ExerciseName = .Still
+    
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
     
@@ -92,7 +94,8 @@ class StretchingVC: NSViewController {
         cameraPreview.layer?.addSublayer(previewLayer)
         previewLayer.frame = view.frame
         
-        cameraPreview.layer?.addSublayer(pointsLayer)
+//        print(pointsLayer)
+//        cameraPreview.layer?.addSublayer(pointsLayer)
         pointsLayer.frame = view.frame
         pointsLayer.strokeColor = NSColor.red.cgColor
     }

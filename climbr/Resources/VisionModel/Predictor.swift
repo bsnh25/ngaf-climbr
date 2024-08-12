@@ -113,6 +113,7 @@ class Predictor {
             
             var displayedPoints = recognizedPoints.map{
                 CGPoint(x: $0.value.x, y: 1-$0.value.y)
+//                print("x: \($0.value.x), y: \(1-$0.value.y) ")
             }
             
             delegate?.predictor(self, didFindNewRecognizedPoints: displayedPoints)

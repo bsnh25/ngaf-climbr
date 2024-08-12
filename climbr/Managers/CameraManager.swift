@@ -57,10 +57,10 @@ class CameraManager: NSObject {
     private func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.videoGravity = .resizeAspectFill
-        
+
         if let connection = previewLayer.connection, connection.isVideoMirroringSupported {
             connection.automaticallyAdjustsVideoMirroring = false
-            connection.isVideoMirrored = true
+            connection.isVideoMirrored = !connection.isVideoMirrored
         }
         
     }
@@ -88,6 +88,9 @@ class CameraManager: NSObject {
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+            connection.isVideoMirrored = true
+        }
         predictor.estimation(sampleBuffer: sampleBuffer)
     }
 }

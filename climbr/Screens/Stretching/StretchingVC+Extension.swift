@@ -22,18 +22,15 @@ extension StretchingVC {
 
 extension StretchingVC : PredictorDelegate {
     func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double) {
-//        if action == "Cross Body Shoulder Left" && confidence > 0.75 {
-//            print("Cross Body Shoulder Left detected")
-//        }
-        print("\(action) and the confidence is \(confidence)")
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-//            self.isStretch = false
-//        }
         
-//        DispatchQueue.main.async{
-//            AudioServicesPlayAlertSound(SystemSoundID(1322))
-//        }
+        for name in ExerciseName.allCases {
+            if name.rawValue == action {
+                if exerciseName != name {
+                    exerciseName = name
+                    print("\(name) and the confidence is \(confidence)")
+                }
+            }
+        }
     }
     
     func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
