@@ -18,10 +18,13 @@ class StretchingVC: NSViewController {
     let nextMovementView        = NextMovementView()
     let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
     let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
+    let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
+    let movementStateView       = MovementStateView()
     
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
+    
     
     @Published var exerciseName : ExerciseName = .Still
     
@@ -63,7 +66,33 @@ class StretchingVC: NSViewController {
         .store(in: &bags)
         
         $exerciseName.sink { name in
-            self.positionStateLabel.setText(name.rawValue)
+            
+            /// Return true if the name equals to current movement
+            let positionState   = name == Movement.items[self.currentIndex].name
+            
+            DispatchQueue.main.async {
+                /// Show the movement state view if movement incorrect
+                if !positionState {
+                    self.movementStateView.unhide()
+                    
+                    /// Set label, foreground, and background color based on each state
+                    var label: String = "Please move according to the guidance"
+                    if name == .Still {
+                        label = "Please move according to the guidance"
+                        self.movementStateView.setForegroundColor(.black)
+                        self.movementStateView.setBackgroundColor(.white)
+                    } else {
+                        label = "Position Incorrect"
+                        self.movementStateView.setForegroundColor(.white)
+                        self.movementStateView.setBackgroundColor(.systemRed)
+                    }
+                    
+                    self.movementStateView.setLabel(label)
+                } else {
+                    /// Hide the movement state view if the movement is correct
+                    self.movementStateView.hide()
+                }
+            }
         }.store(in: &bags)
         
         /// Stream the next index and update on its changed
@@ -207,28 +236,13 @@ class StretchingVC: NSViewController {
     }
     
     private func configurePositionStateLabel() {
-        let container = NSView()
-        cameraPreview.addSubview(container)
-        
-        container.translatesAutoresizingMaskIntoConstraints          = false
-        positionStateLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        positionStateLabel.setText("test \(exerciseName.rawValue)")
-        positionStateLabel.backgroundColor  = .clear
-        
-        container.addSubview(positionStateLabel)
-        container.wantsLayer                = true
-        container.layer?.backgroundColor    = .black
-        container.layer?.cornerRadius       = 10
+        cameraPreview.addSubview(movementStateView)
         
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: cameraPreview.safeAreaLayoutGuide.topAnchor, constant: padding),
-            container.centerXAnchor.constraint(equalTo: cameraPreview.centerXAnchor),
-            container.widthAnchor.constraint(equalTo: cameraPreview.widthAnchor, multiplier: 0.3),
-            container.heightAnchor.constraint(equalToConstant: 48),
-            
-            positionStateLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            positionStateLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            movementStateView.topAnchor.constraint(equalTo: cameraPreview.safeAreaLayoutGuide.topAnchor, constant: padding),
+            movementStateView.centerXAnchor.constraint(equalTo: cameraPreview.centerXAnchor),
+            movementStateView.widthAnchor.constraint(equalTo: cameraPreview.widthAnchor, multiplier: 0.3),
+            movementStateView.heightAnchor.constraint(equalToConstant: 48),
         ])
     }
 }
