@@ -97,6 +97,12 @@ class StretchingResultVC: NSViewController {
         
         view.addSubview(stack)
         
+        mainMenuButton.target = self
+        mainMenuButton.action = #selector(goToMainMenu)
+        
+        continueWorkingButton.target = self
+        continueWorkingButton.action = #selector(continueWorking)
+        
         NSLayoutConstraint.activate([
             stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),

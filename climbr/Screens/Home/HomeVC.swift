@@ -185,7 +185,7 @@ class HomeVC: NSViewController {
 
     @objc
     private func actionStartSession(){
-        push(StretchingVC())
+        push(to: StretchingVC())
         print("go to stretching session")
     }
     

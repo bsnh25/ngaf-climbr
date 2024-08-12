@@ -20,7 +20,7 @@ extension StretchingVC {
     }
     
     func finishEarly() {
-        push(StretchingResultVC())
+        self.replace(with: StretchingResultVC())
     }
     
     @objc func showEndSessionAlert() {
