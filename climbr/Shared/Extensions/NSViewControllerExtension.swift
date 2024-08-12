@@ -15,31 +15,21 @@ extension NSViewController {
         vc.view.frame = view.bounds
     }
     
-    func push(_ vc: NSViewController) {
+    func push(to vc: NSViewController) {
         
-        let currentVC = children.first
-        
-        print(self.children)
-        
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.3
-            
-            currentVC?.view.animator().alphaValue = 0
-        } completionHandler: {
-            currentVC?.view.removeFromSuperview()
-            currentVC?.removeFromParent()
-            
-            self.addChild(vc)
-            self.view.addSubview(vc.view)
-            vc.view.frame = self.view.bounds
-            vc.view.autoresizingMask = [.height, .width]
-            
-            vc.view.animator().alphaValue = 0
+        if let contentVC = self.view.window?.contentViewController {
+            print("NAV - Before Push: ", contentVC.children)
             
             NSAnimationContext.runAnimationGroup { context in
                 context.duration = 0.3
                 
+                vc.view.animator().alphaValue = 0
+            } completionHandler: {
+                contentVC.addSubViewController(vc, to: self.view)
+                
                 vc.view.animator().alphaValue = 1
+                
+                print("NAV - After Push: ", contentVC.children)
             }
         }
 
@@ -47,22 +37,31 @@ extension NSViewController {
     
     func pop() {
         
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.3
+        if let contentVC = self.view.window?.contentViewController {
+            print("NAV - Before Pop: ", contentVC)
+            guard let currentVC = contentVC.children.last else {
+                return
+            }
             
-            /// Set current view opacity to zero
-            self.view.animator().alphaValue = 0
-        } completionHandler: {
-            /// After animation complete, remove current VC from parent and remove current view from superview
-            self.removeFromParent()
-            self.view.removeFromSuperview()
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.3
+                
+                /// Set next vc view opacity to zero
+                currentVC.view.animator().alphaValue = 0
+            } completionHandler: {
+                /// Remove current VC from parent
+                currentVC.removeFromParent()
+                currentVC.view.removeFromSuperview()
+                
+                print("NAV - After Pop: ", contentVC)
+            }
         }
-        
     }
     
     func replace(with nextViewController: NSViewController) {
         if let contentVC = self.view.window?.contentViewController {
-            guard let currentVC = contentVC.children.first else {
+            print("NAV - Before Replace: ", contentVC.children)
+            guard let currentVC = contentVC.children.last else {
                 return
             }
             
@@ -84,6 +83,8 @@ extension NSViewController {
                     /// After animation comple, remove current vc from parent and remove current view from super view
                     currentVC.removeFromParent()
                     currentVC.view.removeFromSuperview()
+                    
+                    print("NAV - After Replace: ", contentVC.children)
                 }
                 
             }
