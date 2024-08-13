@@ -264,41 +264,67 @@ class UserPreferenceVC: NSViewController {
         
     }
     
-    @objc
-    private func action30min(){
-        resetButtonColors()
-        button1.layer?.backgroundColor = .black
-        print("\(button1.title) choose")
-    }
-    
-    @objc
-    private func action60min(){
-        resetButtonColors()
-        button2.layer?.backgroundColor = .black
-        print("\(button2.title) choose")
-    }
-    
-    @objc
-    private func action90min(){
-        resetButtonColors()
-        button3.layer?.backgroundColor = .black
-        print("\(button3.title) choose")
-    }
-    
-    @objc
-    private func action120min(){
-        resetButtonColors()
-        button4.layer?.backgroundColor = .black
-        print("\(button4.title) choose")
-    }
-    
-    private func resetButtonColors() {
-        // Reset all buttons to gray
-        button1.layer?.backgroundColor = NSColor.gray.cgColor
-        button2.layer?.backgroundColor = NSColor.gray.cgColor
-        button3.layer?.backgroundColor = NSColor.gray.cgColor
-        button4.layer?.backgroundColor = NSColor.gray.cgColor
-    }
+    private func processSavePreference() -> Int{
+            
+            if button1.isSelected {
+                return 30
+            }else if button2.isSelected{
+                return 60
+            }else if button3.isSelected{
+                return 90
+            } else if button4.isSelected{
+                return 120
+            }else {
+                print("ERR: at user preference (reminder)")
+                return 0
+            }
+        }
+
+        private func resetButtonColors() {
+            // Reset all buttons to gray
+            button1.layer?.backgroundColor = NSColor.gray.cgColor
+            button2.layer?.backgroundColor = NSColor.gray.cgColor
+            button3.layer?.backgroundColor = NSColor.gray.cgColor
+            button4.layer?.backgroundColor = NSColor.gray.cgColor
+            
+            button1.isSelected = false
+            button2.isSelected = false
+            button3.isSelected = false
+            button4.isSelected = false
+
+        }
+
+        @objc
+        private func action30min(){
+            resetButtonColors()
+            button1.isSelected = true
+            button1.layer?.backgroundColor = .black
+            print("\(button1.title) choose")
+        }
+        
+        @objc
+        private func action60min(){
+            resetButtonColors()
+            button2.isSelected = true
+            button2.layer?.backgroundColor = .black
+            print("\(button2.title) choose")
+        }
+        
+        @objc
+        private func action90min(){
+            resetButtonColors()
+            button3.isSelected = true
+            button3.layer?.backgroundColor = .black
+            print("\(button3.title) choose")
+        }
+        
+        @objc
+        private func action120min(){
+            resetButtonColors()
+            button4.isSelected = true
+            button4.layer?.backgroundColor = .black
+            print("\(button4.title) choose")
+        }
     
     @objc
     private func actionCheckbox(){
