@@ -190,6 +190,8 @@ class ChooseCharacterVC: NSViewController {
         }else{
             print("still empty")
         }
+        
+        replace(with: HomeVC())
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {

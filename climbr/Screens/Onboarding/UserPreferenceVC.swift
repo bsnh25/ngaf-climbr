@@ -316,7 +316,7 @@ class UserPreferenceVC: NSViewController {
             ///get checkbox value
             print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
             
-            push(HomeVC())
+            push(to: ChooseCharacterVC())
         }
 
         @objc
