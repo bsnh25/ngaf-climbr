@@ -98,7 +98,7 @@ extension StretchingVC {
     }
     
     func finishEarly() {
-        self.cameraManager.stopSession()
+        self.cameraService?.stopSession()
         self.replace(with: StretchingResultVC())
     }
     
@@ -139,7 +139,7 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
-        guard let previewLayer = cameraManager.previewLayer else {return}
+        guard let previewLayer = cameraService?.previewLayer else {return}
         
         let convertedPoints = points.map{
             previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
