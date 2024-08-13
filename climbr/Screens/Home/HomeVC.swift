@@ -192,7 +192,7 @@ class HomeVC: NSViewController {
 
     @objc
     private func actionStartSession(){
-        push(to: StretchingVC())
+        push(to: StretchingVC(audioService: AudioManager.shared))
         print("go to stretching session")
     }
     

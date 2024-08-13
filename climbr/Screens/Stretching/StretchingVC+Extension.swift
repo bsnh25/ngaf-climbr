@@ -10,6 +10,107 @@ import AVFoundation
 import AudioToolbox
 
 extension StretchingVC {
+    func updateMovementData() {
+        /// Stream the current index and update on its changed
+        $currentIndex.sink { index in
+            let movement = Movement.items[index]
+            
+            self.currentMovementView.updateData(movement)
+            
+            /// Disable skip button and remove next movement view
+            /// if next index equals to items last index
+            if index == Movement.items.count - 1 {
+                self.skipButton.isEnabled = false
+                
+                self.movementStack.removeView(self.movementDivider)
+                self.movementStack.removeView(self.nextMovementView)
+            }
+        }
+        .store(in: &bags)
+        
+        /// Stream the next index and update on its changed
+        $nextIndex.sink { index in
+            guard let movement = Movement.items[safe: index] else {
+                
+                return
+            }
+            
+            self.nextMovementView.updateData(movement)
+            
+        }
+        .store(in: &bags)
+    }
+    
+    func updateMovementState() {
+        $exerciseName.sink { name in
+            /// Get current movement data
+            let movement = Movement.items[self.currentIndex]
+            
+            /// Return true if the name equals to current movement
+            let positionState   = name == movement.name
+            
+            DispatchQueue.main.async {
+                
+                /// Make sure to unhide the movement state view
+                self.movementStateView.unhide()
+                
+                if !positionState {
+                    /// Pause the timer if movement incorrect
+                    self.pauseTimer()
+                    
+                    /// Set label, foreground, and background color based on each state
+                    var label: String = "Please move according to the guidance"
+                    
+                    if name == .Still {
+                        label = "Please move according to the guidance"
+                        self.movementStateView.setForegroundColor(.black)
+                        self.movementStateView.setBackgroundColor(.white)
+                    } else {
+                        label = "Position Incorrect"
+                        self.movementStateView.setForegroundColor(.white)
+                        self.movementStateView.setBackgroundColor(.systemRed)
+                        
+                        self.playSfx("huh")
+                        
+                    }
+                    
+                    self.movementStateView.setLabel(label)
+                } else {
+                    self.playSfx("yaaas")
+                    self.startExerciseSession(duration: movement.duration)
+                    /// Hide the movement state view if the movement is correct
+                    //                    self.movementStateView.hide()
+                }
+            }
+        }.store(in: &bags)
+        
+        $remainingTime.sink { time in
+            
+            /// Cancel code execution below if timer not running and timer is paused
+            guard self.isTimerRunning, !self.isTimerPaused else { return }
+            
+            /// If remaining time equals to zero, then hide the movement state view and
+            /// next to the next movement
+            ///
+            /// Assume that if remaining time is zero, it means the movement has done
+            guard time > 0 else {
+                self.movementStateView.hide()
+                
+                self.next()
+                
+                return
+            }
+            
+            /// Set the label for current remaining time
+            let label = "Hold for \(time) seconds"
+            self.movementStateView.setLabel(label)
+            
+            self.movementStateView.setForegroundColor(.white)
+            self.movementStateView.setBackgroundColor(.systemGreen)
+        }
+        .store(in: &bags)
+    }
+    
     /// Excercise session
     func startExerciseSession(duration: TimeInterval) {
         /// If movement is correct, run the timer based on previous state (start or resume)
@@ -92,6 +193,7 @@ extension StretchingVC {
     }
     
     func next() {
+        self.playSfx("next-move")
         completedMovement.append(Movement.items[currentIndex])
 
         skip()
@@ -131,7 +233,9 @@ extension StretchingVC : PredictorDelegate {
         for name in ExerciseName.allCases {
             if name.rawValue == action && confidence > 0.5{
                 if exerciseName != name {
-                    exerciseName = name
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self.exerciseName = name
+                    }
                     print("\(name) and the confidence is \(confidence)")
                 }
             }
@@ -159,6 +263,11 @@ extension StretchingVC : PredictorDelegate {
         }
     }
     
+    func playSfx(_ file: String) {
+        guard let audioService else { return }
+        
+        audioService.playSFX(fileName: file)
+    }
     
 }
 
