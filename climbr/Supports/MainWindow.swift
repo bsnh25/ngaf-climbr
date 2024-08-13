@@ -26,7 +26,7 @@ class MainWindow: NSWindow {
         
         /// Set the window to center axis by default
         center()
-        let vc                  = HomeVC()
+        let vc                  = ChooseCharacterVC()
         contentView             = vc.view
         contentViewController   = vc
     }
