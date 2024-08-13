@@ -182,25 +182,32 @@ extension StretchingVC {
         startTimer(duration: nil)
     }
     
-    @objc func skip() {
+    @objc func skip() -> Bool {
         guard let _ = Movement.items[safe: currentIndex+1] else {
-            return
+            return false
         }
         
         currentIndex += 1
         nextIndex     = currentIndex+1
         stopTimer()
         movementStateView.hide()
+        
+        return true
     }
     
     func next() {
         self.playSfx("next-move")
         completedMovement.append(Movement.items[currentIndex])
 
-        skip()
+        let canSkip = skip()
+        
+        guard canSkip else {
+            finishSession()
+            return
+        }
     }
     
-    func finishEarly() {
+    func finishSession() {
         self.cameraManager.stopSession()
         self.replace(with: StretchingResultVC())
     }
@@ -221,7 +228,7 @@ extension StretchingVC {
         let result = alert.runModal()
         
         if result == .alertSecondButtonReturn {
-            finishEarly()
+            finishSession()
         }
     }
     
