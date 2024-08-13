@@ -160,3 +160,11 @@ extension StretchingVC : PredictorDelegate {
     
 }
 
+extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+            connection.isVideoMirrored = true
+        }
+        cameraManager.predictor.estimation(sampleBuffer: sampleBuffer)
+    }
+}
