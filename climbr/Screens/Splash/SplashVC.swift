@@ -33,9 +33,11 @@ class SplashVC: NSViewController {
     }
     
     private func navigateToHome() {
+        let vc          = HomeVC()
+        vc.audioService = AudioManager.shared
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
-            self.replace(with: HomeVC())
+            self.replace(with: vc)
         }
     }
 }

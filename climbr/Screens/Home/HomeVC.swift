@@ -33,6 +33,10 @@ class HomeVC: NSViewController {
         viewStretchConfig()
     }
     
+    override func viewDidAppear() {
+        audioService?.playBackgroundMusic(fileName: "bgmusic")
+    }
+    
     private func previewAnimaConfig(){
         view.addSubview(previewAnimation)
         previewAnimation.wantsLayer                = true
