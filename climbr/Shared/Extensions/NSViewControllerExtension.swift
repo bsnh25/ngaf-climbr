@@ -25,7 +25,7 @@ extension NSViewController {
                 
                 vc.view.animator().alphaValue = 0
             } completionHandler: {
-                contentVC.addSubViewController(vc, to: self.view)
+                contentVC.addSubViewController(vc, to: contentVC.view)
                 
                 vc.view.animator().alphaValue = 1
                 
