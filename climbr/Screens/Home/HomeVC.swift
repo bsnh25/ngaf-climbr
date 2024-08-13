@@ -154,7 +154,6 @@ class HomeVC: NSViewController {
         progressStretch.layer?.backgroundColor = NSColor.darkGray.cgColor
         progressStretch.layer?.cornerRadius = 5
         progressStretch.displayIfNeeded()
-//        print("Progress value set to: \(progressStretch.doubleValue)")
 
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
