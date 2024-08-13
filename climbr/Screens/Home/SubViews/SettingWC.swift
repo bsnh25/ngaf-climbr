@@ -30,6 +30,8 @@ import SnapKit
 //}
 
 
+let kCheckbox = "kCheckbox"
+
 class SettingVC: NSViewController {
     
     private let settingText = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Setting Preference")
@@ -211,17 +213,12 @@ class SettingVC: NSViewController {
     
     @objc
     private func actionCheckbox(){
-        // Check the state of the checkbox
         isChecked = checkboxButton.state == .on
         
-        // Perform actions based on checkbox state
-        if isChecked {
-            print("Checkbox is checked")
-            // Handle the case when the checkbox is checked
-        } else {
-            print("Checkbox is unchecked")
-            // Handle the case when the checkbox is unchecked
-        }
+        ///change print into user deafult settings
+        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
+//        print("value checkbox : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+
     }
     
     @objc
@@ -272,12 +269,21 @@ class SettingVC: NSViewController {
     
     @objc
     private func actionSave(){
-        let reminderInt = processSaveSettings()
+        ///get reminder value
+        let reminderInt = processSaveReminder()
         print("Reminder at \(reminderInt)")
+        
+        ///get checkbox value
+        print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+        
+        ///get start working hour and end working hour
+        print("start working hour: \(startTime.dateValue)")
+        print("end working hour: \(endTime.dateValue)")
+        
         self.dismiss(self)
     }
     
-    private func processSaveSettings() -> Int{
+    private func processSaveReminder() -> Int{
         
         if min30.isSelected {
             return 30

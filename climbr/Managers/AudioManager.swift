@@ -97,6 +97,7 @@ class AudioManager: AudioService {
     func unmuteSound(){
         backgroundMusicVolume = self.backgroundMusicVolume
         sfxVolume = self.sfxVolume
+//        print("value : \(UserDefaults.standard.bool(forKey: kBackgroundVolume))")
     }
     
     func stopBackground() {
