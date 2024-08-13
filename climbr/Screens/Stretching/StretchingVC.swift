@@ -43,6 +43,19 @@ class StretchingVC: NSViewController {
     var isTimerRunning: Bool = false
     var isTimerPaused: Bool = false
     
+    /// Dependencies
+    var audioService: AudioService?
+    
+    init(audioService: AudioService?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.audioService = audioService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
     override func viewDidLoad() {
         
