@@ -22,10 +22,10 @@ class AudioManager: AudioService {
     private init(){
         deviceVolume = getVolumeDevice()
         if UserDefaults.standard.object(forKey: kBackgroundVolume) == nil {
-            UserDefaults.standard.set(deviceVolume, forKey: kBackgroundVolume) // Default volume 100%
+            UserDefaults.standard.set(1, forKey: kBackgroundVolume) // Default volume 100%
         }
         if UserDefaults.standard.object(forKey: kSFXVolume) == nil {
-            UserDefaults.standard.set(deviceVolume, forKey: kSFXVolume) // Default volume 100%
+            UserDefaults.standard.set(1, forKey: kSFXVolume) // Default volume 100%
         }
     }
     
@@ -53,6 +53,7 @@ class AudioManager: AudioService {
         }
     }
 
+    ///This function not running if user using earphone
     private func getVolumeDevice() -> Float? {
         var volume: Float = 0.0
         var defaultOutputDeviceID = AudioObjectID(0)
@@ -84,19 +85,18 @@ class AudioManager: AudioService {
             print("Failed to get volume with OSStatus: \(volumeStatus)")
             return nil
         }
-
+        print("volume init : \(volume)")
         return volume
     }
     
     func muteSound(){
-        backgroundMusicVolume = 0
-        sfxVolume = 0
+        backgroundPlayer?.volume = 0
+        effectPlayer?.volume = 0
     }
     
     func unmuteSound(){
-        guard let volumeDevice = getVolumeDevice() else {return}
-        backgroundMusicVolume = volumeDevice
-        sfxVolume = (volumeDevice + 1)/2
+        backgroundMusicVolume = self.backgroundMusicVolume
+        sfxVolume = self.sfxVolume
     }
     
     func stopBackground() {
@@ -104,7 +104,7 @@ class AudioManager: AudioService {
     }
     
     func playBackgroundMusic(fileName: String) {
-        guard let path = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
+        guard let path = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
         
         do {
             backgroundPlayer = try AVAudioPlayer(contentsOf: path)

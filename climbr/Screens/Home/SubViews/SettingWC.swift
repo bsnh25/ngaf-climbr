@@ -227,29 +227,34 @@ class SettingVC: NSViewController {
     @objc
     private func action30min(){
         resetButtonColors()
+        min30.isSelected = true
         min30.layer?.backgroundColor = .black
-        print("\(min30.title) choose")
+//        print("\(min30.title) choose")
+        print("\( min30.isSelected) : 30 choose")
     }
     
     @objc
     private func action60min(){
         resetButtonColors()
+        min60.isSelected = true
         min60.layer?.backgroundColor = .black
-        print("\(min60.title) choose")
+        print("\( min60.isSelected) : 60 choose")
     }
     
     @objc
     private func action90min(){
         resetButtonColors()
+        min90.isSelected = true
         min90.layer?.backgroundColor = .black
-        print("\(min90.title) choose")
+        print("\( min90.isSelected) : 90 choose")
     }
     
     @objc
     private func action120min(){
         resetButtonColors()
+        min120.isSelected = true
         min120.layer?.backgroundColor = .black
-        print("\(min120.title) choose")
+        print("\( min120.isSelected) : 120 choose")
     }
     
     private func resetButtonColors() {
@@ -258,12 +263,36 @@ class SettingVC: NSViewController {
         min60.layer?.backgroundColor = NSColor.gray.cgColor
         min90.layer?.backgroundColor = NSColor.gray.cgColor
         min120.layer?.backgroundColor = NSColor.gray.cgColor
+        
+        min30.isSelected = false
+        min60.isSelected = false
+        min90.isSelected = false
+        min120.isSelected = false
     }
     
     @objc
     private func actionSave(){
+        let reminderInt = processSaveSettings()
+        print("Reminder at \(reminderInt)")
         self.dismiss(self)
     }
+    
+    private func processSaveSettings() -> Int{
+        
+        if min30.isSelected {
+            return 30
+        }else if min60.isSelected{
+            return 60
+        }else if min90.isSelected{
+            return 90
+        } else if min120.isSelected{
+            return 120
+        }else {
+            print("ERR: at setting (reminder)")
+            return 0
+        }
+    }
+    
 }
 
 #Preview(traits: .defaultLayout, body: {
