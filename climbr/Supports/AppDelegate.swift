@@ -34,7 +34,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.action   = #selector(openApp)
             button.target   = self
         }
-        
+        ///audio setup
+        audioService.playBackgroundMusic(fileName: "bgmusic")
         mainWindow.makeKeyAndOrderFront(nil)
     }
     
@@ -55,7 +56,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.makeKeyAndOrderFront(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
-//        AudioManager.shared.playBackground(fileName: "musicPath")
     }
 
 }

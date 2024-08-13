@@ -347,6 +347,7 @@
 		E7FDDAEC2C6433C500DE2A7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03BFB3A62C6AEB1C00612A6C /* Music */,
 				8ABB12332C649D9A00616C57 /* VisionModel */,
 				E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */,
 			);
@@ -579,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */,
+				03BFB3A82C6AEB3700612A6C /* bgmusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
