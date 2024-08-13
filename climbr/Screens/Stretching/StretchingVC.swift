@@ -7,6 +7,7 @@
 
 import AppKit
 import Combine
+import AVFoundation
 
 class StretchingVC: NSViewController {
     let cameraManager           = CameraManager()
@@ -21,6 +22,7 @@ class StretchingVC: NSViewController {
     let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     let movementStateView       = MovementStateView()
+    let predictor               = Predictor()
     
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
@@ -49,7 +51,8 @@ class StretchingVC: NSViewController {
         cameraManager.startSession()
         configureCameraPreview()
         configureMovementView()
-        cameraManager.predictor.delegate = self
+        predictor.delegate = self
+        cameraManager.videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
         
         configureButton()
         configurePositionStateLabel()
