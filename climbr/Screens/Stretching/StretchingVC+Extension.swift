@@ -10,7 +10,79 @@ import AVFoundation
 import AudioToolbox
 
 extension StretchingVC {
+    /// Excercise session
+    func startExerciseSession(duration: TimeInterval) {
+        /// If movement is correct, run the timer based on previous state (start or resume)
+        if self.isTimerPaused {
+            self.resumeTimer()
+        } else {
+            self.startTimer(duration: duration)
+        }
+    }
+    
+    /// Timer countdown
+    func startTimer(duration: TimeInterval?) {
+        
+        /// If duration exist, it means the app will start timer based on duration.
+        /// Otherwise, app will start timer based on previous duration (resume)
+        if let duration {
+            remainingTime   = duration
+            timerInterval   = duration
+        }
+        
+        guard !isTimerRunning, !isTimerPaused else { return }
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        
+        isTimerRunning  = true
+    }
+    
+    @objc private func updateTimer() {
+        /// If remaining time equals to zero, then stop timer
+        guard remainingTime > 0 else {
+            stopTimer()
+            return
+        }
+        
+        /// Decrease remaining time by 1
+        remainingTime -= 1
+        
+        print("Remaining Time: ", remainingTime)
+    }
+    
+    func stopTimer() {
+        /// Make sure the timer is running
+        guard isTimerRunning else { return }
+        
+        /// Set the timer running and paused to false (reset), then invalidate the timer
+        isTimerRunning  = false
+        isTimerPaused   = false
+        timer?.invalidate()
+    }
+    
+    func pauseTimer() {
+        /// Make sure the timer is running
+        guard isTimerRunning else { return }
+        
+        /// Invalidate the timer, then set timer pause state to true and timer running to false
+        timer?.invalidate()
+        isTimerPaused  = true
+        isTimerRunning = false
+    }
+    
+    func resumeTimer() {
+        /// Make sure the timer paused and timer not runnning
+        guard isTimerPaused, !isTimerRunning else { return }
+        
+        /// Set the timer pause to false
+        isTimerPaused   = false
+        
+        /// The start the timer again
+        startTimer(duration: nil)
+    }
+    
     @objc func skip() {
+//        cameraManager.stopSession()
         guard let _ = Movement.items[safe: currentIndex+1] else {
             return
         }
@@ -19,7 +91,14 @@ extension StretchingVC {
         nextIndex     = currentIndex+1
     }
     
+    func next() {
+        completedMovement.append(Movement.items[currentIndex])
+
+        skip()
+    }
+    
     func finishEarly() {
+        cameraManager.stopSession()
         push(StretchingResultVC())
     }
     
