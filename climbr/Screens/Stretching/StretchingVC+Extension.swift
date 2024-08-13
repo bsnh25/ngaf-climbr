@@ -82,6 +82,7 @@ extension StretchingVC {
     }
     
     @objc func skip() {
+//        cameraManager.stopSession()
         guard let _ = Movement.items[safe: currentIndex+1] else {
             return
         }
@@ -97,7 +98,8 @@ extension StretchingVC {
     }
     
     func finishEarly() {
-        push(StretchingResultVC())
+        self.cameraManager.stopSession()
+        self.replace(with: StretchingResultVC())
     }
     
     @objc func showEndSessionAlert() {

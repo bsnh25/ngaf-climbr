@@ -9,7 +9,6 @@ import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let audioService = AudioManager.shared
     var mainWindow: MainWindow?
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
@@ -17,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        mainWindow = MainWindow(audioService: audioService)
+        mainWindow = MainWindow()
         guard let mainWindow = mainWindow else {return}
 //        mainWindow.audioService = audioService
         /// Create status bar instance
@@ -34,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.action   = #selector(openApp)
             button.target   = self
         }
-        
+        ///audio setup
         mainWindow.makeKeyAndOrderFront(nil)
     }
     
@@ -55,7 +54,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.makeKeyAndOrderFront(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
-//        AudioManager.shared.playBackground(fileName: "musicPath")
     }
 
 }

@@ -7,6 +7,11 @@
 
 import Foundation
 
-extension StretchingVC {
+extension StretchingResultVC {
+    @objc func goToMainMenu() {
+        self.pop()
+    }
     
+    @objc func continueWorking() {
+    }
 }

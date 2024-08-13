@@ -33,6 +33,10 @@ class HomeVC: NSViewController {
         viewStretchConfig()
     }
     
+    override func viewDidAppear() {
+        audioService?.playBackgroundMusic(fileName: "bgmusic")
+    }
+    
     private func previewAnimaConfig(){
         view.addSubview(previewAnimation)
         previewAnimation.wantsLayer                = true
@@ -168,13 +172,16 @@ class HomeVC: NSViewController {
 
     @objc
     private func actionAudio(){
+        guard let audio = audioService else {return}
         isSoundTapped.toggle()
         if isSoundTapped{
+            audio.muteSound()
             audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")
-            audioService?.muteSound()
+            return
         } else {
+            audio.unmuteSound()
             audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")
-            audioService?.unmuteSound()
+            return
         }
     }
 
@@ -185,7 +192,7 @@ class HomeVC: NSViewController {
 
     @objc
     private func actionStartSession(){
-        push(StretchingVC())
+        push(to: StretchingVC())
         print("go to stretching session")
     }
     
