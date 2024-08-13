@@ -10,6 +10,16 @@ import AVFoundation
 import AudioToolbox
 
 extension StretchingVC {
+    /// Excercise session
+    func startExerciseSession(duration: TimeInterval) {
+        /// If movement is correct, run the timer based on previous state (start or resume)
+        if self.isTimerPaused {
+            self.resumeTimer()
+        } else {
+            self.startTimer(duration: duration)
+        }
+    }
+    
     /// Timer countdown
     func startTimer(duration: TimeInterval?) {
         
@@ -40,7 +50,7 @@ extension StretchingVC {
         print("Remaining Time: ", remainingTime)
     }
     
-    private func stopTimer() {
+    func stopTimer() {
         /// Make sure the timer is running
         guard isTimerRunning else { return }
         

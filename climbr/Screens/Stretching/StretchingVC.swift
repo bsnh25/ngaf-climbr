@@ -90,6 +90,7 @@ class StretchingVC: NSViewController {
                     
                     /// Set label, foreground, and background color based on each state
                     var label: String = "Please move according to the guidance"
+                    
                     if name == .Still {
                         label = "Please move according to the guidance"
                         self.movementStateView.setForegroundColor(.black)
@@ -102,12 +103,8 @@ class StretchingVC: NSViewController {
                     
                     self.movementStateView.setLabel(label)
                 } else {
-                    /// If movement is correct, run the timer based on previous state (start or resume)
-                    if self.isTimerPaused {
-                        self.resumeTimer()
-                    } else {
-                        self.startTimer(duration: movement.duration)
-                    }
+                    
+                    self.startExerciseSession(duration: movement.duration)
                     /// Hide the movement state view if the movement is correct
 //                    self.movementStateView.hide()
                 }
@@ -162,6 +159,8 @@ class StretchingVC: NSViewController {
     override func viewDidDisappear() {
         super.viewDidDisappear()
         cameraManager.stopSession()
+        
+        stopTimer()
     }
     
     private func setupVideoPreview(){
