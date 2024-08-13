@@ -183,13 +183,14 @@ extension StretchingVC {
     }
     
     @objc func skip() {
-//        cameraManager.stopSession()
         guard let _ = Movement.items[safe: currentIndex+1] else {
             return
         }
         
         currentIndex += 1
         nextIndex     = currentIndex+1
+        stopTimer()
+        movementStateView.hide()
     }
     
     func next() {
