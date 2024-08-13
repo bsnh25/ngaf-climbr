@@ -12,9 +12,9 @@ class CLImageButton: NSButton {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.wantsLayer = true
-        self.controlSize = .large
+        self.controlSize = .regular
         self.cell?.isBezeled = false
-        self.isBordered = false
+        self.isBordered = true
     }
     
     required init?(coder: NSCoder) {
@@ -23,10 +23,10 @@ class CLImageButton: NSButton {
     
     init(imageName: String, accesibilityName: String, imgColor: NSColor, bgColor: NSColor) {
         super.init(frame: .zero)
-        self.wantsLayer = true
-        self.controlSize = .large
-        self.bezelStyle = .automatic
-        self.isBordered = false
+        self.wantsLayer = false
+        self.controlSize = .regular
+        self.bezelStyle = .flexiblePush
+        self.isBordered = true
         
         configureUI(imageName: imageName, accesibilityName: accesibilityName, imgColor: imgColor, bgColor: bgColor)
     }

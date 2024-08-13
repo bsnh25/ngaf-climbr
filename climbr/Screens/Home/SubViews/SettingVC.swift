@@ -42,13 +42,13 @@ class SettingVC: NSViewController {
     private let toText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "to")
     private let endTime = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
     private let everyText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
-    private let min30 = CLTextButtonV2(title: "30", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min60 = CLTextButtonV2(title: "60", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min90 = CLTextButtonV2(title: "90", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min120 = CLTextButtonV2(title: "120", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min30 = CLTextButtonV2(title: "30", backgroundColor: .cdsReminder, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min60 = CLTextButtonV2(title: "60", backgroundColor: .cdsReminder, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min90 = CLTextButtonV2(title: "90", backgroundColor: .cdsReminder, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    private let min120 = CLTextButtonV2(title: "120", backgroundColor: .cdsReminder, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
     private let minutesText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "minutes")
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
-    private let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .black, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
+    private let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
     
     var isChecked: Bool = false
     
@@ -56,7 +56,7 @@ class SettingVC: NSViewController {
         super.viewDidLoad()
         configureUI()
         view.wantsLayer = true
-        view.layer?.backgroundColor = .white
+        view.layer?.backgroundColor = NSColor.cBox.cgColor
         
     }
     
@@ -102,7 +102,6 @@ class SettingVC: NSViewController {
         //MARK: End Time Picker
         endTime.maxDate = .distantFuture
         endTime.minDate = Calendar.current.date(byAdding: .hour, value: 2, to: value)
-        
         
         min30.target = self
         min30.action = #selector(action30min)
@@ -222,8 +221,7 @@ class SettingVC: NSViewController {
     private func action30min(){
         resetButtonColors()
         min30.isSelected = true
-        min30.layer?.backgroundColor = .black
-//        print("\(min30.title) choose")
+        min30.layer?.backgroundColor = NSColor.cdsReminderSelected.cgColor
         print("\( min30.isSelected) : 30 choose")
     }
     
@@ -231,7 +229,7 @@ class SettingVC: NSViewController {
     private func action60min(){
         resetButtonColors()
         min60.isSelected = true
-        min60.layer?.backgroundColor = .black
+        min60.layer?.backgroundColor = NSColor.cdsReminderSelected.cgColor
         print("\( min60.isSelected) : 60 choose")
     }
     
@@ -239,7 +237,7 @@ class SettingVC: NSViewController {
     private func action90min(){
         resetButtonColors()
         min90.isSelected = true
-        min90.layer?.backgroundColor = .black
+        min90.layer?.backgroundColor = NSColor.cdsReminderSelected.cgColor
         print("\( min90.isSelected) : 90 choose")
     }
     
@@ -247,21 +245,22 @@ class SettingVC: NSViewController {
     private func action120min(){
         resetButtonColors()
         min120.isSelected = true
-        min120.layer?.backgroundColor = .black
+        min120.layer?.backgroundColor = NSColor.cdsReminderSelected.cgColor
         print("\( min120.isSelected) : 120 choose")
     }
     
     private func resetButtonColors() {
         // Reset all buttons to gray
-        min30.layer?.backgroundColor = NSColor.gray.cgColor
-        min60.layer?.backgroundColor = NSColor.gray.cgColor
-        min90.layer?.backgroundColor = NSColor.gray.cgColor
-        min120.layer?.backgroundColor = NSColor.gray.cgColor
+        min30.layer?.backgroundColor = NSColor.cdsReminder.cgColor
+        min60.layer?.backgroundColor = NSColor.cdsReminder.cgColor
+        min90.layer?.backgroundColor = NSColor.cdsReminder.cgColor
+        min120.layer?.backgroundColor = NSColor.cdsReminder.cgColor
         
         min30.isSelected = false
         min60.isSelected = false
         min90.isSelected = false
         min120.isSelected = false
+    
     }
     
     @objc

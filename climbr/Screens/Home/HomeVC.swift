@@ -11,9 +11,9 @@ import SnapKit
 class HomeVC: NSViewController {
     
     private let settingButton = CLImageButton(imageName: "gear", accesibilityName: "settings", imgColor: .white, bgColor: .black)
-    private let audioButton = CLImageButton(imageName: "speaker.wave.2", accesibilityName: "Music Play", imgColor: .white, bgColor: .black)
+    private let audioButton = CLImageButton(imageName: "speaker.wave.3", accesibilityName: "Music Play", imgColor: .white, bgColor: .black)
     private let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .white, bgColor: .black)
-    private let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .black
+    private let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .cButton
                                                     , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
     private let textA = CLTextLabelV2(sizeOfFont: 10, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
     private let textB = CLTextLabelV2(sizeOfFont: 13, weightOfFont: .bold, contentLabel: "Today’s session goal")
@@ -68,27 +68,26 @@ class HomeVC: NSViewController {
         let vPadding = view.bounds.height * 0.08
         let hPadding = view.bounds.width * 0.02
         let widthBtn = view.bounds.width * 0.08
-        let heightBtn = view.bounds.height * 0.06
         
         settingButton.snp.makeConstraints { setting in
-            setting.leading.equalToSuperview().inset(hPadding)
-            setting.top.equalToSuperview().inset(vPadding)
+            setting.leading.equalToSuperview().offset(hPadding)
+            setting.top.equalToSuperview().offset(vPadding)
             setting.width.equalTo(widthBtn)
-            setting.height.equalTo(heightBtn)
+            setting.height.equalTo(widthBtn)
         }
         
         audioButton.snp.makeConstraints { audio in
             audio.leading.equalTo(settingButton.snp.trailing).offset(hPadding)
-            audio.top.equalTo(settingButton.snp.top)
-            audio.width.equalTo(settingButton.snp.width)
-            audio.height.equalTo(settingButton.snp.height)
+            audio.top.equalToSuperview().offset(vPadding)
+            audio.width.equalTo(widthBtn)
+            audio.height.equalTo(widthBtn)
         }
         
         storeButton.snp.makeConstraints { store in
             store.leading.equalTo(audioButton.snp.trailing).offset(hPadding)
-            store.top.equalTo(settingButton.snp.top)
-            store.width.equalTo(settingButton.snp.width)
-            store.height.equalTo(settingButton.snp.height)
+            store.top.equalToSuperview().offset(vPadding)
+            store.width.equalTo(widthBtn)
+            store.height.equalTo(widthBtn)
         }
     }
     
