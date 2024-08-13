@@ -34,8 +34,8 @@
 		AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A787F2C64CA0900028B36 /* NotificationManager.swift */; };
 		AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78812C64CA1400028B36 /* CameraManager.swift */; };
 		AB9A78B42C67D81200028B36 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78B32C67D81200028B36 /* Predictor.swift */; };
-		AB9A78BA2C689A2300028B36 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78B92C689A2300028B36 /* CameraPreview.swift */; };
 		AB9A78BC2C68A14F00028B36 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78BB2C68A14F00028B36 /* CameraPreviewView.swift */; };
+		AB9A78BF2C6B39CE00028B36 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78BE2C6B39CE00028B36 /* CameraService.swift */; };
 		E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701F0A52C6A7B980069A2DC /* SplashVC.swift */; };
 		E70C20DA2C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */; };
 		E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */; };
@@ -114,8 +114,8 @@
 		AB9A787F2C64CA0900028B36 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		AB9A78812C64CA1400028B36 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		AB9A78B32C67D81200028B36 /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
-		AB9A78B92C689A2300028B36 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		AB9A78BB2C68A14F00028B36 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		AB9A78BE2C6B39CE00028B36 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		E701F0A52C6A7B980069A2DC /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceManager.swift; sourceTree = "<group>"; };
 		E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingResultVC.swift; sourceTree = "<group>"; };
@@ -405,6 +405,7 @@
 				AB9A78732C64BB3800028B36 /* EquipmentService.swift */,
 				AB9A78752C64BB4500028B36 /* NotificationService.swift */,
 				AB9A78772C64BB4F00028B36 /* AudioService.swift */,
+				AB9A78BE2C6B39CE00028B36 /* CameraService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -440,7 +441,6 @@
 			children = (
 				E7FDDB072C6434C700DE2A7A /* SubViews */,
 				E7FDDB002C64349400DE2A7A /* StretchingVC.swift */,
-				AB9A78B92C689A2300028B36 /* CameraPreview.swift */,
 				E7FDDB192C64359800DE2A7A /* StretchingVC+Extension.swift */,
 				E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */,
 				E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */,
@@ -608,6 +608,7 @@
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E76E63152C675AC9001906A9 /* Pose+Empty.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
+				AB9A78BF2C6B39CE00028B36 /* CameraService.swift in Sources */,
 				E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
 				034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */,
@@ -618,7 +619,6 @@
 				03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */,
 				E7ABBA442C660AAF007A702F /* NSViewControllerExtension.swift in Sources */,
 				03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */,
-				AB9A78BA2C689A2300028B36 /* CameraPreview.swift in Sources */,
 				AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */,
 				03889CBD2C64688A004BC8C8 /* Character+CoreDataProperties.swift in Sources */,
 				03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */,
@@ -794,7 +794,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -824,7 +824,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 57BYB3NG56;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
