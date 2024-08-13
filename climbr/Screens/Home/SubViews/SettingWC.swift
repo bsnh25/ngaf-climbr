@@ -30,6 +30,8 @@ import SnapKit
 //}
 
 
+let kCheckbox = "kCheckbox"
+
 class SettingVC: NSViewController {
     
     private let settingText = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Setting Preference")
@@ -94,15 +96,12 @@ class SettingVC: NSViewController {
         
         //MARK: Start Time Picker
         startTime.maxDate = .distantFuture
-        startTime.minDate = .now
+        startTime.minDate = .distantPast
+        let value = startTime.dateValue
         
         //MARK: End Time Picker
         endTime.maxDate = .distantFuture
-        if let startMinDate = startTime.minDate {
-            let calendar = Calendar.current
-            let oneHourLater = calendar.date(byAdding: .hour, value: 2, to: startMinDate)
-            endTime.minDate = oneHourLater
-        }
+        endTime.minDate = Calendar.current.date(byAdding: .hour, value: 2, to: value)
         
         
         min30.target = self
@@ -211,45 +210,45 @@ class SettingVC: NSViewController {
     
     @objc
     private func actionCheckbox(){
-        // Check the state of the checkbox
         isChecked = checkboxButton.state == .on
         
-        // Perform actions based on checkbox state
-        if isChecked {
-            print("Checkbox is checked")
-            // Handle the case when the checkbox is checked
-        } else {
-            print("Checkbox is unchecked")
-            // Handle the case when the checkbox is unchecked
-        }
+        ///change print into user deafult settings
+        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
+//        print("value checkbox : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+
     }
     
     @objc
     private func action30min(){
         resetButtonColors()
+        min30.isSelected = true
         min30.layer?.backgroundColor = .black
-        print("\(min30.title) choose")
+//        print("\(min30.title) choose")
+        print("\( min30.isSelected) : 30 choose")
     }
     
     @objc
     private func action60min(){
         resetButtonColors()
+        min60.isSelected = true
         min60.layer?.backgroundColor = .black
-        print("\(min60.title) choose")
+        print("\( min60.isSelected) : 60 choose")
     }
     
     @objc
     private func action90min(){
         resetButtonColors()
+        min90.isSelected = true
         min90.layer?.backgroundColor = .black
-        print("\(min90.title) choose")
+        print("\( min90.isSelected) : 90 choose")
     }
     
     @objc
     private func action120min(){
         resetButtonColors()
+        min120.isSelected = true
         min120.layer?.backgroundColor = .black
-        print("\(min120.title) choose")
+        print("\( min120.isSelected) : 120 choose")
     }
     
     private func resetButtonColors() {
@@ -258,12 +257,46 @@ class SettingVC: NSViewController {
         min60.layer?.backgroundColor = NSColor.gray.cgColor
         min90.layer?.backgroundColor = NSColor.gray.cgColor
         min120.layer?.backgroundColor = NSColor.gray.cgColor
+        
+        min30.isSelected = false
+        min60.isSelected = false
+        min90.isSelected = false
+        min120.isSelected = false
     }
     
     @objc
     private func actionSave(){
+        ///get reminder value
+        ///get start working hour and end working hour
+        guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
+            print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
+            return
+        }
+        print("Reminder at \(processSaveReminder())")
+        print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
+        
+        ///get checkbox value
+        print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+        
         self.dismiss(self)
     }
+    
+    private func processSaveReminder() -> Int{
+        
+        if min30.isSelected {
+            return 30
+        }else if min60.isSelected{
+            return 60
+        }else if min90.isSelected{
+            return 90
+        } else if min120.isSelected{
+            return 120
+        }else {
+            print("ERR: at setting (reminder)")
+            return 0
+        }
+    }
+    
 }
 
 #Preview(traits: .defaultLayout, body: {

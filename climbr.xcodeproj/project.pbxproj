@@ -19,6 +19,7 @@
 		03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */; };
 		03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */; };
 		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
+		03BFB3A82C6AEB3700612A6C /* bgmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 03BFB3A72C6AEB3700612A6C /* bgmusic.mp3 */; };
 		8ABB12342C649D9A00616C57 /* ModelFixV1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12322C649D9A00616C57 /* ModelFixV1.mlmodel */; };
 		8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */; };
 		8ABB12942C67D36100616C57 /* UserPreferenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */; };
@@ -40,6 +41,7 @@
 		E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */; };
 		E74C3AF12C684C6500631D6F /* StretchingResultVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */; };
 		E74C3AF42C6865B600631D6F /* EndSessionAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */; };
+		E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E757EDB12C6A173F00F0F84D /* MovementStateView.swift */; };
 		E76E63122C675AC9001906A9 /* Pose+Landmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63062C675AC9001906A9 /* Pose+Landmark.swift */; };
 		E76E63132C675AC9001906A9 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63072C675AC9001906A9 /* Pose.swift */; };
 		E76E63142C675AC9001906A9 /* Pose+Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76E63082C675AC9001906A9 /* Pose+Connection.swift */; };
@@ -93,6 +95,7 @@
 		03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03BFB3A72C6AEB3700612A6C /* bgmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmusic.mp3; sourceTree = "<group>"; };
 		8ABB12322C649D9A00616C57 /* ModelFixV1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV1.mlmodel; sourceTree = "<group>"; };
 		8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextButtonV2.swift; sourceTree = "<group>"; };
 		8ABB127F2C66074C00616C57 /* ModelFixV1+Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Singleton.swift"; sourceTree = "<group>"; };
@@ -118,6 +121,7 @@
 		E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingResultVC.swift; sourceTree = "<group>"; };
 		E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StretchingResultVC+Extension.swift"; sourceTree = "<group>"; };
 		E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndSessionAlertVC.swift; sourceTree = "<group>"; };
+		E757EDB12C6A173F00F0F84D /* MovementStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementStateView.swift; sourceTree = "<group>"; };
 		E76E63062C675AC9001906A9 /* Pose+Landmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pose+Landmark.swift"; sourceTree = "<group>"; };
 		E76E63072C675AC9001906A9 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
 		E76E63082C675AC9001906A9 /* Pose+Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pose+Connection.swift"; sourceTree = "<group>"; };
@@ -180,6 +184,14 @@
 				8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */,
 			);
 			path = Button;
+			sourceTree = "<group>";
+		};
+		03BFB3A62C6AEB1C00612A6C /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				03BFB3A72C6AEB3700612A6C /* bgmusic.mp3 */,
+			);
+			path = Music;
 			sourceTree = "<group>";
 		};
 		8ABB12332C649D9A00616C57 /* VisionModel */ = {
@@ -332,6 +344,7 @@
 		E7FDDAEC2C6433C500DE2A7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03BFB3A62C6AEB1C00612A6C /* Music */,
 				8ABB12332C649D9A00616C57 /* VisionModel */,
 				E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */,
 			);
@@ -461,6 +474,7 @@
 				E7ABBA452C670605007A702F /* NextMovementView.swift */,
 				AB9A78BB2C68A14F00028B36 /* CameraPreviewView.swift */,
 				E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */,
+				E757EDB12C6A173F00F0F84D /* MovementStateView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -562,6 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */,
+				03BFB3A82C6AEB3700612A6C /* bgmusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +608,7 @@
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E76E63152C675AC9001906A9 /* Pose+Empty.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
+				E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
 				034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */,
 				E76E63142C675AC9001906A9 /* Pose+Connection.swift in Sources */,
