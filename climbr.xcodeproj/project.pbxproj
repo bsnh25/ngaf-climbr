@@ -38,6 +38,8 @@
 		AB9A78BF2C6B39CE00028B36 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78BE2C6B39CE00028B36 /* CameraService.swift */; };
 		E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701F0A52C6A7B980069A2DC /* SplashVC.swift */; };
 		E70C20DA2C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */; };
+		E71F6E642C6B8B3B001BCFEB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = E71F6E632C6B8B3B001BCFEB /* Swinject */; };
+		E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */; };
 		E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */; };
 		E74C3AF12C684C6500631D6F /* StretchingResultVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */; };
 		E74C3AF42C6865B600631D6F /* EndSessionAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */; };
@@ -118,6 +120,7 @@
 		AB9A78BE2C6B39CE00028B36 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		E701F0A52C6A7B980069A2DC /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		E70C20D92C67C57E00DE1DB4 /* ExcerciseGuidanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceManager.swift; sourceTree = "<group>"; };
+		E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwinjectExtension.swift; sourceTree = "<group>"; };
 		E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingResultVC.swift; sourceTree = "<group>"; };
 		E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StretchingResultVC+Extension.swift"; sourceTree = "<group>"; };
 		E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndSessionAlertVC.swift; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 			files = (
 				E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */,
 				034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */,
+				E71F6E642C6B8B3B001BCFEB /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +229,13 @@
 				E701F0A52C6A7B980069A2DC /* SplashVC.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		E71F6E622C6B8B3B001BCFEB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E76E63032C675AAD001906A9 /* Recovered References */ = {
@@ -303,6 +314,7 @@
 				E7FDDAD52C64301B00DE2A7A /* climbr */,
 				E7FDDAD42C64301B00DE2A7A /* Products */,
 				E76E63032C675AAD001906A9 /* Recovered References */,
+				E71F6E622C6B8B3B001BCFEB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -493,6 +505,7 @@
 				E7FDDB232C64363200DE2A7A /* DateExtension.swift */,
 				E7ABBA432C660AAF007A702F /* NSViewControllerExtension.swift */,
 				E76E631F2C6792D0001906A9 /* CollectionExtension.swift */,
+				E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -528,6 +541,7 @@
 			packageProductDependencies = (
 				E7FDDB262C64370E00DE2A7A /* RiveRuntime */,
 				034C71642C64FAFF0040AD4F /* SnapKit */,
+				E71F6E632C6B8B3B001BCFEB /* Swinject */,
 			);
 			productName = climbr;
 			productReference = E7FDDAD32C64301B00DE2A7A /* climbr.app */;
@@ -560,6 +574,7 @@
 			packageReferences = (
 				E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */,
 				034C71632C64FAFF0040AD4F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				E71F6E612C6B8995001BCFEB /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = E7FDDAD42C64301B00DE2A7A /* Products */;
 			projectDirPath = "";
@@ -604,6 +619,7 @@
 				E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */,
 				8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
+				E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */,
 				E74C3AF12C684C6500631D6F /* StretchingResultVC+Extension.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				E76E63152C675AC9001906A9 /* Pose+Empty.swift in Sources */,
@@ -794,7 +810,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = L62ZSF9D69;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -824,7 +840,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = L62ZSF9D69;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -875,6 +891,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		E71F6E612C6B8995001BCFEB /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.0;
+			};
+		};
 		E7FDDB252C64370E00DE2A7A /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
@@ -890,6 +914,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 034C71632C64FAFF0040AD4F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		E71F6E632C6B8B3B001BCFEB /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E71F6E612C6B8995001BCFEB /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
 		};
 		E7FDDB262C64370E00DE2A7A /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
