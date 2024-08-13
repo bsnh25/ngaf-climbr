@@ -8,14 +8,14 @@
 import AVFoundation
 import AppKit
 
-class CameraManager: NSObject {
+class CameraManager: NSObject, CameraService {
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
     var cameraDevice: AVCaptureDevice!
     var videoOutput: AVCaptureVideoDataOutput
     private let cameraQueue: DispatchQueue
     
-    var predictor = Predictor()
+//    var predictor = Predictor()
     
     override init() {
         captureSession = AVCaptureSession()
@@ -50,11 +50,11 @@ class CameraManager: NSObject {
         
         setupPreviewLayer()
         
-        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
+//        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
         
     }
     
-    private func setupPreviewLayer() {
+    func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.videoGravity = .resizeAspectFill
 
@@ -88,14 +88,14 @@ class CameraManager: NSObject {
     }
 }
 
-extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
-            connection.isVideoMirrored = true
-        }
-        predictor.estimation(sampleBuffer: sampleBuffer)
-    }
-}
+//extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
+//    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+//        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+//            connection.isVideoMirrored = true
+//        }
+//        predictor.estimation(sampleBuffer: sampleBuffer)
+//    }
+//}
 
 
 

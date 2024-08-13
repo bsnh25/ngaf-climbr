@@ -119,7 +119,7 @@ class AudioManager: AudioService {
     }
     
     func playSFX(fileName: String) {
-        guard let path = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
+        guard let path = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
         
         do {
             effectPlayer = try AVAudioPlayer(contentsOf: path)
