@@ -7,6 +7,8 @@
 
 import Cocoa
 
+
+
 class UserPreferenceVC: NSViewController {
     
     private let bgContainer = NSView()
@@ -119,6 +121,8 @@ class UserPreferenceVC: NSViewController {
     private func configureNextButton(){
         view.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.target = self
+        nextButton.action = #selector(actNextButton)
         
         NSLayoutConstraint.activate([
             nextButton.widthAnchor.constraint(equalToConstant: 143),
@@ -256,6 +260,8 @@ class UserPreferenceVC: NSViewController {
         checkboxButton.translatesAutoresizingMaskIntoConstraints = false
         checkboxButton.font = NSFont.systemFont(ofSize: 22, weight: .bold)
         checkboxButton.contentTintColor = .black
+        checkboxButton.target = self
+        checkboxButton.action = #selector(actionCheckbox)
         
         NSLayoutConstraint.activate([
             checkboxButton.topAnchor.constraint(equalTo: text1Line2.bottomAnchor, constant: 55),
@@ -278,7 +284,11 @@ class UserPreferenceVC: NSViewController {
                 print("ERR: at user preference (reminder)")
                 return 0
             }
+        
         }
+    
+    
+    
 
         private func resetButtonColors() {
             // Reset all buttons to gray
@@ -292,6 +302,21 @@ class UserPreferenceVC: NSViewController {
             button3.isSelected = false
             button4.isSelected = false
 
+        }
+    
+        @objc
+        private func actNextButton(){
+            guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
+                print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
+                return
+            }
+            print("Reminder at \(processSavePreference())")
+            print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
+            
+            ///get checkbox value
+            print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+            
+            push(HomeVC())
         }
 
         @objc
@@ -328,23 +353,16 @@ class UserPreferenceVC: NSViewController {
     
     @objc
     private func actionCheckbox(){
-        // Check the state of the checkbox
         isChecked = checkboxButton.state == .on
         
-        // Perform actions based on checkbox state
-        if isChecked {
-            print("Checkbox is checked")
-            // Handle the case when the checkbox is checked
-        } else {
-            print("Checkbox is unchecked")
-            // Handle the case when the checkbox is unchecked
-        }
+        ///change print into user deafult settings
+        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
     }
 }
 
 
 
-
-#Preview(traits: .defaultLayout, body: {
-    UserPreferenceVC()
-})
+//
+//#Preview(traits: .defaultLayout, body: {
+//    UserPreferenceVC()
+//})

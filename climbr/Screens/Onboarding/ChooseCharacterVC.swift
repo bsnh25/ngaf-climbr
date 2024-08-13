@@ -7,8 +7,9 @@
 
 import Cocoa
 
+
+
 class ChooseCharacterVC: NSViewController {
-    
     private let containerBig = NSView()
     private let container1 = NSView()
     private let container2 = NSView()
@@ -19,7 +20,11 @@ class ChooseCharacterVC: NSViewController {
     private let textField = CLTextField(placeholder: "Type your climbr's name here")
     private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .buttonOnboarding, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
     
+    enum Gender{
+        case male, female, empty
+    }
     
+    var genderChar: Gender = Gender.empty
     
     
     override func viewDidLoad() {
@@ -69,6 +74,8 @@ class ChooseCharacterVC: NSViewController {
     
     private func configureTextField(){
         view.addSubview(textField)
+        //        textField.delegate = self
+        
         
         NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: text1.bottomAnchor, constant: 15),
@@ -94,8 +101,13 @@ class ChooseCharacterVC: NSViewController {
         view.addSubview(container1)
         container1.wantsLayer = true
         container1.layer?.cornerRadius = 10
-        container1.layer?.backgroundColor = .white
+        container1.layer?.backgroundColor = NSColor.femaleCharContainer.cgColor
         container1.translatesAutoresizingMaskIntoConstraints = false
+        container1.layer?.borderWidth = 0
+        
+        let clickGesture1 = NSClickGestureRecognizer(target: self, action: #selector(container1Clicked(_:)))
+        container1.addGestureRecognizer(clickGesture1)
+        
         
         NSLayoutConstraint.activate([
             container1.topAnchor.constraint(equalTo: text2.bottomAnchor, constant: 15),
@@ -111,8 +123,11 @@ class ChooseCharacterVC: NSViewController {
         view.addSubview(container2)
         container2.wantsLayer = true
         container2.layer?.cornerRadius = 10
-        container2.layer?.backgroundColor = .white
+        container2.layer?.backgroundColor = NSColor.maleCharContainer.cgColor
         container2.translatesAutoresizingMaskIntoConstraints = false
+        
+        let clickGesture2 = NSClickGestureRecognizer(target: self, action: #selector(container2Clicked(_:)))
+        container2.addGestureRecognizer(clickGesture2)
         
         NSLayoutConstraint.activate([
             container2.topAnchor.constraint(equalTo: text2.bottomAnchor, constant: 15),
@@ -124,7 +139,7 @@ class ChooseCharacterVC: NSViewController {
     }
     
     private func configureFemaleChar(){
-        view.addSubview(femalechar)
+        container1.addSubview(femalechar)
         femalechar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -136,7 +151,7 @@ class ChooseCharacterVC: NSViewController {
     }
     
     private func configureMaleChar(){
-        view.addSubview(malechar)
+        container2.addSubview(malechar)
         malechar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -166,8 +181,40 @@ class ChooseCharacterVC: NSViewController {
     
     @objc
     private func actButtonStart(){
-        print("tapped")
+        print("tapped and inputed \(textField.stringValue)")
+        
+        if genderChar == Gender.female{
+            print("user choose female")
+        }else if genderChar == Gender.male{
+            print("user choose male")
+        }else{
+            print("still empty")
+        }
     }
+    
+    @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {
+        if gesture.state == .ended {
+            resetBorderContainer()
+            container1.layer?.borderWidth = 5
+            container1.layer?.borderColor = .white
+            genderChar = Gender.female
+        }
+    }
+    
+    @objc private func container2Clicked(_ gesture: NSClickGestureRecognizer) {
+        if gesture.state == .ended {
+            resetBorderContainer()
+            container2.layer?.borderWidth = 5
+            container2.layer?.borderColor = .white
+            genderChar = Gender.male
+        }
+    }
+    
+    private func resetBorderContainer(){
+        container1.layer?.borderWidth = 0
+        container2.layer?.borderWidth = 0
+    }
+    
 }
 
 #Preview(traits: .defaultLayout, body: {
