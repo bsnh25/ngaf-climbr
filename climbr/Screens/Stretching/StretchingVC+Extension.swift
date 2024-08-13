@@ -167,6 +167,6 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
         if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
             connection.isVideoMirrored = true
         }
-        cameraManager.predictor.estimation(sampleBuffer: sampleBuffer)
+        predictor.estimation(sampleBuffer: sampleBuffer)
     }
 }

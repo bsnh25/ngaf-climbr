@@ -15,7 +15,7 @@ class CameraManager: NSObject, CameraService {
     var videoOutput: AVCaptureVideoDataOutput
     private let cameraQueue: DispatchQueue
     
-    var predictor = Predictor()
+//    var predictor = Predictor()
     
     override init() {
         captureSession = AVCaptureSession()

@@ -1,0 +1,24 @@
+{
+  "originHash" : "6700b07ce5098b9637723df03bfc6475a833bed2d6cb325404d81c98ff618721",
+  "pins" : [
+    {
+      "identity" : "rive-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rive-app/rive-ios",
+      "state" : {
+        "revision" : "43d3e39f7812994e35f6ccc9b3fcf2ccf8d7e20d",
+        "version" : "6.0.0"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
+      }
+    }
+  ],
+  "version" : 3
+}
