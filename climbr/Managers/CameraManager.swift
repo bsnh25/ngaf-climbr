@@ -27,6 +27,11 @@ class CameraManager: NSObject, CameraService {
         setupSession()
     }
     
+    func setSampleBufferDelegate(delegate: AVCaptureVideoDataOutputSampleBufferDelegate) {
+        print("DELEGATE - AVCaptureVideoDataOutputSampleBufferDelegate")
+        videoOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "videoDispatchQueue"))
+    }
+    
     private func setupSession() {
         guard let device = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified).devices.first else {
             fatalError("No front-facing camera found")
@@ -37,6 +42,7 @@ class CameraManager: NSObject, CameraService {
             if captureSession.canAddInput(cameraInput) {
                 captureSession.addInput(cameraInput)
             }
+            
         } catch {
             fatalError("Camera input could not be added: \(error.localizedDescription)")
         }
@@ -44,14 +50,12 @@ class CameraManager: NSObject, CameraService {
 //        captureSession.sessionPreset = .high
         videoOutput.alwaysDiscardsLateVideoFrames = true
         
+        
         if captureSession.canAddOutput(videoOutput){
             captureSession.addOutput(videoOutput)
         }
         
         setupPreviewLayer()
-        
-//        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
-        
     }
     
     func setupPreviewLayer() {
@@ -88,6 +92,8 @@ class CameraManager: NSObject, CameraService {
     }
 }
 
+
+//videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
 //extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
 //    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
 //        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
