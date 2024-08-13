@@ -8,9 +8,7 @@
 import Cocoa
 
 class MainWindow: NSWindow {
-    var audioService: AudioService?
-    init(audioService: AudioService) {
-        self.audioService = audioService
+    init() {
         /// Init the main window with following parameters:
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 1200, height: 840),
@@ -26,8 +24,7 @@ class MainWindow: NSWindow {
         
         /// Set the window to center axis by default
         center()
-        let vc                  = HomeVC()
-        vc.audioService         = audioService
+        let vc                  = MainVC()
         contentView             = vc.view
         contentViewController   = vc
     }

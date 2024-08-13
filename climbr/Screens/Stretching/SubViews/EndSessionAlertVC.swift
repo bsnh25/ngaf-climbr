@@ -117,7 +117,7 @@ extension EndSessionAlertVC {
     }
     
     @objc func endSession() {
-        self.push(StretchingResultVC())
+//        self.push(to: StretchingResultVC())
 //        dismissAlert()
     }
 }

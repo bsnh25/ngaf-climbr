@@ -98,8 +98,8 @@ extension StretchingVC {
     }
     
     func finishEarly() {
-        cameraManager.stopSession()
-        push(StretchingResultVC())
+        self.cameraManager.stopSession()
+        self.replace(with: StretchingResultVC())
     }
     
     @objc func showEndSessionAlert() {
