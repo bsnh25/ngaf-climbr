@@ -96,15 +96,12 @@ class SettingVC: NSViewController {
         
         //MARK: Start Time Picker
         startTime.maxDate = .distantFuture
-        startTime.minDate = .now
+        startTime.minDate = .distantPast
+        let value = startTime.dateValue
         
         //MARK: End Time Picker
         endTime.maxDate = .distantFuture
-        if let startMinDate = startTime.minDate {
-            let calendar = Calendar.current
-            let oneHourLater = calendar.date(byAdding: .hour, value: 2, to: startMinDate)
-            endTime.minDate = oneHourLater
-        }
+        endTime.minDate = Calendar.current.date(byAdding: .hour, value: 2, to: value)
         
         
         min30.target = self
@@ -270,15 +267,16 @@ class SettingVC: NSViewController {
     @objc
     private func actionSave(){
         ///get reminder value
-        let reminderInt = processSaveReminder()
-        print("Reminder at \(reminderInt)")
+        ///get start working hour and end working hour
+        guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
+            print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
+            return
+        }
+        print("Reminder at \(processSaveReminder())")
+        print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
         
         ///get checkbox value
         print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
-        
-        ///get start working hour and end working hour
-        print("start working hour: \(startTime.dateValue)")
-        print("end working hour: \(endTime.dateValue)")
         
         self.dismiss(self)
     }
