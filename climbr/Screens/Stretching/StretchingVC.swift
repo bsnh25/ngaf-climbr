@@ -46,6 +46,7 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         
+        cameraManager.startSession()
         configureCameraPreview()
         configureMovementView()
         cameraManager.predictor.delegate = self
@@ -151,11 +152,11 @@ class StretchingVC: NSViewController {
 
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        cameraManager.startSession()
-    }
-    
+//    override func viewDidAppear() {
+//        super.viewDidAppear()
+//        cameraManager.startSession()
+//    }
+//    
     override func viewDidDisappear() {
         super.viewDidDisappear()
         cameraManager.stopSession()
