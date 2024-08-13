@@ -66,6 +66,7 @@ class CameraManager: NSObject {
     }
     
     func startSession() {
+        print("start session")
         if let captureSession = captureSession {
             if !captureSession.isRunning{
                 cameraQueue.async {
@@ -76,6 +77,7 @@ class CameraManager: NSObject {
     }
     
     func stopSession() {
+        print("stop session")
         if let captureSession = captureSession {
             if captureSession.isRunning{
                 cameraQueue.async {

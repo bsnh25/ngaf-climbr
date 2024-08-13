@@ -1,5 +1,4 @@
 {
-  "originHash" : "6700b07ce5098b9637723df03bfc6475a833bed2d6cb325404d81c98ff618721",
   "pins" : [
     {
       "identity" : "rive-ios",
@@ -20,5 +19,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
