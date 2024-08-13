@@ -34,6 +34,13 @@ class StretchingVC: NSViewController {
     var completedMovement: [Movement]   = []
     
     var bags: Set<AnyCancellable> = []
+    
+    @Published var remainingTime: TimeInterval = TimeInterval()
+    var timerInterval: TimeInterval = TimeInterval()
+    var timer: Timer?
+    var isTimerRunning: Bool = false
+    var isTimerPaused: Bool = false
+    
 
     override func viewDidLoad() {
         
@@ -66,14 +73,20 @@ class StretchingVC: NSViewController {
         .store(in: &bags)
         
         $exerciseName.sink { name in
+            /// Get current movement data
+            let movement = Movement.items[self.currentIndex]
             
             /// Return true if the name equals to current movement
-            let positionState   = name == Movement.items[self.currentIndex].name
+            let positionState   = name == movement.name
             
             DispatchQueue.main.async {
-                /// Show the movement state view if movement incorrect
+                
+                /// Make sure to unhide the movement state view
+                self.movementStateView.unhide()
+                
                 if !positionState {
-                    self.movementStateView.unhide()
+                    /// Pause the timer if movement incorrect
+                    self.pauseTimer()
                     
                     /// Set label, foreground, and background color based on each state
                     var label: String = "Please move according to the guidance"
@@ -89,11 +102,43 @@ class StretchingVC: NSViewController {
                     
                     self.movementStateView.setLabel(label)
                 } else {
+                    /// If movement is correct, run the timer based on previous state (start or resume)
+                    if self.isTimerPaused {
+                        self.resumeTimer()
+                    } else {
+                        self.startTimer(duration: movement.duration)
+                    }
                     /// Hide the movement state view if the movement is correct
-                    self.movementStateView.hide()
+//                    self.movementStateView.hide()
                 }
             }
         }.store(in: &bags)
+        
+        $remainingTime.sink { time in
+            
+            /// Cancel code execution below if timer not running and timer is paused
+            guard self.isTimerRunning, !self.isTimerPaused else { return }
+            
+            /// If remaining time equals to zero, then hide the movement state view and
+            /// next to the next movement
+            ///
+            /// Assume that if remaining time is zero, it means the movement has done
+            guard time > 0 else {
+                self.movementStateView.hide()
+                
+                self.next()
+                
+                return
+            }
+            
+            /// Set the label for current remaining time
+            let label = "Hold for \(time) seconds"
+            self.movementStateView.setLabel(label)
+            
+            self.movementStateView.setForegroundColor(.white)
+            self.movementStateView.setBackgroundColor(.systemGreen)
+        }
+        .store(in: &bags)
         
         /// Stream the next index and update on its changed
         $nextIndex.sink { index in
