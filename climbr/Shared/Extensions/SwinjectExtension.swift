@@ -14,6 +14,7 @@ extension Container {
         
         /// Managers
         container.register(AudioService.self) { _ in AudioManager.shared }
+        container.register(CameraService.self) { _ in CameraManager() }
         
         /// ViewControllers
         container.register(MainVC.self) { resolver in
@@ -21,9 +22,10 @@ extension Container {
         }
         
         container.register(StretchingVC.self) { resolver in
-            let audioService = resolver.resolve(AudioService.self)
+            let audioService    = resolver.resolve(AudioService.self)
+            let cameraService   = resolver.resolve(CameraService.self)
             
-            return StretchingVC(audioService: audioService)
+            return StretchingVC(audioService: audioService, cameraService: cameraService)
         }
         
         return container
