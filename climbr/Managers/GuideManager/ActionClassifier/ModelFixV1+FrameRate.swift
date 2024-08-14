@@ -7,7 +7,7 @@
 
 import CoreML
 
-extension ModelFixV1 {
+extension ModelFixV2 {
     /// The value of the Frame Rate training parameter the action
     /// classifier's creator used in the Create ML developer tool.
     ///
@@ -55,7 +55,7 @@ extension ModelFixV1 {
         }
 
         let windowSize = Int(truncating: dimensions.first!)
-        let frameRate = ModelFixV1.frameRate
+        let frameRate = ModelFixV2.frameRate
 
         let timeSpan = Double(windowSize) / frameRate
         let timeString = String(format: "%0.2f second(s)", timeSpan)

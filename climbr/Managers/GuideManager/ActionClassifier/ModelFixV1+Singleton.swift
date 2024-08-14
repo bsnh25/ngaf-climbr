@@ -8,18 +8,18 @@
 import CoreML
 
 
-extension ModelFixV1{
+extension ModelFixV2{
     
-    static let shared: ModelFixV1 = {
+    static let shared: ModelFixV2 = {
         let defaultConfig = MLModelConfiguration()
         
-        guard let modelFixV1 = try? ModelFixV1(configuration: defaultConfig) else {
+        guard let modelFixV2 = try? ModelFixV2(configuration: defaultConfig) else {
             fatalError("Model failed to initialize.")
         }
         
-        modelFixV1.checkLabels()
+        modelFixV2.checkLabels()
         
-        return modelFixV1
+        return modelFixV2
     }()
     
     

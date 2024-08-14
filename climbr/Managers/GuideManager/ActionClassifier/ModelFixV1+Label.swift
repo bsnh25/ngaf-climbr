@@ -5,7 +5,7 @@
 //  Created by I Gusti Ngurah Surya Ardika Dinataputra on 09/08/24.
 //
 
-extension ModelFixV1{
+extension ModelFixV2{
     
     enum Label: String, CaseIterable{
         case crossBodyShoulderLeft = "Cross Body Shoulder Left"
