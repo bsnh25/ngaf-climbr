@@ -43,7 +43,25 @@ class CurrentMovementView: NSStackView {
     
     func updateData(_ data: Movement) {
         movementLabel.setText(data.name.rawValue)
-        durationLabel.setText("\(data.duration) seconds")
+        durationLabel.setText("\(String(format: "%.f", data.duration)) seconds")
+    }
+    
+    func setDuration(_ time: Double) {
+        let durationAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 20, weight: .bold)
+        ]
+        
+        let leftAttributes = [
+            .font: NSFont.systemFont(ofSize: 16, weight: .bold),
+            NSAttributedString.Key.foregroundColor: NSColor.systemGray
+        ]
+        
+        let duration    = NSMutableAttributedString(string: "\(String(format: "%.f", time)) ", attributes: durationAttributes)
+        let leftString  = NSAttributedString(string: "seconds left", attributes: leftAttributes)
+        
+        duration.append(leftString)
+        
+        durationLabel.attributedStringValue = duration
     }
     
     private func configureMovementLabel() {
