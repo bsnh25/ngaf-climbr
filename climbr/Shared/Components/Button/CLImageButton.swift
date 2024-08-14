@@ -44,14 +44,12 @@ class CLImageButton: NSButton {
     
     private func configureUI(imageName: String, accesibilityName: String, imgColor: NSColor, bgColor: CGColor){
         
-        let config = CLSFSymbol(symbolName: imageName, description: imageName)
-        self.image = config.image?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: imgColor))
+        let config = NSImage(systemSymbolName: imageName, accessibilityDescription: accesibilityName)
+        self.image = config?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: imgColor))
         
         self.layer?.cornerRadius = 10
         self.symbolConfiguration = NSImage.SymbolConfiguration(scale: .large)
         self.layer?.backgroundColor = bgColor
-//        self.layer?.opacity = 0.84
-//        self.bezelColor = .clear
         
     }
     
