@@ -191,6 +191,7 @@ class ChooseCharacterVC: NSViewController {
             print("still empty")
         }
         
+        UserDefaults.standard.setValue(false, forKey: "isFirstTime")
         replace(with: HomeVC())
     }
     
@@ -219,6 +220,6 @@ class ChooseCharacterVC: NSViewController {
     
 }
 
-#Preview(traits: .defaultLayout, body: {
-    ChooseCharacterVC()
-})
+//#Preview(traits: .defaultLayout, body: {
+//    ChooseCharacterVC()
+//})
