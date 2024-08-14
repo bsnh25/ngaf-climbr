@@ -40,13 +40,13 @@ class CLImageButton: NSButton {
         self.image = NSImage(systemSymbolName: imageName, accessibilityDescription: accesibilityName)
     }
     
-    override func updateLayer() {
-        super.updateLayer()
-
-        if isHighlighted {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
-        } else {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
-        }
-    }
+//    override func updateLayer() {
+//        super.updateLayer()
+//
+//        if isHighlighted {
+//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+//        } else {
+//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+//        }
+//    }
 }
