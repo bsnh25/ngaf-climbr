@@ -191,7 +191,8 @@ class ChooseCharacterVC: NSViewController {
             print("still empty")
         }
         
-        replace(with: HomeVC())
+        UserDefaults.standard.setValue(false, forKey: "isFirstTime")
+        pop()
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {
@@ -219,6 +220,6 @@ class ChooseCharacterVC: NSViewController {
     
 }
 
-#Preview(traits: .defaultLayout, body: {
-    ChooseCharacterVC()
-})
+//#Preview(traits: .defaultLayout, body: {
+//    ChooseCharacterVC()
+//})
