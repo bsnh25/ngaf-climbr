@@ -1,13 +1,14 @@
 //
-//  CLTextButtonV2.swift
+//  CLPickerButton.swift
 //  climbr
 //
-//  Created by I Gusti Ngurah Surya Ardika Dinataputra on 09/08/24.
+//  Created by Bayu Septyan Nur Hidayat on 14/08/24.
 //
 
 import Cocoa
 
-class CLTextButtonV2: NSButton {
+class CLPickerButton: NSButton {
+    
     var isSelected: Bool = false {
             didSet {
                 updateLayer()
@@ -72,14 +73,10 @@ class CLTextButtonV2: NSButton {
 
     override func updateLayer() {
        super.updateLayer()
-        if isHighlighted {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.5)
-        } else {
-            layer?.backgroundColor = self.backgroundColor.cgColor
-        }
         
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
         }
    }
+    
 }

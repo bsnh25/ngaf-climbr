@@ -23,7 +23,7 @@ class EndSessionAlertVC: NSViewController {
     
     let endButton   = CLTextButtonV2(
         title: "End Session",
-        backgroundColor: .systemButton,
+        backgroundColor: .gray,
         foregroundColorText: .black,
         fontText: .preferredFont(forTextStyle: .callout)
     )
