@@ -192,7 +192,7 @@ class ChooseCharacterVC: NSViewController {
         }
         
         UserDefaults.standard.setValue(false, forKey: "isFirstTime")
-        replace(with: HomeVC())
+        pop()
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {
