@@ -23,10 +23,10 @@ class UserPreferenceVC: NSViewController {
     private let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
     private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
     private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
-    private let button1 = CLTextButtonV2(title: "30", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button2 = CLTextButtonV2(title: "60", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button3 = CLTextButtonV2(title: "90", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button4 = CLTextButtonV2(title: "120", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     var isChecked: Bool = false
     
@@ -35,6 +35,7 @@ class UserPreferenceVC: NSViewController {
         super.viewDidLoad()
         configure()
     }
+    
     
     private func configure(){
         configureBgContainer()
@@ -292,10 +293,15 @@ class UserPreferenceVC: NSViewController {
 
         private func resetButtonColors() {
             // Reset all buttons to gray
-            button1.layer?.backgroundColor = NSColor.gray.cgColor
-            button2.layer?.backgroundColor = NSColor.gray.cgColor
-            button3.layer?.backgroundColor = NSColor.gray.cgColor
-            button4.layer?.backgroundColor = NSColor.gray.cgColor
+            button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            button3.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            button4.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            
+            button1.foregroundColorText = .white
+            button2.foregroundColorText = .white
+            button3.foregroundColorText = .white
+            button4.foregroundColorText = .white
             
             button1.isSelected = false
             button2.isSelected = false
@@ -325,7 +331,9 @@ class UserPreferenceVC: NSViewController {
         private func action30min(){
             resetButtonColors()
             button1.isSelected = true
-            button1.layer?.backgroundColor = .black
+            button1.layer?.backgroundColor = .white
+            button1.foregroundColorText = .black
+            
             print("\(button1.title) choose")
         }
         
@@ -333,7 +341,9 @@ class UserPreferenceVC: NSViewController {
         private func action60min(){
             resetButtonColors()
             button2.isSelected = true
-            button2.layer?.backgroundColor = .black
+            button2.layer?.backgroundColor = .white
+            button2.foregroundColorText = .black
+            button2.fontText = .systemFont(ofSize: 17, weight: .bold)
             print("\(button2.title) choose")
         }
         
@@ -341,7 +351,9 @@ class UserPreferenceVC: NSViewController {
         private func action90min(){
             resetButtonColors()
             button3.isSelected = true
-            button3.layer?.backgroundColor = .black
+            button3.layer?.backgroundColor = .white
+            button3.foregroundColorText = .black
+            button3.fontText = .systemFont(ofSize: 17, weight: .bold)
             print("\(button3.title) choose")
         }
         
@@ -349,7 +361,9 @@ class UserPreferenceVC: NSViewController {
         private func action120min(){
             resetButtonColors()
             button4.isSelected = true
-            button4.layer?.backgroundColor = .black
+            button4.layer?.backgroundColor = .white
+            button4.foregroundColorText = .black
+            button4.fontText = .systemFont(ofSize: 17, weight: .bold)
             print("\(button4.title) choose")
         }
     

@@ -40,8 +40,7 @@ class SplashVC: NSViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: "isFirstTime") {
-//                self.replace(with: onboardingStage)
-                self.replace(with: vc)
+                self.replace(with: onboardingStage)
             }else{
                 self.replace(with: vc)
             }
