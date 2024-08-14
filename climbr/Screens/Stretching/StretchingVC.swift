@@ -10,7 +10,6 @@ import Combine
 import AVFoundation
 
 class StretchingVC: NSViewController {
-    let cameraManager           = CameraManager()
     let cameraPreview           = CameraPreviewView()
     let movementInfoView        = NSView()
     let movementStack           = NSStackView()
@@ -44,12 +43,14 @@ class StretchingVC: NSViewController {
     var isTimerPaused: Bool = false
     
     /// Dependencies
-    var audioService: AudioService!
+    var audioService: AudioService?
+    var cameraService: CameraService?
     
-    init(audioService: AudioService) {
+    init(audioService: AudioService?, cameraService: CameraService?) {
         super.init(nibName: nil, bundle: nil)
         
         self.audioService = audioService
+        self.cameraService = cameraService
     }
     
     required init?(coder: NSCoder) {
@@ -61,12 +62,11 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         
-        cameraManager.startSession()
+        cameraService?.startSession()
         configureCameraPreview()
         configureMovementView()
         predictor.delegate = self
-        cameraManager.videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
-        
+        cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
         
@@ -76,17 +76,17 @@ class StretchingVC: NSViewController {
         updateMovementState()
 
     }
-    
+  
     override func viewDidDisappear() {
         super.viewDidDisappear()
-        cameraManager.stopSession()
+        cameraService?.stopSession()
         
         stopTimer()
     }
     
     private func setupVideoPreview(){
         
-        guard let previewLayer  = cameraManager.previewLayer else {return}
+        guard let previewLayer  = cameraService?.previewLayer else {return}
         
         cameraPreview.layer?.addSublayer(previewLayer)
         previewLayer.frame      = view.frame
@@ -99,7 +99,7 @@ class StretchingVC: NSViewController {
         cameraPreview.wantsLayer                = true
         cameraPreview.layer?.backgroundColor    = .black
         
-        cameraPreview.setupPreviewLayer(with: cameraManager)
+        cameraPreview.setupPreviewLayer(with: cameraService?.previewLayer)
         cameraPreview.addOtherSubLayer(layer: pointsLayer)
         
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false

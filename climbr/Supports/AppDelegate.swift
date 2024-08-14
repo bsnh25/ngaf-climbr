@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import Swinject
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -15,24 +16,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
         // Insert code here to initialize your application
         mainWindow = MainWindow()
+        
         guard let mainWindow = mainWindow else {return}
-//        mainWindow.audioService = audioService
+
         /// Create status bar instance
         statusBar       = NSStatusBar()
+        
         /// Create status item with dynamic size (depends on its content)
         statusBarItem   = statusBar.statusItem(withLength: NSStatusItem.variableLength)
+        
         /// Make sure the button is not nil
         if let button = statusBarItem.button {
+            
             /// Set the image with custom icon
             let image       = NSImage.stretchingIcon
             image.size      = CGSize(width: 16, height: 16)
             button.image    = image
+            
             /// Set the action button to run openApp function
             button.action   = #selector(openApp)
             button.target   = self
         }
+        
         ///audio setup
         mainWindow.makeKeyAndOrderFront(nil)
     }
