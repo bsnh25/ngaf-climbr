@@ -7,7 +7,7 @@
 
 import AppKit
 import AVFoundation
-import AudioToolbox
+import Swinject
 
 extension StretchingVC {
     func updateMovementData() {
@@ -70,13 +70,13 @@ extension StretchingVC {
                         self.movementStateView.setForegroundColor(.white)
                         self.movementStateView.setBackgroundColor(.systemRed)
                         
-                        self.playSfx("incorrect")
+                        self.playSfx("huh")
                         
                     }
                     
                     self.movementStateView.setLabel(label)
                 } else {
-                    self.playSfx("correct")
+                    self.playSfx("yaaas")
                     self.startExerciseSession(duration: movement.duration)
                     self.movementStateView.hide()
                     /// Hide the movement state view if the movement is correct
@@ -206,7 +206,11 @@ extension StretchingVC {
     
     func finishSession() {
         self.cameraService?.stopSession()
-        self.replace(with: StretchingResultVC())
+        
+        if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
+            stretchingResult.movementList = self.completedMovement
+            self.replace(with: stretchingResult)
+        }
     }
     
     @objc func showEndSessionAlert() {
