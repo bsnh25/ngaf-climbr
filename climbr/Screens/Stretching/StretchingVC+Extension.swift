@@ -78,6 +78,7 @@ extension StretchingVC {
                 } else {
                     self.playSfx("correct")
                     self.startExerciseSession(duration: movement.duration)
+                    self.movementStateView.hide()
                     /// Hide the movement state view if the movement is correct
                     //                    self.movementStateView.hide()
                 }
@@ -101,12 +102,8 @@ extension StretchingVC {
                 return
             }
             
-            /// Set the label for current remaining time
-            let label = "Hold for \(time) seconds"
-            self.movementStateView.setLabel(label)
+            self.currentMovementView.setDuration(time)
             
-            self.movementStateView.setForegroundColor(.white)
-            self.movementStateView.setBackgroundColor(.systemGreen)
         }
         .store(in: &bags)
     }
@@ -207,7 +204,7 @@ extension StretchingVC {
         }
     }
     
-    func finishEarly() {
+    func finishSession() {
         self.cameraService?.stopSession()
         self.replace(with: StretchingResultVC())
     }

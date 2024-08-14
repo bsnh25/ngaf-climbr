@@ -16,8 +16,8 @@ class StretchingVC: NSViewController {
     let currentMovementView     = CurrentMovementView()
     let movementDivider         = Divider()
     let nextMovementView        = NextMovementView()
-    let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
-    let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
+    let skipButton              = CLTextButtonV2(title: "Skip This Movement", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 14))
+    let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 14))
     let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     let movementStateView       = MovementStateView()
@@ -260,6 +260,7 @@ class StretchingVC: NSViewController {
         
         buttonStack.distribution    = .fillEqually
         buttonStack.spacing         = 10
+        buttonStack.orientation     = .vertical
         
         view.addSubview(buttonStack)
         view.addSubview(divider)
@@ -282,11 +283,14 @@ class StretchingVC: NSViewController {
             buttonStack.bottomAnchor.constraint(equalTo: movementInfoView.bottomAnchor, constant: -padding),
             buttonStack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant:  -padding),
             
-            skipButton.heightAnchor.constraint(equalToConstant: 48),
-            finishButton.heightAnchor.constraint(equalToConstant: 48),
+            skipButton.heightAnchor.constraint(equalToConstant: 38),
+            skipButton.widthAnchor.constraint(equalTo: buttonStack.widthAnchor),
             
-            divider.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
-            divider.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+            finishButton.heightAnchor.constraint(equalToConstant: 38),
+            finishButton.widthAnchor.constraint(equalTo: buttonStack.widthAnchor),
+            
+            divider.leadingAnchor.constraint(equalTo: buttonStack.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
             divider.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -padding),
         ])
     }
