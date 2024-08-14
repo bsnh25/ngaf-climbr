@@ -9,7 +9,7 @@ import Cocoa
 
 class CLPickerButton: NSButton {
     
-    var isSelected: Bool = false {
+    var isSelected: Bool = true {
             didSet {
                 updateLayer()
             }
@@ -17,8 +17,16 @@ class CLPickerButton: NSButton {
 
   
     var backgroundColor: NSColor!
-    var foregroundColorText: NSColor!
-    var fontText: NSFont!
+    var foregroundColorText: NSColor! {
+            didSet {
+                updateAttributedTitle()
+            }
+        }
+    var fontText: NSFont! {
+            didSet {
+                updateAttributedTitle()
+            }
+        }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -36,8 +44,9 @@ class CLPickerButton: NSButton {
         
         self.backgroundColor        = backgroundColor
         self.foregroundColorText    = foregroundColorText
-        self.fontText               = font
-
+        self.fontText               = fontText
+        
+       
         configure(foregroundColorText: foregroundColorText, font: fontText)
     }
     
@@ -49,7 +58,6 @@ class CLPickerButton: NSButton {
         self.isBordered             = false
         self.layer?.borderColor     = borderColor.cgColor
         self.layer?.borderWidth     = 1.5
-//        self.layer?.backgroundColor = .white.copy(alpha: 0)
         
         configure(foregroundColorText: borderColor, font: font)
     }
@@ -70,6 +78,15 @@ class CLPickerButton: NSButton {
         
         translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    private func updateAttributedTitle() {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: foregroundColorText ?? NSColor.black, // Use your default color if needed
+                .font: fontText ?? NSFont.systemFont(ofSize: 14) // Use your default font if needed
+            ]
+            
+            attributedTitle = NSAttributedString(string: self.title, attributes: attributes)
+        }
 
     override func updateLayer() {
        super.updateLayer()
@@ -77,6 +94,7 @@ class CLPickerButton: NSButton {
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
         }
+        
    }
     
 }
