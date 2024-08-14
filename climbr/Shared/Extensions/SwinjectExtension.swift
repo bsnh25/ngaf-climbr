@@ -16,6 +16,7 @@ extension Container {
         container.register(AudioService.self) { _ in AudioManager.shared }
         container.register(CameraService.self) { _ in CameraManager() }
         container.register(UserService.self) { _ in UserManager() }
+        container.register(NotificationManager.self) { _ in NotificationManager() }
         
         /// ViewControllers
         container.register(MainVC.self) { resolver in

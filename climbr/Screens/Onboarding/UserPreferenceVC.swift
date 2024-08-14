@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-
+import Swinject
 
 
 class UserPreferenceVC: NSViewController {
@@ -34,6 +34,13 @@ class UserPreferenceVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        let notif = Container.shared.resolve(NotificationManager.self)
+        notif?.askUserPermission()
+//        notif?.scheduleNotification(reminder: <#T##UserPreferences#>)
     }
     
     

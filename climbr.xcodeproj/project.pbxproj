@@ -11,6 +11,7 @@
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034C71692C664D210040AD4F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71682C664D210040AD4F /* SettingVC.swift */; };
 		034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C716A2C6736040040AD4F /* CLTextLabelV2.swift */; };
+		036AA9FE2C6D0A2000956F7C /* SettingVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */; };
 		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
 		03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */; };
 		03889CBC2C64688A004BC8C8 /* Character+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */; };
@@ -86,6 +87,7 @@
 		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
 		034C71682C664D210040AD4F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		034C716A2C6736040040AD4F /* CLTextLabelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextLabelV2.swift; sourceTree = "<group>"; };
+		036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingVC+Extension.swift"; sourceTree = "<group>"; };
 		03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreferences+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				034C71682C664D210040AD4F /* SettingVC.swift */,
+				036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				8ABB12AC2C6AEE8200616C57 /* ChooseCharacterVC.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
 				8A1962302C6B030B00F7064B /* CLGradientContainer.swift in Sources */,
+				036AA9FE2C6D0A2000956F7C /* SettingVC+Extension.swift in Sources */,
 				E7FDDAF72C64346900DE2A7A /* ShopVC.swift in Sources */,
 				AB9A78BF2C6B39CE00028B36 /* CameraService.swift in Sources */,
 				E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */,
@@ -790,9 +794,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -820,9 +825,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
