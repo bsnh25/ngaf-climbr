@@ -70,13 +70,13 @@ extension StretchingVC {
                         self.movementStateView.setForegroundColor(.white)
                         self.movementStateView.setBackgroundColor(.systemRed)
                         
-                        self.playSfx("huh")
+                        self.playSfx("incorrect")
                         
                     }
                     
                     self.movementStateView.setLabel(label)
                 } else {
-                    self.playSfx("yaaas")
+                    self.playSfx("correct")
                     self.startExerciseSession(duration: movement.duration)
                     self.movementStateView.hide()
                     /// Hide the movement state view if the movement is correct
