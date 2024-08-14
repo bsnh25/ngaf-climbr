@@ -103,7 +103,6 @@ extension StretchingVC {
             }
             
             self.currentMovementView.setDuration(time)
-            
         }
         .store(in: &bags)
     }
