@@ -207,7 +207,7 @@ extension StretchingVC {
         }
     }
     
-    func finishEarly() {
+    func finishSession() {
         self.cameraService?.stopSession()
         self.replace(with: StretchingResultVC())
     }
