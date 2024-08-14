@@ -44,7 +44,7 @@ class NextMovementView: NSStackView {
     
     func updateData(_ data: Movement) {
         movementLabel.setText(data.name.rawValue)
-        durationLabel.setText("\(data.duration) seconds")
+        durationLabel.setText("\(String(format: "%.f", data.duration)) seconds")
     }
     
     private func disableTAMIC() {

@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Swinject
 
 class MainWindow: NSWindow {
     init() {
@@ -24,8 +25,9 @@ class MainWindow: NSWindow {
         
         /// Set the window to center axis by default
         center()
-        let vc                  = MainVC()
-        contentView             = vc.view
-        contentViewController   = vc
+        if let vc                  = Container.shared.resolve(MainVC.self) {
+            contentView             = vc.view
+            contentViewController   = vc
+        }
     }
 }

@@ -7,20 +7,21 @@
 
 import AppKit
 import Combine
+import AVFoundation
 
 class StretchingVC: NSViewController {
-    let cameraManager           = CameraManager()
     let cameraPreview           = CameraPreviewView()
     let movementInfoView        = NSView()
     let movementStack           = NSStackView()
     let currentMovementView     = CurrentMovementView()
     let movementDivider         = Divider()
     let nextMovementView        = NextMovementView()
-    let skipButton              = CLTextButtonV2(title: "Skip", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
-    let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 16))
+    let skipButton              = CLTextButtonV2(title: "Skip This Movement", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 14))
+    let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 14))
     let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     let movementStateView       = MovementStateView()
+    let predictor               = Predictor()
     
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
@@ -41,16 +42,31 @@ class StretchingVC: NSViewController {
     var isTimerRunning: Bool = false
     var isTimerPaused: Bool = false
     
+    /// Dependencies
+    var audioService: AudioService?
+    var cameraService: CameraService?
+    
+    init(audioService: AudioService?, cameraService: CameraService?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.audioService = audioService
+        self.cameraService = cameraService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        cameraManager.startSession()
+        cameraService?.startSession()
         configureCameraPreview()
         configureMovementView()
-        cameraManager.predictor.delegate = self
-        
+        predictor.delegate = self
+        cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
         
@@ -151,22 +167,17 @@ class StretchingVC: NSViewController {
         .store(in: &bags)
 
     }
-    
-//    override func viewDidAppear() {
-//        super.viewDidAppear()
-//        cameraManager.startSession()
-//    }
-//    
+  
     override func viewDidDisappear() {
         super.viewDidDisappear()
-        cameraManager.stopSession()
+        cameraService?.stopSession()
         
         stopTimer()
     }
     
     private func setupVideoPreview(){
         
-        guard let previewLayer  = cameraManager.previewLayer else {return}
+        guard let previewLayer  = cameraService?.previewLayer else {return}
         
         cameraPreview.layer?.addSublayer(previewLayer)
         previewLayer.frame      = view.frame
@@ -179,7 +190,7 @@ class StretchingVC: NSViewController {
         cameraPreview.wantsLayer                = true
         cameraPreview.layer?.backgroundColor    = .black
         
-        cameraPreview.setupPreviewLayer(with: cameraManager)
+        cameraPreview.setupPreviewLayer(with: cameraService?.previewLayer)
         cameraPreview.addOtherSubLayer(layer: pointsLayer)
         
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false
@@ -249,6 +260,7 @@ class StretchingVC: NSViewController {
         
         buttonStack.distribution    = .fillEqually
         buttonStack.spacing         = 10
+        buttonStack.orientation     = .vertical
         
         view.addSubview(buttonStack)
         view.addSubview(divider)
@@ -271,11 +283,14 @@ class StretchingVC: NSViewController {
             buttonStack.bottomAnchor.constraint(equalTo: movementInfoView.bottomAnchor, constant: -padding),
             buttonStack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant:  -padding),
             
-            skipButton.heightAnchor.constraint(equalToConstant: 48),
-            finishButton.heightAnchor.constraint(equalToConstant: 48),
+            skipButton.heightAnchor.constraint(equalToConstant: 38),
+            skipButton.widthAnchor.constraint(equalTo: buttonStack.widthAnchor),
             
-            divider.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
-            divider.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+            finishButton.heightAnchor.constraint(equalToConstant: 38),
+            finishButton.widthAnchor.constraint(equalTo: buttonStack.widthAnchor),
+            
+            divider.leadingAnchor.constraint(equalTo: buttonStack.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
             divider.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -padding),
         ])
     }

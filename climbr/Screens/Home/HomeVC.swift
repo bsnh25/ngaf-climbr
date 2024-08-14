@@ -7,6 +7,7 @@
 
 import AppKit
 import SnapKit
+import Swinject
 
 class HomeVC: NSViewController {
     
@@ -190,8 +191,10 @@ class HomeVC: NSViewController {
 
     @objc
     private func actionStartSession(){
-        push(to: StretchingVC())
-        print("go to stretching session")
+        if let vc = Container.shared.resolve(StretchingVC.self) {
+            push(to: vc)
+            print("go to stretching session")
+        }
     }
     
 }

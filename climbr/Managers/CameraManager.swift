@@ -8,14 +8,14 @@
 import AVFoundation
 import AppKit
 
-class CameraManager: NSObject {
+class CameraManager: NSObject, CameraService {
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
     var cameraDevice: AVCaptureDevice!
     var videoOutput: AVCaptureVideoDataOutput
     private let cameraQueue: DispatchQueue
     
-    var predictor = Predictor()
+//    var predictor = Predictor()
     
     override init() {
         captureSession = AVCaptureSession()
@@ -25,6 +25,11 @@ class CameraManager: NSObject {
         
         super.init()
         setupSession()
+    }
+    
+    func setSampleBufferDelegate(delegate: AVCaptureVideoDataOutputSampleBufferDelegate) {
+        print("DELEGATE - AVCaptureVideoDataOutputSampleBufferDelegate")
+        videoOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "videoDispatchQueue"))
     }
     
     private func setupSession() {
@@ -37,6 +42,7 @@ class CameraManager: NSObject {
             if captureSession.canAddInput(cameraInput) {
                 captureSession.addInput(cameraInput)
             }
+            
         } catch {
             fatalError("Camera input could not be added: \(error.localizedDescription)")
         }
@@ -44,17 +50,15 @@ class CameraManager: NSObject {
 //        captureSession.sessionPreset = .high
         videoOutput.alwaysDiscardsLateVideoFrames = true
         
+        
         if captureSession.canAddOutput(videoOutput){
             captureSession.addOutput(videoOutput)
         }
         
         setupPreviewLayer()
-        
-        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
-        
     }
     
-    private func setupPreviewLayer() {
+    func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.videoGravity = .resizeAspectFill
 
@@ -88,14 +92,16 @@ class CameraManager: NSObject {
     }
 }
 
-extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
-            connection.isVideoMirrored = true
-        }
-        predictor.estimation(sampleBuffer: sampleBuffer)
-    }
-}
+
+//videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoDispatchQueue"))
+//extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
+//    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+//        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+//            connection.isVideoMirrored = true
+//        }
+//        predictor.estimation(sampleBuffer: sampleBuffer)
+//    }
+//}
 
 
 
