@@ -7,7 +7,7 @@
 
 import AppKit
 import AVFoundation
-import AudioToolbox
+import Swinject
 
 extension StretchingVC {
     func updateMovementData() {
@@ -206,7 +206,11 @@ extension StretchingVC {
     
     func finishSession() {
         self.cameraService?.stopSession()
-        self.replace(with: StretchingResultVC())
+        
+        if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
+            stretchingResult.movementList = self.completedMovement
+            self.replace(with: stretchingResult)
+        }
     }
     
     @objc func showEndSessionAlert() {

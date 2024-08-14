@@ -75,11 +75,14 @@ class CLTextButtonV2: NSButton {
         if isHighlighted {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.5)
         } else {
-            layer?.backgroundColor = self.backgroundColor.cgColor
+            if let color = self.backgroundColor {
+                layer?.backgroundColor = color.cgColor
+            }
         }
         
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+            layer?.borderColor = layer?.borderColor?.copy(alpha: 0.2)
         }
    }
 }

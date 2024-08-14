@@ -8,6 +8,20 @@
 import Foundation
 
 extension StretchingResultVC {
+    func calculatePoints() {
+        let points = movementList.reduce(0) { partial, next in
+            return partial + next.duration
+        }
+        
+        var label: String = "You didn’t earn any coins, but the next round could be yours!"
+        
+        if !points.isZero {
+            label = "You earned \(points) coins"
+        }
+        
+        rewardPointLabel.setText(label)
+    }
+    
     @objc func goToMainMenu() {
         self.pop()
     }

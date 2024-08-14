@@ -15,10 +15,17 @@ extension Container {
         /// Managers
         container.register(AudioService.self) { _ in AudioManager.shared }
         container.register(CameraService.self) { _ in CameraManager() }
+        container.register(UserService.self) { _ in UserManager() }
         
         /// ViewControllers
         container.register(MainVC.self) { resolver in
             return MainVC()
+        }
+        
+        container.register(StretchingResultVC.self) { resolver in
+            let userService     = resolver.resolve(UserService.self)
+            
+            return StretchingResultVC(userService: userService)
         }
         
         container.register(StretchingVC.self) { resolver in
