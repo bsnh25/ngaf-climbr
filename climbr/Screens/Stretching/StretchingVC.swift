@@ -48,7 +48,7 @@ class StretchingVC: NSViewController {
         
         configureCameraPreview()
         configureMovementView()
-        cameraManager.predictor.delegate = self
+//        cameraManager.predictor.delegate = self
         
         configureButton()
         configurePositionStateLabel()
