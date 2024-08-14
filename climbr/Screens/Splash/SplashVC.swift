@@ -14,9 +14,9 @@ class SplashVC: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.wantsLayer = true
+        view.layer?.backgroundColor = .white
         configureAppLogo()
-        
         navigateToHome()
     }
     
@@ -40,7 +40,8 @@ class SplashVC: NSViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: "isFirstTime") {
-                self.replace(with: onboardingStage)
+//                self.replace(with: onboardingStage)
+                self.replace(with: vc)
             }else{
                 self.replace(with: vc)
             }

@@ -111,7 +111,7 @@ class Predictor {
         do{
             let recognizedPoints = try observation.recognizedPoints(forGroupKey: .all)
             
-            var displayedPoints = recognizedPoints.map{
+            let displayedPoints = recognizedPoints.map{
                 CGPoint(x: $0.value.x, y: 1-$0.value.y)
 //                print("x: \($0.value.x), y: \(1-$0.value.y) ")
             }

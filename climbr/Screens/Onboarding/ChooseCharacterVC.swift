@@ -18,7 +18,7 @@ class ChooseCharacterVC: NSViewController {
     private let malechar = NSImageView(image: .malechar1)
     private let femalechar = NSImageView(image: .femalecharacter)
     private let textField = CLTextField(placeholder: "Type your climbr's name here")
-    private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .buttonOnboarding, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
+    private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
     
     enum Gender{
         case male, female, empty

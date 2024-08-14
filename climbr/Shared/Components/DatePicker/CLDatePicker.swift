@@ -8,20 +8,20 @@
 import Cocoa
 
 class CLDatePicker: NSDatePicker {
-
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         configure()
     }
     
     init(backgroundColor: NSColor, textColor: NSColor, datePickerStyleElement: NSDatePicker.ElementFlags, font: NSFont) {
-         super.init(frame: .zero)
-         self.font = font
-         self.layer?.backgroundColor = backgroundColor.cgColor
-         self.textColor = textColor
-         self.datePickerElements = datePickerStyleElement
-         configure()
-     }
+        super.init(frame: .zero)
+        configure()
+        self.font = font
+        self.layer?.backgroundColor = backgroundColor.cgColor
+        self.textColor = textColor
+        self.datePickerElements = datePickerStyleElement
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
