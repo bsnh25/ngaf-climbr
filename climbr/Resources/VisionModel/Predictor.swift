@@ -8,7 +8,7 @@
 import Foundation
 import Vision
 
-typealias stretchClassifier = ModelFixV1
+typealias stretchClassifier = ModelFixV2
 
 protocol PredictorDelegate: AnyObject {
     func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint])
