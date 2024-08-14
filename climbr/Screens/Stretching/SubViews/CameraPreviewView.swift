@@ -26,8 +26,8 @@ class CameraPreviewView: NSView {
         self.wantsLayer = true
     }
     
-    func setupPreviewLayer(with cameraManager: CameraManager) {
-        previewLayer = cameraManager.previewLayer
+    func setupPreviewLayer(with layer: AVCaptureVideoPreviewLayer?) {
+        previewLayer = layer
         
         if let previewLayer = previewLayer {
             previewLayer.frame = self.bounds

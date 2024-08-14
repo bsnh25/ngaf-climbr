@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import AVFoundation
 
 protocol CameraService {
+    var previewLayer: AVCaptureVideoPreviewLayer! { get }
+    
     func startSession()
     func stopSession()
-    func setupPreviewLayer()
+    func setSampleBufferDelegate(delegate: AVCaptureVideoDataOutputSampleBufferDelegate)
 }
