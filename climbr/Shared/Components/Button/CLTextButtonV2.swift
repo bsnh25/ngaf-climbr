@@ -73,9 +73,9 @@ class CLTextButtonV2: NSButton {
     override func updateLayer() {
        super.updateLayer()
         if isHighlighted {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
+            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.5)
         } else {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+            layer?.backgroundColor = self.backgroundColor.cgColor
         }
         
         if !isEnabled {
