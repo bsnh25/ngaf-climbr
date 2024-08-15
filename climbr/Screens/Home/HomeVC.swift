@@ -54,8 +54,10 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         
-        guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
-        push(to: choosCharVc)
+        if UserDefaults.standard.bool(forKey: "isFirstUser") == true {
+            guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
+            push(to: choosCharVc)
+        }
     }
     
     private func previewAnimaConfig(){
