@@ -17,6 +17,7 @@ class ItemsGridVC: NSViewController {
     let collectionViewContainer = CollectionContainerView()
     let sidebar = NSStackView()
     let contentStack = NSStackView()
+    let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     
     let sidebarItems: [(imageName: String, text: String)] = [
             ("person.fill", "Headgear"),
@@ -24,6 +25,8 @@ class ItemsGridVC: NSViewController {
             ("figure.walk", "Hiking stick"),
             ("map.fill", "Location")
         ]
+    
+    var itemType : EquipmentType = .head
     
 //    let sidebarItems = ["Headgear", "Backpack", "Hiking stick", "Location"]
         
@@ -97,8 +100,10 @@ class ItemsGridVC: NSViewController {
 //        let collectionViewContainer = CollectionContainerView()
         
 //        view.addSubview(collectionViewContainer)
-        
+        collectionViewContainer.itemType = itemType
         collectionViewContainer.translatesAutoresizingMaskIntoConstraints = false
+//        collectionViewContainer.layer?.backgroundColor = .white
+        
         NSLayoutConstraint.activate([
 //                collectionViewContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 //            collectionViewContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -109,14 +114,21 @@ class ItemsGridVC: NSViewController {
     }
         
     func setupPointsLabel() {
-        pointsLabel.font = NSFont.systemFont(ofSize: 20)
-        pointsLabel.alignment = .right
-        view.addSubview(pointsLabel)
+        
+        view.addSubview(points)
+        points.setText("halo")
+//        pointsLabel.font = NSFont.systemFont(ofSize: 20)
+//        pointsLabel.alignment = .right
+//        view.addSubview(pointsLabel)
             
-        pointsLabel.translatesAutoresizingMaskIntoConstraints = false
+//        pointsLabel.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            pointsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            pointsLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
+//        ])
         NSLayoutConstraint.activate([
-            pointsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            pointsLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
+            points.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            points.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
         ])
     }
 }

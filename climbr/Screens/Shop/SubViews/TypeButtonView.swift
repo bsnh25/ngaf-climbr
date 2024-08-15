@@ -43,7 +43,7 @@ class CustomButton: NSButton {
         title = ""
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.gray.cgColor
+        layer?.backgroundColor = NSColor.lightGray.cgColor
         layer?.cornerRadius = 10
         bezelStyle = .flexiblePush
         isBordered = false

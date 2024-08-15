@@ -27,4 +27,9 @@ class GridItem: NSCollectionViewItem {
             textLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+        print("GridItem tapped: \(textLabel.stringValue)")
+    }
 }
