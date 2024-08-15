@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Swinject
 
 
 
@@ -25,6 +26,17 @@ class ChooseCharacterVC: NSViewController {
     }
     
     var genderChar: Gender = Gender.empty
+    var userService: UserService?
+    var userData: UserModel?
+    
+    init(userService: UserService?){
+        super.init(nibName: nil, bundle: nil)
+        self.userService = userService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
@@ -189,6 +201,14 @@ class ChooseCharacterVC: NSViewController {
             print("user choose male")
         }else{
             print("still empty")
+        }
+        
+        userData?.id = UUID()
+        userData?.name = textField.stringValue
+        userData?.point = 0
+        
+        if let userData {
+            userService?.saveUserData(data: userData)
         }
         
         UserDefaults.standard.setValue(false, forKey: "isFirstTime")

@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Swinject
 
 class SplashVC: NSViewController {
     
@@ -34,13 +35,13 @@ class SplashVC: NSViewController {
     }
     
     private func navigateToHome() {
-        let onboardingStage = UserPreferenceVC()
+        let onboardingStage = Container.shared.resolve(UserPreferenceVC.self)
         let vc          = HomeVC()
         vc.audioService = AudioManager.shared
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: "isFirstTime") {
-                self.replace(with: onboardingStage)
+                self.replace(with: onboardingStage!)
             }else{
                 self.replace(with: vc)
             }

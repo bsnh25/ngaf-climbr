@@ -35,6 +35,18 @@ extension Container {
             return StretchingVC(audioService: audioService, cameraService: cameraService)
         }
         
+        container.register(UserPreferenceVC.self){ resolver in
+            let userService     = resolver.resolve(UserService.self)
+            
+            return UserPreferenceVC(userService: userService)
+        }
+        
+        container.register(ChooseCharacterVC.self){ resolver in
+            let userService     = resolver.resolve(UserService.self)
+            
+            return ChooseCharacterVC(userService: userService)
+        }
+        
         return container
     }()
 }

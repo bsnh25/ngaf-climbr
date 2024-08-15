@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Swinject
 
 
 
@@ -21,14 +22,28 @@ class UserPreferenceVC: NSViewController {
     private let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
     private let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
     private let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
-    private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
-    private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
+    private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
+    private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
     private let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     var isChecked: Bool = false
+    var userPreferenceData: UserPreferenceModel?
+    var intervalReminder: Int64 = 0
+    var userService: UserService?
+    
+    
+    init(userService: UserService?) {
+        super.init(nibName: nil, bundle: nil)
+        self.userService = userService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
 
     override func viewDidLoad() {
@@ -122,6 +137,7 @@ class UserPreferenceVC: NSViewController {
     private func configureNextButton(){
         view.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.isEnabled = false
         nextButton.target = self
         nextButton.action = #selector(actNextButton)
         
@@ -146,7 +162,6 @@ class UserPreferenceVC: NSViewController {
     private func configureStartWorkHour(){
         view.addSubview(startWorkHour)
         startWorkHour.maxDate = .distantFuture
-        startWorkHour.minDate = .now
         
         NSLayoutConstraint.activate([
             startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -169,11 +184,7 @@ class UserPreferenceVC: NSViewController {
     private func configureStopWorkHour(){
         view.addSubview(stopWorkHour)
         stopWorkHour.maxDate = .distantFuture
-        if let startMinDate = startWorkHour.minDate {
-            let calendar = Calendar.current
-            let oneHourLater = calendar.date(byAdding: .hour, value: 2, to: startMinDate)
-            stopWorkHour.minDate = oneHourLater
-        }
+        stopWorkHour.minDate = .init(timeInterval: 7200, since: startWorkHour.dateValue)
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -271,7 +282,7 @@ class UserPreferenceVC: NSViewController {
         
     }
     
-    private func processSavePreference() -> Int{
+    private func processSavePreference() -> Int64{
             
             if button1.isSelected {
                 return 30
@@ -307,7 +318,6 @@ class UserPreferenceVC: NSViewController {
             button2.isSelected = false
             button3.isSelected = false
             button4.isSelected = false
-
         }
     
         @objc
@@ -318,13 +328,19 @@ class UserPreferenceVC: NSViewController {
             }
             print("Reminder at \(processSavePreference())")
             print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
-            
             ///get checkbox value
             print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
             
+            userPreferenceData?.id = UUID()
+            userPreferenceData?.endWorkingHour = stopWorkHour.dateValue
+            userPreferenceData?.launchAtLogin = UserDefaults.standard.bool(forKey: kCheckbox)
+            userPreferenceData?.reminderInterval = processSavePreference()
+            userPreferenceData?.startWorkingHour = startWorkHour.dateValue
             
-            replace(with: HomeVC())
-            push(to: ChooseCharacterVC())
+            if let userPreferenceData {
+                userService?.savePreferences(data: userPreferenceData)
+            }
+            
         }
 
         @objc
@@ -333,7 +349,7 @@ class UserPreferenceVC: NSViewController {
             button1.isSelected = true
             button1.layer?.backgroundColor = .white
             button1.foregroundColorText = .black
-            
+            nextButton.isEnabled = true
             print("\(button1.title) choose")
         }
         
@@ -343,7 +359,7 @@ class UserPreferenceVC: NSViewController {
             button2.isSelected = true
             button2.layer?.backgroundColor = .white
             button2.foregroundColorText = .black
-            button2.fontText = .systemFont(ofSize: 17, weight: .bold)
+            nextButton.isEnabled = true
             print("\(button2.title) choose")
         }
         
@@ -353,7 +369,7 @@ class UserPreferenceVC: NSViewController {
             button3.isSelected = true
             button3.layer?.backgroundColor = .white
             button3.foregroundColorText = .black
-            button3.fontText = .systemFont(ofSize: 17, weight: .bold)
+            nextButton.isEnabled = true
             print("\(button3.title) choose")
         }
         
@@ -363,7 +379,7 @@ class UserPreferenceVC: NSViewController {
             button4.isSelected = true
             button4.layer?.backgroundColor = .white
             button4.foregroundColorText = .black
-            button4.fontText = .systemFont(ofSize: 17, weight: .bold)
+            nextButton.isEnabled = true
             print("\(button4.title) choose")
         }
     
