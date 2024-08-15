@@ -126,7 +126,10 @@ class StretchingVC: NSViewController {
         
         movementInfoView.translatesAutoresizingMaskIntoConstraints = false
         movementInfoView.wantsLayer                = true
-        movementInfoView.layer?.backgroundColor    = .white
+        movementInfoView.layer?.backgroundColor    = .white.copy(alpha: 0.5)
+        
+        let blurEffect = CLBlurEffectView(frame: movementInfoView.bounds)
+        movementInfoView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
             movementInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
