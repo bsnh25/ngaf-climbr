@@ -337,8 +337,8 @@ class UserPreferenceVC: NSViewController {
         print("Reminder at \(processSavePreference())")
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
         ///get checkbox value
-        print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
-        var userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: UserDefaults.standard.bool(forKey: kCheckbox), reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+        print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
+        var userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin), reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
         
         userService?.savePreferences(data: userPreferenceData)
         

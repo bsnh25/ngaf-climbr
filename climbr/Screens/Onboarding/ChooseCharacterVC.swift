@@ -206,7 +206,7 @@ class ChooseCharacterVC: NSViewController {
         
         userService?.saveUserData(data: userData)
         
-        UserDefaults.standard.setValue(false, forKey: "isFirstTime")
+       
         UserDefaults.standard.setValue(false, forKey: "kStretch")
         UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)
         pop()
