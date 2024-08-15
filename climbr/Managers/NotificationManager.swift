@@ -10,12 +10,12 @@ import UserNotifications
 
 class NotificationManager: NotificationService {
     
-    static let instance = NotificationManager()
+    static let shared = NotificationManager()
     
-    let center = UNUserNotificationCenter.current()
+    let notificationCenter = UNUserNotificationCenter.current()
     
     func askUserPermission() {
-        center.requestAuthorization(options: [.alert,.badge,.sound]) { (success, err) in
+        notificationCenter.requestAuthorization(options: [.alert,.badge,.sound]) { (success, err) in
             (err == nil) ? print("success request \(success)") : print("Notification Err : \(String(describing: err?.localizedDescription))")
         }
     }
@@ -55,7 +55,7 @@ class NotificationManager: NotificationService {
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 
-                UNUserNotificationCenter.current().add(request) { error in
+                notificationCenter.add(request) { error in
                     if let error = error {
                         print("Error scheduling notification: \(error)")
                         return
