@@ -10,12 +10,13 @@ import Cocoa
 class SplashVC: NSViewController {
     
     let appLogoView     = NSImageView()
+    var isFirstTime: Void     = UserDefaults.standard.set(true, forKey: "isFirstTime")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.wantsLayer = true
+        view.layer?.backgroundColor = .white
         configureAppLogo()
-        
         navigateToHome()
     }
     
@@ -33,11 +34,17 @@ class SplashVC: NSViewController {
     }
     
     private func navigateToHome() {
+        let onboardingStage = UserPreferenceVC()
         let vc          = HomeVC()
         vc.audioService = AudioManager.shared
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
-            self.replace(with: vc)
+            if UserDefaults.standard.bool(forKey: "isFirstTime") {
+                self.replace(with: onboardingStage)
+//                self.replace(with: vc)
+            }else{
+                self.replace(with: vc)
+            }
         }
     }
 }

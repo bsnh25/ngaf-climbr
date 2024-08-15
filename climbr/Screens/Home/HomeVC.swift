@@ -7,21 +7,22 @@
 
 import AppKit
 import SnapKit
+import Swinject
 
 class HomeVC: NSViewController {
     
-    private let settingButton = CLImageButton(imageName: "gear", accesibilityName: "settings", imgColor: .white, bgColor: .black)
-    private let audioButton = CLImageButton(imageName: "speaker.wave.2", accesibilityName: "Music Play", imgColor: .white, bgColor: .black)
-    private let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .white, bgColor: .black)
-    private let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .black
+    let settingButton = CLImageButton(imageName: "gear", accesibilityName: "settings", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
+    let audioButton = CLImageButton(imageName: "speaker.wave.3", accesibilityName: "Music Play", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
+    let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
+    let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .cButton
                                                     , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
-    private let textA = CLTextLabelV2(sizeOfFont: 10, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
-    private let textB = CLTextLabelV2(sizeOfFont: 13, weightOfFont: .bold, contentLabel: "Today’s session goal")
-    private let progressStretch = NSProgressIndicator()
-    private let containerView = NSView()
-    private let previewAnimation = NSView()
-    private var isSoundTapped: Bool = false
-    
+    let textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
+    let textB = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Today’s session goal")
+    let progressStretch = NSProgressIndicator()
+    let containerView = NSView()
+    let imageHome = NSImageView()
+    var isSoundTapped: Bool = false
+    let stack = NSStackView()
     var audioService: AudioService?
     
     
@@ -31,6 +32,7 @@ class HomeVC: NSViewController {
         previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()
+        dailyProgress()
     }
     
     override func viewDidAppear() {
@@ -38,20 +40,27 @@ class HomeVC: NSViewController {
     }
     
     private func previewAnimaConfig(){
-        view.addSubview(previewAnimation)
-        previewAnimation.wantsLayer                = true
-        previewAnimation.layer?.backgroundColor    = NSColor.red.cgColor.copy(alpha: 0.5)
+        view.addSubview(imageHome)
+        imageHome.wantsLayer = true
+        imageHome.image = NSImage(resource: .homebg)
+        imageHome.imageScaling = .scaleProportionallyUpOrDown
         
-        previewAnimation.snp.makeConstraints { anime in
+        imageHome.snp.makeConstraints { anime in
             anime.top.leading.trailing.bottom.equalToSuperview()
             anime.centerX.centerY.equalToSuperview()
+            anime.width.equalTo(view.snp.width)
+            anime.height.equalTo(view.snp.height)
         }
     }
     
     private func ButtonConfigure(){
-        view.addSubview(settingButton)
-        view.addSubview(audioButton)
-        view.addSubview(storeButton)
+
+        view.addSubview(stack)
+        
+        stack.wantsLayer = true
+        stack.setViews([settingButton, audioButton, storeButton], in: .center)
+        stack.orientation = .horizontal
+        stack.spacing = 10
         
         //MARK: Settings Button Action
         settingButton.action = #selector(actionSetting)
@@ -67,29 +76,38 @@ class HomeVC: NSViewController {
         
         let vPadding = view.bounds.height * 0.08
         let hPadding = view.bounds.width * 0.02
-        let widthBtn = view.bounds.width * 0.08
-        let heightBtn = view.bounds.height * 0.06
+        let widthBtn = view.bounds.width * 0.3
+        let heightBtn = view.bounds.height * 0.08
+        
+        stack.snp.makeConstraints { stack in
+            stack.leading.equalToSuperview().offset(hPadding)
+            stack.top.equalToSuperview().offset(vPadding)
+            stack.width.equalTo(widthBtn)
+            stack.height.equalTo(heightBtn)
+        }
         
         settingButton.snp.makeConstraints { setting in
-            setting.leading.equalToSuperview().inset(hPadding)
-            setting.top.equalToSuperview().inset(vPadding)
-            setting.width.equalTo(widthBtn)
-            setting.height.equalTo(heightBtn)
+            setting.leading.equalTo(stack.snp.leading)
+            setting.top.equalTo(stack.snp.top)
+            setting.width.equalTo(38)
+            setting.height.equalTo(38)
         }
         
         audioButton.snp.makeConstraints { audio in
             audio.leading.equalTo(settingButton.snp.trailing).offset(hPadding)
-            audio.top.equalTo(settingButton.snp.top)
-            audio.width.equalTo(settingButton.snp.width)
-            audio.height.equalTo(settingButton.snp.height)
+            audio.top.equalTo(stack.snp.top)
+            audio.width.equalTo(38)
+            audio.height.equalTo(38)
         }
         
         storeButton.snp.makeConstraints { store in
             store.leading.equalTo(audioButton.snp.trailing).offset(hPadding)
-            store.top.equalTo(settingButton.snp.top)
-            store.width.equalTo(settingButton.snp.width)
-            store.height.equalTo(settingButton.snp.height)
+            store.top.equalTo(stack.snp.top)
+            store.width.equalTo(38)
+            store.height.equalTo(38)
         }
+        
+
     }
     
     private func stackConfig(){
@@ -117,7 +135,7 @@ class HomeVC: NSViewController {
         }
         
         textA.snp.makeConstraints { text in
-            text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.01))
+            text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.02))
             text.leading.equalTo(progressStretch.snp.trailing).offset(minPadding)
             text.trailing.equalTo(containerView.snp.trailing).inset(padding)
         }
@@ -140,7 +158,7 @@ class HomeVC: NSViewController {
         containerView.addSubview(startStretchButton)
         
         containerView.wantsLayer = true
-        containerView.layer?.backgroundColor = NSColor.gray.cgColor
+        containerView.layer?.backgroundColor = NSColor.cContainerHome.withAlphaComponent(0.72).cgColor
         containerView.layer?.opacity = 1
         containerView.layer?.cornerRadius = 20
         
@@ -149,55 +167,14 @@ class HomeVC: NSViewController {
         progressStretch.isDisplayedWhenStopped = true
         progressStretch.layer?.masksToBounds = true
         progressStretch.style = .bar
-        progressStretch.minValue = 0
-        progressStretch.maxValue = 100
-        progressStretch.doubleValue = 50
-        progressStretch.layer?.backgroundColor = NSColor.darkGray.cgColor
+        progressStretch.layer?.backgroundColor = NSColor.black.cgColor.copy(alpha: 0.12)
         progressStretch.layer?.cornerRadius = 5
         progressStretch.displayIfNeeded()
-//        print("Progress value set to: \(progressStretch.doubleValue)")
 
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
         
         stackConfig()
     }
-    
-    @objc
-    private func actionSetting(){
-        let settingsVC = SettingVC()
-        settingsVC.preferredContentSize = CGSize(width: 412, height: 358)
-        self.presentAsModalWindow(settingsVC)
-    }
-
-    @objc
-    private func actionAudio(){
-        guard let audio = audioService else {return}
-        isSoundTapped.toggle()
-        if isSoundTapped{
-            audio.muteSound()
-            audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")
-            return
-        } else {
-            audio.unmuteSound()
-            audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")
-            return
-        }
-    }
-
-    @objc
-    private func actionStore(){
-        print("go to shop")
-    }
-
-    @objc
-    private func actionStartSession(){
-        push(to: StretchingVC())
-        print("go to stretching session")
-    }
-    
+  
 }
-
-#Preview(traits: .defaultLayout, body: {
-    HomeVC()
-})

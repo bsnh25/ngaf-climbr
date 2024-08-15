@@ -48,7 +48,7 @@ class CLTextButtonV2: NSButton {
         self.isBordered             = false
         self.layer?.borderColor     = borderColor.cgColor
         self.layer?.borderWidth     = 1.5
-        self.layer?.backgroundColor = .white.copy(alpha: 0)
+//        self.layer?.backgroundColor = .white.copy(alpha: 0)
         
         configure(foregroundColorText: borderColor, font: font)
     }
@@ -73,13 +73,16 @@ class CLTextButtonV2: NSButton {
     override func updateLayer() {
        super.updateLayer()
         if isHighlighted {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
+            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.5)
         } else {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+            if let color = self.backgroundColor {
+                layer?.backgroundColor = color.cgColor
+            }
         }
         
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+            layer?.borderColor = layer?.borderColor?.copy(alpha: 0.2)
         }
    }
 }

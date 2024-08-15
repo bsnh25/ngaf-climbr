@@ -6,6 +6,8 @@
 //
 
 import Cocoa
+import Swinject
+
 
 class UserPreferenceVC: NSViewController {
     
@@ -21,10 +23,10 @@ class UserPreferenceVC: NSViewController {
     private let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
     private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
     private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
-    private let button1 = CLTextButtonV2(title: "30", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button2 = CLTextButtonV2(title: "60", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button3 = CLTextButtonV2(title: "90", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button4 = CLTextButtonV2(title: "120", backgroundColor: .gray, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    private let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     var isChecked: Bool = false
     
@@ -33,6 +35,14 @@ class UserPreferenceVC: NSViewController {
         super.viewDidLoad()
         configure()
     }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        let notif = Container.shared.resolve(NotificationManager.self)
+        notif?.askUserPermission()
+//        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
+    }
+    
     
     private func configure(){
         configureBgContainer()
@@ -119,6 +129,8 @@ class UserPreferenceVC: NSViewController {
     private func configureNextButton(){
         view.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.target = self
+        nextButton.action = #selector(actNextButton)
         
         NSLayoutConstraint.activate([
             nextButton.widthAnchor.constraint(equalToConstant: 143),
@@ -256,6 +268,8 @@ class UserPreferenceVC: NSViewController {
         checkboxButton.translatesAutoresizingMaskIntoConstraints = false
         checkboxButton.font = NSFont.systemFont(ofSize: 22, weight: .bold)
         checkboxButton.contentTintColor = .black
+        checkboxButton.target = self
+        checkboxButton.action = #selector(actionCheckbox)
         
         NSLayoutConstraint.activate([
             checkboxButton.topAnchor.constraint(equalTo: text1Line2.bottomAnchor, constant: 55),
@@ -278,14 +292,23 @@ class UserPreferenceVC: NSViewController {
                 print("ERR: at user preference (reminder)")
                 return 0
             }
+        
         }
+    
+    
+    
 
         private func resetButtonColors() {
             // Reset all buttons to gray
-            button1.layer?.backgroundColor = NSColor.gray.cgColor
-            button2.layer?.backgroundColor = NSColor.gray.cgColor
-            button3.layer?.backgroundColor = NSColor.gray.cgColor
-            button4.layer?.backgroundColor = NSColor.gray.cgColor
+            button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            button3.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            button4.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+            
+            button1.foregroundColorText = .white
+            button2.foregroundColorText = .white
+            button3.foregroundColorText = .white
+            button4.foregroundColorText = .white
             
             button1.isSelected = false
             button2.isSelected = false
@@ -293,12 +316,31 @@ class UserPreferenceVC: NSViewController {
             button4.isSelected = false
 
         }
+    
+        @objc
+        private func actNextButton(){
+            guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
+                print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
+                return
+            }
+            print("Reminder at \(processSavePreference())")
+            print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
+            
+            ///get checkbox value
+            print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+            
+            
+            replace(with: HomeVC())
+            push(to: ChooseCharacterVC())
+        }
 
         @objc
         private func action30min(){
             resetButtonColors()
             button1.isSelected = true
-            button1.layer?.backgroundColor = .black
+            button1.layer?.backgroundColor = .white
+            button1.foregroundColorText = .black
+            
             print("\(button1.title) choose")
         }
         
@@ -306,7 +348,9 @@ class UserPreferenceVC: NSViewController {
         private func action60min(){
             resetButtonColors()
             button2.isSelected = true
-            button2.layer?.backgroundColor = .black
+            button2.layer?.backgroundColor = .white
+            button2.foregroundColorText = .black
+            button2.fontText = .systemFont(ofSize: 17, weight: .bold)
             print("\(button2.title) choose")
         }
         
@@ -314,7 +358,9 @@ class UserPreferenceVC: NSViewController {
         private func action90min(){
             resetButtonColors()
             button3.isSelected = true
-            button3.layer?.backgroundColor = .black
+            button3.layer?.backgroundColor = .white
+            button3.foregroundColorText = .black
+            button3.fontText = .systemFont(ofSize: 17, weight: .bold)
             print("\(button3.title) choose")
         }
         
@@ -322,29 +368,24 @@ class UserPreferenceVC: NSViewController {
         private func action120min(){
             resetButtonColors()
             button4.isSelected = true
-            button4.layer?.backgroundColor = .black
+            button4.layer?.backgroundColor = .white
+            button4.foregroundColorText = .black
+            button4.fontText = .systemFont(ofSize: 17, weight: .bold)
             print("\(button4.title) choose")
         }
     
     @objc
     private func actionCheckbox(){
-        // Check the state of the checkbox
         isChecked = checkboxButton.state == .on
         
-        // Perform actions based on checkbox state
-        if isChecked {
-            print("Checkbox is checked")
-            // Handle the case when the checkbox is checked
-        } else {
-            print("Checkbox is unchecked")
-            // Handle the case when the checkbox is unchecked
-        }
+        ///change print into user deafult settings
+        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
     }
 }
 
 
 
-
-#Preview(traits: .defaultLayout, body: {
-    UserPreferenceVC()
-})
+//
+//#Preview(traits: .defaultLayout, body: {
+//    UserPreferenceVC()
+//})
