@@ -74,7 +74,6 @@ extension StretchingVC {
                         self.movementStateView.setBackgroundColor(.systemRed)
                         
                         self.playSfx("incorrect")
-                        
                     }
                     
                     self.movementStateView.setLabel(label)
@@ -82,8 +81,6 @@ extension StretchingVC {
                     self.playSfx("correct")
                     self.startExerciseSession(duration: movement.duration)
                     self.movementStateView.hide()
-                    /// Hide the movement state view if the movement is correct
-                    //                    self.movementStateView.hide()
                 }
             }
         }.store(in: &bags)
@@ -122,6 +119,7 @@ extension StretchingVC {
     
     /// Timer countdown
     func startTimer(duration: TimeInterval?) {
+        guard !isTimerRunning, !isTimerPaused else { return }
         
         /// If duration exist, it means the app will start timer based on duration.
         /// Otherwise, app will start timer based on previous duration (resume)
@@ -129,8 +127,6 @@ extension StretchingVC {
             remainingTime   = duration
             timerInterval   = duration
         }
-        
-        guard !isTimerRunning, !isTimerPaused else { return }
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         
@@ -195,6 +191,7 @@ extension StretchingVC {
     }
     
     func next() {
+        /// Make sure movement index is not out of range
         guard let movement = setOfMovements[safe: currentIndex] else {
             return
         }
