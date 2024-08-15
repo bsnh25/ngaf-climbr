@@ -18,7 +18,6 @@ extension HomeVC {
     @objc
     func actionStartSession(){
         if let vc = Container.shared.resolve(StretchingVC.self) {
-            UserDefaults.standard.setValue(true, forKey: "kStretch")
             push(to: vc)
             print("go to stretching session")
         }
@@ -64,7 +63,7 @@ extension HomeVC {
             print("Date now \(now)")
             print("Start Date Tommorow: \(Calendar.current.startOfDay(for: tomorrow))")
             
-            switch UserDefaults.standard.integer(forKey: "kProgressSession") {
+            switch UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) {
             case 0, 1, 2, 3:
                 textA.setText("\(progressValue) / 4 sessions")
                 progressValue += 1
@@ -74,12 +73,12 @@ extension HomeVC {
                 progressValue = 4
             }
             
-            UserDefaults.standard.setValue(progressValue, forKey: "kProgressSession")
+            UserDefaults.standard.setValue(progressValue, forKey: UserDefaultsKey.kProgressSession)
             
         } else {
             progressValue = 0
             textA.setText("0 / 4 sessions")
-            UserDefaults.standard.setValue(Date(), forKey: "kDateNow")
+            UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
         }
         
         print("Session : \(textA.stringValue)")

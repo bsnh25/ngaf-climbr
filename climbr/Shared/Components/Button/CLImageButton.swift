@@ -90,18 +90,9 @@ class CLImageButton: NSButton {
     
     override func updateLayer() {
        super.updateLayer()
-//        if isHighlighted {
-//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
-//        } else {
-//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
-//        }
         
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
-        }
-        
-        if UserDefaults.standard.bool(forKey: "isFirstTime") == true || UserDefaults.standard.bool(forKey: "kStretch") == true {
-            self.isEnabled = false
         }
    }
 }

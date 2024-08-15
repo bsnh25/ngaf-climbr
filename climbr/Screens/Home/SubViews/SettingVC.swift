@@ -30,7 +30,7 @@ import SnapKit
 //}
 
 
-let kCheckbox = "kCheckbox"
+
 
 class SettingVC: NSViewController {
     

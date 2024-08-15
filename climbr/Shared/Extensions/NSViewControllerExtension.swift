@@ -7,12 +7,20 @@
 
 import AppKit
 
+fileprivate var overlayView: CustomOverlayView!
+
 extension NSViewController {
     func addSubViewController(_ vc: NSViewController, to view: NSView) {
         addChild(vc)
         
+        overlayView = CustomOverlayView(frame: view.bounds)
+        overlayView.wantsLayer = true
+        overlayView.layer?.backgroundColor = .clear
+        overlayView.autoresizingMask = [.width, .height]
+        
         view.addSubview(vc.view)
         vc.view.frame = view.bounds
+        vc.view.addSubview(overlayView, positioned: .below, relativeTo: nil)
     }
     
     func push(to vc: NSViewController) {
@@ -20,11 +28,14 @@ extension NSViewController {
         if let contentVC = self.view.window?.contentViewController {
             print("NAV - Before Push: ", contentVC.children)
             
+            
             NSAnimationContext.runAnimationGroup { context in
                 context.duration = 0.3
                 
                 vc.view.animator().alphaValue = 0
             } completionHandler: {
+                
+                
                 contentVC.addSubViewController(vc, to: contentVC.view)
                 
                 vc.view.animator().alphaValue = 1
@@ -38,7 +49,7 @@ extension NSViewController {
     func pop() {
         
         if let contentVC = self.view.window?.contentViewController {
-            print("NAV - Before Pop: ", contentVC)
+            print("NAV - Before Pop: ", contentVC.children)
             guard let currentVC = contentVC.children.last else {
                 return
             }
@@ -53,7 +64,10 @@ extension NSViewController {
                 currentVC.removeFromParent()
                 currentVC.view.removeFromSuperview()
                 
-                print("NAV - After Pop: ", contentVC)
+                // Remove overlay from superview
+                overlayView.removeFromSuperview()
+                
+                print("NAV - After Pop: ", contentVC.children)
             }
         }
     }
@@ -89,5 +103,19 @@ extension NSViewController {
                 
             }
         }
+    }
+}
+
+class CustomOverlayView: NSView {
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        return false
+    }
+    override var allowedTouchTypes: NSTouch.TouchTypeMask {
+        get { return [] }
+        set { }
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        
     }
 }
