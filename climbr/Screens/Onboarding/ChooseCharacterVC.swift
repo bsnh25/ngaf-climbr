@@ -5,7 +5,7 @@
 //  Created by I Gusti Ngurah Surya Ardika Dinataputra on 13/08/24.
 //
 
-import Cocoa
+import AppKit
 
 
 
@@ -48,9 +48,8 @@ class ChooseCharacterVC: NSViewController {
         view.addSubview(containerBig)
         containerBig.wantsLayer = true
         containerBig.layer?.backgroundColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
+//        containerBig.layer?.backgroundColor = NSColor.red.cgColor
         containerBig.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         
         NSLayoutConstraint.activate([
             containerBig.topAnchor.constraint(equalTo: view.topAnchor),
@@ -192,6 +191,7 @@ class ChooseCharacterVC: NSViewController {
         }
         
         UserDefaults.standard.setValue(false, forKey: "isFirstTime")
+        UserDefaults.standard.setValue(false, forKey: "kStretch")
         pop()
     }
     

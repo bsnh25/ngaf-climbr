@@ -16,14 +16,29 @@ class HomeVC: NSViewController {
     let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
     let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .cButton
                                                     , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
-    let textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
     let textB = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Today’s session goal")
-    let progressStretch = NSProgressIndicator()
     let containerView = NSView()
     let imageHome = NSImageView()
-    var isSoundTapped: Bool = false
     let stack = NSStackView()
+    
     var audioService: AudioService?
+    var isSoundTapped: Bool = false
+    var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
+    var progressStretch = NSProgressIndicator()
+    var progressValue: Double = 0.0
+    
+//    var progressService: ProgressService?
+//    var settingVC: SettingVC?
+    
+    init(audioService: AudioService?) {
+        super.init(nibName: nil, bundle: nil)
+//        self.progressService = progressService
+        self.audioService = audioService
+    }
+   
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
@@ -33,6 +48,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
+        
     }
     
     override func viewDidAppear() {
@@ -117,6 +133,8 @@ class HomeVC: NSViewController {
         
         let padding = view.bounds.height * 0.04
         let minPadding = view.bounds.height * 0.02
+        
+        startStretchButton.isEnabled = UserDefaults.standard.bool(forKey: "isFirstTime") ? false : true
         
         containerView.snp.makeConstraints { container in
             container.trailing.equalToSuperview().inset(padding)

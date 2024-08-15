@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Swinject
 
 extension StretchingResultVC {
     func calculatePoints() {
@@ -17,6 +18,8 @@ extension StretchingResultVC {
         
         if !points.isZero {
             label = "You earned \(points) coins"
+            guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+            homeVc.updateProgress(UserDefaults.standard.object(forKey: "kDateNow") as! Date)
         }
         
         rewardPointLabel.setText(label)
@@ -24,8 +27,17 @@ extension StretchingResultVC {
     
     @objc func goToMainMenu() {
         self.pop()
+        UserDefaults.standard.setValue(false, forKey: "kStretch")
     }
     
     @objc func continueWorking() {
+        UserDefaults.standard.setValue(false, forKey: "kStretch")
     }
+    
+//    func updateProgress(){
+//        //1. check value sekarang berapa
+//        //2. if value kurang dari max value, return 3, else return maxValue
+//        //3. kalau kurang, value ditambah 0.25,
+//        HomeVC().progressValue = (HomeVC().progressValue < HomeVC().progressStretch.maxValue) ? HomeVC().progressValue+0.25 : HomeVC().progressStretch.maxValue
+//    }
 }
