@@ -20,6 +20,10 @@ extension NSViewController {
         if let contentVC = self.view.window?.contentViewController {
             print("NAV - Before Push: ", contentVC.children)
             
+            guard let currentVC = contentVC.children.last else {
+                return
+            }
+            
             NSAnimationContext.runAnimationGroup { context in
                 context.duration = 0.3
                 
@@ -29,7 +33,17 @@ extension NSViewController {
                 
                 vc.view.animator().alphaValue = 1
                 
+                /// Hide the current VC
+                currentVC.view.isHidden = true
+                
                 print("NAV - After Push: ", contentVC.children)
+                
+                NSAnimationContext.runAnimationGroup { context in
+                    context.duration = 0.3
+                    
+                    /// Unhide previous vc
+                    contentVC.children.first?.view.isHidden = false
+                }
             }
         }
 
@@ -48,6 +62,7 @@ extension NSViewController {
                 
                 /// Set next vc view opacity to zero
                 currentVC.view.animator().alphaValue = 0
+                
             } completionHandler: {
                 /// Remove current VC from parent
                 currentVC.removeFromParent()
