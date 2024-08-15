@@ -36,6 +36,7 @@ extension StretchingResultVC {
     }
     
     @objc func continueWorking() {
+        self.view.window?.miniaturize(self)
     }
     
 //    func updateProgress(){
