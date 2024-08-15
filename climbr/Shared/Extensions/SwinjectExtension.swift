@@ -24,6 +24,11 @@ extension Container {
             return MainVC()
         }
         
+        container.register(SplashVC.self) { resolver in
+            let user = resolver.resolve(UserService.self)
+            return SplashVC(userService: user)
+        }
+        
         container.register(UserPreferenceVC.self) { resolver in
             let notif = resolver.resolve(NotificationService.self)
             let user = resolver.resolve(UserService.self)
@@ -37,7 +42,8 @@ extension Container {
         
         container.register(HomeVC.self) { resolver in
             let audio = resolver.resolve(AudioService.self)
-            return HomeVC(audioService: audio)
+            let user = resolver.resolve(UserService.self)
+            return HomeVC(audioService: audio, userService: user)
         }
         
         container.register(SettingVC.self) { resolver in

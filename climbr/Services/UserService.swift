@@ -8,9 +8,9 @@
 import Foundation
 
 protocol UserService {
-    func getPreferences() -> [UserPreferences]
+    func getPreferences() -> UserPreferences?
     func savePreferences(data: UserPreferenceModel)
-    func getUserData() -> User
+    func getUserData() -> User?
     func saveUserData(data: UserModel)
     func updatePoint(user: User, points: Int)
 }

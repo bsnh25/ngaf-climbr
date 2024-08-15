@@ -338,14 +338,11 @@ class UserPreferenceVC: NSViewController {
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
         ///get checkbox value
         print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
-        var userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin), reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+        var userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
         
         userService?.savePreferences(data: userPreferenceData)
-        
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-        guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
         replace(with: homeVc)
-        push(to: choosCharVc)
     }
     
     @objc
@@ -391,9 +388,7 @@ class UserPreferenceVC: NSViewController {
     @objc
     private func actionCheckbox(){
         isChecked = checkboxButton.state == .on
-        
-        ///change print into user deafult settings
-        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
+        print("\(isChecked)")
     }
 }
 

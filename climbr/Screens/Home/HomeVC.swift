@@ -22,6 +22,7 @@ class HomeVC: NSViewController {
     let stack = NSStackView()
     
     var audioService: AudioService?
+    var userService: UserService?
     var isSoundTapped: Bool = false
     var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
     var progressStretch = NSProgressIndicator()
@@ -30,10 +31,11 @@ class HomeVC: NSViewController {
 //    var progressService: ProgressService?
 //    var settingVC: SettingVC?
     
-    init(audioService: AudioService?) {
+    init(audioService: AudioService?, userService: UserService?) {
         super.init(nibName: nil, bundle: nil)
 //        self.progressService = progressService
         self.audioService = audioService
+        self.userService = userService
     }
    
     required init?(coder: NSCoder) {
@@ -54,7 +56,7 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         
-        if UserDefaults.standard.bool(forKey: UserDefaultsKey.kFirstTime) == true {
+        if userService?.getPreferences() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
         }

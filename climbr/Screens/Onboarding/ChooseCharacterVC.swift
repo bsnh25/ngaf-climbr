@@ -22,10 +22,10 @@ class ChooseCharacterVC: NSViewController {
     private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
     
     enum Gender{
-        case male, female, empty
+        case male, female
     }
     
-    var genderChar: Gender = Gender.empty
+    var genderChar: Gender?
     var userService: UserService?
     
     init(userService: UserService?){
@@ -194,12 +194,14 @@ class ChooseCharacterVC: NSViewController {
     private func actButtonStart(){
         print("tapped and inputed \(textField.stringValue)")
         
-        if genderChar != Gender.empty{
+        if let genderChar{
             if genderChar == Gender.female{
                 print("user choose female")
             }else if genderChar == Gender.male{
                 print("user choose male")
             }
+        }else {
+            print("user not choose character")
         }
         
         var userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)

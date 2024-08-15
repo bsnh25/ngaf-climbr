@@ -21,15 +21,15 @@ class UserManager : UserService {
         }
     }
     
-    func getPreferences() -> [UserPreferences] {
+    func getPreferences() -> UserPreferences? {
         var request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
         
         
         do {
-            return try container.viewContext.fetch(request)
+            return try container.viewContext.fetch(request).first
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
-            return []
+            return nil
         }
     }
     
@@ -55,7 +55,7 @@ class UserManager : UserService {
         
     }
     
-    func getUserData() -> User {
+    func getUserData() -> User? {
 #warning("change the return data later")
         return User()
     }
