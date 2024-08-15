@@ -7,10 +7,6 @@
 
 import Cocoa
 
-//class ItemsGridView: NSView {
-//    
-//}
-
 class ItemsGridVC: NSViewController {
     
     let pointsLabel = NSTextField(labelWithString: "100")
@@ -26,18 +22,41 @@ class ItemsGridVC: NSViewController {
             ("map.fill", "Location")
         ]
     
-    var itemType : EquipmentType = .head
+    let headItem: [String] = ["A", "B", "C", "D", "E"]
+    let handItem: [String] = ["A", "B", "C", "D", "E", "F", "G"]
+    let backItem: [String] = ["A", "B", "C", "D"]
+    let locationItem: [String] = ["A", "B", "C", "D", "E", "F"]
     
-//    let sidebarItems = ["Headgear", "Backpack", "Hiking stick", "Location"]
+    var itemType : EquipmentType = .head
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         
+        collectionViewContainer.updateItems(items: headItem)
         setupSidebar()
         setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
+    }
+    
+    func setupSidebar() {
+        sidebar.orientation = .vertical
+        sidebar.alignment = .leading
+        sidebar.spacing = 10
+        var items : [CustomButton] = []
+        
+        for (index, item) in sidebarItems.enumerated() {
+            let button = CustomButton(imageName: item.imageName, text: item.text)
+            button.tag = index
+            button.target = self
+            button.action = #selector(sidebarButtonClicked(_:))
+            sidebar.addArrangedSubview(button)
+            items.append(button)
+        }
+        
+        sidebar.setViews(items, in: .top)
+        sidebar.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func horizontalStack(){
@@ -51,41 +70,8 @@ class ItemsGridVC: NSViewController {
         
         NSLayoutConstraint.activate([
             contentStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-//            contentStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             contentStack.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10)
         ])
-    }
-        
-    func setupSidebar() {
-//        let sidebar = NSStackView()
-        sidebar.orientation = .vertical
-        sidebar.alignment = .leading
-//        sidebar.distribution = .fillEqually
-        sidebar.spacing = 10
-        
-        let items = sidebarItems.map { item in
-            CustomButton(imageName: item.imageName, text: item.text)
-        }
-        
-        sidebar.setViews(items, in: .top)
-        
-//        for item in sidebarItems {
-////            let button = CustomButton(frame: NSRect(x: 0, y: 0, width: 300, height: 300))
-////            button.setButton(imageName: item.imageName, text: item.text)
-////            let button = CustomButton(height: 0, width: 0, imageName: item.imageName, text: item.text)
-//            let button = CustomButton(imageName: item.imageName, text: item.text)
-//            sidebar.addArrangedSubview(button)
-//        }
-        
-//        view.addSubview(sidebar)
-        
-        sidebar.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            sidebar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            sidebar.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-////            sidebar.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-////            sidebar.trailingAnchor.constraint(equalTo: collectionViewContainer.leadingAnchor , constant: 20)
-//        ])
     }
         
     func createSidebarButton(title: String) -> NSButton {
@@ -97,38 +83,43 @@ class ItemsGridVC: NSViewController {
     }
         
     func setupCollectionViewContainer() {
-//        let collectionViewContainer = CollectionContainerView()
-        
-//        view.addSubview(collectionViewContainer)
         collectionViewContainer.itemType = itemType
         collectionViewContainer.translatesAutoresizingMaskIntoConstraints = false
-//        collectionViewContainer.layer?.backgroundColor = .white
         
         NSLayoutConstraint.activate([
-//                collectionViewContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            collectionViewContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            collectionViewContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             collectionViewContainer.widthAnchor.constraint(equalToConstant: 350),
             collectionViewContainer.heightAnchor.constraint(equalToConstant: 700)
         ])
     }
+    
+    
         
     func setupPointsLabel() {
-        
         view.addSubview(points)
         points.setText("halo")
-//        pointsLabel.font = NSFont.systemFont(ofSize: 20)
-//        pointsLabel.alignment = .right
-//        view.addSubview(pointsLabel)
-            
-//        pointsLabel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            pointsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            pointsLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
-//        ])
         NSLayoutConstraint.activate([
             points.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             points.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
         ])
+    }
+    
+    @objc func sidebarButtonClicked(_ sender: CustomButton) {
+        print("halo \(sender.tag)")
+        switch sender.tag {
+        case 0:
+            print("case 0")
+            collectionViewContainer.updateItems(items: headItem)
+        case 1:
+            print("case 1")
+            collectionViewContainer.updateItems(items: backItem)
+        case 2:
+            print("case 2")
+            collectionViewContainer.updateItems(items: handItem)
+        case 3:
+            print("case 3")
+            collectionViewContainer.updateItems(items: locationItem)
+        default:
+            break
+        }
     }
 }
