@@ -26,7 +26,9 @@ extension StretchingResultVC {
     }
     
     @objc func goToMainMenu() {
-        self.pop()
+        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+//        homeVc.viewDidLoad()
+        self.resetAndAdjust(with: homeVc)
     }
     
     @objc func continueWorking() {

@@ -8,6 +8,7 @@
 import AppKit
 import SnapKit
 import Swinject
+import Combine
 
 class HomeVC: NSViewController {
     
@@ -23,9 +24,10 @@ class HomeVC: NSViewController {
     
     var audioService: AudioService?
     var isSoundTapped: Bool = false
-    var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
+    var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
-    @Published var progressValue: Double = 0.0
+    @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+    var bagss: Set<AnyCancellable> = []
     
 //    var progressService: ProgressService?
 //    var settingVC: SettingVC?
@@ -57,14 +59,14 @@ class HomeVC: NSViewController {
         if UserDefaults.standard.bool(forKey: UserDefaultsKey.kFirstTime) == true {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
-        }
+        } 
     }
     
     private func previewAnimaConfig(){
         view.addSubview(imageHome)
         imageHome.wantsLayer = true
         imageHome.image = NSImage(resource: .homebg)
-        imageHome.imageScaling = .scaleProportionallyUpOrDown
+        imageHome.imageScaling = .scaleAxesIndependently
         
         imageHome.snp.makeConstraints { anime in
             anime.top.leading.trailing.bottom.equalToSuperview()

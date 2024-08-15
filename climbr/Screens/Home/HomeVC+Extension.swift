@@ -46,35 +46,37 @@ extension HomeVC {
     }
     
     func dailyProgress(){
-        UserDefaults.standard.setValue(progressValue, forKey: UserDefaultsKey.kProgressSession)
         print("Progress Value : \(progressValue)")
         progressStretch.minValue = 0
         progressStretch.maxValue = 4
-        progressStretch.doubleValue = progressValue / progressStretch.maxValue // value progress
+        progressStretch.doubleValue = progressValue
     }
     
     func updateProgress(_ now: Date){
-        //1. check value sekarang berapa
-        //2. if value kurang dari max value, return 3, else return maxValue
-        //3. kalau kurang, value ditambah 0.25,
-        //4. check date sekarang
-        
         guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: now) else {return}
         
         if now < Calendar.current.startOfDay(for: tomorrow){
-            print("Date now \(now)")
-            print("Start Date Tommorow: \(Calendar.current.startOfDay(for: tomorrow))")
+//                print("Date now \(now)")
+//                print("Start Date Tommorow: \(Calendar.current.startOfDay(for: tomorrow))")
             
             switch UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) {
             case 0, 1, 2, 3:
-                progressValue += 1
-                textA.setText("\(progressValue) / 4 sessions")
+                self.progressValue += 1
+                break
             default:
-                progressValue = 4
-                textA.setText("4 / 4 sessions")
+                self.progressValue = 4
+                break
             }
             
-            UserDefaults.standard.setValue(progressValue, forKey: UserDefaultsKey.kProgressSession)
+            $progressValue.sink { _ in
+                
+//                let value = progres == self.progressValue
+
+            }.store(in: &bagss)
+            
+            textA.setText("\(progressValue) / 4 sessions")
+            
+            UserDefaults.standard.setValue(self.progressValue, forKey: UserDefaultsKey.kProgressSession)
             
         } else {
             progressValue = 0
@@ -82,6 +84,8 @@ extension HomeVC {
             UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
         }
         
-        print("Session : \(textA.stringValue)")
+        print("Session : \(self.textA.stringValue)")
+        print("Progress Value : \(progressValue)")
+
     }
 }
