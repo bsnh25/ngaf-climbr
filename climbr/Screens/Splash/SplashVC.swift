@@ -36,14 +36,16 @@ class SplashVC: NSViewController {
     }
     
     private func navigateToHome() {
-        guard let vc = Container.shared.resolve(HomeVC.self) else {return}
-        guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: "isFirstTime") {
+                
+                guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
                 UserDefaults.standard.setValue(Date(), forKey: "kDateNow")
-            }else{
+            } else{
+                
+                guard let vc = Container.shared.resolve(HomeVC.self) else {return}
                 self.replace(with: vc)
             }
         }
