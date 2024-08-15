@@ -59,7 +59,7 @@ class GridItem: NSCollectionViewItem {
     let overlayView: NSView = {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.5).cgColor
+        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.2).cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

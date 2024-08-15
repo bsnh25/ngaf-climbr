@@ -7,12 +7,9 @@
 
 import Cocoa
 
-class CustomButton: NSButton {
-    var isSelected: Bool = false {
-            didSet {
-                updateLayer()
-            }
-        }
+class TypeButton: NSButton {
+    var isSelected: Bool = false
+    
     let stack = NSStackView()
     
     init(imageName: String, text: String){
@@ -59,7 +56,7 @@ class CustomButton: NSButton {
             heightAnchor.constraint(equalToConstant: 84)
         ])
     }
-    
+
     override func updateLayer() {
        super.updateLayer()
         if isHighlighted {
@@ -71,5 +68,5 @@ class CustomButton: NSButton {
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
         }
-   }
+    }
 }

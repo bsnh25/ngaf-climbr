@@ -28,27 +28,38 @@ class ItemsGridVC: NSViewController {
     let backItem: [String] = ["A", "B", "C", "D"]
     let locationItem: [String] = ["A", "B", "C", "D", "E", "F"]
     
+    let headItems: [EquipmentModel] = headGearItems
+    let handItems: [EquipmentModel] = HikingStickItems
+    let backItems: [EquipmentModel] = BackpackItems
+    let locationItems: [EquipmentModel] = LocationsItems
+    
     var itemType : EquipmentType = .head
+    
+    private var selectedButton: TypeButton?
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         
-        collectionViewContainer.updateItems(items: headItem)
+        collectionViewContainer.updateItems(items: headItems)
         setupSidebar()
         setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
+        
+        if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
+            highlightButton(firstButton)
+        }
     }
     
     func setupSidebar() {
         sidebar.orientation = .vertical
         sidebar.alignment = .leading
         sidebar.spacing = 10
-        var items : [CustomButton] = []
+        var items : [TypeButton] = []
         
         for (index, item) in sidebarItems.enumerated() {
-            let button = CustomButton(imageName: item.imageName, text: item.text)
+            let button = TypeButton(imageName: item.imageName, text: item.text)
             button.tag = index
             button.target = self
             button.action = #selector(sidebarButtonClicked(_:))
@@ -115,39 +126,39 @@ class ItemsGridVC: NSViewController {
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
-//        let box = NSBox()
-//        box.contentView = pointsView
-//        box.boxType = .custom
-//        box.borderWidth = 2.0  // Set the border width
-//        box.cornerRadius = 10.0  // Optionally, set corner radius
-//        box.borderColor = NSColor.black
-        
         view.addSubview(pointsView)
-//        view.addSubview(box)
         
         NSLayoutConstraint.activate([
             pointsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             pointsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             pointsView.widthAnchor.constraint(equalToConstant: 200),
             pointsView.heightAnchor.constraint(equalToConstant: 50)
-            
-//            box.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-//            box.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-//            box.widthAnchor.constraint(equalToConstant: 200),
-//            box.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-    @objc func sidebarButtonClicked(_ sender: CustomButton) {
+    func highlightButton(_ button: TypeButton) {
+        // Unhighlight the previously selected button
+        selectedButton?.isSelected = false
+        selectedButton?.layer?.backgroundColor = NSColor.lightGray.cgColor // Default color
+            
+        // Highlight the newly selected button
+        selectedButton = button
+        selectedButton?.isSelected = true
+        selectedButton?.layer?.backgroundColor = NSColor.gray.cgColor // Highlight color
+    }
+    
+    @objc func sidebarButtonClicked(_ sender: TypeButton) {
+        highlightButton(sender)
+        
         switch sender.tag {
         case 0:
-            collectionViewContainer.updateItems(items: headItem)
+            collectionViewContainer.updateItems(items: headItems)
         case 1:
-            collectionViewContainer.updateItems(items: backItem)
+            collectionViewContainer.updateItems(items: backItems)
         case 2:
-            collectionViewContainer.updateItems(items: handItem)
+            collectionViewContainer.updateItems(items: handItems)
         case 3:
-            collectionViewContainer.updateItems(items: locationItem)
+            collectionViewContainer.updateItems(items: locationItems)
         default:
             break
         }

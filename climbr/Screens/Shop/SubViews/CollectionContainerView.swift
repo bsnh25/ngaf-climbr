@@ -21,6 +21,8 @@ class CollectionContainerView: NSView {
     var itemType : EquipmentType = .head
     
     var collectionName : [String] = []
+    
+    var equipmentCollections : [EquipmentModel] = []
         
     override init(frame frameRect: NSRect) {
         
@@ -71,16 +73,21 @@ class CollectionContainerView: NSView {
         collectionName = items
         collectionView.reloadData()
     }
+    
+    func updateItems(items: [EquipmentModel]) {
+        equipmentCollections = items
+        collectionView.reloadData()
+    }
 }
 
 extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionName.count
+        return equipmentCollections.count
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
-        item.configure(text: collectionName[indexPath.item], backgroundImage: NSImage(named: "StretchingIcon"))
+        item.configure(text: equipmentCollections[indexPath.item].name, backgroundImage: NSImage(named: equipmentCollections[indexPath.item].image))
         return item
     }
 }
