@@ -54,8 +54,8 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         
-        #warning("Should register the VC in Swinject container")
-        push(to: ChooseCharacterVC())
+        guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
+        push(to: choosCharVc)
     }
     
     private func previewAnimaConfig(){
