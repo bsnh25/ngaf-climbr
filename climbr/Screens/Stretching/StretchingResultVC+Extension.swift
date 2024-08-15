@@ -18,11 +18,17 @@ extension StretchingResultVC {
         
         if points > 0 {
             label = "You earned \(points) coins"
-            guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+            
+            #warning("uhh what's that brother?")
+            guard let homeVc = Container.shared.resolve(HomeVC.self) else { return }
             homeVc.updateProgress(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date)
         }
         
         rewardPointLabel.setText(label)
+        
+        if let user = userService?.getUserData() {
+            userService?.updatePoint(user: user, points: points)
+        }
     }
     
     @objc func goToMainMenu() {

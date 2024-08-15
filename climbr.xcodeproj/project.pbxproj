@@ -53,6 +53,7 @@
 		E71F6E642C6B8B3B001BCFEB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = E71F6E632C6B8B3B001BCFEB /* Swinject */; };
 		E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */; };
 		E71F6E6C2C6E314C001BCFEB /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71F6E6B2C6E314C001BCFEB /* UserDefaultsKey.swift */; };
+		E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E71F6E6D2C6E4BDF001BCFEB /* countdown.mp3 */; };
 		E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */; };
 		E74C3AF12C684C6500631D6F /* StretchingResultVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */; };
 		E74C3AF42C6865B600631D6F /* EndSessionAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */; };
@@ -135,6 +136,7 @@
 		E701F0A52C6A7B980069A2DC /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwinjectExtension.swift; sourceTree = "<group>"; };
 		E71F6E6B2C6E314C001BCFEB /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
+		E71F6E6D2C6E4BDF001BCFEB /* countdown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = countdown.mp3; sourceTree = "<group>"; };
 		E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingResultVC.swift; sourceTree = "<group>"; };
 		E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StretchingResultVC+Extension.swift"; sourceTree = "<group>"; };
 		E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndSessionAlertVC.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				8AB71C692C6BAEB500635C85 /* correct.mp3 */,
 				8AB71C682C6BAEB500635C85 /* huh.mp3 */,
 				8AB71C6B2C6BAEB500635C85 /* incorrect.mp3 */,
+				E71F6E6D2C6E4BDF001BCFEB /* countdown.mp3 */,
 				8AB71C6A2C6BAEB500635C85 /* next-move.mp3 */,
 				8AB71C6C2C6BAEB500635C85 /* yaaas.mp3 */,
 				8A1962312C6B0E1900F7064B /* bgmusic.mp3 */,
@@ -597,6 +600,7 @@
 				E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */,
 				8AB71C6F2C6BAEB500635C85 /* next-move.mp3 in Resources */,
 				8A1962332C6B0E1900F7064B /* bgmusic.mp3 in Resources */,
+				E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */,
 				8AB71C702C6BAEB500635C85 /* incorrect.mp3 in Resources */,
 				8AB71C712C6BAEB500635C85 /* yaaas.mp3 in Resources */,
 				8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */,
