@@ -199,8 +199,9 @@ extension StretchingVC {
             return
         }
         
+        self.completedMovement.append(movement)
+        
         self.playSfx("next-move")
-        completedMovement.append(movement)
 
         let canSkip = skip()
         
