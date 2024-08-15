@@ -54,7 +54,7 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         
-        if UserDefaults.standard.bool(forKey: "isFirstUser") == true {
+        if UserDefaults.standard.bool(forKey: UserDefaultsKey.kFirstTime) == true {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
         }

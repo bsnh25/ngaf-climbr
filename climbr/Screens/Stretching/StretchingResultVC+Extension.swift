@@ -19,7 +19,7 @@ extension StretchingResultVC {
         if !points.isZero {
             label = "You earned \(points) coins"
             guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-            homeVc.updateProgress(UserDefaults.standard.object(forKey: "kDateNow") as! Date)
+            homeVc.updateProgress(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date)
         }
         
         rewardPointLabel.setText(label)
@@ -27,11 +27,9 @@ extension StretchingResultVC {
     
     @objc func goToMainMenu() {
         self.pop()
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
     }
     
     @objc func continueWorking() {
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
     }
     
 //    func updateProgress(){
