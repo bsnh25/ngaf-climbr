@@ -35,6 +35,7 @@ class StretchingResultVC: NSViewController {
     /// Dependencies
     var userService: UserService?
     
+    
     init(userService: UserService?) {
         super.init(nibName: nil, bundle: nil)
         

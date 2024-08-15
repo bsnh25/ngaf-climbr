@@ -32,6 +32,7 @@ class StretchingVC: NSViewController {
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
     
+    var setOfMovements: [Movement]      = Movement.setOfMovements.randomElement() ?? []
     var completedMovement: [Movement]   = []
     
     var bags: Set<AnyCancellable> = []
@@ -82,6 +83,7 @@ class StretchingVC: NSViewController {
         cameraService?.stopSession()
         
         stopTimer()
+        bags.removeAll()
     }
     
     private func setupVideoPreview(){
