@@ -470,8 +470,8 @@
 			isa = PBXGroup;
 			children = (
 				AB9A78FD2C6C7AF400028B36 /* ItemsGridView.swift */,
-				AB9A79012C6C7C1C00028B36 /* GridItemView.swift */,
 				AB9A78FF2C6C7BD300028B36 /* CollectionContainerView.swift */,
+				AB9A79012C6C7C1C00028B36 /* GridItemView.swift */,
 				AB9A79072C6C952600028B36 /* TypeButtonView.swift */,
 			);
 			path = SubViews;

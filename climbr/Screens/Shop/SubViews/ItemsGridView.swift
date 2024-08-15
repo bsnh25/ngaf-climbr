@@ -13,6 +13,7 @@ class ItemsGridVC: NSViewController {
     let collectionViewContainer = CollectionContainerView()
     let sidebar = NSStackView()
     let contentStack = NSStackView()
+    let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     
     let sidebarItems: [(imageName: String, text: String)] = [
@@ -69,6 +70,7 @@ class ItemsGridVC: NSViewController {
         self.view.addSubview(contentStack)
         
         NSLayoutConstraint.activate([
+            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80),
             contentStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             contentStack.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10)
         ])
@@ -92,31 +94,59 @@ class ItemsGridVC: NSViewController {
         ])
     }
     
-    
-        
     func setupPointsLabel() {
-        view.addSubview(points)
-        points.setText("halo")
+        
+        let icon = CLSFSymbol(symbolName: "c.circle", description: "coins")
+        icon.setConfiguration(size: 24, weight: .bold)
+        icon.contentTintColor = .black
+        
+        points.setText("100")
+        points.backgroundColor = .clear
+        points.setTextColor(.black)
+        
+        pointsView.wantsLayer = true
+        
+        pointsView.setViews([icon, points], in: .center)
+        pointsView.translatesAutoresizingMaskIntoConstraints = false
+        pointsView.orientation = .horizontal
+        pointsView.alignment = .centerY
+        pointsView.distribution = .equalSpacing
+        pointsView.layer?.backgroundColor = .white
+        pointsView.layer?.cornerRadius = 10
+        pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+//        let box = NSBox()
+//        box.contentView = pointsView
+//        box.boxType = .custom
+//        box.borderWidth = 2.0  // Set the border width
+//        box.cornerRadius = 10.0  // Optionally, set corner radius
+//        box.borderColor = NSColor.black
+        
+        view.addSubview(pointsView)
+//        view.addSubview(box)
+        
         NSLayoutConstraint.activate([
-            points.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            points.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
+            pointsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            pointsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            pointsView.widthAnchor.constraint(equalToConstant: 200),
+            pointsView.heightAnchor.constraint(equalToConstant: 50)
+            
+//            box.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+//            box.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+//            box.widthAnchor.constraint(equalToConstant: 200),
+//            box.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
     @objc func sidebarButtonClicked(_ sender: CustomButton) {
-        print("halo \(sender.tag)")
         switch sender.tag {
         case 0:
-            print("case 0")
             collectionViewContainer.updateItems(items: headItem)
         case 1:
-            print("case 1")
             collectionViewContainer.updateItems(items: backItem)
         case 2:
-            print("case 2")
             collectionViewContainer.updateItems(items: handItem)
         case 3:
-            print("case 3")
             collectionViewContainer.updateItems(items: locationItem)
         default:
             break

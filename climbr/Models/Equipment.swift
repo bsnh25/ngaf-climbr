@@ -21,237 +21,255 @@ enum EquipmentType {
     case head, hand, back, location
 }
 
-enum Headgear: String, CaseIterable, Identifiable, Codable{
-    var id: Headgear{
+enum HeadGear: String, CaseIterable, Identifiable{
+    var id: HeadGear{
         self
     }
     
-    case asset0
-    case asset1
-    case asset2
-    case asset3
-    case asset4
-    case asset5
+    case climbingBP
+    case cuddlyBP
+    case duffelBP
+    case hikingBP
     
-    var value: Int {
+    var value: Int{
         switch self {
-        case .asset0:
+        case .climbingBP:
             0
-        case .asset1:
+        case .cuddlyBP:
             1
-        case .asset2:
+        case .duffelBP:
             2
-        case .asset3:
+        case .hikingBP:
             3
-        case .asset4:
-            4
-        case .asset5:
-            5
         }
     }
         
-    var harga: Int {
+    var harga: Int{
         switch self {
-        case .asset0:
-            0
-        case .asset1:
-            150
-        case .asset2:
-            150
-        case .asset3:
-            170
-        case .asset4:
-            170
-        case .asset5:
-            170
+        case .climbingBP:
+            80
+        case .cuddlyBP:
+            80
+        case .duffelBP:
+            80
+        case .hikingBP:
+            80
         }
     }
         
-    var image: String {
+    var imageBP: String {
         switch self {
-        case .asset0:
-            "A"
-        case .asset1:
-            "B"
-        case .asset2:
-            "C"
-        case .asset3:
-            "C"
-        case .asset4:
-            "D"
-        case .asset5:
-            "E"
+        case .climbingBP:
+            "ClimbingBP"
+        case .cuddlyBP:
+            "CuddlyBP"
+        case .duffelBP:
+            "DuffelBP"
+        case .hikingBP:
+            "HikingBP"
+        }
+    }
+    
+    var imageTent: String{
+        switch self {
+        case .climbingBP:
+            "ClimbingT"
+        case .cuddlyBP:
+            "CuddlyT"
+        case .duffelBP:
+            "DuffelT"
+        case .hikingBP:
+            "HikingT"
         }
     }
 }
 
-enum Backpack: String, CaseIterable, Identifiable, Codable{
+enum Backpack: String, CaseIterable, Identifiable{
     var id: Backpack{
         self
     }
     
-    case asset0
-    case asset1
-    case asset2
-    case asset3
-    case asset4
-    case asset5
+    case climbingBP
+    case cuddlyBP
+    case duffelBP
+    case hikingBP
     
-    var value: Int {
+    var value: Int{
         switch self {
-        case .asset0:
+        case .climbingBP:
             0
-        case .asset1:
+        case .cuddlyBP:
             1
-        case .asset2:
+        case .duffelBP:
             2
-        case .asset3:
+        case .hikingBP:
             3
-        case .asset4:
-            4
-        case .asset5:
-            5
         }
     }
         
-    var harga: Int {
+    var harga: Int{
         switch self {
-        case .asset0:
-            0
-        case .asset1:
-            150
-        case .asset2:
-            150
-        case .asset3:
-            170
-        case .asset4:
-            170
-        case .asset5:
-            170
+        case .climbingBP:
+            80
+        case .cuddlyBP:
+            80
+        case .duffelBP:
+            80
+        case .hikingBP:
+            80
         }
     }
         
-    var image: String {
+    var imageBP: String {
         switch self {
-        case .asset0:
-            "A"
-        case .asset1:
-            "B"
-        case .asset2:
-            "C"
-        case .asset3:
-            "C"
-        case .asset4:
-            "D"
-        case .asset5:
-            "E"
+        case .climbingBP:
+            "ClimbingBP"
+        case .cuddlyBP:
+            "CuddlyBP"
+        case .duffelBP:
+            "DuffelBP"
+        case .hikingBP:
+            "HikingBP"
+        }
+    }
+    
+    var imageTent: String{
+        switch self {
+        case .climbingBP:
+            "ClimbingT"
+        case .cuddlyBP:
+            "CuddlyT"
+        case .duffelBP:
+            "DuffelT"
+        case .hikingBP:
+            "HikingT"
         }
     }
 }
 
-enum HikingStick: String, CaseIterable, Identifiable, Codable{
+enum HikingStick: String, CaseIterable, Identifiable{
     var id: HikingStick{
         self
     }
     
-    case asset0
-    case asset1
-    case asset2
-    case asset3
-    case asset4
+    case climbingBP
+    case cuddlyBP
+    case duffelBP
+    case hikingBP
     
-    var value: Int {
+    var value: Int{
         switch self {
-        case .asset0:
+        case .climbingBP:
             0
-        case .asset1:
+        case .cuddlyBP:
             1
-        case .asset2:
+        case .duffelBP:
             2
-        case .asset3:
+        case .hikingBP:
             3
-        case .asset4:
-            4
         }
     }
         
-    var harga: Int {
+    var harga: Int{
         switch self {
-        case .asset0:
-            0
-        case .asset1:
-            150
-        case .asset2:
-            150
-        case .asset3:
-            170
-        case .asset4:
-            170
+        case .climbingBP:
+            80
+        case .cuddlyBP:
+            80
+        case .duffelBP:
+            80
+        case .hikingBP:
+            80
         }
     }
         
-    var image: String {
+    var imageBP: String {
         switch self {
-        case .asset0:
-            "A"
-        case .asset1:
-            "B"
-        case .asset2:
-            "C"
-        case .asset3:
-            "C"
-        case .asset4:
-            "D"
+        case .climbingBP:
+            "ClimbingBP"
+        case .cuddlyBP:
+            "CuddlyBP"
+        case .duffelBP:
+            "DuffelBP"
+        case .hikingBP:
+            "HikingBP"
+        }
+    }
+    
+    var imageTent: String{
+        switch self {
+        case .climbingBP:
+            "ClimbingT"
+        case .cuddlyBP:
+            "CuddlyT"
+        case .duffelBP:
+            "DuffelT"
+        case .hikingBP:
+            "HikingT"
         }
     }
 }
 
-enum Location: String, CaseIterable, Identifiable, Codable{
+
+enum Location: String, CaseIterable, Identifiable{
     var id: Location{
         self
     }
     
-    case asset0
-    case asset1
-    case asset2
-    case asset3
+    case climbingBP
+    case cuddlyBP
+    case duffelBP
+    case hikingBP
     
-    var value: Int {
+    var value: Int{
         switch self {
-        case .asset0:
+        case .climbingBP:
             0
-        case .asset1:
+        case .cuddlyBP:
             1
-        case .asset2:
+        case .duffelBP:
             2
-        case .asset3:
+        case .hikingBP:
             3
         }
     }
         
-    var harga: Int {
+    var harga: Int{
         switch self {
-        case .asset0:
-            0
-        case .asset1:
-            150
-        case .asset2:
-            150
-        case .asset3:
-            170
+        case .climbingBP:
+            80
+        case .cuddlyBP:
+            80
+        case .duffelBP:
+            80
+        case .hikingBP:
+            80
         }
     }
         
-    var image: String {
+    var imageBP: String {
         switch self {
-        case .asset0:
-            "A"
-        case .asset1:
-            "B"
-        case .asset2:
-            "C"
-        case .asset3:
-            "C"
+        case .climbingBP:
+            "ClimbingBP"
+        case .cuddlyBP:
+            "CuddlyBP"
+        case .duffelBP:
+            "DuffelBP"
+        case .hikingBP:
+            "HikingBP"
+        }
+    }
+    
+    var imageTent: String{
+        switch self {
+        case .climbingBP:
+            "ClimbingT"
+        case .cuddlyBP:
+            "CuddlyT"
+        case .duffelBP:
+            "DuffelT"
+        case .hikingBP:
+            "HikingT"
         }
     }
 }

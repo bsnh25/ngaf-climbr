@@ -39,7 +39,7 @@ class CollectionContainerView: NSView {
         setupCollectionView()
         
         self.wantsLayer = true
-        self.layer?.cornerRadius = 20 // Adjust the corner radius as needed
+        self.layer?.cornerRadius = 20
         self.layer?.masksToBounds = true
     }
     
@@ -50,14 +50,12 @@ class CollectionContainerView: NSView {
     private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.wantsLayer = true
-        collectionView.layer?.backgroundColor = .clear
+        collectionView.layer?.backgroundColor = .white
         
         let scrollView = NSScrollView()
         scrollView.documentView = collectionView
-        scrollView.hasVerticalScroller = false
-        scrollView.hasHorizontalScroller = false
+        scrollView.verticalScrollElasticity = .none
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.wantsLayer = true
         
         self.addSubview(scrollView)
             
@@ -71,8 +69,7 @@ class CollectionContainerView: NSView {
     
     func updateItems(items: [String]) {
         collectionName = items
-        collectionView.reloadData()  // Reload the collection view data
-        print("Item changed to \(items.description)")
+        collectionView.reloadData()
     }
 }
 
@@ -83,7 +80,7 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
-        item.textLabel.stringValue = collectionName[indexPath.item]
+        item.configure(text: collectionName[indexPath.item], backgroundImage: NSImage(named: "StretchingIcon"))
         return item
     }
 }
