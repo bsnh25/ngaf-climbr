@@ -329,9 +329,8 @@ class UserPreferenceVC: NSViewController {
             ///get checkbox value
             print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
             
-            
+            #warning("Should register the VC in Swinject container")
             replace(with: HomeVC())
-            push(to: ChooseCharacterVC())
         }
 
         @objc
