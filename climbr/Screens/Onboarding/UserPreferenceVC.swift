@@ -393,7 +393,7 @@ class UserPreferenceVC: NSViewController {
         isChecked = checkboxButton.state == .on
         
         ///change print into user deafult settings
-        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
+        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
     }
 }
 

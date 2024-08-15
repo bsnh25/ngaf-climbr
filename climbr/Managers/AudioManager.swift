@@ -9,9 +9,6 @@ import Foundation
 import CoreAudio
 import AVFoundation
 
-private let kBackgroundVolume = "kBackgroundVolume"
-private let kSFXVolume = "kSFXVolume"
-
 class AudioManager: AudioService {
     
     static let shared = AudioManager()
@@ -21,11 +18,11 @@ class AudioManager: AudioService {
     
     private init(){
         deviceVolume = getVolumeDevice()
-        if UserDefaults.standard.object(forKey: kBackgroundVolume) == nil {
-            UserDefaults.standard.set(1, forKey: kBackgroundVolume) // Default volume 100%
+        if UserDefaults.standard.object(forKey: UserDefaultsKey.kBackgroundVolume) == nil {
+            UserDefaults.standard.set(1, forKey: UserDefaultsKey.kBackgroundVolume) // Default volume 100%
         }
-        if UserDefaults.standard.object(forKey: kSFXVolume) == nil {
-            UserDefaults.standard.set(1, forKey: kSFXVolume) // Default volume 100%
+        if UserDefaults.standard.object(forKey: UserDefaultsKey.kSFXVolume) == nil {
+            UserDefaults.standard.set(1, forKey: UserDefaultsKey.kSFXVolume) // Default volume 100%
         }
     }
     
@@ -36,7 +33,7 @@ class AudioManager: AudioService {
         }
         set {
             backgroundPlayer?.volume = newValue
-            UserDefaults.standard.set(newValue, forKey: kBackgroundVolume)
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.kBackgroundVolume)
             print("Background volume set to \(newValue)")
         }
     }
@@ -48,7 +45,7 @@ class AudioManager: AudioService {
         }
         set {
             effectPlayer?.volume = newValue
-            UserDefaults.standard.set(newValue, forKey: kSFXVolume)
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.kSFXVolume)
             print("SFX volume set to \(newValue)")
         }
     }

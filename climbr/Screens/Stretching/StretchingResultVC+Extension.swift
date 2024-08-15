@@ -11,27 +11,31 @@ import Swinject
 extension StretchingResultVC {
     func calculatePoints() {
         let points = movementList.reduce(0) { partial, next in
-            return partial + next.duration
+            return partial + next.rewardPoint
         }
         
         var label: String = "You didn’t earn any coins, but the next round could be yours!"
         
-        if !points.isZero {
+        if points > 0 {
             label = "You earned \(points) coins"
-            guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-            homeVc.updateProgress(UserDefaults.standard.object(forKey: "kDateNow") as! Date)
+            
+            #warning("uhh what's that brother?")
+            guard let homeVc = Container.shared.resolve(HomeVC.self) else { return }
+            homeVc.updateProgress(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date)
         }
         
         rewardPointLabel.setText(label)
+        
+        if let user = userService?.getUserData() {
+            userService?.updatePoint(user: user, points: points)
+        }
     }
     
     @objc func goToMainMenu() {
         self.pop()
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
     }
     
     @objc func continueWorking() {
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
     }
     
 //    func updateProgress(){

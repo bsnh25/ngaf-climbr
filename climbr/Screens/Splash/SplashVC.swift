@@ -14,8 +14,7 @@ class SplashVC: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaults.standard.set(true, forKey: "isFirstTime")
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kFirstTime)
         view.wantsLayer = true
         view.layer?.backgroundColor = .white
         configureAppLogo()
@@ -36,14 +35,16 @@ class SplashVC: NSViewController {
     }
     
     private func navigateToHome() {
-        guard let vc = Container.shared.resolve(HomeVC.self) else {return}
-        guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
-            if UserDefaults.standard.bool(forKey: "isFirstTime") {
+            if UserDefaults.standard.bool(forKey: UserDefaultsKey.kFirstTime) {
+                
+                guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
-                UserDefaults.standard.setValue(Date(), forKey: "kDateNow")
-            }else{
+                UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+            } else{
+                
+                guard let vc = Container.shared.resolve(HomeVC.self) else {return}
                 self.replace(with: vc)
             }
         }

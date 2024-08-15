@@ -208,6 +208,7 @@ class ChooseCharacterVC: NSViewController {
         
         UserDefaults.standard.setValue(false, forKey: "isFirstTime")
         UserDefaults.standard.setValue(false, forKey: "kStretch")
+        UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)
         pop()
     }
     
