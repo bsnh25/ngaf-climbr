@@ -24,8 +24,8 @@ class HomeVC: NSViewController {
     
     var audioService: AudioService?
     var isSoundTapped: Bool = false
-    var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
-    var progressStretch = NSProgressIndicator()
+    @Published var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
+    @Published var progressStretch = NSProgressIndicator()
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     var bagss: Set<AnyCancellable> = []
     
@@ -42,7 +42,6 @@ class HomeVC: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -51,20 +50,39 @@ class HomeVC: NSViewController {
         viewStretchConfig()
         dailyProgress()
         
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                
+                DispatchQueue.main.async {
+                    self.updateProgressData()
+                }
+            }
+            .store(in: &bagss)
     }
     
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         
+        validateYesterday(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date)
         if UserDefaults.standard.bool(forKey: UserDefaultsKey.kFirstTime) == true {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
-        } 
+        }
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        $progressValue.sink { progress in
+            
+            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
+            
+        }.store(in: &bagss)
     }
     
     private func previewAnimaConfig(){
         view.addSubview(imageHome)
-        imageHome.wantsLayer = true
+        imageHome.wantsLayer = true 
         imageHome.image = NSImage(resource: .homebg)
         imageHome.imageScaling = .scaleAxesIndependently
         
@@ -138,7 +156,6 @@ class HomeVC: NSViewController {
         let padding = view.bounds.height * 0.04
         let minPadding = view.bounds.height * 0.02
         
-        textA.stringValue = "\(Int(progressValue)) / 4 sessions"
         startStretchButton.isEnabled = UserDefaults.standard.bool(forKey: "isFirstTime") ? false : true
         
         containerView.snp.makeConstraints { container in
@@ -160,7 +177,7 @@ class HomeVC: NSViewController {
             progress.height.equalTo(4)
         }
         
-        textA.snp.makeConstraints { text in
+        progressText.snp.makeConstraints { text in
             text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.02))
             text.leading.equalTo(progressStretch.snp.trailing).offset(minPadding)
             text.trailing.equalTo(containerView.snp.trailing).inset(padding)
@@ -180,7 +197,7 @@ class HomeVC: NSViewController {
         
         containerView.addSubview(textB)
         containerView.addSubview(progressStretch)
-        containerView.addSubview(textA)
+        containerView.addSubview(progressText)
         containerView.addSubview(startStretchButton)
         
         containerView.wantsLayer = true

@@ -14,7 +14,7 @@ extension HomeVC {
     func actionStore(){
         print("go to shop")
     }
-
+    
     @objc
     func actionStartSession(){
         if let vc = Container.shared.resolve(StretchingVC.self) {
@@ -29,7 +29,7 @@ extension HomeVC {
         settingsVC.preferredContentSize = CGSize(width: 412, height: 358)
         self.presentAsModalWindow(settingsVC)
     }
-
+    
     @objc
     func actionAudio(){
         guard let audio = audioService else {return}
@@ -52,40 +52,53 @@ extension HomeVC {
         progressStretch.doubleValue = progressValue
     }
     
-    func updateProgress(_ now: Date){
-        guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: now) else {return}
-        
-        if now < Calendar.current.startOfDay(for: tomorrow){
-//                print("Date now \(now)")
-//                print("Start Date Tommorow: \(Calendar.current.startOfDay(for: tomorrow))")
-            
-            switch UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) {
-            case 0, 1, 2, 3:
-                self.progressValue += 1
-                break
-            default:
-                self.progressValue = 4
-                break
-            }
-            
-            $progressValue.sink { _ in
-                
-//                let value = progres == self.progressValue
-
-            }.store(in: &bagss)
-            
-            textA.setText("\(progressValue) / 4 sessions")
-            
-            UserDefaults.standard.setValue(self.progressValue, forKey: UserDefaultsKey.kProgressSession)
-            
-        } else {
-            progressValue = 0
-            textA.setText("0 / 4 sessions")
-            UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+//    func updateProgress(_ now: Date){
+//        
+//        let progress = UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession)
+//        guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: now) else {return}
+//        
+//        if now < Calendar.current.startOfDay(for: tomorrow){
+//            
+//            switch progress {
+//            case 0, 1, 2, 3:
+//                self.progressValue += 1
+//                self.progressStretch.increment(by: 1)
+//                break
+//            default:
+//                self.progressValue = 4
+//                break
+//            }
+//            
+//            textA.setText("\(Int(progressValue)) / 4 sessions")
+//            
+//            
+//            UserDefaults.standard.setValue(self.progressValue, forKey: UserDefaultsKey.kProgressSession)
+//            
+//        } else {
+//            progressValue = 0
+//            textA.setText("0 / 4 sessions")
+//            progressStretch.doubleValue = progressValue
+//            UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+//        }
+//        
+//        UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+//        print("Session : \(self.textA.stringValue)")
+//        print("Progress Value : \(progressValue)")
+//        
+//    }
+    
+    func validateYesterday(_ date: Date){
+        if Calendar.current.isDateInYesterday(date) {
+            print("Date param : \(date)")
+            print("Date current : \(Calendar.current)")
+            UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         }
-        
-        print("Session : \(self.textA.stringValue)")
-        print("Progress Value : \(progressValue)")
-
+    }
+    
+    func updateProgressData(){
+        let progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+        progressStretch.doubleValue = progress
+        progressText.setText("\(Int(progress)) / 4 sessions")
     }
 }
+
