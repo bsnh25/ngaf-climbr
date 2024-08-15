@@ -203,14 +203,6 @@
 			path = TextField;
 			sourceTree = "<group>";
 		};
-		8A19622E2C6B02E500F7064B /* GradientContainer */ = {
-			isa = PBXGroup;
-			children = (
-				8A19622F2C6B030B00F7064B /* CLGradientContainer.swift */,
-			);
-			path = GradientContainer;
-			sourceTree = "<group>";
-		};
 		8A1962322C6B0E1900F7064B /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				E71F6E702C6E5346001BCFEB /* CLBlurEffectView.swift */,
+				8A19622F2C6B030B00F7064B /* CLGradientContainer.swift */,
 			);
 			path = VisualEffects;
 			sourceTree = "<group>";
@@ -525,7 +518,6 @@
 			isa = PBXGroup;
 			children = (
 				E71F6E6F2C6E5329001BCFEB /* VisualEffects */,
-				8A19622E2C6B02E500F7064B /* GradientContainer */,
 				8A19622B2C6AF77300F7064B /* TextField */,
 				8ABB12972C6893EC00616C57 /* DatePicker */,
 				E7ABBA4D2C67494C007A702F /* Images */,
