@@ -45,10 +45,26 @@ class UserPreferenceVC: NSViewController {
     }
     
     
-
+    var notifService: NotificationService?
+    
+    init(notifService: NotificationService?){
+        super.init(nibName: nil, bundle: nil)
+        self.notifService = notifService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        notifService?.askUserPermission()
+//        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }
     
     
@@ -140,6 +156,7 @@ class UserPreferenceVC: NSViewController {
         nextButton.isEnabled = false
         nextButton.target = self
         nextButton.action = #selector(actNextButton)
+        nextButton.isEnabled = true
         
         NSLayoutConstraint.activate([
             nextButton.widthAnchor.constraint(equalToConstant: 143),
@@ -322,6 +339,7 @@ class UserPreferenceVC: NSViewController {
     
         @objc
         private func actNextButton(){
+            UserDefaults.standard.setValue(true, forKey: "kStretch")
             guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
                 print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
                 return
@@ -341,6 +359,10 @@ class UserPreferenceVC: NSViewController {
                 userService?.savePreferences(data: userPreferenceData)
             }
             
+            guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+            guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
+            replace(with: homeVc)
+            push(to: choosCharVc)
         }
 
         @objc

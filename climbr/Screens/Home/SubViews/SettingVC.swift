@@ -34,21 +34,21 @@ let kCheckbox = "kCheckbox"
 
 class SettingVC: NSViewController {
     
-    private let settingText = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Setting Preference")
-    private let subTitleA = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Your work hours")
-    private let subTitleB = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
-    private let fromText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "From")
-    private let startTime = CLDatePicker(backgroundColor: .cHourPicker, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
-    private let toText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "to")
-    private let endTime = CLDatePicker(backgroundColor: .cHourPicker, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
-    private let everyText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
-    private let min30 = CLPickerButton(title: "30", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min60 = CLPickerButton(title: "60", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min90 = CLPickerButton(title: "90", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let min120 = CLPickerButton(title: "120", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    private let minutesText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "minutes")
-    private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
-    private let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
+    let settingText = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Setting Preference")
+    let subTitleA = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Your work hours")
+    let subTitleB = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
+    let fromText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "From")
+    let startTime = CLDatePicker(backgroundColor: .cHourPicker, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
+    let toText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "to")
+    let endTime = CLDatePicker(backgroundColor: .cHourPicker, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
+    let everyText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
+    let min30 = CLPickerButton(title: "30", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    let min60 = CLPickerButton(title: "60", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    let min90 = CLPickerButton(title: "90", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    let min120 = CLPickerButton(title: "120", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
+    let minutesText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "minutes")
+    let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
     
     var isChecked: Bool = false
     
@@ -94,12 +94,12 @@ class SettingVC: NSViewController {
         view.addSubview(checkboxButton)
         view.addSubview(saveButton)
         
-        //MARK: Start Time Picker
+        //MARK: Start Time Picker - Need Revision
         startTime.maxDate = .distantFuture
-        startTime.minDate = .distantPast
+        startTime.minDate = .now
         let value = startTime.dateValue
         
-        //MARK: End Time Picker
+        //MARK: End Time Picker - Need Revision
         endTime.maxDate = .distantFuture
         endTime.minDate = Calendar.current.date(byAdding: .hour, value: 2, to: value)
         
@@ -204,95 +204,6 @@ class SettingVC: NSViewController {
             save.top.equalTo(checkboxButton.snp.bottom).offset(20)
             save.height.equalTo(36)
             save.width.equalTo(80)
-        }
-    }
-    
-    @objc
-    private func actionCheckbox(){
-        isChecked = checkboxButton.state == .on
-        
-        ///change print into user deafult settings
-        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
-//        print("value checkbox : \(UserDefaults.standard.bool(forKey: kCheckbox))")
-
-    }
-    
-    @objc
-    private func action30min(){
-        resetButtonColors()
-        min30.isSelected = true
-        min30.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
-        print("\( min30.isSelected) : 30 choose")
-    }
-    
-    @objc
-    private func action60min(){
-        resetButtonColors()
-        min60.isSelected = true
-        min60.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
-        print("\( min60.isSelected) : 60 choose")
-    }
-    
-    @objc
-    private func action90min(){
-        resetButtonColors()
-        min90.isSelected = true
-        min90.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
-        print("\( min90.isSelected) : 90 choose")
-    }
-    
-    @objc
-    private func action120min(){
-        resetButtonColors()
-        min120.isSelected = true
-        min120.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
-        print("\( min120.isSelected) : 120 choose")
-    }
-    
-    private func resetButtonColors() {
-        // Reset all buttons to gray
-        min30.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        min60.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        min90.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        min120.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        
-        min30.isSelected = false
-        min60.isSelected = false
-        min90.isSelected = false
-        min120.isSelected = false
-    
-    }
-    
-    @objc
-    private func actionSave(){
-        ///get reminder value
-        ///get start working hour and end working hour
-        guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
-            print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
-            return
-        }
-        print("Reminder at \(processSaveReminder())")
-        print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
-        
-        ///get checkbox value
-        print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
-        
-        self.dismiss(self)
-    }
-    
-    private func processSaveReminder() -> Int{
-        
-        if min30.isSelected {
-            return 30
-        }else if min60.isSelected{
-            return 60
-        }else if min90.isSelected{
-            return 90
-        } else if min120.isSelected{
-            return 120
-        }else {
-            print("ERR: at setting (reminder)")
-            return 0
         }
     }
     
