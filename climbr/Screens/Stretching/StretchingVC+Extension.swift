@@ -102,6 +102,10 @@ extension StretchingVC {
                 return
             }
             
+            if time <= 5 {
+                self.playSfx("countdown")
+            }
+            
             self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)
