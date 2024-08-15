@@ -57,6 +57,7 @@ class CLLabel: NSTextField {
     private func configure() {
         isBordered      = false
         isEditable      = false
+        backgroundColor = .clear
         
         translatesAutoresizingMaskIntoConstraints   = false
     }
