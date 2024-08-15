@@ -13,13 +13,15 @@ extension StretchingVC {
     func updateMovementData() {
         /// Stream the current index and update on its changed
         $currentIndex.sink { index in
-            let movement = Movement.items[index]
+            guard let movement = self.setOfMovements[safe: index] else {
+                return
+            }
             
             self.currentMovementView.updateData(movement)
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
-            if index == Movement.items.count - 1 {
+            if index == self.setOfMovements.count - 1 {
                 self.skipButton.isEnabled = false
                 
                 self.movementStack.removeView(self.movementDivider)
@@ -30,8 +32,7 @@ extension StretchingVC {
         
         /// Stream the next index and update on its changed
         $nextIndex.sink { index in
-            guard let movement = Movement.items[safe: index] else {
-                
+            guard let movement = self.setOfMovements[safe: index] else {
                 return
             }
             
@@ -44,7 +45,9 @@ extension StretchingVC {
     func updateMovementState() {
         $exerciseName.sink { name in
             /// Get current movement data
-            let movement = Movement.items[self.currentIndex]
+            guard let movement = self.setOfMovements[safe: self.currentIndex] else {
+                return
+            }
             
             /// Return true if the name equals to current movement
             let positionState   = name == movement.name
@@ -71,7 +74,6 @@ extension StretchingVC {
                         self.movementStateView.setBackgroundColor(.systemRed)
                         
                         self.playSfx("incorrect")
-                        
                     }
                     
                     self.movementStateView.setLabel(label)
@@ -79,8 +81,6 @@ extension StretchingVC {
                     self.playSfx("correct")
                     self.startExerciseSession(duration: movement.duration)
                     self.movementStateView.hide()
-                    /// Hide the movement state view if the movement is correct
-                    //                    self.movementStateView.hide()
                 }
             }
         }.store(in: &bags)
@@ -119,6 +119,7 @@ extension StretchingVC {
     
     /// Timer countdown
     func startTimer(duration: TimeInterval?) {
+        guard !isTimerRunning, !isTimerPaused else { return }
         
         /// If duration exist, it means the app will start timer based on duration.
         /// Otherwise, app will start timer based on previous duration (resume)
@@ -126,8 +127,6 @@ extension StretchingVC {
             remainingTime   = duration
             timerInterval   = duration
         }
-        
-        guard !isTimerRunning, !isTimerPaused else { return }
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         
@@ -179,7 +178,7 @@ extension StretchingVC {
     }
     
     @objc func skip() -> Bool {
-        guard let _ = Movement.items[safe: currentIndex+1] else {
+        guard let _ = setOfMovements[safe: currentIndex+1] else {
             return false
         }
         
@@ -192,8 +191,14 @@ extension StretchingVC {
     }
     
     func next() {
+        /// Make sure movement index is not out of range
+        guard let movement = setOfMovements[safe: currentIndex] else {
+            return
+        }
+        
+        self.completedMovement.append(movement)
+        
         self.playSfx("next-move")
-        completedMovement.append(Movement.items[currentIndex])
 
         let canSkip = skip()
         
