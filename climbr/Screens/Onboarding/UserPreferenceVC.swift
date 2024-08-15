@@ -329,7 +329,6 @@ class UserPreferenceVC: NSViewController {
     
         @objc
         private func actNextButton(){
-            UserDefaults.standard.setValue(true, forKey: "kStretch")
             guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
                 print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
                 return
@@ -338,12 +337,10 @@ class UserPreferenceVC: NSViewController {
             print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
             
             ///get checkbox value
-            print("value checkbox is : \(UserDefaults.standard.bool(forKey: kCheckbox))")
+            print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
             
             guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-            guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             replace(with: homeVc)
-            push(to: choosCharVc)
         }
 
         @objc
@@ -391,7 +388,7 @@ class UserPreferenceVC: NSViewController {
         isChecked = checkboxButton.state == .on
         
         ///change print into user deafult settings
-        isChecked ? UserDefaults.standard.set(true, forKey: kCheckbox) : UserDefaults.standard.set(false, forKey: kCheckbox)
+        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
     }
 }
 

@@ -52,6 +52,7 @@
 		E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701F0A52C6A7B980069A2DC /* SplashVC.swift */; };
 		E71F6E642C6B8B3B001BCFEB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = E71F6E632C6B8B3B001BCFEB /* Swinject */; };
 		E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */; };
+		E71F6E6C2C6E314C001BCFEB /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71F6E6B2C6E314C001BCFEB /* UserDefaultsKey.swift */; };
 		E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */; };
 		E74C3AF12C684C6500631D6F /* StretchingResultVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */; };
 		E74C3AF42C6865B600631D6F /* EndSessionAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */; };
@@ -133,6 +134,7 @@
 		AB9A78BE2C6B39CE00028B36 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		E701F0A52C6A7B980069A2DC /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwinjectExtension.swift; sourceTree = "<group>"; };
+		E71F6E6B2C6E314C001BCFEB /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		E74C3AEE2C684C5400631D6F /* StretchingResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchingResultVC.swift; sourceTree = "<group>"; };
 		E74C3AF02C684C6500631D6F /* StretchingResultVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StretchingResultVC+Extension.swift"; sourceTree = "<group>"; };
 		E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndSessionAlertVC.swift; sourceTree = "<group>"; };
@@ -261,6 +263,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E71F6E6A2C6E3137001BCFEB /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				E71F6E6B2C6E314C001BCFEB /* UserDefaultsKey.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		E76E63032C675AAD001906A9 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +389,7 @@
 		E7FDDAEF2C6433FD00DE2A7A /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E71F6E6A2C6E3137001BCFEB /* Constants */,
 				E7FDDB202C64360800DE2A7A /* Components */,
 				E7FDDB1F2C6435FF00DE2A7A /* Extensions */,
 			);
@@ -602,6 +613,7 @@
 				E7FDDB0C2C6434EC00DE2A7A /* SampleViewA.swift in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
 				E7ABBA462C670605007A702F /* NextMovementView.swift in Sources */,
+				E71F6E6C2C6E314C001BCFEB /* UserDefaultsKey.swift in Sources */,
 				E76E63202C6792D0001906A9 /* CollectionExtension.swift in Sources */,
 				E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */,
 				E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */,
@@ -802,7 +814,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -833,7 +845,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
