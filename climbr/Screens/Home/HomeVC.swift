@@ -25,7 +25,7 @@ class HomeVC: NSViewController {
     var isSoundTapped: Bool = false
     var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
     var progressStretch = NSProgressIndicator()
-    var progressValue: Double = 0.0
+    @Published var progressValue: Double = 0.0
     
 //    var progressService: ProgressService?
 //    var settingVC: SettingVC?
@@ -136,6 +136,7 @@ class HomeVC: NSViewController {
         let padding = view.bounds.height * 0.04
         let minPadding = view.bounds.height * 0.02
         
+        textA.stringValue = "\(Int(progressValue)) / 4 sessions"
         startStretchButton.isEnabled = UserDefaults.standard.bool(forKey: "isFirstTime") ? false : true
         
         containerView.snp.makeConstraints { container in

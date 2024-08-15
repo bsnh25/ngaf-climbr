@@ -38,10 +38,10 @@ class SplashVC: NSViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: UserDefaultsKey.kFirstTime) {
-                
                 guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
                 UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+                print("DATE GMT+0 : \(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow)!)")
             } else{
                 
                 guard let vc = Container.shared.resolve(HomeVC.self) else {return}

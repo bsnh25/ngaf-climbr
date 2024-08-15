@@ -46,6 +46,8 @@ extension HomeVC {
     }
     
     func dailyProgress(){
+        UserDefaults.standard.setValue(progressValue, forKey: UserDefaultsKey.kProgressSession)
+        print("Progress Value : \(progressValue)")
         progressStretch.minValue = 0
         progressStretch.maxValue = 4
         progressStretch.doubleValue = progressValue / progressStretch.maxValue // value progress
@@ -65,12 +67,11 @@ extension HomeVC {
             
             switch UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) {
             case 0, 1, 2, 3:
-                textA.setText("\(progressValue) / 4 sessions")
                 progressValue += 1
-                return
+                textA.setText("\(progressValue) / 4 sessions")
             default:
-                textA.setText("4 / 4 sessions")
                 progressValue = 4
+                textA.setText("4 / 4 sessions")
             }
             
             UserDefaults.standard.setValue(progressValue, forKey: UserDefaultsKey.kProgressSession)
