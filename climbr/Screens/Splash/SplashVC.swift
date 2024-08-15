@@ -41,6 +41,7 @@ class SplashVC: NSViewController {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: "isFirstTime") {
                 self.replace(with: onboardingStage)
+//                self.replace(with: vc)
             }else{
                 self.replace(with: vc)
             }
