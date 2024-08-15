@@ -34,6 +34,7 @@ class UserManager : UserService {
     }
     
     func savePreferences(data: UserPreferenceModel) {
+        print("gans")
         let moc = container.viewContext
         
         let newUserPreference = UserPreferences(context: moc)
@@ -44,18 +45,18 @@ class UserManager : UserService {
         newUserPreference.reminderInterval = data.reminderInterval
         newUserPreference.startWorkingHour = data.startWorkingHour
         
-        do{
-            do {
-                try moc.save()
-                print("saved")
-            } catch {
-                print("Failed to save context: \(error)")
-            }
+        
+        do {
+            try moc.save()
+            print("saved")
+        } catch {
+            print("Failed to save context: \(error)")
         }
+        
     }
     
     func getUserData() -> User {
-        #warning("change the return data later")
+#warning("change the return data later")
         return User()
     }
     
@@ -68,19 +69,19 @@ class UserManager : UserService {
         newUserData.name = data.name
         newUserData.point = data.point
         
-        do{
-            do {
-                try moc.save()
-                print("saved")
-            } catch {
-                print("Failed to save context: \(error)")
-            }
+        
+        do {
+            try moc.save()
+            print("saved")
+        } catch {
+            print("Failed to save context: \(error)")
         }
+        
     }
     
     func updatePoint(user: User, points: Int) {
         
     }
     
-    //MARK: TODO 
+    //MARK: TODO
 }

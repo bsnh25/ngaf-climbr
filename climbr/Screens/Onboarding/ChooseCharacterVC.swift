@@ -27,7 +27,6 @@ class ChooseCharacterVC: NSViewController {
     
     var genderChar: Gender = Gender.empty
     var userService: UserService?
-    var userData: UserModel?
     
     init(userService: UserService?){
         super.init(nibName: nil, bundle: nil)
@@ -60,7 +59,7 @@ class ChooseCharacterVC: NSViewController {
         view.addSubview(containerBig)
         containerBig.wantsLayer = true
         containerBig.layer?.backgroundColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
-//        containerBig.layer?.backgroundColor = NSColor.red.cgColor
+        //        containerBig.layer?.backgroundColor = NSColor.red.cgColor
         containerBig.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -179,6 +178,7 @@ class ChooseCharacterVC: NSViewController {
         
         buttonStart.target = self
         buttonStart.action = #selector(actButtonStart)
+        buttonStart.isEnabled = false
         
         
         NSLayoutConstraint.activate([
@@ -194,21 +194,17 @@ class ChooseCharacterVC: NSViewController {
     private func actButtonStart(){
         print("tapped and inputed \(textField.stringValue)")
         
-        if genderChar == Gender.female{
-            print("user choose female")
-        }else if genderChar == Gender.male{
-            print("user choose male")
-        }else{
-            print("still empty")
+        if genderChar != Gender.empty{
+            if genderChar == Gender.female{
+                print("user choose female")
+            }else if genderChar == Gender.male{
+                print("user choose male")
+            }
         }
         
-        userData?.id = UUID()
-        userData?.name = textField.stringValue
-        userData?.point = 0
+        var userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
         
-        if let userData {
-            userService?.saveUserData(data: userData)
-        }
+        userService?.saveUserData(data: userData)
         
         UserDefaults.standard.setValue(false, forKey: "isFirstTime")
         UserDefaults.standard.setValue(false, forKey: "kStretch")
@@ -221,6 +217,7 @@ class ChooseCharacterVC: NSViewController {
             container1.layer?.borderWidth = 5
             container1.layer?.borderColor = .white
             genderChar = Gender.female
+            buttonStart.isEnabled = true
         }
     }
     
@@ -230,6 +227,7 @@ class ChooseCharacterVC: NSViewController {
             container2.layer?.borderWidth = 5
             container2.layer?.borderColor = .white
             genderChar = Gender.male
+            buttonStart.isEnabled = true
         }
     }
     
