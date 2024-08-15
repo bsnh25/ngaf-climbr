@@ -28,6 +28,7 @@ class CLTextButtonV2: NSButton {
         super.init(frame: .zero)
         
         wantsLayer = true
+        self.isEnabled = true
         
         self.title                  = title
         self.isBordered             = false

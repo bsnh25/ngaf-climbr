@@ -38,4 +38,8 @@ class CLTextLabelV2: NSTextField {
         
     }
     
+    func setText(_ contentLabel: String){
+        stringValue = contentLabel
+    }
+    
 }

@@ -6,14 +6,16 @@
 //
 
 import Cocoa
+import Swinject
 
 class SplashVC: NSViewController {
     
-    let appLogoView     = NSImageView()
-    var isFirstTime: Void     = UserDefaults.standard.set(true, forKey: "isFirstTime")
+    let appLogoView = NSImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefaults.standard.set(true, forKey: "isFirstTime")
+        UserDefaults.standard.setValue(false, forKey: "kStretch")
         view.wantsLayer = true
         view.layer?.backgroundColor = .white
         configureAppLogo()
@@ -34,14 +36,13 @@ class SplashVC: NSViewController {
     }
     
     private func navigateToHome() {
-        let onboardingStage = UserPreferenceVC()
-        let vc          = HomeVC()
-        vc.audioService = AudioManager.shared
+        guard let vc = Container.shared.resolve(HomeVC.self) else {return}
+        guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
             if UserDefaults.standard.bool(forKey: "isFirstTime") {
-                self.replace(with: onboardingStage)
-//                self.replace(with: vc)
+                self.replace(with: onBoardVc)
+                UserDefaults.standard.setValue(Date(), forKey: "kDateNow")
             }else{
                 self.replace(with: vc)
             }
