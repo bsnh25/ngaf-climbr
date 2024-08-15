@@ -40,7 +40,7 @@ class UserPreferenceVC: NSViewController {
         super.viewDidAppear()
         let notif = Container.shared.resolve(NotificationManager.self)
         notif?.askUserPermission()
-//        notif?.scheduleNotification(reminder: <#T##UserPreferences#>)
+//        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }
     
     

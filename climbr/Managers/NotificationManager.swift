@@ -29,7 +29,7 @@ class NotificationManager: NotificationService {
         content.sound = .default
         content.badge = 1 as NSNumber
         
-        // Determine the working hours range
+        // Unwrap working hours
         guard let startWorkingHour = reminder.startWorkingHour, let endWorkingHour = reminder.endWorkingHour else {
             print("Invalid working hours")
             return
@@ -39,33 +39,32 @@ class NotificationManager: NotificationService {
 //        print("Ini start working hour : \(currentReminderTime)")
 //        print("Ini end working hour : \(reminder.endWorkingHour)")
         
+        //MARK: Steps Send Notification
+        /// 0. Make sure start working not above end working hour
+        /// 1. Calculate the time interval from now to the current reminder time
+        /// 2. If the interval is positive, it means the reminder is in the future
+        /// 3. Regist trigger base on time Interval on the future
+        /// 4. Create the request with a unique identifier
+        /// 5. Schedule the notification
+        /// 6. Move to the next reminder time by adding the reminder interval
+        
         while currentReminderTime <= endWorkingHour {
-            
-            // Calculate the time interval from now to the current reminder time
             let timeInterval = currentReminderTime.timeIntervalSinceNow
-            print("Ini time interval 1 : \(timeInterval)")
-            
-            // If the interval is positive, it means the reminder is in the future
+//            print("Ini time interval now : \(timeInterval)")
             if timeInterval > 0 {
-    //            print("Hitted if else")
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
-                
-                // Create the request with a unique identifier
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 
-                // Schedule the notification
                 UNUserNotificationCenter.current().add(request) { error in
                     if let error = error {
                         print("Error scheduling notification: \(error)")
                         return
                     }
                 }
-                print("set schedule")
+//                print("success set schedule")
             }
-            
-            // Move to the next reminder time by adding the reminder interval
             currentReminderTime = currentReminderTime.addingTimeInterval(TimeInterval(reminder.reminderInterval))
-            print("Ini time interval 2 : \(currentReminderTime)")
+//            print("Ini time interval 2 : \(currentReminderTime)")
         }
 
     }
