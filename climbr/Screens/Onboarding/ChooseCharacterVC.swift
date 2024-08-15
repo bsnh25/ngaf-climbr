@@ -6,8 +6,7 @@
 //
 
 import AppKit
-
-
+import Swinject
 
 class ChooseCharacterVC: NSViewController {
     private let containerBig = NSView()
@@ -191,8 +190,9 @@ class ChooseCharacterVC: NSViewController {
         }
         
         UserDefaults.standard.setValue(false, forKey: "isFirstTime")
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
-        pop()
+        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+        self.resetAndAdjust(with: homeVc)
+        
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {

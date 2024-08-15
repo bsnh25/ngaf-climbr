@@ -208,7 +208,7 @@ extension StretchingVC {
         
         if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
             stretchingResult.movementList = self.completedMovement
-            self.replace(with: stretchingResult)
+            self.resetAndAdjust(with: stretchingResult)
         }
     }
     

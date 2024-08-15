@@ -329,7 +329,6 @@ class UserPreferenceVC: NSViewController {
     
         @objc
         private func actNextButton(){
-            UserDefaults.standard.setValue(true, forKey: "kStretch")
             guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
                 print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
                 return

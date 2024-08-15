@@ -59,13 +59,11 @@ class HomeVC: NSViewController {
         view.addSubview(imageHome)
         imageHome.wantsLayer = true
         imageHome.image = NSImage(resource: .homebg)
-        imageHome.imageScaling = .scaleProportionallyUpOrDown
+        imageHome.imageScaling = .scaleAxesIndependently
         
         imageHome.snp.makeConstraints { anime in
             anime.top.leading.trailing.bottom.equalToSuperview()
             anime.centerX.centerY.equalToSuperview()
-            anime.width.equalTo(view.snp.width)
-            anime.height.equalTo(view.snp.height)
         }
     }
     

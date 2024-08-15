@@ -15,7 +15,6 @@ class SplashVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefaults.standard.set(true, forKey: "isFirstTime")
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
         view.wantsLayer = true
         view.layer?.backgroundColor = .white
         configureAppLogo()

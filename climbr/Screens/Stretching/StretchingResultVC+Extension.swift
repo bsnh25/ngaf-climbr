@@ -26,12 +26,12 @@ extension StretchingResultVC {
     }
     
     @objc func goToMainMenu() {
-        self.pop()
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
+        guard let homevc = Container.shared.resolve(HomeVC.self) else {return}
+        self.resetAndAdjust(with: homevc)
     }
     
     @objc func continueWorking() {
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
+        
     }
     
 //    func updateProgress(){

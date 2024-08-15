@@ -100,7 +100,7 @@ class CLImageButton: NSButton {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
         }
         
-        if UserDefaults.standard.bool(forKey: "isFirstTime") == true || UserDefaults.standard.bool(forKey: "kStretch") == true {
+        if UserDefaults.standard.bool(forKey: "isFirstTime") == true {
             self.isEnabled = false
         }
    }
