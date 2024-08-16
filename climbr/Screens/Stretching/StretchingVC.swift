@@ -140,6 +140,7 @@ class StretchingVC: NSViewController {
         
         movementInfoView.translatesAutoresizingMaskIntoConstraints = false
         movementInfoView.wantsLayer                = true
+        movementInfoView.layer?.backgroundColor    = .white.copy(alpha: 0.72)
         
         let blurEffect = CLBlurEffectView(frame: movementInfoView.bounds)
         movementInfoView.addSubview(blurEffect, positioned: .below, relativeTo: nil)

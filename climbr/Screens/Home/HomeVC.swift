@@ -201,7 +201,7 @@ class HomeVC: NSViewController {
         containerView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
         
         containerView.wantsLayer = true
-        containerView.layer?.backgroundColor = .clear
+        containerView.layer?.backgroundColor = .white.copy(alpha: 0.72)
         containerView.layer?.opacity = 1
         containerView.layer?.cornerRadius = 20
         
