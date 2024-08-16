@@ -47,7 +47,8 @@ extension Container {
         }
         
         container.register(SettingVC.self) { resolver in
-            return SettingVC()
+            let user = resolver.resolve(UserService.self)
+            return SettingVC(userService: user)
         }
         
         container.register(ShopItemVC.self) { resolver in
