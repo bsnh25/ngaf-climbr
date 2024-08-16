@@ -29,13 +29,35 @@ class StretchingResultVC: NSViewController {
     )
     
     let padding: CGFloat        = 64
-
+    
+    var movementList: [Movement] = []
+    
+    /// Dependencies
+    var userService: UserService?
+    
+    
+    init(userService: UserService?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.userService = userService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureVC()
         configureResultUI()
         configureButton()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        self.calculatePoints()
     }
     
     private func configureVC() {
@@ -96,6 +118,12 @@ class StretchingResultVC: NSViewController {
         stack.distribution    = .fillEqually
         
         view.addSubview(stack)
+        
+        mainMenuButton.target = self
+        mainMenuButton.action = #selector(goToMainMenu)
+        
+        continueWorkingButton.target = self
+        continueWorkingButton.action = #selector(continueWorking)
         
         NSLayoutConstraint.activate([
             stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),

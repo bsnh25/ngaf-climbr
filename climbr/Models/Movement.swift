@@ -23,6 +23,59 @@ struct Movement {
         Movement(name: .NeckExtensionBack, type: .neck, preview: "", rewardPoint: 5),
         Movement(name: .NeckExtensionFront, type: .neck, preview: "", rewardPoint: 5),
     ]
+    
+    static var setOfMovements: [[Movement]] = [
+        /// Set 1
+        [
+            /// Neck Movement
+            Movement(name: .NeckDeepLeft, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckDeepRight, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckExtensionBack, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckExtensionFront, type: .neck, preview: "", rewardPoint: 5),
+            
+            /// Arm Movement
+            Movement(name: .CrossBodyShoulderLeft, type: .arm, preview: "", rewardPoint: 5),
+            Movement(name: .CrossBodyShoulderRight, type: .arm, preview: "", rewardPoint: 5),
+            
+            /// Back Movement
+            Movement(name: .UpperBackStretchLeft, type: .back, preview: "", rewardPoint: 5),
+            Movement(name: .UpperBackStretchRight, type: .back, preview: "", rewardPoint: 5),
+        ],
+        
+        /// Set 2
+        [
+            /// Neck Movement
+            Movement(name: .NeckRotationLeft, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckRotationRight, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckExtensionBack, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckExtensionFront, type: .neck, preview: "", rewardPoint: 5),
+            
+            /// Arm Movement
+            Movement(name: .FrontShoulderStaticLeft, type: .arm, preview: "", rewardPoint: 5),
+            Movement(name: .FrontShoulderStaticRight, type: .arm, preview: "", rewardPoint: 5),
+            
+            /// Back Movement
+            Movement(name: .UpperBackStretchUp, type: .back, preview: "", rewardPoint: 5),
+            Movement(name: .UpperBackStretchFront, type: .back, preview: "", rewardPoint: 5),
+        ],
+        
+        /// Set 3
+        [
+            /// Neck Movement
+            Movement(name: .NeckDeepLeft, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckDeepRight, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckRotationLeft, type: .neck, preview: "", rewardPoint: 5),
+            Movement(name: .NeckRotationRight, type: .neck, preview: "", rewardPoint: 5),
+            
+            /// Arm Movement
+            Movement(name: .TricepStaticLeft, type: .arm, preview: "", rewardPoint: 5),
+            Movement(name: .TricepStaticRight, type: .arm, preview: "", rewardPoint: 5),
+            
+            /// Back Movement
+            Movement(name: .LowerBackSpinLeft, type: .back, preview: "", rewardPoint: 5),
+            Movement(name: .LowerBackSpinRight, type: .back, preview: "", rewardPoint: 5),
+        ],
+    ]
 }
 
 enum ExerciseType {

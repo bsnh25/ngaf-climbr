@@ -6,36 +6,19 @@
 //
 
 import Cocoa
+import Swinject
 
 class MainVC: NSViewController {
-    
-    let appLogoView     = NSImageView()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureAppLogo()
-    }
-    
-    private func configureAppLogo() {
-        view.addSubview(appLogoView)
         
-        appLogoView.image   = NSImage.appLogo
-        appLogoView.translatesAutoresizingMaskIntoConstraints = false
+        view.wantsLayer = true
         
-        NSLayoutConstraint.activate([
-            appLogoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            appLogoView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            appLogoView.widthAnchor.constraint(equalToConstant: 238)
-        ])
+        guard let vc = Container.shared.resolve(SplashVC.self) else {return}
+        
+        /// Add SplashVC to MainVC
+        addSubViewController(vc, to: view)
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-
 
 }
 

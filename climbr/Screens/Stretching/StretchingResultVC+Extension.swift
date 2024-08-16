@@ -6,7 +6,44 @@
 //
 
 import Foundation
+import Swinject
 
-extension StretchingVC {
+extension StretchingResultVC {
+    func calculatePoints(){
+        let points = movementList.reduce(0) { partial, next in
+            return partial + next.rewardPoint
+        }
+        
+        var label: String = "You didn’t earn any coins, but the next round could be yours!"
+        
+        if points > 0 {
+            label = "You earned \(points) coins"
+            updateProgress()
+        }
+        
+        rewardPointLabel.setText(label)
+        
+        if let user = userService?.getUserData() {
+            userService?.updatePoint(user: user, points: points)
+        }
+    }
     
+    @objc func goToMainMenu() {
+        self.pop()
+    }
+    
+    @objc func continueWorking() {
+        self.view.window?.miniaturize(self)
+    }
+    
+    func updateProgress(){
+        var progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+        if progress < 4.0 {
+            progress += 1.0
+            UserDefaults.standard.set(progress, forKey: UserDefaultsKey.kProgressSession)
+        }
+        UserDefaults.standard.set(Date(), forKey: UserDefaultsKey.kDateNow)
+        print("Update Last Stretching Date : \(String(describing: UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow)))")
+        print("Update Progress Stretching : \(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))")
+    }
 }

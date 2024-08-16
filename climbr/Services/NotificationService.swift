@@ -9,6 +9,6 @@ import Foundation
 
 protocol NotificationService {
     func askUserPermission()
-    func sendNotification(date: Date, title: String, body: String)
-    func scheduleNotification(reminder: UserPreferences)
+    func sendNotification(title: String, body: String, reminder: UserPreferences)
+//    func scheduleNotification(reminder: UserPreferences)
 }

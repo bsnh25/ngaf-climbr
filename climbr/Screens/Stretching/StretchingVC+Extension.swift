@@ -7,9 +7,117 @@
 
 import AppKit
 import AVFoundation
-import AudioToolbox
+import Swinject
 
 extension StretchingVC {
+    func updateMovementData() {
+        /// Stream the current index and update on its changed
+        $currentIndex.sink { [weak self] index in
+            guard let self else { return }
+            
+            guard let movement = self.setOfMovements[safe: index] else {
+                return
+            }
+            
+            self.currentMovementView.updateData(movement)
+            
+            /// Disable skip button and remove next movement view
+            /// if next index equals to items last index
+            if index == self.setOfMovements.count - 1 {
+                self.skipButton.isEnabled = false
+                
+                self.movementStack.removeView(self.movementDivider)
+                self.movementStack.removeView(self.nextMovementView)
+            }
+        }
+        .store(in: &bags)
+        
+        /// Stream the next index and update on its changed
+        $nextIndex.sink { [weak self] index in
+            guard let self else { return }
+            
+            guard let movement = self.setOfMovements[safe: index] else {
+                return
+            }
+            
+            self.nextMovementView.updateData(movement)
+            
+        }
+        .store(in: &bags)
+    }
+    
+    func updateMovementState() {
+        $exerciseName.sink { [weak self] name in
+            guard let self else { return }
+            
+            /// Get current movement data
+            guard let movement = self.setOfMovements[safe: self.currentIndex] else {
+                return
+            }
+            
+            /// Return true if the name equals to current movement
+            let positionState   = name == movement.name
+            
+            DispatchQueue.main.async {
+                
+                /// Make sure to unhide the movement state view
+                self.movementStateView.unhide()
+                
+                if !positionState {
+                    /// Pause the timer if movement incorrect
+                    self.pauseTimer()
+                    
+                    /// Set label, foreground, and background color based on each state
+                    var label: String = "Please move according to the guidance"
+                    
+                    if name == .Still {
+                        label = "Please move according to the guidance"
+                        self.movementStateView.setForegroundColor(.black)
+                        self.movementStateView.setBackgroundColor(.white)
+                    } else {
+                        label = "Position Incorrect"
+                        self.movementStateView.setForegroundColor(.black)
+                        self.movementStateView.setBackgroundColor(.systemRed)
+                        
+                        self.playSfx("incorrect")
+                    }
+                    
+                    self.movementStateView.setLabel(label)
+                } else {
+                    self.playSfx("correct")
+                    self.startExerciseSession(duration: movement.duration)
+                    self.movementStateView.hide()
+                }
+            }
+        }.store(in: &bags)
+        
+        $remainingTime.sink { [weak self] time in
+            guard let self else { return }
+            
+            /// Cancel code execution below if timer not running and timer is paused
+            guard self.isTimerRunning, !self.isTimerPaused else { return }
+            
+            /// If remaining time equals to zero, then hide the movement state view and
+            /// next to the next movement
+            ///
+            /// Assume that if remaining time is zero, it means the movement has done
+            guard time > 0 else {
+                self.movementStateView.hide()
+                
+                self.next()
+                
+                return
+            }
+            
+            if time <= 5 {
+                self.playSfx("countdown")
+            }
+            
+            self.currentMovementView.setDuration(time)
+        }
+        .store(in: &bags)
+    }
+    
     /// Excercise session
     func startExerciseSession(duration: TimeInterval) {
         /// If movement is correct, run the timer based on previous state (start or resume)
@@ -22,6 +130,7 @@ extension StretchingVC {
     
     /// Timer countdown
     func startTimer(duration: TimeInterval?) {
+        guard !isTimerRunning, !isTimerPaused else { return }
         
         /// If duration exist, it means the app will start timer based on duration.
         /// Otherwise, app will start timer based on previous duration (resume)
@@ -29,8 +138,6 @@ extension StretchingVC {
             remainingTime   = duration
             timerInterval   = duration
         }
-        
-        guard !isTimerRunning, !isTimerPaused else { return }
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         
@@ -81,23 +188,44 @@ extension StretchingVC {
         startTimer(duration: nil)
     }
     
-    @objc func skip() {
-        guard let _ = Movement.items[safe: currentIndex+1] else {
-            return
+    @objc func skip() -> Bool {
+        guard let _ = setOfMovements[safe: currentIndex+1] else {
+            return false
         }
         
         currentIndex += 1
         nextIndex     = currentIndex+1
+        stopTimer()
+        movementStateView.hide()
+        
+        return true
     }
     
     func next() {
-        completedMovement.append(Movement.items[currentIndex])
+        /// Make sure movement index is not out of range
+        guard let movement = setOfMovements[safe: currentIndex] else {
+            return
+        }
+        
+        self.completedMovement.append(movement)
+        
+        self.playSfx("next-move")
 
-        skip()
+        let canSkip = skip()
+        
+        guard canSkip else {
+            finishSession()
+            return
+        }
     }
     
-    func finishEarly() {
-        push(StretchingResultVC())
+    func finishSession() {
+        self.cameraService?.stopSession()
+        
+        if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
+            stretchingResult.movementList = self.completedMovement
+            self.replace(with: stretchingResult)
+        }
     }
     
     @objc func showEndSessionAlert() {
@@ -116,7 +244,7 @@ extension StretchingVC {
         let result = alert.runModal()
         
         if result == .alertSecondButtonReturn {
-            finishEarly()
+            finishSession()
         }
     }
     
@@ -129,7 +257,9 @@ extension StretchingVC : PredictorDelegate {
         for name in ExerciseName.allCases {
             if name.rawValue == action && confidence > 0.5{
                 if exerciseName != name {
-                    exerciseName = name
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self.exerciseName = name
+                    }
                     print("\(name) and the confidence is \(confidence)")
                 }
             }
@@ -137,7 +267,7 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
-        guard let previewLayer = cameraManager.previewLayer else {return}
+        guard let previewLayer = cameraService?.previewLayer else { return }
         
         let convertedPoints = points.map{
             previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
@@ -157,6 +287,19 @@ extension StretchingVC : PredictorDelegate {
         }
     }
     
+    func playSfx(_ file: String) {
+        guard let audioService else { return }
+        
+        audioService.playSFX(fileName: file)
+    }
     
 }
 
+extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+            connection.isVideoMirrored = true
+        }
+        predictor.estimation(sampleBuffer: sampleBuffer)
+    }
+}

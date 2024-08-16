@@ -23,7 +23,7 @@ class EndSessionAlertVC: NSViewController {
     
     let endButton   = CLTextButtonV2(
         title: "End Session",
-        backgroundColor: .systemButton,
+        backgroundColor: .gray,
         foregroundColorText: .black,
         fontText: .preferredFont(forTextStyle: .callout)
     )
@@ -117,7 +117,7 @@ extension EndSessionAlertVC {
     }
     
     @objc func endSession() {
-        self.push(StretchingResultVC())
+//        self.push(to: StretchingResultVC())
 //        dismissAlert()
     }
 }
