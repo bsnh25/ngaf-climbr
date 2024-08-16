@@ -14,7 +14,7 @@ extension HomeVC {
     func actionStore(){
         print("go to shop")
     }
-
+    
     @objc
     func actionStartSession(){
         if let vc = Container.shared.resolve(StretchingVC.self) {
@@ -29,7 +29,7 @@ extension HomeVC {
         settingsVC.preferredContentSize = CGSize(width: 412, height: 358)
         self.presentAsModalWindow(settingsVC)
     }
-
+    
     @objc
     func actionAudio(){
         guard let audio = audioService else {return}
@@ -46,41 +46,24 @@ extension HomeVC {
     }
     
     func dailyProgress(){
+        print("Progress Value : \(progressValue)")
         progressStretch.minValue = 0
         progressStretch.maxValue = 4
-        progressStretch.doubleValue = progressValue / progressStretch.maxValue // value progress
+        progressStretch.doubleValue = progressValue
     }
     
-    func updateProgress(_ now: Date){
-        //1. check value sekarang berapa
-        //2. if value kurang dari max value, return 3, else return maxValue
-        //3. kalau kurang, value ditambah 0.25,
-        //4. check date sekarang
-        
-        guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: now) else {return}
-        
-        if now < Calendar.current.startOfDay(for: tomorrow){
-            print("Date now \(now)")
-            print("Start Date Tommorow: \(Calendar.current.startOfDay(for: tomorrow))")
-            
-            switch UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) {
-            case 0, 1, 2, 3:
-                textA.setText("\(progressValue) / 4 sessions")
-                progressValue += 1
-                return
-            default:
-                textA.setText("4 / 4 sessions")
-                progressValue = 4
-            }
-            
-            UserDefaults.standard.setValue(progressValue, forKey: UserDefaultsKey.kProgressSession)
-            
-        } else {
-            progressValue = 0
-            textA.setText("0 / 4 sessions")
-            UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+    func validateYesterday(_ date: Date){
+        if Calendar.current.isDateInYesterday(date) {
+            print("Date param : \(date)")
+            print("Date current : \(Calendar.current)")
+            UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         }
-        
-        print("Session : \(textA.stringValue)")
+    }
+    
+    func updateProgressData(){
+        let progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+        progressStretch.doubleValue = progress
+        progressText.setText("\(Int(progress)) / 4 sessions")
     }
 }
+

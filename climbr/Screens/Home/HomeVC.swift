@@ -8,6 +8,7 @@
 import AppKit
 import SnapKit
 import Swinject
+import Combine
 
 class HomeVC: NSViewController {
     
@@ -24,16 +25,15 @@ class HomeVC: NSViewController {
     var audioService: AudioService?
     var userService: UserService?
     var isSoundTapped: Bool = false
-    var textA = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "0 / 4 sessions")
+    var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
-    var progressValue: Double = 0.0
+    var bagss: Set<AnyCancellable> = []
     
-//    var progressService: ProgressService?
-//    var settingVC: SettingVC?
+    @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+    
     
     init(audioService: AudioService?, userService: UserService?) {
         super.init(nibName: nil, bundle: nil)
-//        self.progressService = progressService
         self.audioService = audioService
         self.userService = userService
     }
@@ -41,7 +41,6 @@ class HomeVC: NSViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +50,15 @@ class HomeVC: NSViewController {
         viewStretchConfig()
         dailyProgress()
         
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                
+                DispatchQueue.main.async {
+                    self.updateProgressData()
+                }
+            }
+            .store(in: &bagss)
     }
     
     override func viewDidAppear() {
@@ -62,11 +70,20 @@ class HomeVC: NSViewController {
         }
     }
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        $progressValue.sink { progress in
+            
+            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
+            
+        }.store(in: &bagss)
+    }
+    
     private func previewAnimaConfig(){
         view.addSubview(imageHome)
-        imageHome.wantsLayer = true
+        imageHome.wantsLayer = true 
         imageHome.image = NSImage(resource: .homebg)
-        imageHome.imageScaling = .scaleProportionallyUpOrDown
+        imageHome.imageScaling = .scaleAxesIndependently
         
         imageHome.snp.makeConstraints { anime in
             anime.top.leading.trailing.bottom.equalToSuperview()
@@ -159,7 +176,7 @@ class HomeVC: NSViewController {
             progress.height.equalTo(4)
         }
         
-        textA.snp.makeConstraints { text in
+        progressText.snp.makeConstraints { text in
             text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.02))
             text.leading.equalTo(progressStretch.snp.trailing).offset(minPadding)
             text.trailing.equalTo(containerView.snp.trailing).inset(padding)
@@ -179,7 +196,7 @@ class HomeVC: NSViewController {
         
         containerView.addSubview(textB)
         containerView.addSubview(progressStretch)
-        containerView.addSubview(textA)
+        containerView.addSubview(progressText)
         containerView.addSubview(startStretchButton)
         
         containerView.wantsLayer = true
