@@ -22,6 +22,10 @@ extension StretchingResultVC {
         }
         
         rewardPointLabel.setText(label)
+        
+        if let user = userService?.getUserData() {
+            userService?.updatePoint(user: user, points: points)
+        }
     }
     
     @objc func goToMainMenu() {
@@ -35,6 +39,7 @@ extension StretchingResultVC {
     }
     
     @objc func continueWorking() {
+        self.view.window?.miniaturize(self)
     }
     
     func updateProgress(){

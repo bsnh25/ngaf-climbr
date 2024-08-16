@@ -37,6 +37,10 @@ class MovementStateView: NSView {
         layer?.backgroundColor    = .white
         layer?.cornerRadius       = 10
         
+        let blurEffect = CLBlurEffectView(frame: bounds)
+        
+        addSubview(blurEffect, positioned: .below, relativeTo: nil)
+        
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: centerXAnchor),
             label.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -55,12 +59,12 @@ class MovementStateView: NSView {
         ///
         /// Then set the inital value, final value, and duration
         let animation           = CABasicAnimation(keyPath: "backgroundColor")
-        animation.fromValue     = layer.backgroundColor
-        animation.toValue       = color.cgColor
+        animation.fromValue     = layer.backgroundColor?.copy(alpha: 0.72)
+        animation.toValue       = color.cgColor.copy(alpha: 0.72)
         animation.duration      = 0.3
             
         /// Set the layer property to final value
-        layer.backgroundColor   = color.cgColor
+        layer.backgroundColor   = color.cgColor.copy(alpha: 0.72)
         
         /// Add animation to layer
         layer.add(animation, forKey: "backgroundColor")

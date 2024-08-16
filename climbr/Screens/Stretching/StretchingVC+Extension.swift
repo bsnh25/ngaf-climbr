@@ -70,7 +70,7 @@ extension StretchingVC {
                         self.movementStateView.setBackgroundColor(.white)
                     } else {
                         label = "Position Incorrect"
-                        self.movementStateView.setForegroundColor(.white)
+                        self.movementStateView.setForegroundColor(.black)
                         self.movementStateView.setBackgroundColor(.systemRed)
                         
                         self.playSfx("incorrect")
@@ -100,6 +100,10 @@ extension StretchingVC {
                 self.next()
                 
                 return
+            }
+            
+            if time <= 5 {
+                self.playSfx("countdown")
             }
             
             self.currentMovementView.setDuration(time)
