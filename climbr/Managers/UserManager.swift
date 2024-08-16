@@ -51,11 +51,12 @@ class UserManager : UserService {
     }
     
     func getUserData() -> User? {
+        guard let container = container else {return nil}
         let request: NSFetchRequest<User> = User.fetchRequest()
         
         
         do {
-            return try container.viewContext.fetch(request).first
+            return try container.fetch(request).first
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
             return nil
