@@ -23,10 +23,10 @@ class ShopItemVC: NSViewController {
         ("map.fill", "Location")
     ]
     
-    let headItems1: [EquipmentModel] = headGears
-    let handItems1: [EquipmentModel] = hikingSticks
-    let backItems1: [EquipmentModel] = backPacks
-    let locationItems1: [EquipmentModel] = locations
+    let headItems1: [EquipmentModel] = EquipmentModel.headGears
+    let handItems1: [EquipmentModel] = EquipmentModel.hikingSticks
+    let backItems1: [EquipmentModel] = EquipmentModel.backPacks
+    let locationItems1: [EquipmentModel] = EquipmentModel.locations
     
     var itemType : EquipmentType = .head
     

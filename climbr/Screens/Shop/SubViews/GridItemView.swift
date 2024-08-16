@@ -88,7 +88,7 @@ class GridItem: NSCollectionViewItem {
     func configure(equipmentModel: EquipmentModel) {
         backgroundImageView.image = NSImage(named: equipmentModel.item.image)
         item = equipmentModel.item
-        itemId = equipmentModel.item.itemID
+        itemId = Int(equipmentModel.item.itemID)
         type = equipmentModel.type
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
