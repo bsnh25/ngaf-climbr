@@ -50,6 +50,10 @@ extension Container {
             return SettingVC()
         }
         
+        container.register(ShopItemVC.self) { resolver in
+            return ShopItemVC()
+        }
+        
         container.register(StretchingResultVC.self) { resolver in
             let userService     = resolver.resolve(UserService.self)
             

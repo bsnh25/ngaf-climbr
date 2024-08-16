@@ -22,7 +22,7 @@ class EquipmentManager: EquipmentService {
         
         var predicate: NSPredicate? = nil
         
-        predicate = NSPredicate(format: "type == %@", equipmentType.rawValue)
+        predicate = NSPredicate(format: "type == %@", equipmentType.hashValue)
         var request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         request.predicate = predicate
         

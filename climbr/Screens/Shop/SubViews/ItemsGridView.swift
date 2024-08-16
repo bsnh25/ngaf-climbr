@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class ItemsGridVC: NSViewController {
+class ShopItemVC: NSViewController {
     
     let pointsLabel = NSTextField(labelWithString: "100")
     let collectionViewContainer = CollectionContainerView()
@@ -173,7 +173,7 @@ class ItemsGridVC: NSViewController {
     }
 }
 
-extension ItemsGridVC : collectionContainerProtocol {
+extension ShopItemVC : collectionContainerProtocol {
     func itemSelectedChanged(to newSelected: EquipmentItem) {
         self.selectedItem = newSelected
         

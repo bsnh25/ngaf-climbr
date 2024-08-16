@@ -12,7 +12,10 @@ extension HomeVC {
     
     @objc
     func actionStore(){
-        print("go to shop")
+        if let vc = Container.shared.resolve(ShopItemVC.self) {
+            push(to: vc)
+            print("go to stretching shop")
+        }
     }
     
     @objc
