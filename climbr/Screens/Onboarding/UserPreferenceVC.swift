@@ -29,6 +29,8 @@ class UserPreferenceVC: NSViewController {
     let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    var lastStartValue: Date!
+    var lastStopValue: Date!
     var isChecked: Bool = false
     var intervalReminder: Int64 = 0
     var userService: UserService?
@@ -177,7 +179,7 @@ class UserPreferenceVC: NSViewController {
         if let date = calendar.date(from: components) {
             startWorkHour.dateValue = date
         }
-        
+        lastStartValue = startWorkHour.dateValue
         startWorkHour.datePickerElements = [.hourMinute]
         startWorkHour.target = self
         startWorkHour.action = #selector(startWorkHourChanged)
@@ -204,8 +206,11 @@ class UserPreferenceVC: NSViewController {
     
     func configureStopWorkHour() {
         view.addSubview(stopWorkHour)
-        
+        lastStopValue = stopWorkHour.dateValue
         stopWorkHour.datePickerElements = [.hourMinute]
+        stopWorkHour.target = self
+        stopWorkHour.action = #selector(stopWorkHourChanged)
+        
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
