@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Swinject
 
 class MainVC: NSViewController {
     override func viewDidLoad() {
@@ -13,8 +14,10 @@ class MainVC: NSViewController {
         
         view.wantsLayer = true
         
+        guard let vc = Container.shared.resolve(SplashVC.self) else {return}
+        
         /// Add SplashVC to MainVC
-        addSubViewController(SplashVC(), to: view)
+        addSubViewController(vc, to: view)
     }
 
 }

@@ -24,18 +24,26 @@ extension Container {
             return MainVC()
         }
         
+        container.register(SplashVC.self) { resolver in
+            let user = resolver.resolve(UserService.self)
+            return SplashVC(userService: user)
+        }
+        
         container.register(UserPreferenceVC.self) { resolver in
             let notif = resolver.resolve(NotificationService.self)
-            return UserPreferenceVC(notifService: notif)
+            let user = resolver.resolve(UserService.self)
+            return UserPreferenceVC(userService: user, notifService: notif)
         }
         
         container.register(ChooseCharacterVC.self) { resolver in
-            return ChooseCharacterVC()
+            let userService     = resolver.resolve(UserService.self)
+            return ChooseCharacterVC(userService: userService)
         }
         
         container.register(HomeVC.self) { resolver in
             let audio = resolver.resolve(AudioService.self)
-            return HomeVC(audioService: audio)
+            let user = resolver.resolve(UserService.self)
+            return HomeVC(audioService: audio, userService: user)
         }
         
         container.register(SettingVC.self) { resolver in
@@ -53,6 +61,12 @@ extension Container {
             let cameraService   = resolver.resolve(CameraService.self)
             
             return StretchingVC(audioService: audioService, cameraService: cameraService)
+        }
+        
+        container.register(ChooseCharacterVC.self){ resolver in
+            let userService     = resolver.resolve(UserService.self)
+            
+            return ChooseCharacterVC(userService: userService)
         }
         
         return container

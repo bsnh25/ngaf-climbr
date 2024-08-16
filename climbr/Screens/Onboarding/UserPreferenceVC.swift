@@ -9,6 +9,7 @@ import Cocoa
 import Swinject
 
 
+
 class UserPreferenceVC: NSViewController {
     
     private let bgContainer = NSView()
@@ -21,25 +22,29 @@ class UserPreferenceVC: NSViewController {
     private let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
     private let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
     private let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
-    private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
-    private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 22))
+    private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
+    private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
     private let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     var isChecked: Bool = false
-    
+    var intervalReminder: Int64 = 0
+    var userService: UserService?
     var notifService: NotificationService?
     
-    init(notifService: NotificationService?){
+    
+    init(userService: UserService?, notifService: NotificationService?) {
         super.init(nibName: nil, bundle: nil)
+        self.userService = userService
         self.notifService = notifService
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +54,7 @@ class UserPreferenceVC: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         notifService?.askUserPermission()
-//        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
+        //        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }
     
     
@@ -107,9 +112,9 @@ class UserPreferenceVC: NSViewController {
         NSLayoutConstraint.activate([
             appLogoImage.widthAnchor.constraint(equalToConstant: 252),
             appLogoImage.heightAnchor.constraint(equalToConstant: 78.57),
-                appLogoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -115)
-            ])
+            appLogoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -115)
+        ])
         
     }
     
@@ -120,7 +125,7 @@ class UserPreferenceVC: NSViewController {
         NSLayoutConstraint.activate([
             workHoursLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
             workHoursLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 360),
-        
+            
         ])
     }
     
@@ -131,16 +136,16 @@ class UserPreferenceVC: NSViewController {
         NSLayoutConstraint.activate([
             reminderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
             reminderLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 484),
-        
+            
         ])
     }
     
     private func configureNextButton(){
         view.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.isEnabled = false
         nextButton.target = self
         nextButton.action = #selector(actNextButton)
-        nextButton.isEnabled = true
         
         NSLayoutConstraint.activate([
             nextButton.widthAnchor.constraint(equalToConstant: 143),
@@ -163,7 +168,6 @@ class UserPreferenceVC: NSViewController {
     private func configureStartWorkHour(){
         view.addSubview(startWorkHour)
         startWorkHour.maxDate = .distantFuture
-        startWorkHour.minDate = .now
         
         NSLayoutConstraint.activate([
             startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -186,11 +190,7 @@ class UserPreferenceVC: NSViewController {
     private func configureStopWorkHour(){
         view.addSubview(stopWorkHour)
         stopWorkHour.maxDate = .distantFuture
-        if let startMinDate = startWorkHour.minDate {
-            let calendar = Calendar.current
-            let oneHourLater = calendar.date(byAdding: .hour, value: 2, to: startMinDate)
-            stopWorkHour.minDate = oneHourLater
-        }
+        stopWorkHour.minDate = .init(timeInterval: 7200, since: startWorkHour.dateValue)
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -222,7 +222,7 @@ class UserPreferenceVC: NSViewController {
             button1.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
-
+    
     private func configureButton2(){
         view.addSubview(button2)
         button2.target = self
@@ -235,7 +235,7 @@ class UserPreferenceVC: NSViewController {
             button2.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
-
+    
     private func configureButton3(){
         view.addSubview(button3)
         button3.target = self
@@ -248,7 +248,7 @@ class UserPreferenceVC: NSViewController {
             button3.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
-
+    
     private func configureButton4(){
         view.addSubview(button4)
         button4.target = self
@@ -269,7 +269,7 @@ class UserPreferenceVC: NSViewController {
         NSLayoutConstraint.activate([
             text2Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
             text2Line2.leadingAnchor.constraint(equalTo: button4.trailingAnchor, constant: 25)
-        
+            
         ])
     }
     
@@ -288,107 +288,107 @@ class UserPreferenceVC: NSViewController {
         
     }
     
-    private func processSavePreference() -> Int{
-            
-            if button1.isSelected {
-                return 30
-            }else if button2.isSelected{
-                return 60
-            }else if button3.isSelected{
-                return 90
-            } else if button4.isSelected{
-                return 120
-            }else {
-                print("ERR: at user preference (reminder)")
-                return 0
-            }
+    private func processSavePreference() -> Int64{
         
+        if button1.isSelected {
+            return 30
+        }else if button2.isSelected{
+            return 60
+        }else if button3.isSelected{
+            return 90
+        } else if button4.isSelected{
+            return 120
+        }else {
+            print("ERR: at user preference (reminder)")
+            return 0
         }
+        
+    }
     
     
     
-
-        private func resetButtonColors() {
-            // Reset all buttons to gray
-            button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-            button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-            button3.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-            button4.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-            
-            button1.foregroundColorText = .white
-            button2.foregroundColorText = .white
-            button3.foregroundColorText = .white
-            button4.foregroundColorText = .white
-            
-            button1.isSelected = false
-            button2.isSelected = false
-            button3.isSelected = false
-            button4.isSelected = false
-
-        }
     
-        @objc
-        private func actNextButton(){
-            guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
-                print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
-                return
-            }
-            print("Reminder at \(processSavePreference())")
-            print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
-            
-            ///get checkbox value
-            print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
-            
-            guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-            replace(with: homeVc)
-        }
-
-        @objc
-        private func action30min(){
-            resetButtonColors()
-            button1.isSelected = true
-            button1.layer?.backgroundColor = .white
-            button1.foregroundColorText = .black
-            
-            print("\(button1.title) choose")
-        }
+    private func resetButtonColors() {
+        // Reset all buttons to gray
+        button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+        button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+        button3.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+        button4.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
         
-        @objc
-        private func action60min(){
-            resetButtonColors()
-            button2.isSelected = true
-            button2.layer?.backgroundColor = .white
-            button2.foregroundColorText = .black
-            button2.fontText = .systemFont(ofSize: 17, weight: .bold)
-            print("\(button2.title) choose")
-        }
+        button1.foregroundColorText = .white
+        button2.foregroundColorText = .white
+        button3.foregroundColorText = .white
+        button4.foregroundColorText = .white
         
-        @objc
-        private func action90min(){
-            resetButtonColors()
-            button3.isSelected = true
-            button3.layer?.backgroundColor = .white
-            button3.foregroundColorText = .black
-            button3.fontText = .systemFont(ofSize: 17, weight: .bold)
-            print("\(button3.title) choose")
-        }
+        button1.isSelected = false
+        button2.isSelected = false
+        button3.isSelected = false
+        button4.isSelected = false
+    }
+    
+    @objc
+    private func actNextButton(){
         
-        @objc
-        private func action120min(){
-            resetButtonColors()
-            button4.isSelected = true
-            button4.layer?.backgroundColor = .white
-            button4.foregroundColorText = .black
-            button4.fontText = .systemFont(ofSize: 17, weight: .bold)
-            print("\(button4.title) choose")
+        UserDefaults.standard.setValue(true, forKey: "kStretch")
+        guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
+            print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
+            return
         }
+        print("Reminder at \(processSavePreference())")
+        print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
+        ///get checkbox value
+        print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
+        var userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+        
+        userService?.savePreferences(data: userPreferenceData)
+        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+        replace(with: homeVc)
+    }
+    
+    @objc
+    private func action30min(){
+        resetButtonColors()
+        button1.isSelected = true
+        button1.layer?.backgroundColor = .white
+        button1.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button1.title) choose")
+    }
+    
+    @objc
+    private func action60min(){
+        resetButtonColors()
+        button2.isSelected = true
+        button2.layer?.backgroundColor = .white
+        button2.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button2.title) choose")
+    }
+    
+    @objc
+    private func action90min(){
+        resetButtonColors()
+        button3.isSelected = true
+        button3.layer?.backgroundColor = .white
+        button3.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button3.title) choose")
+    }
+    
+    @objc
+    private func action120min(){
+        resetButtonColors()
+        button4.isSelected = true
+        button4.layer?.backgroundColor = .white
+        button4.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button4.title) choose")
+    }
     
     @objc
     private func actionCheckbox(){
         isChecked = checkboxButton.state == .on
-        
-        ///change print into user deafult settings
-        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
+        print("\(isChecked)")
     }
 }
 
