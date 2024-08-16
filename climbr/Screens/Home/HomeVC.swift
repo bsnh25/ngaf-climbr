@@ -155,8 +155,6 @@ class HomeVC: NSViewController {
         let padding = view.bounds.height * 0.04
         let minPadding = view.bounds.height * 0.02
         
-        startStretchButton.isEnabled = UserDefaults.standard.bool(forKey: "isFirstTime") ? false : true
-        
         containerView.snp.makeConstraints { container in
             container.trailing.equalToSuperview().inset(padding)
             container.top.equalTo(settingButton.snp.top)
@@ -194,13 +192,16 @@ class HomeVC: NSViewController {
     private func viewStretchConfig(){
         view.addSubview(containerView)
         
+        let blurEffect = CLBlurEffectView(frame: containerView.bounds)
+        
         containerView.addSubview(textB)
         containerView.addSubview(progressStretch)
         containerView.addSubview(progressText)
         containerView.addSubview(startStretchButton)
+        containerView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
         
         containerView.wantsLayer = true
-        containerView.layer?.backgroundColor = NSColor.cContainerHome.withAlphaComponent(0.72).cgColor
+        containerView.layer?.backgroundColor = .clear
         containerView.layer?.opacity = 1
         containerView.layer?.cornerRadius = 20
         
