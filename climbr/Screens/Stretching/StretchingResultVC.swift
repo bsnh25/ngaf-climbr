@@ -12,6 +12,7 @@ class StretchingResultVC: NSViewController {
     let greetingLabel           = CLLabel(fontSize: 36, fontWeight: .heavy)
     let stretchingDurationLabel = CLLabel(fontSize: 28, fontWeight: .bold)
     let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
+    let resultStack             = NSStackView()
     
     let awardsText              = "You’ve reduced your sedentary time by"
     
@@ -52,7 +53,6 @@ class StretchingResultVC: NSViewController {
         
         configureVC()
         configureResultUI()
-        configureButton()
     }
     
     override func viewDidAppear() {
@@ -71,7 +71,7 @@ class StretchingResultVC: NSViewController {
         let views                   = [greetingLabel, stretchingDurationLabel, dummyCharacter, rewardPointLabel]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        let resultStack             = NSStackView(views: views)
+        resultStack.setViews(views, in: .center)
         resultStack.orientation     = .vertical
         resultStack.spacing         = 24
         
@@ -87,10 +87,12 @@ class StretchingResultVC: NSViewController {
         /// Character
         configureCharacter()
         
+        /// Button
+        configureButton()
+        
         NSLayoutConstraint.activate([
-            resultStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
             resultStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            resultStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            resultStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
@@ -114,7 +116,7 @@ class StretchingResultVC: NSViewController {
         stack.spacing               = 10
         stack.distribution    = .fillEqually
         
-        view.addSubview(stack)
+        resultStack.addArrangedSubview(stack)
         
         mainMenuButton.target = self
         mainMenuButton.action = #selector(goToMainMenu)
@@ -124,8 +126,6 @@ class StretchingResultVC: NSViewController {
         
         NSLayoutConstraint.activate([
             stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             continueWorkingButton.heightAnchor.constraint(equalToConstant: 48),
             mainMenuButton.heightAnchor.constraint(equalToConstant: 48),
         ])
