@@ -8,11 +8,9 @@
 import AppKit
 import Swinject
 
-extension UserPreferenceVC: NSDatePickerCellDelegate{
+extension UserPreferenceVC{
     @objc
     func actNextButton(){
-        
-        UserDefaults.standard.setValue(true, forKey: "kStretch")
         guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
             print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
             return
@@ -74,9 +72,23 @@ extension UserPreferenceVC: NSDatePickerCellDelegate{
         print("\(isChecked)")
     }
     
-    
-    func datePickerCell(_ aDatePickerCell: NSDatePickerCell, validateProposedDateValue proposedDateValue: AutoreleasingUnsafeMutablePointer<NSDate>, timeInterval proposedTimeInterval: UnsafeMutablePointer<TimeInterval>?) {
-        print("date picker dirubah menjadi \(startWorkHour.dateValue)")
-        stopWorkHour.dateValue = startWorkHour.dateValue.addingTimeInterval(7200)
+    @objc
+    func datePickerValueChanged(_ sender: NSDatePicker) {
+        // Get the selected date from the date picker
+        let selectedDate = sender.dateValue
+        
+        // Convert the date to a string for display (optional)
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .medium
+//        dateFormatter.timeStyle = .short
+//        let dateString = dateFormatter.string(from: selectedDate)
+        
+        // Display the selected date
+        print("Date changed to: \(selectedDate)")
+        stopWorkHour.dateValue = selectedDate.addingTimeInterval(7200)
+//        stopWorkHour.minDate = selectedDate.addingTimeInterval(7200)
+        print("\(stopWorkHour.dateValue)")
+        
     }
+    
 }

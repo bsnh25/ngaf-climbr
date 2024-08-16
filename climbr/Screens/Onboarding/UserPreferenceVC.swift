@@ -178,11 +178,8 @@ class UserPreferenceVC: NSViewController {
             startWorkHour.dateValue = date
         }
         
-        startWorkHour.maxDate = stopWorkHour.minDate?.addingTimeInterval(-7200)
-        if let cell = startWorkHour.cell as? NSDatePickerCell {
-            cell.delegate = self
-        }
-        
+        startWorkHour.target = self
+        startWorkHour.action = #selector(datePickerValueChanged)
         NSLayoutConstraint.activate([
             startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
             startWorkHour.leadingAnchor.constraint(equalTo: text1Line1.trailingAnchor, constant: 25),
@@ -203,9 +200,8 @@ class UserPreferenceVC: NSViewController {
     
     func configureStopWorkHour(){
         view.addSubview(stopWorkHour)
-        stopWorkHour.maxDate = .distantFuture
+//        stopWorkHour.maxDate = .distantFuture
         stopWorkHour.minDate = startWorkHour.dateValue.addingTimeInterval(7200)
-        stopWorkHour.dateValue = startWorkHour.dateValue.addingTimeInterval(7200)
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
