@@ -64,7 +64,7 @@ class EquipmentManager: EquipmentService {
     
     func purchaseEquipment(data: EquipmentModel) {
         guard let container = container else {return}
-        guard let equipment = fetchEquipment(byID: data.item.itemID, context: container) else {
+        guard let equipment = fetchEquipment(byID: data.item.rawValue , context: container) else {
             print("No equipment found with ID \(data.item.itemID)")
              return
          }
@@ -78,6 +78,7 @@ class EquipmentManager: EquipmentService {
         
     }
     
+    
     func convertToEquipmentModel(for equipment: [Equipment]) -> [EquipmentModel] {
         return equipment.compactMap { equipment in
             guard let typeString = equipment.type,
@@ -90,9 +91,10 @@ class EquipmentManager: EquipmentService {
         }
     }
     
-    func fetchEquipment(byID id: Int, context: NSManagedObjectContext) -> Equipment? {
+    
+    func fetchEquipment(byID name: String, context: NSManagedObjectContext) -> Equipment? {
         let fetchRequest: NSFetchRequest<Equipment> = Equipment.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name as String)
         
         do {
             let result = try context.fetch(fetchRequest)

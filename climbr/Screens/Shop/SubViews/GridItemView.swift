@@ -42,7 +42,7 @@ class GridItem: NSCollectionViewItem {
     }()
     
     var type : EquipmentType?
-    var itemId: Int?
+    var itemId: UUID?
     var item: EquipmentItem?
     
     override func viewDidLoad() {
