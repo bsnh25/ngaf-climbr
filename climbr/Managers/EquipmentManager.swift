@@ -25,16 +25,14 @@ class EquipmentManager: EquipmentService {
         items.append(contentsOf: hikingSticks)
         items.append(contentsOf: locations)
         
-        let request = items.map { equipment in
-            var data = Equipment(context: container)
+        items.forEach { equipment in
+            let data = Equipment(context: container)
             data.id         = Int64(equipment.item.itemID)
             data.type       = equipment.type.rawValue
             data.name       = equipment.item.rawValue
             data.isUnlocked = false
             data.image      = equipment.item.image
             data.price      = Int64(equipment.item.harga)
-            
-            return equipment
         }
         
         do {
