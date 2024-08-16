@@ -204,7 +204,7 @@ class ChooseCharacterVC: NSViewController {
             print("user not choose character")
         }
         
-        var userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
+        let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
         
         userService?.saveUserData(data: userData)
         UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)

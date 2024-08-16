@@ -334,8 +334,8 @@ class UserPreferenceVC: NSViewController {
             print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
             return
         }
-        print("start time : \(startWorkHour.dateValue)")
-        print("end time : \(stopWorkHour.dateValue)")
+        print("Start Work Hour : \(startWorkHour.dateValue)")
+        print("End Work Hour : \(stopWorkHour.dateValue)")
         
         print("Reminder at \(processSavePreference())")
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")

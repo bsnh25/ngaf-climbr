@@ -11,36 +11,40 @@ struct EquipmentModel {
     var item: EquipmentItem
     var type: EquipmentType
     var isUnlocked: Bool
+    
+    static var headGears : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.climberCrownHG, type: EquipmentType.head, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.cozyCragglerHG, type: EquipmentType.head, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.festiveFollyHG, type: EquipmentType.head, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.trailbazerTamHG, type: EquipmentType.head, isUnlocked: false)
+    ]
+    
+    static var backPacks : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.climbingBP, type: EquipmentType.back, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.cuddlyBP, type: EquipmentType.back, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.duffelBP, type: EquipmentType.back, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.hikingBP, type: EquipmentType.back, isUnlocked: false)
+    ]
+    
+    static var hikingSticks : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.highWizardS, type: EquipmentType.hand, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.iceGripS, type: EquipmentType.hand, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.natureGuideS, type: EquipmentType.hand, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.trekTrooperS, type: EquipmentType.hand, isUnlocked: false)
+    ]
+    
+    static var locations : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.jungleJumble, type: EquipmentType.location, isUnlocked: true),
+        EquipmentModel(item: EquipmentItem.snowySummit, type: EquipmentType.location, isUnlocked: false)
+    ]
 }
 
-var headGears : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.climberCrownHG, type: EquipmentType.head, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.cozyCragglerHG, type: EquipmentType.head, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.festiveFollyHG, type: EquipmentType.head, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.trailbazerTamHG, type: EquipmentType.head, isUnlocked: false)
-]
 
-var backPacks : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.climbingBP, type: EquipmentType.back, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.cuddlyBP, type: EquipmentType.back, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.duffelBP, type: EquipmentType.back, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.hikingBP, type: EquipmentType.back, isUnlocked: false)
-]
-
-var hikingSticks : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.highWizardS, type: EquipmentType.hand, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.iceGripS, type: EquipmentType.hand, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.natureGuideS, type: EquipmentType.hand, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.trekTrooperS, type: EquipmentType.hand, isUnlocked: false)
-]
-
-var locations : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.jungleJumble, type: EquipmentType.location, isUnlocked: true),
-    EquipmentModel(item: EquipmentItem.snowySummit, type: EquipmentType.location, isUnlocked: false)
-]
-
-enum EquipmentType {
-    case head, hand, back, location
+enum EquipmentType: String {
+    case head = "head",
+         hand = "hand",
+         back = "back",
+         location = "location"
 }
 
 enum EquipmentItem: String, CaseIterable, Identifiable {
@@ -99,7 +103,7 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         }
     }
     
-    var harga: Int{
+    var price: Int{
         switch self {
         case .climberCrownHG:
             80
@@ -195,6 +199,39 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             ""
         case .snowySummit:
             ""
+        }
+    }
+    
+    var name: String {
+        switch self {
+        case .climberCrownHG:
+            "Climber Crown"
+        case .cozyCragglerHG:
+            "Cozy Craggler"
+        case .festiveFollyHG:
+            "Festive Folly"
+        case .trailbazerTamHG:
+            "Trailblazer Tam"
+        case .climbingBP:
+            "Climbing"
+        case .cuddlyBP:
+            "Cuddly"
+        case .duffelBP:
+            "Duffel"
+        case .hikingBP:
+            "Hiking"
+        case .highWizardS:
+            "High Wizard"
+        case .iceGripS:
+            "Ice Grip"
+        case .natureGuideS:
+            "Nature Guide"
+        case .trekTrooperS:
+            "Trek Trooper"
+        case .jungleJumble:
+            "Jungle Jumble"
+        case .snowySummit:
+            "Snowy Summit"
         }
     }
 }
