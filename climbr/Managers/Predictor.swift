@@ -1,5 +1,5 @@
 //
-//  Predictor.swift
+//  GuideMovementManager.swift
 //  climbr
 //
 //  Created by Fatakhillah Khaqo on 11/08/24.

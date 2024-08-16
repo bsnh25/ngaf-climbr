@@ -248,16 +248,20 @@ extension StretchingVC {
         }
     }
     
-    
+    func playSfx(_ file: String) {
+        guard let audioService else { return }
+        
+        audioService.playSFX(fileName: file)
+    }
 }
 
 extension StretchingVC : PredictorDelegate {
     func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double) {
         
         for name in ExerciseName.allCases {
-            if name.rawValue == action && confidence > 0.5{
+            if name.rawValue == action && confidence > 0.7 {
                 if exerciseName != name {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         self.exerciseName = name
                     }
                     print("\(name) and the confidence is \(confidence)")
@@ -267,30 +271,24 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
-        guard let previewLayer = cameraService?.previewLayer else { return }
-        
-        let convertedPoints = points.map{
-            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
-        }
-        
-        let combinePath = CGMutablePath()
-        
-        for point in convertedPoints {
-            let doPath = NSBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
-            combinePath.addPath(doPath.cgPath)
-        }
-        
-        pointsLayer.path = combinePath
-        
-        DispatchQueue.main.async{
-            self.pointsLayer.didChangeValue(for: \.path)
-        }
-    }
-    
-    func playSfx(_ file: String) {
-        guard let audioService else { return }
-        
-        audioService.playSFX(fileName: file)
+//        guard let previewLayer = cameraService?.previewLayer else { return }
+//        
+//        let convertedPoints = points.map{
+//            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
+//        }
+//        
+//        let combinePath = CGMutablePath()
+//        
+//        for point in convertedPoints {
+//            let doPath = NSBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
+//            combinePath.addPath(doPath.cgPath)
+//        }
+//        
+//        pointsLayer.path = combinePath
+//        
+//        DispatchQueue.main.async{
+//            self.pointsLayer.didChangeValue(for: \.path)
+//        }
     }
     
 }
