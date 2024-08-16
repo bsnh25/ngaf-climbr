@@ -64,7 +64,6 @@ class TypeButton: NSButton {
         } else {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
         }
-        
         if !isEnabled {
             layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
         }

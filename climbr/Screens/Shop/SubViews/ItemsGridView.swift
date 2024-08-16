@@ -17,11 +17,11 @@ class ItemsGridVC: NSViewController {
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     
     let sidebarItems: [(imageName: String, text: String)] = [
-            ("person.fill", "Headgear"),
-            ("bag.fill", "Backpack"),
-            ("figure.walk", "Hiking stick"),
-            ("map.fill", "Location")
-        ]
+        ("person.fill", "Headgear"),
+        ("bag.fill", "Backpack"),
+        ("figure.walk", "Hiking stick"),
+        ("map.fill", "Location")
+    ]
     
     let headItems1: [EquipmentModel] = headGears
     let handItems1: [EquipmentModel] = hikingSticks
@@ -176,6 +176,38 @@ class ItemsGridVC: NSViewController {
 extension ItemsGridVC : collectionContainerProtocol {
     func itemSelectedChanged(to newSelected: EquipmentItem) {
         self.selectedItem = newSelected
-        print("selectedItem changed to \(newSelected)")
+        
+        switch newSelected {
+        case .climberCrownHG:
+            currentHead = .climberCrownHG
+        case .cozyCragglerHG:
+            currentHead = .cozyCragglerHG
+        case .festiveFollyHG:
+            currentHead = .festiveFollyHG
+        case .trailbazerTamHG:
+            currentHead = .trailbazerTamHG
+        case .climbingBP:
+            currentBack = .climbingBP
+        case .cuddlyBP:
+            currentBack = .cuddlyBP
+        case .duffelBP:
+            currentBack = .duffelBP
+        case .hikingBP:
+            currentBack = .hikingBP
+        case .highWizardS:
+            currentHand = .highWizardS
+        case .iceGripS:
+            currentHand = .iceGripS
+        case .natureGuideS:
+            currentHand = .natureGuideS
+        case .trekTrooperS:
+            currentHand = .trekTrooperS
+        case .jungleJumble:
+            currentLocation = .jungleJumble
+        case .snowySummit:
+            currentLocation = .snowySummit
+        }
+        
+        print("head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
     }
 }
