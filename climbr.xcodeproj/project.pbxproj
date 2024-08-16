@@ -103,6 +103,7 @@
 		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03CD09BB2C6DDFB600BEEE8B /* ProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressService.swift; sourceTree = "<group>"; };
 		03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressManager.swift; sourceTree = "<group>"; };
+		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPickerButton.swift; sourceTree = "<group>"; };
 		03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Extension.swift"; sourceTree = "<group>"; };
 		8A19622C2C6AF79000F7064B /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
@@ -334,6 +335,7 @@
 		E7FDDAD52C64301B00DE2A7A /* climbr */ = {
 			isa = PBXGroup;
 			children = (
+				03CD09BF2C6EEEF100BEEE8B /* Info.plist */,
 				E7FDDAF22C64341F00DE2A7A /* LocalDataSources */,
 				E7FDDAF12C64341400DE2A7A /* Services */,
 				E7FDDAF02C64340B00DE2A7A /* Managers */,
@@ -825,10 +827,12 @@
 				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = climbr/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -856,10 +860,12 @@
 				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = climbr/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

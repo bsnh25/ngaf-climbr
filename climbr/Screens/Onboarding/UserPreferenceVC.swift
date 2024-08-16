@@ -53,6 +53,7 @@ class UserPreferenceVC: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         notifService?.askUserPermission()
         //        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }

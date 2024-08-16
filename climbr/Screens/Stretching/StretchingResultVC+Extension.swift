@@ -9,7 +9,7 @@ import Foundation
 import Swinject
 
 extension StretchingResultVC {
-    func calculatePoints() {
+    func calculatePoints(){
         let points = movementList.reduce(0) { partial, next in
             return partial + next.rewardPoint
         }
@@ -18,10 +18,7 @@ extension StretchingResultVC {
         
         if points > 0 {
             label = "You earned \(points) coins"
-            
-            #warning("uhh what's that brother?")
-            guard let homeVc = Container.shared.resolve(HomeVC.self) else { return }
-            homeVc.updateProgress(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date)
+            updateProgress()
         }
         
         rewardPointLabel.setText(label)
@@ -39,10 +36,14 @@ extension StretchingResultVC {
         self.view.window?.miniaturize(self)
     }
     
-//    func updateProgress(){
-//        //1. check value sekarang berapa
-//        //2. if value kurang dari max value, return 3, else return maxValue
-//        //3. kalau kurang, value ditambah 0.25,
-//        HomeVC().progressValue = (HomeVC().progressValue < HomeVC().progressStretch.maxValue) ? HomeVC().progressValue+0.25 : HomeVC().progressStretch.maxValue
-//    }
+    func updateProgress(){
+        var progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+        if progress < 4.0 {
+            progress += 1.0
+            UserDefaults.standard.set(progress, forKey: UserDefaultsKey.kProgressSession)
+        }
+        UserDefaults.standard.set(Date(), forKey: UserDefaultsKey.kDateNow)
+        print("Update Last Stretching Date : \(String(describing: UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow)))")
+        print("Update Progress Stretching : \(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))")
+    }
 }

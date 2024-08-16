@@ -40,7 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.action   = #selector(openApp)
             button.target   = self
         }
-        
+        NSApp.appearance = NSAppearance(named: .aqua)
         ///audio setup
         mainWindow.makeKeyAndOrderFront(nil)
     }

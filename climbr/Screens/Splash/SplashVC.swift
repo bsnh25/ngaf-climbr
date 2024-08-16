@@ -49,6 +49,7 @@ class SplashVC: NSViewController {
                 guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
                 UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+                print("DATE GMT+0 : \(UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow)!)")
             } else{
                 guard let vc = Container.shared.resolve(HomeVC.self) else {return}
                 self.replace(with: vc)
