@@ -9,6 +9,7 @@ import Foundation
 
 class EquipmentManager: EquipmentService {
     func getEquipments(equipmentType: EquipmentType) -> [Equipment] {
+        
         return []
     }
     
