@@ -24,6 +24,8 @@ class HomeVC: NSViewController {
     
     var audioService: AudioService?
     var userService: UserService?
+    var equipmentService: EquipmentService?
+    
     var isSoundTapped: Bool = false
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
@@ -32,10 +34,11 @@ class HomeVC: NSViewController {
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
     
-    init(audioService: AudioService?, userService: UserService?) {
+    init(audioService: AudioService?, userService: UserService?, equipmentService: EquipmentService?) {
         super.init(nibName: nil, bundle: nil)
         self.audioService = audioService
         self.userService = userService
+        self.equipmentService = equipmentService
     }
    
     required init?(coder: NSCoder) {
@@ -67,7 +70,11 @@ class HomeVC: NSViewController {
         if userService?.getUserData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
+            
+            /// Store all equipments data to coredata
+            equipmentService?.seedDatabase()
         }
+        
     }
     
     override func viewWillAppear() {
@@ -201,7 +208,7 @@ class HomeVC: NSViewController {
         containerView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
         
         containerView.wantsLayer = true
-        containerView.layer?.backgroundColor = .clear
+        containerView.layer?.backgroundColor = .white.copy(alpha: 0.72)
         containerView.layer?.opacity = 1
         containerView.layer?.cornerRadius = 20
         

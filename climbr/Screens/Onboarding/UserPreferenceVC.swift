@@ -338,6 +338,74 @@ class UserPreferenceVC: NSViewController {
         button3.isSelected = false
         button4.isSelected = false
     }
+    
+    @objc
+    private func actNextButton(){
+        
+        UserDefaults.standard.setValue(true, forKey: "kStretch")
+        guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
+            print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
+            return
+        }
+        print("Start Work Hour : \(startWorkHour.dateValue)")
+        print("End Work Hour : \(stopWorkHour.dateValue)")
+        
+        print("Reminder at \(processSavePreference())")
+        print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
+        ///get checkbox value
+        print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
+        let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+        
+        userService?.savePreferences(data: userPreferenceData)
+        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+        replace(with: homeVc)
+    }
+    
+    @objc
+    private func action30min(){
+        resetButtonColors()
+        button1.isSelected = true
+        button1.layer?.backgroundColor = .white
+        button1.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button1.title) choose")
+    }
+    
+    @objc
+    private func action60min(){
+        resetButtonColors()
+        button2.isSelected = true
+        button2.layer?.backgroundColor = .white
+        button2.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button2.title) choose")
+    }
+    
+    @objc
+    private func action90min(){
+        resetButtonColors()
+        button3.isSelected = true
+        button3.layer?.backgroundColor = .white
+        button3.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button3.title) choose")
+    }
+    
+    @objc
+    private func action120min(){
+        resetButtonColors()
+        button4.isSelected = true
+        button4.layer?.backgroundColor = .white
+        button4.foregroundColorText = .black
+        nextButton.isEnabled = true
+        print("\(button4.title) choose")
+    }
+    
+    @objc
+    private func actionCheckbox(){
+        isChecked = checkboxButton.state == .on
+        print("\(isChecked)")
+    }
 }
 
 

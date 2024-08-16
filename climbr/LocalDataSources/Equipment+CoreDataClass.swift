@@ -2,7 +2,7 @@
 //  Equipment+CoreDataClass.swift
 //  climbr
 //
-//  Created by Bayu Septyan Nur Hidayat on 08/08/24.
+//  Created by Bayu Septyan Nur Hidayat on 16/08/24.
 //
 //
 

@@ -15,9 +15,16 @@ extension Container {
         /// Managers
         container.register(AudioService.self) { _ in AudioManager.shared }
         container.register(CameraService.self) { _ in CameraManager() }
-        container.register(UserService.self) { _ in UserManager() }
         container.register(NotificationService.self) { _ in NotificationManager.shared }
-//        container.register(ProgressService.self) { _ in ProgressService() }
+        container.register(PersistenceController.self) { _ in return PersistenceController.shared }
+        container.register(UserService.self) { resolver in
+            let persistence = resolver.resolve(PersistenceController.self)
+            return UserManager(controller: persistence)
+        }
+        container.register(EquipmentService.self) { resolver in
+            let persistence = resolver.resolve(PersistenceController.self)
+            return EquipmentManager(controller: persistence)
+        }
         
         /// ViewControllers
         container.register(MainVC.self) { resolver in
@@ -43,7 +50,8 @@ extension Container {
         container.register(HomeVC.self) { resolver in
             let audio = resolver.resolve(AudioService.self)
             let user = resolver.resolve(UserService.self)
-            return HomeVC(audioService: audio, userService: user)
+            let equipment = resolver.resolve(EquipmentService.self)
+            return HomeVC(audioService: audio, userService: user, equipmentService: equipment)
         }
         
         container.register(SettingVC.self) { resolver in
