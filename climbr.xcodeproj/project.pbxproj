@@ -236,7 +236,6 @@
 			isa = PBXGroup;
 			children = (
 				8AB71C722C6CA79900635C85 /* ModelFixV2.mlmodel */,
-				AB9A78B32C67D81200028B36 /* Predictor.swift */,
 			);
 			path = VisionModel;
 			sourceTree = "<group>";
@@ -427,6 +426,7 @@
 				AB9A787F2C64CA0900028B36 /* NotificationManager.swift */,
 				AB9A78812C64CA1400028B36 /* CameraManager.swift */,
 				03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */,
+				AB9A78B32C67D81200028B36 /* Predictor.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
