@@ -5,7 +5,7 @@
 //  Created by Ivan Nur Ilham Syah on 11/08/24.
 //
 
-import Cocoa
+import AppKit
 
 class StretchingResultVC: NSViewController {
     
@@ -16,16 +16,18 @@ class StretchingResultVC: NSViewController {
     
     let awardsText              = "You’ve reduced your sedentary time by"
     
-    let dummyCharacter          = NSView()
+    let characterView          = NSView()
+    let dummyCharacter         = NSImageView()
     
     let continueWorkingButton   = CLTextButtonV2(
         title: "Continue Working",
-        borderColor: .black,
-        font: .boldSystemFont(ofSize: 16)
+        backgroundColor: .white,
+        foregroundColorText: .black,
+        fontText: .boldSystemFont(ofSize: 16)
     )
     let mainMenuButton          = CLTextButtonV2(
         title: "Go To Main Menu",
-        backgroundColor: .black,
+        backgroundColor: .cButton,
         foregroundColorText: .white,
         fontText: .boldSystemFont(ofSize: 16)
     )
@@ -63,12 +65,12 @@ class StretchingResultVC: NSViewController {
     
     private func configureVC() {
         view.wantsLayer             = true
-        view.layer?.backgroundColor = .white
+        view.layer?.backgroundColor = NSColor.kGreen.cgColor
     }
     
     private func configureResultUI() {
         
-        let views                   = [greetingLabel, stretchingDurationLabel, dummyCharacter, rewardPointLabel]
+        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         resultStack.setViews(views, in: .center)
@@ -81,8 +83,13 @@ class StretchingResultVC: NSViewController {
         
         /// Label
         greetingLabel.setText("Great Job!")
+        greetingLabel.setTextColor(.white)
+        
         stretchingDurationLabel.setText("\(awardsText) 0 minutes")
+        stretchingDurationLabel.setTextColor(.white)
+        
         rewardPointLabel.setText("+100 points")
+        rewardPointLabel.setTextColor(.white)
         
         /// Character
         configureCharacter()
@@ -97,12 +104,20 @@ class StretchingResultVC: NSViewController {
     }
     
     private func configureCharacter() {
-        dummyCharacter.wantsLayer = true
-        dummyCharacter.layer?.backgroundColor   = NSColor.systemGray.cgColor
+        characterView.wantsLayer                = true
+        characterView.layer?.backgroundColor    = .clear
+        
+        dummyCharacter.image    = .dummyCharacter
+        dummyCharacter.translatesAutoresizingMaskIntoConstraints = false
+        
+        characterView.addSubview(dummyCharacter)
         
         NSLayoutConstraint.activate([
-            dummyCharacter.widthAnchor.constraint(equalToConstant: 200),
-            dummyCharacter.heightAnchor.constraint(equalToConstant: 350),
+            characterView.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            characterView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            
+            dummyCharacter.centerXAnchor.constraint(equalTo: characterView.centerXAnchor),
+            dummyCharacter.centerYAnchor.constraint(equalTo: characterView.centerYAnchor),
         ])
     }
     
