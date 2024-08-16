@@ -16,11 +16,39 @@ class EquipmentManager: EquipmentService {
         self.container = controller?.container.viewContext
     }
     
+    func seedDatabase() {
+        guard let container else { return }
+        
+        var items: [EquipmentModel] = []
+        items.append(contentsOf: headGears)
+        items.append(contentsOf: backPacks)
+        items.append(contentsOf: hikingSticks)
+        items.append(contentsOf: locations)
+        
+        let request = items.map { equipment in
+            var data = Equipment(context: container)
+            data.id = Int64(equipment.item.itemID)
+            data.name = equipment.item.rawValue
+            data.isUnlocked = false
+            data.image = equipment.item.image
+            data.price = Int64(equipment.item.harga)
+            
+            return equipment
+        }
+        
+        do {
+            try container.save()
+            print("Success")
+        } catch {
+            print("Error: ", error.localizedDescription)
+        }
+    }
+    
     func getEquipments(equipmentType: EquipmentType) -> [EquipmentModel] {
         
         var predicate: NSPredicate? = nil
         
-        predicate = NSPredicate(format: "type == %@", equipmentType.hashValue)
+        predicate = NSPredicate(format: "type == %@", "head")
         let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         request.predicate = predicate
         
