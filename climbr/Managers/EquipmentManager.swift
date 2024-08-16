@@ -18,7 +18,7 @@ class EquipmentManager: EquipmentService {
         }
     }
     
-    func getEquipments(equipmentType: EquipmentType) -> [Equipment] {
+    func getEquipments(equipmentType: EquipmentType) -> [EquipmentModel] {
         
         var predicate: NSPredicate? = nil
         

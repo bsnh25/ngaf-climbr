@@ -8,6 +8,6 @@
 import Foundation
 
 protocol EquipmentService {
-    func getEquipments(equipmentType: EquipmentType) -> [Equipment]
+    func getEquipments(equipmentType: EquipmentType) -> [EquipmentModel]
     func purchaseEquipment(data: Equipment, userPoint: Int)
 }
