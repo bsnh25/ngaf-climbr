@@ -7,22 +7,22 @@
 
 import Cocoa
 
+protocol collectionContainerProtocol {
+    func itemSelectedChanged(to newSelected: EquipmentItem)
+}
+
 class CollectionContainerView: NSView {
     
     let collectionView: NSCollectionView
     
-    var collectionItems: [EquipmentModel] = []
-    
-    var itemsHead: [EquipmentModel] = []
-    var itemsBackPack: [EquipmentModel] = []
-    var itemsHikingStick: [EquipmentModel] = []
-    var itemsLocation: [EquipmentModel] = []
-    
-    var itemType : EquipmentType = .head
-    
-    var collectionName : [String] = []
-    
     var equipmentCollections : [EquipmentModel] = []
+    
+    private var selectedItemHead: GridItem?
+    private var selectedItemBack: GridItem?
+    private var selectedItemHand: GridItem?
+    private var selectedItemLoc: GridItem?
+    
+    var collectionDelegate: collectionContainerProtocol?
         
     override init(frame frameRect: NSRect) {
         
@@ -36,6 +36,7 @@ class CollectionContainerView: NSView {
         collectionView = NSCollectionView()
         collectionView.collectionViewLayout = flowLayout
         collectionView.register(GridItem.self, forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"))
+      
             
         super.init(frame: frameRect)
         setupCollectionView()
@@ -69,11 +70,6 @@ class CollectionContainerView: NSView {
         ])
     }
     
-    func updateItems(items: [String]) {
-        collectionName = items
-        collectionView.reloadData()
-    }
-    
     func updateItems(items: [EquipmentModel]) {
         equipmentCollections = items
         collectionView.reloadData()
@@ -87,7 +83,16 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
-        item.configure(text: equipmentCollections[indexPath.item].name, backgroundImage: NSImage(named: equipmentCollections[indexPath.item].image))
+        item.configure(equipmentModel: equipmentCollections[indexPath.item])
+        item.gridDelegate = self
         return item
     }
 }
+
+extension CollectionContainerView : gridItemSelectionProtocol {
+    func gridItemSelectionDidChange(to newSelected: GridItem) {
+        print(newSelected.item?.rawValue ?? 0)
+        collectionDelegate?.itemSelectedChanged(to: newSelected.item ?? .climberCrownHG)
+    }
+}
+

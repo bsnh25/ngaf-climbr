@@ -23,25 +23,30 @@ class ItemsGridVC: NSViewController {
             ("map.fill", "Location")
         ]
     
-    let headItem: [String] = ["A", "B", "C", "D", "E"]
-    let handItem: [String] = ["A", "B", "C", "D", "E", "F", "G"]
-    let backItem: [String] = ["A", "B", "C", "D"]
-    let locationItem: [String] = ["A", "B", "C", "D", "E", "F"]
-    
-    let headItems: [EquipmentModel] = headGearItems
-    let handItems: [EquipmentModel] = HikingStickItems
-    let backItems: [EquipmentModel] = BackpackItems
-    let locationItems: [EquipmentModel] = LocationsItems
+    let headItems1: [EquipmentModel] = headGears
+    let handItems1: [EquipmentModel] = hikingSticks
+    let backItems1: [EquipmentModel] = backPacks
+    let locationItems1: [EquipmentModel] = locations
     
     var itemType : EquipmentType = .head
     
+    var currentHead : EquipmentItem = .climberCrownHG
+    var currentBack : EquipmentItem = .climbingBP
+    var currentHand : EquipmentItem = .highWizardS
+    var currentLocation : EquipmentItem = .jungleJumble
+    
     private var selectedButton: TypeButton?
+    var selectedGridItem: GridItem?
+    var selectedItem: EquipmentItem?
+    
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         
-        collectionViewContainer.updateItems(items: headItems)
+        
+        collectionViewContainer.updateItems(items: headItems1)
+        collectionViewContainer.collectionDelegate = self
         setupSidebar()
         setupPointsLabel()
         setupCollectionViewContainer()
@@ -96,7 +101,6 @@ class ItemsGridVC: NSViewController {
     }
         
     func setupCollectionViewContainer() {
-        collectionViewContainer.itemType = itemType
         collectionViewContainer.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -152,15 +156,26 @@ class ItemsGridVC: NSViewController {
         
         switch sender.tag {
         case 0:
-            collectionViewContainer.updateItems(items: headItems)
+            itemType = .head
+            collectionViewContainer.updateItems(items: headItems1)
         case 1:
-            collectionViewContainer.updateItems(items: backItems)
+            itemType = .back
+            collectionViewContainer.updateItems(items: backItems1)
         case 2:
-            collectionViewContainer.updateItems(items: handItems)
+            itemType = .hand
+            collectionViewContainer.updateItems(items: handItems1)
         case 3:
-            collectionViewContainer.updateItems(items: locationItems)
+            itemType = .location
+            collectionViewContainer.updateItems(items: locationItems1)
         default:
             break
         }
+    }
+}
+
+extension ItemsGridVC : collectionContainerProtocol {
+    func itemSelectedChanged(to newSelected: EquipmentItem) {
+        self.selectedItem = newSelected
+        print("selectedItem changed to \(newSelected)")
     }
 }

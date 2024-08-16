@@ -7,47 +7,14 @@
 
 import Cocoa
 
-class GridItem1: NSCollectionViewItem {
-    let textLabel = NSTextField(labelWithString: "")
-    
-    let lockIcon = CLSFSymbol(symbolName: "lock.fill", description: "lock")
-    let itemImage = NSImageView()
-    var isUnlocked : Bool?
-    
-    override func loadView() {
-        self.view = NSView()
-        self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.lightGray.cgColor
-        self.view.layer?.cornerRadius = 10
-        
-        textLabel.font = NSFont.systemFont(ofSize: 20)
-        textLabel.alignment = .center
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-//        self.view.addSubview(textLabel)
-        self.view.addSubview(itemImage)
-        self.view.addSubview(lockIcon)
-        
-        NSLayoutConstraint.activate([
-            textLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            textLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
-    }
-    
-    func configure(isUnlocked : Bool, itemImage : NSImage){
-        self.isUnlocked = isUnlocked
-        self.itemImage.image = itemImage
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        super.mouseDown(with: event)
-        print("GridItem tapped: \(textLabel.stringValue)")
-    }
+protocol gridItemSelectionProtocol {
+    func gridItemSelectionDidChange(to newSelected: GridItem)
 }
 
 class GridItem: NSCollectionViewItem {
     
     let lockIcon = CLSFSymbol(symbolName: "lock.fill", description: "lock")
+    var gridDelegate : gridItemSelectionProtocol?
     
     let backgroundImageView: NSImageView = {
         let imageView = NSImageView()
@@ -64,6 +31,20 @@ class GridItem: NSCollectionViewItem {
         return view
     }()
     
+    let borderView: NSView = {
+        let view = NSView()
+        view.wantsLayer = true
+        view.layer?.borderColor = NSColor.systemBlue.cgColor
+        view.layer?.cornerRadius = 10
+        view.layer?.borderWidth = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    var type : EquipmentType?
+    var itemId: Int?
+    var item: EquipmentItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,6 +58,7 @@ class GridItem: NSCollectionViewItem {
         view.addSubview(backgroundImageView)
         view.addSubview(overlayView)
         view.addSubview(lockIcon)
+        view.addSubview(borderView)
 
         NSLayoutConstraint.activate([
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
@@ -90,16 +72,36 @@ class GridItem: NSCollectionViewItem {
             overlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             lockIcon.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lockIcon.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            lockIcon.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            borderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            borderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            borderView.topAnchor.constraint(equalTo: view.topAnchor),
+            borderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
     func configure(text: String, backgroundImage: NSImage?) {
         backgroundImageView.image = backgroundImage
     }
+
+    func configure(equipmentModel: EquipmentModel) {
+        backgroundImageView.image = NSImage(named: equipmentModel.item.image)
+        item = equipmentModel.item
+        itemId = equipmentModel.item.itemID
+        type = equipmentModel.type
+        overlayView.isHidden = equipmentModel.isUnlocked
+        lockIcon.isHidden = equipmentModel.isUnlocked
+    }
     
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
-        print("GridItem tapped")
+        gridDelegate?.gridItemSelectionDidChange(to: self)
+    }
+    
+    func setSelected(_ selected: Bool) {
+        borderView.layer?.borderWidth = selected ? 4 : 0
     }
 }
+
+
