@@ -104,29 +104,6 @@ extension NSViewController {
             }
         }
     }
-    
-    func resetAndAdjust(with vc: NSViewController){
-        
-        if let contentVC = self.view.window?.contentViewController {
-            print("NAV - Before Reset: ", contentVC)
-            contentVC.children.removeAll()
-            if contentVC.children.isEmpty {
-                NSAnimationContext.runAnimationGroup { context in
-                    context.duration = 0.2
-                    
-                    /// Set next vc view opacity to zero
-                    vc.view.animator().alphaValue = 0
-                } completionHandler: {
-                    /// Add next vc to the content vc
-                    contentVC.addSubViewController(vc, to: contentVC.view)
-                    vc.view.animator().alphaValue = 1
-                    print("NAV - After Reset: ", contentVC.children)
-                }
-            } else {
-                print("Err reset: ", contentVC.children)
-            }
-        }
-    }
 }
 
 class CustomOverlayView: NSView {

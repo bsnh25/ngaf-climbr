@@ -25,17 +25,15 @@ class HomeVC: NSViewController {
     var audioService: AudioService?
     var userService: UserService?
     var isSoundTapped: Bool = false
-    @Published var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
-    @Published var progressStretch = NSProgressIndicator()
-    @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+    var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
+    var progressStretch = NSProgressIndicator()
     var bagss: Set<AnyCancellable> = []
     
-//    var progressService: ProgressService?
-//    var settingVC: SettingVC?
+    @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+    
     
     init(audioService: AudioService?, userService: UserService?) {
         super.init(nibName: nil, bundle: nil)
-//        self.progressService = progressService
         self.audioService = audioService
         self.userService = userService
     }
