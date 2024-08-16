@@ -14,10 +14,10 @@ extension StretchingResultVC {
             return partial + next.rewardPoint
         }
         
-        var label: String = "You didn’t earn any coins, but the next round could be yours!"
+        var label: String = "CharacterName is too tired to find coins."
         
         if points > 0 {
-            label = "You earned \(points) coins"
+            label = "While resting, CharacterName found \(points) coins!"
             updateProgress()
         }
         
@@ -26,6 +26,20 @@ extension StretchingResultVC {
         if let user = userService?.getUserData() {
             userService?.updatePoint(user: user, points: points)
         }
+    }
+    
+    func calculateDurations() {
+        var durations: Double = movementList.reduce(0) { partialResult, next in
+            return partialResult + next.duration
+        }
+        
+        durations /= 60
+        
+        if let affirmationText = affirmationTexts.randomElement() {
+            greetingLabel.setText(affirmationText)
+        }
+        
+        stretchingDurationLabel.setText("\(awardsText) \(String(format: "%.f", durations)) minutes")
     }
     
     @objc func goToMainMenu() {

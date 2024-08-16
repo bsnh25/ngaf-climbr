@@ -16,8 +16,18 @@ class StretchingVC: NSViewController {
     let currentMovementView     = CurrentMovementView()
     let movementDivider         = Divider()
     let nextMovementView        = NextMovementView()
-    let skipButton              = CLTextButtonV2(title: "Skip This Movement", backgroundColor: .black, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 14))
-    let finishButton            = CLTextButtonV2(title: "Finish Early", backgroundColor: .systemRed, foregroundColorText: .white, fontText: .boldSystemFont(ofSize: 14))
+    let skipButton              = CLTextButtonV2(
+        title: "Skip This Movement",
+        backgroundColor: .white,
+        foregroundColorText: .black,
+        fontText: .systemFont(ofSize: 14)
+    )
+    let finishButton            = CLTextButtonV2(
+        title: "Finish Early",
+        backgroundColor: .white,
+        foregroundColorText: .black,
+        fontText: .systemFont(ofSize: 14)
+    )
     let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     let movementStateView       = MovementStateView()
@@ -77,6 +87,10 @@ class StretchingVC: NSViewController {
         updateMovementState()
 
     }
+    
+    override func viewDidAppear() {
+        push(to: ExerciseInstructionVC())
+    }
   
     override func viewDidDisappear() {
         super.viewDidDisappear()
@@ -126,7 +140,7 @@ class StretchingVC: NSViewController {
         
         movementInfoView.translatesAutoresizingMaskIntoConstraints = false
         movementInfoView.wantsLayer                = true
-        movementInfoView.layer?.backgroundColor    = .white.copy(alpha: 0.5)
+        movementInfoView.layer?.backgroundColor    = .white.copy(alpha: 0.72)
         
         let blurEffect = CLBlurEffectView(frame: movementInfoView.bounds)
         movementInfoView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
