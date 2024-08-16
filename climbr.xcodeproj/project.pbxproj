@@ -22,6 +22,7 @@
 		03CD09BE2C6DE1B200BEEE8B /* ProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */; };
 		03CD0A0A2C6F83E800BEEE8B /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD0A082C6F83E800BEEE8B /* Equipment+CoreDataClass.swift */; };
 		03CD0A0B2C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD0A092C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift */; };
+		03CD0A0D2C6F887300BEEE8B /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD0A0C2C6F887300BEEE8B /* PersistenceController.swift */; };
 		03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */; };
 		03E796CB2C6C70DD003C6121 /* HomeVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */; };
 		8A19622D2C6AF79000F7064B /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A19622C2C6AF79000F7064B /* CLTextField.swift */; };
@@ -108,6 +109,7 @@
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03CD0A082C6F83E800BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A092C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03CD0A0C2C6F887300BEEE8B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPickerButton.swift; sourceTree = "<group>"; };
 		03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Extension.swift"; sourceTree = "<group>"; };
 		8A19622C2C6AF79000F7064B /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */,
 				03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */,
 				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
+				03CD0A0C2C6F887300BEEE8B /* PersistenceController.swift */,
 			);
 			path = LocalDataSources;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */,
 				AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */,
 				03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */,
+				03CD0A0D2C6F887300BEEE8B /* PersistenceController.swift in Sources */,
 				AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,

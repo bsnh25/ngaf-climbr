@@ -9,24 +9,18 @@ import Foundation
 import CoreData
 
 class UserManager : UserService {
-    let container = NSPersistentContainer(name: "ClimbrDataSource")
+    let container : NSManagedObjectContext?
     
-    
-    init(){
-        container.loadPersistentStores{description, error in
-            if let error = error{
-                print("Core data failed to load: \(error.localizedDescription)")
-            }
-            
-        }
+    init(controller: PersistenceController?){
+        self.container = controller?.container.viewContext
     }
     
     func getPreferences() -> UserPreferences? {
         var request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
-        
+        guard let container = container else {return nil}
         
         do {
-            return try container.viewContext.fetch(request).first
+            return try container.fetch(request).first
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
             return nil
@@ -35,9 +29,9 @@ class UserManager : UserService {
     
     func savePreferences(data: UserPreferenceModel) {
         print("gans")
-        let moc = container.viewContext
+        guard let container = container else {return }
         
-        let newUserPreference = UserPreferences(context: moc)
+        let newUserPreference = UserPreferences(context: container)
         
         newUserPreference.id = data.id
         newUserPreference.endWorkingHour = data.endWorkingHour
@@ -47,7 +41,7 @@ class UserManager : UserService {
         
         
         do {
-            try moc.save()
+            try container.save()
             print("saved")
         } catch {
             print("Failed to save context: \(error)")
@@ -56,22 +50,20 @@ class UserManager : UserService {
     }
     
     func getUserData() -> User? {
-#warning("change the return data later")
+    #warning("change the return data later")
         return User()
     }
     
     func saveUserData(data: UserModel) {
-        let moc = container.viewContext
-        
-        let newUserData = User(context: moc)
+        guard let container = container else {return }
+        let newUserData = User(context: container)
         
         newUserData.id = data.id
         newUserData.name = data.name
         newUserData.point = data.point
         
-        
         do {
-            try moc.save()
+            try container.save()
             print("saved")
         } catch {
             print("Failed to save context: \(error)")

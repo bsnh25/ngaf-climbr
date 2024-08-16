@@ -9,13 +9,11 @@ import Foundation
 import CoreData
 
 class EquipmentManager: EquipmentService {
-    let container = NSPersistentContainer(name: "ClimbrDataSource")
     
-    init() {
-        container.loadPersistentStores { success, err in
-            guard let error = err else {return}
-            print("Err Load Equipment : \(error.localizedDescription)")
-        }
+    let container : NSManagedObjectContext?
+    
+    init(controller: PersistenceController?){
+        self.container = controller?.container.viewContext
     }
     
     func getEquipments(equipmentType: EquipmentType) -> [EquipmentModel] {
@@ -23,11 +21,12 @@ class EquipmentManager: EquipmentService {
         var predicate: NSPredicate? = nil
         
         predicate = NSPredicate(format: "type == %@", equipmentType.hashValue)
-        var request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
+        let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         request.predicate = predicate
         
         do {
-            let equipmentArr = try container.viewContext.fetch(request)
+            guard let container = container else {return []}
+            let equipmentArr = try container.fetch(request)
             return convertToEquipmentModel(for: equipmentArr)
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
@@ -36,14 +35,15 @@ class EquipmentManager: EquipmentService {
     }
     
     func purchaseEquipment(data: Equipment, userPoint: Int) {
-        guard let equipment = fetchEquipment(byID: data.id, context: container.viewContext) else {
+        guard let container = container else {return}
+        guard let equipment = fetchEquipment(byID: data.id, context: container) else {
              print("No equipment found with ID \(data.id)")
              return
          }
         
         do {
-            equipment.isUnlocked = false
-            try container.viewContext.save()
+            equipment.isUnlocked = true
+            try container.save()
         } catch {
             print("Error when purchase")
         }
