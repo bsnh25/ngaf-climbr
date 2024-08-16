@@ -17,6 +17,6 @@ struct EquipmentModel {
     var type: String
 }
 
-enum EquipmentType {
-    case head, hand, back
+enum EquipmentType: String {
+    case head = "head", hand = "hand", back = "back"
 }
