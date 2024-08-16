@@ -12,6 +12,11 @@ class TypeButton: NSButton {
     
     let stack = NSStackView()
     
+    var currentHead : EquipmentItem?
+    var currentBack : EquipmentItem?
+    var currentHand : EquipmentItem?
+    var currentLocation : EquipmentItem?
+    
     init(imageName: String, text: String){
         super.init(frame: .zero)
         self.wantsLayer = true

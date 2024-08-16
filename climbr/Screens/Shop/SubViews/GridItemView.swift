@@ -92,6 +92,7 @@ class GridItem: NSCollectionViewItem {
         type = equipmentModel.type
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
+//        print(item?.rawValue ?? "lol")
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -102,6 +103,24 @@ class GridItem: NSCollectionViewItem {
     func setSelected(_ selected: Bool) {
         borderView.layer?.borderWidth = selected ? 4 : 0
     }
+    
+    func updateSelectedGridItem(gridItemSelected: GridItem){
+        if gridItemSelected == self {
+            setSelected(true)
+        }else{
+            setSelected(false)
+        }
+    }
+    
+    func updateItemSelected(item: EquipmentItem){
+        if self.item == item {
+            setSelected(true)
+        } else{
+            setSelected(false)
+        }
+    }
+    
+    func updateSelectedItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
+        print("head: \(head.rawValue), back: \(back.rawValue), hand:\(hand.rawValue), location: \(location.rawValue)")
+    }
 }
-
-

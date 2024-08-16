@@ -23,10 +23,10 @@ class ShopItemVC: NSViewController {
         ("map.fill", "Location")
     ]
     
-    let headItems1: [EquipmentModel] = headGears
-    let handItems1: [EquipmentModel] = hikingSticks
-    let backItems1: [EquipmentModel] = backPacks
-    let locationItems1: [EquipmentModel] = locations
+    let headItems: [EquipmentModel] = headGears
+    let handItems: [EquipmentModel] = hikingSticks
+    let backItems: [EquipmentModel] = backPacks
+    let locationItems: [EquipmentModel] = locations
     
     var itemType : EquipmentType = .head
     
@@ -38,14 +38,14 @@ class ShopItemVC: NSViewController {
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
     var selectedItem: EquipmentItem?
-    
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         
         
-        collectionViewContainer.updateItems(items: headItems1)
+        collectionViewContainer.updateItems(items: headItems)
+        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         collectionViewContainer.collectionDelegate = self
         setupSidebar()
         setupPointsLabel()
@@ -157,16 +157,16 @@ class ShopItemVC: NSViewController {
         switch sender.tag {
         case 0:
             itemType = .head
-            collectionViewContainer.updateItems(items: headItems1)
+            collectionViewContainer.updateItems(items: headItems)
         case 1:
             itemType = .back
-            collectionViewContainer.updateItems(items: backItems1)
+            collectionViewContainer.updateItems(items: backItems)
         case 2:
             itemType = .hand
-            collectionViewContainer.updateItems(items: handItems1)
+            collectionViewContainer.updateItems(items: handItems)
         case 3:
             itemType = .location
-            collectionViewContainer.updateItems(items: locationItems1)
+            collectionViewContainer.updateItems(items: locationItems)
         default:
             break
         }
@@ -174,6 +174,11 @@ class ShopItemVC: NSViewController {
 }
 
 extension ShopItemVC : collectionContainerProtocol {
+    func gridItemSelectedChange(to newSelected: GridItem) {
+        self.selectedGridItem = newSelected
+        collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
+    }
+    
     func itemSelectedChanged(to newSelected: EquipmentItem) {
         self.selectedItem = newSelected
         
@@ -207,7 +212,10 @@ extension ShopItemVC : collectionContainerProtocol {
         case .snowySummit:
             currentLocation = .snowySummit
         }
+        print("inside ShopItemVC -> head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
         
-        print("head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
+        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
     }
+    
+    
 }
