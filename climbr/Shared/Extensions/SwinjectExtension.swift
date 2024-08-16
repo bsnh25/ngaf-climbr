@@ -50,7 +50,8 @@ extension Container {
         container.register(HomeVC.self) { resolver in
             let audio = resolver.resolve(AudioService.self)
             let user = resolver.resolve(UserService.self)
-            return HomeVC(audioService: audio, userService: user)
+            let equipment = resolver.resolve(EquipmentService.self)
+            return HomeVC(audioService: audio, userService: user, equipmentService: equipment)
         }
         
         container.register(SettingVC.self) { resolver in
