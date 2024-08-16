@@ -30,12 +30,6 @@ extension StretchingResultVC {
     
     @objc func goToMainMenu() {
         self.pop()
-//        if calculatePoints() > 0 {
-//            guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-//            updateProgress()
-////            homeVc.dailyProgress()
-//            homeVc.progressText.stringValue = "Dari Main Menu"
-//        }
     }
     
     @objc func continueWorking() {
@@ -49,5 +43,7 @@ extension StretchingResultVC {
             UserDefaults.standard.set(progress, forKey: UserDefaultsKey.kProgressSession)
         }
         UserDefaults.standard.set(Date(), forKey: UserDefaultsKey.kDateNow)
+        print("Update Last Stretching Date : \(String(describing: UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow)))")
+        print("Update Progress Stretching : \(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))")
     }
 }
