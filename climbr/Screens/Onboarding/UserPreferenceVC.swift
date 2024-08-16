@@ -55,7 +55,6 @@ class UserPreferenceVC: NSViewController {
         super.viewDidAppear()
         UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         notifService?.askUserPermission()
-        //        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }
     
     
@@ -167,6 +166,7 @@ class UserPreferenceVC: NSViewController {
     }
     
     private func configureStartWorkHour(){
+    #warning("perlu save value dari work hour")
         view.addSubview(startWorkHour)
         startWorkHour.maxDate = .distantFuture
         
@@ -189,6 +189,7 @@ class UserPreferenceVC: NSViewController {
     }
     
     private func configureStopWorkHour(){
+        #warning("perlu save value dari work hour")
         view.addSubview(stopWorkHour)
         stopWorkHour.maxDate = .distantFuture
         stopWorkHour.minDate = .init(timeInterval: 7200, since: startWorkHour.dateValue)
@@ -290,7 +291,6 @@ class UserPreferenceVC: NSViewController {
     }
     
     private func processSavePreference() -> Int64{
-        
         if button1.isSelected {
             return 30
         }else if button2.isSelected{
@@ -330,20 +330,24 @@ class UserPreferenceVC: NSViewController {
     @objc
     private func actNextButton(){
         
-        UserDefaults.standard.setValue(true, forKey: "kStretch")
         guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
             print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
             return
         }
+        print("start time : \(startWorkHour.dateValue)")
+        print("end time : \(stopWorkHour.dateValue)")
+        
         print("Reminder at \(processSavePreference())")
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
         ///get checkbox value
         print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
-        var userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+        let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
         
         userService?.savePreferences(data: userPreferenceData)
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
         replace(with: homeVc)
+        guard let notif = Container.shared.resolve(NotificationService.self) else {return}
+        notif.sendNotification(title: "Title Coba", body: "Body Coba", reminder: userPreferenceData)
     }
     
     @objc

@@ -207,9 +207,6 @@ class ChooseCharacterVC: NSViewController {
         var userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
         
         userService?.saveUserData(data: userData)
-        
-       
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
         UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)
         pop()
     }
