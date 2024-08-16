@@ -32,7 +32,7 @@ class EquipmentManager: EquipmentService {
             data.name       = equipment.item.rawValue
             data.isUnlocked = false
             data.image      = equipment.item.image
-            data.price      = Int64(equipment.item.harga)
+            data.price      = Int64(equipment.item.price)
         }
         
         do {
