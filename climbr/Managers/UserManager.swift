@@ -16,8 +16,9 @@ class UserManager : UserService {
     }
     
     func getPreferences() -> UserPreferences? {
-        var request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
         guard let container = container else {return nil}
+        
+        let request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
         
         do {
             return try container.fetch(request).first
@@ -28,7 +29,6 @@ class UserManager : UserService {
     }
     
     func savePreferences(data: UserPreferenceModel) {
-        print("gans")
         guard let container = container else {return }
         
         let newUserPreference = UserPreferences(context: container)
@@ -55,7 +55,8 @@ class UserManager : UserService {
     }
     
     func saveUserData(data: UserModel) {
-        guard let container = container else {return }
+        guard let container = container else { return }
+        
         let newUserData = User(context: container)
         
         newUserData.id = data.id

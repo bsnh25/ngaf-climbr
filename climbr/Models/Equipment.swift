@@ -11,33 +11,34 @@ struct EquipmentModel {
     var item: EquipmentItem
     var type: EquipmentType
     var isUnlocked: Bool
+    
+    static var headGears : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.climberCrownHG, type: EquipmentType.head, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.cozyCragglerHG, type: EquipmentType.head, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.festiveFollyHG, type: EquipmentType.head, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.trailbazerTamHG, type: EquipmentType.head, isUnlocked: false)
+    ]
+    
+    static var backPacks : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.climbingBP, type: EquipmentType.back, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.cuddlyBP, type: EquipmentType.back, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.duffelBP, type: EquipmentType.back, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.hikingBP, type: EquipmentType.back, isUnlocked: false)
+    ]
+    
+    static var hikingSticks : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.highWizardS, type: EquipmentType.hand, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.iceGripS, type: EquipmentType.hand, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.natureGuideS, type: EquipmentType.hand, isUnlocked: false),
+        EquipmentModel(item: EquipmentItem.trekTrooperS, type: EquipmentType.hand, isUnlocked: false)
+    ]
+    
+    static var locations : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.jungleJumble, type: EquipmentType.location, isUnlocked: true),
+        EquipmentModel(item: EquipmentItem.snowySummit, type: EquipmentType.location, isUnlocked: false)
+    ]
 }
 
-var headGears : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.climberCrownHG, type: EquipmentType.head, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.cozyCragglerHG, type: EquipmentType.head, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.festiveFollyHG, type: EquipmentType.head, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.trailbazerTamHG, type: EquipmentType.head, isUnlocked: false)
-]
-
-var backPacks : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.climbingBP, type: EquipmentType.back, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.cuddlyBP, type: EquipmentType.back, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.duffelBP, type: EquipmentType.back, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.hikingBP, type: EquipmentType.back, isUnlocked: false)
-]
-
-var hikingSticks : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.highWizardS, type: EquipmentType.hand, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.iceGripS, type: EquipmentType.hand, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.natureGuideS, type: EquipmentType.hand, isUnlocked: false),
-    EquipmentModel(item: EquipmentItem.trekTrooperS, type: EquipmentType.hand, isUnlocked: false)
-]
-
-var locations : [EquipmentModel] = [
-    EquipmentModel(item: EquipmentItem.jungleJumble, type: EquipmentType.location, isUnlocked: true),
-    EquipmentModel(item: EquipmentItem.snowySummit, type: EquipmentType.location, isUnlocked: false)
-]
 
 enum EquipmentType: String {
     case head = "head",

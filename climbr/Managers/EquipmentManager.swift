@@ -20,10 +20,10 @@ class EquipmentManager: EquipmentService {
         guard let container else { return }
         
         var items: [EquipmentModel] = []
-        items.append(contentsOf: headGears)
-        items.append(contentsOf: backPacks)
-        items.append(contentsOf: hikingSticks)
-        items.append(contentsOf: locations)
+        items.append(contentsOf: EquipmentModel.headGears)
+        items.append(contentsOf: EquipmentModel.backPacks)
+        items.append(contentsOf: EquipmentModel.hikingSticks)
+        items.append(contentsOf: EquipmentModel.locations)
         
         items.forEach { equipment in
             let data = Equipment(context: container)
@@ -45,17 +45,18 @@ class EquipmentManager: EquipmentService {
     
     func getEquipments(equipmentType: EquipmentType) -> [EquipmentModel] {
         
-        var predicate: NSPredicate? = nil
+        let predicate: NSPredicate = NSPredicate(format: "type == %@", equipmentType.rawValue)
         
-        predicate = NSPredicate(format: "type == %@", equipmentType.rawValue)
         let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
+        
         request.predicate = predicate
         
         do {
-            guard let container = container else {return []}
-            let equipmentArr = try container.fetch(request)
-            print(equipmentArr)
-            return convertToEquipmentModel(for: equipmentArr)
+            guard let container = container else { return [] }
+            
+            let items = try container.fetch(request)
+            
+            return convertToEquipmentModel(for: items)
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
             return []
@@ -63,7 +64,8 @@ class EquipmentManager: EquipmentService {
     }
     
     func purchaseEquipment(data: EquipmentModel) {
-        guard let container = container else {return}
+        guard let container = container else { return }
+        
         guard let equipment = fetchEquipment(byID: data.item.rawValue , context: container) else {
             print("No equipment found with ID \(data.item.itemID)")
              return
