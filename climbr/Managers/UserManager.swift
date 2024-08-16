@@ -38,6 +38,7 @@ class UserManager : UserService {
         newUserPreference.launchAtLogin = data.launchAtLogin
         newUserPreference.reminderInterval = data.reminderInterval
         newUserPreference.startWorkingHour = data.startWorkingHour
+        newUserPreference.endWorkingHour = data.endWorkingHour
         
         
         do {
@@ -50,8 +51,16 @@ class UserManager : UserService {
     }
     
     func getUserData() -> User? {
-    #warning("change the return data later")
-        return User()
+        guard let container = container else {return nil}
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        
+        
+        do {
+            return try container.fetch(request).first
+        } catch {
+            print("Error fetching user preference entries: \(error.localizedDescription)")
+            return nil
+        }
     }
     
     func saveUserData(data: UserModel) {
