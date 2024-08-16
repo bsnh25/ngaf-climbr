@@ -77,6 +77,10 @@ class StretchingVC: NSViewController {
         updateMovementState()
 
     }
+    
+    override func viewWillAppear() {
+        push(to: ExerciseInstructionVC())
+    }
   
     override func viewDidDisappear() {
         super.viewDidDisappear()
