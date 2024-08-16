@@ -5,25 +5,29 @@
 //  Created by Ivan Nur Ilham Syah on 11/08/24.
 //
 
-import Cocoa
+import AppKit
 
 class StretchingResultVC: NSViewController {
     
-    let greetingLabel           = CLLabel(fontSize: 26, fontWeight: .bold)
-    let stretchingSubLabel      = CLLabel(fontSize: 17, fontWeight: .regular)
-    let stretchingDurationLabel = CLLabel(fontSize: 26, fontWeight: .bold)
-    let rewardPointLabel        = CLLabel(fontSize: 26, fontWeight: .bold)
+    let greetingLabel           = CLLabel(fontSize: 36, fontWeight: .heavy)
+    let stretchingDurationLabel = CLLabel(fontSize: 28, fontWeight: .bold)
+    let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
+    let resultStack             = NSStackView()
     
-    let dummyCharacter          = NSView()
+    let awardsText              = "You’ve reduced your sedentary time by"
+    
+    let characterView          = NSView()
+    let dummyCharacter         = NSImageView()
     
     let continueWorkingButton   = CLTextButtonV2(
         title: "Continue Working",
-        borderColor: .black,
-        font: .boldSystemFont(ofSize: 16)
+        backgroundColor: .white,
+        foregroundColorText: .black,
+        fontText: .boldSystemFont(ofSize: 16)
     )
     let mainMenuButton          = CLTextButtonV2(
         title: "Go To Main Menu",
-        backgroundColor: .black,
+        backgroundColor: .cButton,
         foregroundColorText: .white,
         fontText: .boldSystemFont(ofSize: 16)
     )
@@ -51,29 +55,26 @@ class StretchingResultVC: NSViewController {
         
         configureVC()
         configureResultUI()
-        configureButton()
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         
         self.calculatePoints()
+        self.calculateDurations()
     }
     
     private func configureVC() {
         view.wantsLayer             = true
-        view.layer?.backgroundColor = .white
+        view.layer?.backgroundColor = NSColor.kGreen.cgColor
     }
     
     private func configureResultUI() {
-        let stretchingStack         = NSStackView(views: [stretchingSubLabel, stretchingDurationLabel])
-        stretchingStack.orientation = .vertical
-        stretchingStack.spacing     = 10
         
-        let views                   = [greetingLabel, stretchingStack, dummyCharacter, rewardPointLabel]
+        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        let resultStack             = NSStackView(views: views)
+        resultStack.setViews(views, in: .center)
         resultStack.orientation     = .vertical
         resultStack.spacing         = 24
         
@@ -83,27 +84,41 @@ class StretchingResultVC: NSViewController {
         
         /// Label
         greetingLabel.setText("Great Job!")
-        stretchingSubLabel.setText("You’ve reduced your sedentary time by")
-        stretchingDurationLabel.setText("5 minutes")
+        greetingLabel.setTextColor(.white)
+        
+        stretchingDurationLabel.setText("\(awardsText) 0 minutes")
+        stretchingDurationLabel.setTextColor(.white)
+        
         rewardPointLabel.setText("+100 points")
+        rewardPointLabel.setTextColor(.white)
         
         /// Character
         configureCharacter()
         
+        /// Button
+        configureButton()
+        
         NSLayoutConstraint.activate([
-            resultStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
             resultStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            resultStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            resultStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     private func configureCharacter() {
-        dummyCharacter.wantsLayer = true
-        dummyCharacter.layer?.backgroundColor   = NSColor.systemGray.cgColor
+        characterView.wantsLayer                = true
+        characterView.layer?.backgroundColor    = .clear
+        
+        dummyCharacter.image    = .dummyCharacter
+        dummyCharacter.translatesAutoresizingMaskIntoConstraints = false
+        
+        characterView.addSubview(dummyCharacter)
         
         NSLayoutConstraint.activate([
-            dummyCharacter.widthAnchor.constraint(equalToConstant: 200),
-            dummyCharacter.heightAnchor.constraint(equalToConstant: 350),
+            characterView.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            characterView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            
+            dummyCharacter.centerXAnchor.constraint(equalTo: characterView.centerXAnchor),
+            dummyCharacter.centerYAnchor.constraint(equalTo: characterView.centerYAnchor),
         ])
     }
     
@@ -117,7 +132,7 @@ class StretchingResultVC: NSViewController {
         stack.spacing               = 10
         stack.distribution    = .fillEqually
         
-        view.addSubview(stack)
+        resultStack.addArrangedSubview(stack)
         
         mainMenuButton.target = self
         mainMenuButton.action = #selector(goToMainMenu)
@@ -127,8 +142,6 @@ class StretchingResultVC: NSViewController {
         
         NSLayoutConstraint.activate([
             stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             continueWorkingButton.heightAnchor.constraint(equalToConstant: 48),
             mainMenuButton.heightAnchor.constraint(equalToConstant: 48),
         ])
