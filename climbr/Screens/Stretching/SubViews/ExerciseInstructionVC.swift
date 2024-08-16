@@ -20,7 +20,7 @@ class ExerciseInstructionVC: NSViewController {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = .black.copy(alpha: 0.72)
+        view.layer?.backgroundColor = NSColor.kDarkGray.cgColor.copy(alpha: 0.9)
         
         configure()
         setupClickGesture()
