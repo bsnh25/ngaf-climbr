@@ -16,7 +16,7 @@ extension Equipment {
         return NSFetchRequest<Equipment>(entityName: "Equipment")
     }
 
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: Int64
     @NSManaged public var image: String?
     @NSManaged public var isUnlocked: Bool
     @NSManaged public var name: String?

@@ -69,8 +69,37 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
     case jungleJumble
     case snowySummit
     
-    var itemID: UUID{
-        UUID()
+    var itemID: Int{
+        switch self {
+        case .climberCrownHG:
+            0
+        case .cozyCragglerHG:
+            1
+        case .festiveFollyHG:
+            2
+        case .trailbazerTamHG:
+            3
+        case .climbingBP:
+            4
+        case .cuddlyBP:
+            5
+        case .duffelBP:
+            6
+        case .hikingBP:
+            7
+        case .highWizardS:
+            8
+        case .iceGripS:
+            9
+        case .natureGuideS:
+            10
+        case .trekTrooperS:
+            11
+        case .jungleJumble:
+            12
+        case .snowySummit:
+            13
+        }
     }
     
     var price: Int{
