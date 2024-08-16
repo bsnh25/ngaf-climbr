@@ -12,7 +12,9 @@ import Swinject
 extension StretchingVC {
     func updateMovementData() {
         /// Stream the current index and update on its changed
-        $currentIndex.sink { index in
+        $currentIndex.sink { [weak self] index in
+            guard let self else { return }
+            
             guard let movement = self.setOfMovements[safe: index] else {
                 return
             }
@@ -31,7 +33,9 @@ extension StretchingVC {
         .store(in: &bags)
         
         /// Stream the next index and update on its changed
-        $nextIndex.sink { index in
+        $nextIndex.sink { [weak self] index in
+            guard let self else { return }
+            
             guard let movement = self.setOfMovements[safe: index] else {
                 return
             }
@@ -43,7 +47,9 @@ extension StretchingVC {
     }
     
     func updateMovementState() {
-        $exerciseName.sink { name in
+        $exerciseName.sink { [weak self] name in
+            guard let self else { return }
+            
             /// Get current movement data
             guard let movement = self.setOfMovements[safe: self.currentIndex] else {
                 return
@@ -85,7 +91,8 @@ extension StretchingVC {
             }
         }.store(in: &bags)
         
-        $remainingTime.sink { time in
+        $remainingTime.sink { [weak self] time in
+            guard let self else { return }
             
             /// Cancel code execution below if timer not running and timer is paused
             guard self.isTimerRunning, !self.isTimerPaused else { return }
@@ -260,7 +267,7 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
-        guard let previewLayer = cameraService?.previewLayer else {return}
+        guard let previewLayer = cameraService?.previewLayer else { return }
         
         let convertedPoints = points.map{
             previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
