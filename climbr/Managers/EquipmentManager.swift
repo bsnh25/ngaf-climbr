@@ -27,11 +27,12 @@ class EquipmentManager: EquipmentService {
         
         let request = items.map { equipment in
             var data = Equipment(context: container)
-            data.id = Int64(equipment.item.itemID)
-            data.name = equipment.item.rawValue
+            data.id         = Int64(equipment.item.itemID)
+            data.type       = equipment.type.rawValue
+            data.name       = equipment.item.rawValue
             data.isUnlocked = false
-            data.image = equipment.item.image
-            data.price = Int64(equipment.item.harga)
+            data.image      = equipment.item.image
+            data.price      = Int64(equipment.item.harga)
             
             return equipment
         }
@@ -48,13 +49,14 @@ class EquipmentManager: EquipmentService {
         
         var predicate: NSPredicate? = nil
         
-        predicate = NSPredicate(format: "type == %@", "head")
+        predicate = NSPredicate(format: "type == %@", equipmentType.rawValue)
         let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         request.predicate = predicate
         
         do {
             guard let container = container else {return []}
             let equipmentArr = try container.fetch(request)
+            print(equipmentArr)
             return convertToEquipmentModel(for: equipmentArr)
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
