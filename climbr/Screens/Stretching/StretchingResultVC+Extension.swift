@@ -35,6 +35,10 @@ extension StretchingResultVC {
         
         durations /= 60
         
+        if let affirmationText = affirmationTexts.randomElement() {
+            greetingLabel.setText(affirmationText)
+        }
+        
         stretchingDurationLabel.setText("\(awardsText) \(String(format: "%.f", durations)) minutes")
     }
     

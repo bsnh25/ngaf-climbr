@@ -14,6 +14,13 @@ class StretchingResultVC: NSViewController {
     let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
     let resultStack             = NSStackView()
     
+    let affirmationTexts: [String]  = [
+        "Wow! That’s a power move!",
+        "Great Job! You’ve unlocked a new energy boost!",
+        "Fantastic! Your body thanks you!",
+        "Cool! You’ve gained extra endurance points!",
+        "You did it! Bonus points for self-care!"
+    ]
     let awardsText              = "You’ve reduced your sedentary time by"
     
     let characterView          = NSView()
