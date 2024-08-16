@@ -9,10 +9,11 @@ import Cocoa
 
 class StretchingResultVC: NSViewController {
     
-    let greetingLabel           = CLLabel(fontSize: 26, fontWeight: .bold)
-    let stretchingSubLabel      = CLLabel(fontSize: 17, fontWeight: .regular)
-    let stretchingDurationLabel = CLLabel(fontSize: 26, fontWeight: .bold)
-    let rewardPointLabel        = CLLabel(fontSize: 26, fontWeight: .bold)
+    let greetingLabel           = CLLabel(fontSize: 36, fontWeight: .heavy)
+    let stretchingDurationLabel = CLLabel(fontSize: 28, fontWeight: .bold)
+    let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
+    
+    let awardsText              = "You’ve reduced your sedentary time by"
     
     let dummyCharacter          = NSView()
     
@@ -66,11 +67,8 @@ class StretchingResultVC: NSViewController {
     }
     
     private func configureResultUI() {
-        let stretchingStack         = NSStackView(views: [stretchingSubLabel, stretchingDurationLabel])
-        stretchingStack.orientation = .vertical
-        stretchingStack.spacing     = 10
         
-        let views                   = [greetingLabel, stretchingStack, dummyCharacter, rewardPointLabel]
+        let views                   = [greetingLabel, stretchingDurationLabel, dummyCharacter, rewardPointLabel]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         let resultStack             = NSStackView(views: views)
@@ -83,8 +81,7 @@ class StretchingResultVC: NSViewController {
         
         /// Label
         greetingLabel.setText("Great Job!")
-        stretchingSubLabel.setText("You’ve reduced your sedentary time by")
-        stretchingDurationLabel.setText("5 minutes")
+        stretchingDurationLabel.setText("\(awardsText) 0 minutes")
         rewardPointLabel.setText("+100 points")
         
         /// Character
