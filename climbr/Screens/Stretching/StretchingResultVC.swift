@@ -61,6 +61,7 @@ class StretchingResultVC: NSViewController {
         super.viewDidAppear()
         
         self.calculatePoints()
+        self.calculateDurations()
     }
     
     private func configureVC() {

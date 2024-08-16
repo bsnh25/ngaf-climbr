@@ -29,9 +29,11 @@ extension StretchingResultVC {
     }
     
     func calculateDurations() {
-        let durations = movementList.reduce(0) { partialResult, next in
+        var durations: Double = movementList.reduce(0) { partialResult, next in
             return partialResult + next.duration
         }
+        
+        durations /= 60
         
         stretchingDurationLabel.setText("\(awardsText) \(String(format: "%.f", durations)) minutes")
     }
