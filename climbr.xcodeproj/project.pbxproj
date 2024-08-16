@@ -18,10 +18,10 @@
 		03889CBD2C64688A004BC8C8 /* Character+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB32C646889004BC8C8 /* Character+CoreDataProperties.swift */; };
 		03889CBE2C64688A004BC8C8 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */; };
 		03889CBF2C64688A004BC8C8 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */; };
-		03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */; };
-		03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */; };
 		03CD09BC2C6DDFB600BEEE8B /* ProgressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD09BB2C6DDFB600BEEE8B /* ProgressService.swift */; };
 		03CD09BE2C6DE1B200BEEE8B /* ProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */; };
+		03CD0A0A2C6F83E800BEEE8B /* Equipment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD0A082C6F83E800BEEE8B /* Equipment+CoreDataClass.swift */; };
+		03CD0A0B2C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD0A092C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift */; };
 		03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */; };
 		03E796CB2C6C70DD003C6121 /* HomeVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */; };
 		8A19622D2C6AF79000F7064B /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A19622C2C6AF79000F7064B /* CLTextField.swift */; };
@@ -103,11 +103,11 @@
 		03889CB32C646889004BC8C8 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
-		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03CD09BB2C6DDFB600BEEE8B /* ProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressService.swift; sourceTree = "<group>"; };
 		03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressManager.swift; sourceTree = "<group>"; };
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		03CD0A082C6F83E800BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		03CD0A092C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPickerButton.swift; sourceTree = "<group>"; };
 		03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Extension.swift"; sourceTree = "<group>"; };
 		8A19622C2C6AF79000F7064B /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
@@ -446,14 +446,14 @@
 		E7FDDAF22C64341F00DE2A7A /* LocalDataSources */ = {
 			isa = PBXGroup;
 			children = (
+				03CD0A082C6F83E800BEEE8B /* Equipment+CoreDataClass.swift */,
+				03CD0A092C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift */,
 				03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */,
 				03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
 				03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */,
 				03889CB32C646889004BC8C8 /* Character+CoreDataProperties.swift */,
 				03889CB42C646889004BC8C8 /* User+CoreDataClass.swift */,
 				03889CB52C646889004BC8C8 /* User+CoreDataProperties.swift */,
-				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
-				03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */,
 				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
 			);
 			path = LocalDataSources;
@@ -679,16 +679,16 @@
 				E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */,
 				AB9A78B42C67D81200028B36 /* Predictor.swift in Sources */,
 				AB9A79082C6C952600028B36 /* TypeButtonView.swift in Sources */,
-				03889CC02C64688A004BC8C8 /* Equipment+CoreDataClass.swift in Sources */,
 				AB9A79002C6C7BD300028B36 /* CollectionContainerView.swift in Sources */,
 				AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */,
-				03889CC12C64688A004BC8C8 /* Equipment+CoreDataProperties.swift in Sources */,
 				AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */,
 				03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */,
 				AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
+				03CD0A0A2C6F83E800BEEE8B /* Equipment+CoreDataClass.swift in Sources */,
+				03CD0A0B2C6F83E800BEEE8B /* Equipment+CoreDataProperties.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
 				E7ABBA492C673F4B007A702F /* Divider.swift in Sources */,
@@ -844,7 +844,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = L62ZSF9D69;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -877,7 +877,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = L62ZSF9D69;
+				DEVELOPMENT_TEAM = F44CLK4937;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;

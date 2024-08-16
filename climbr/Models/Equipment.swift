@@ -39,8 +39,11 @@ var locations : [EquipmentModel] = [
     EquipmentModel(item: EquipmentItem.snowySummit, type: EquipmentType.location, isUnlocked: false)
 ]
 
-enum EquipmentType {
-    case head, hand, back, location
+enum EquipmentType: String {
+    case head = "head",
+         hand = "hand",
+         back = "back",
+         location = "location"
 }
 
 enum EquipmentItem: String, CaseIterable, Identifiable {
