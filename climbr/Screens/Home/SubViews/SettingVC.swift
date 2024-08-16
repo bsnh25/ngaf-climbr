@@ -51,11 +51,22 @@ class SettingVC: NSViewController {
     let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
     
     var isChecked: Bool = false
+    var userService: UserService?
+    
+    init(userService: UserService?) {
+        super.init(nibName: nil, bundle: nil)
+        self.userService = userService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.cBox.cgColor
+        
         configureUI()
         
     }
@@ -76,6 +87,7 @@ class SettingVC: NSViewController {
     }
     
     private func configureUI(){
+        let userPreferenceData = userService?.getPreferences()
         view.addSubview(settingText)
         view.addSubview(subTitleA)
         view.addSubview(fromText)
@@ -95,13 +107,41 @@ class SettingVC: NSViewController {
         view.addSubview(saveButton)
         
         //MARK: Start Time Picker - Need Revision
+        if let start = userPreferenceData?.startWorkingHour {
+            print("\(start)")
+            startTime.dateValue = start
+        }
         startTime.maxDate = .distantFuture
-        startTime.minDate = .now
-        let value = startTime.dateValue
+        startTime.minDate = .distantPast
+        
         
         //MARK: End Time Picker - Need Revision
+        if let stop = userPreferenceData?.endWorkingHour {
+            print("\(stop)")
+            endTime.dateValue = stop
+        }
         endTime.maxDate = .distantFuture
-        endTime.minDate = Calendar.current.date(byAdding: .hour, value: 2, to: value)
+        endTime.minDate = startTime.dateValue.addingTimeInterval(7200)
+//        Calendar.current.date(byAdding: .hour, value: 2, to: value)
+        
+        
+        if let interval = userPreferenceData?.reminderInterval{
+            switch interval{
+            case 30:
+                NSApplication.shared.sendAction(#selector(action30min), to: self, from: nil)
+            
+            case 60:
+                NSApplication.shared.sendAction(#selector(action60min), to: self, from: nil)
+                
+            case 90:
+                NSApplication.shared.sendAction(#selector(action90min), to: self, from: nil)
+                
+            case 120:
+                NSApplication.shared.sendAction(#selector(action120min), to: self, from: nil)
+            default:
+                break
+            }
+        }
         
         min30.target = self
         min30.action = #selector(action30min)
@@ -117,6 +157,15 @@ class SettingVC: NSViewController {
         
         checkboxButton.font = NSFont.systemFont(ofSize: 17, weight: .bold)
         checkboxButton.contentTintColor = .black
+        
+        if let launchAtLogin = userPreferenceData?.launchAtLogin{
+            if launchAtLogin{
+                checkboxButton.state = .on
+            } else{
+                checkboxButton.state = .off
+            }
+        }
+        
         
         saveButton.target = self
         saveButton.action = #selector(actionSave)
@@ -209,6 +258,6 @@ class SettingVC: NSViewController {
     
 }
 
-#Preview(traits: .defaultLayout, body: {
-    SettingVC()
-})
+//#Preview(traits: .defaultLayout, body: {
+//    SettingVC()
+//})
