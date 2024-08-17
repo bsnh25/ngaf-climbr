@@ -13,7 +13,7 @@ extension SettingVC {
         isChecked = checkboxButton.state == .on
         
         ///change print into user deafult settings
-        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
+//        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
 //        print("value checkbox : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
 
     }
@@ -78,7 +78,6 @@ extension SettingVC {
         
         print("\(endTime.dateValue)")
         ///get checkbox value
-        print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
         
         self.dismiss(self)
     }
