@@ -50,6 +50,8 @@ class SettingVC: NSViewController {
     let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
     
+    var lastStartValue: Date!
+    var lastStopValue: Date!
     var isChecked: Bool = false
     var userService: UserService?
     
@@ -111,25 +113,27 @@ class SettingVC: NSViewController {
             print("\(start)")
             startTime.dateValue = start
         }
-        startTime.maxDate = .distantFuture
-        startTime.minDate = .distantPast
-        
+        lastStartValue = startTime.dateValue
+        startTime.datePickerElements = [.hourMinute]
+        startTime.target = self
+        startTime.action = #selector(startWorkHourChanged)
         
         //MARK: End Time Picker - Need Revision
         if let stop = userPreferenceData?.endWorkingHour {
             print("\(stop)")
             endTime.dateValue = stop
         }
-        endTime.maxDate = .distantFuture
-        endTime.minDate = startTime.dateValue.addingTimeInterval(7200)
-//        Calendar.current.date(byAdding: .hour, value: 2, to: value)
+        lastStopValue = endTime.dateValue
+        endTime.datePickerElements = [.hourMinute]
+        endTime.target = self
+        endTime.action = #selector(stopWorkHourChanged)
         
         
         if let interval = userPreferenceData?.reminderInterval{
             switch interval{
             case 30:
                 NSApplication.shared.sendAction(#selector(action30min), to: self, from: nil)
-            
+                
             case 60:
                 NSApplication.shared.sendAction(#selector(action60min), to: self, from: nil)
                 

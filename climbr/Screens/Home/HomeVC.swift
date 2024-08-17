@@ -66,7 +66,7 @@ class HomeVC: NSViewController {
     
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
-        
+        observeTimer()
         if userService?.getUserData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)

@@ -9,21 +9,44 @@ import AppKit
 import Swinject
 
 extension UserPreferenceVC{
+    
+    func processSavePreference() -> Int64{
+        
+        if button1.isSelected {
+            return 30
+        }else if button2.isSelected{
+            return 60
+        }else if button3.isSelected{
+            return 90
+        } else if button4.isSelected{
+            return 120
+        }else {
+            print("ERR: at user preference (reminder)")
+            return 0
+        }
+        
+    }
+    
     @objc
     func actNextButton(){
+        
         guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
             print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
             return
         }
+        print("Start Work Hour : \(startWorkHour.dateValue)")
+        print("End Work Hour : \(stopWorkHour.dateValue)")
+        
         print("Reminder at \(processSavePreference())")
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
         ///get checkbox value
-        print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
         let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
         
         userService?.savePreferences(data: userPreferenceData)
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
         replace(with: homeVc)
+        guard let notif = Container.shared.resolve(NotificationService.self) else {return}
+        notif.sendNotification(title: "Title Coba", body: "Body Coba", reminder: userPreferenceData)
     }
     
     @objc
@@ -72,23 +95,60 @@ extension UserPreferenceVC{
         print("\(isChecked)")
     }
     
-    @objc
-    func datePickerValueChanged(_ sender: NSDatePicker) {
-        // Get the selected date from the date picker
-        let selectedDate = sender.dateValue
+    @objc func startWorkHourChanged(_ sender: NSDatePicker) {
+        let calendar = Calendar.current
+        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
         
-        // Convert the date to a string for display (optional)
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium
-//        dateFormatter.timeStyle = .short
-//        let dateString = dateFormatter.string(from: selectedDate)
+        if difference.minute == 120 && isTimeIncreased(from: lastStartValue, to: startWorkHour.dateValue) {
+            // Start time increased and difference was 2 hours
+            updateStopWorkHour()
+        }
         
-        // Display the selected date
-        print("Date changed to: \(selectedDate)")
-        stopWorkHour.dateValue = selectedDate.addingTimeInterval(7200)
-//        stopWorkHour.minDate = selectedDate.addingTimeInterval(7200)
-        print("\(stopWorkHour.dateValue)")
-        
+        lastStartValue = startWorkHour.dateValue
     }
     
+    @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
+        let calendar = Calendar.current
+        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
+        
+        if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: stopWorkHour.dateValue) {
+            // Stop time decreased and difference was 2 hours
+            updateStartWorkHour()
+        }
+        
+        lastStopValue = stopWorkHour.dateValue
+    }
+    
+    func updateStopWorkHour() {
+        let calendar = Calendar.current
+        let twoHours = DateComponents(hour: 2)
+        if let stopDate = calendar.date(byAdding: twoHours, to: startWorkHour.dateValue) {
+            stopWorkHour.dateValue = stopDate
+            lastStopValue = stopDate
+        }
+    }
+    
+    func updateStartWorkHour() {
+        let calendar = Calendar.current
+        let minusTwoHours = DateComponents(hour: -2)
+        if let startDate = calendar.date(byAdding: minusTwoHours, to: stopWorkHour.dateValue) {
+            startWorkHour.dateValue = startDate
+            lastStartValue = startDate
+        }
+    }
+    
+    func isTimeIncreased(from oldTime: Date, to newTime: Date) -> Bool {
+        let calendar = Calendar.current
+        let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
+        let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
+        
+        let oldMinutes = oldComponents.hour! * 60 + oldComponents.minute!
+        let newMinutes = newComponents.hour! * 60 + newComponents.minute!
+        
+        return (newMinutes - oldMinutes + 1440) % 1440 <= 720
+    }
+    
+    func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
+        return !isTimeIncreased(from: oldTime, to: newTime)
+    }
 }

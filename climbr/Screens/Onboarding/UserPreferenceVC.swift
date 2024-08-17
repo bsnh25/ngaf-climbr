@@ -29,6 +29,8 @@ class UserPreferenceVC: NSViewController {
     let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    var lastStartValue: Date!
+    var lastStopValue: Date!
     var isChecked: Bool = false
     var intervalReminder: Int64 = 0
     var userService: UserService?
@@ -55,7 +57,6 @@ class UserPreferenceVC: NSViewController {
         super.viewDidAppear()
         UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         notifService?.askUserPermission()
-        //        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }
     
     
@@ -166,7 +167,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    func configureStartWorkHour(){
+    func configureStartWorkHour() {
         view.addSubview(startWorkHour)
         
         let calendar = Calendar.current
@@ -177,15 +178,19 @@ class UserPreferenceVC: NSViewController {
         if let date = calendar.date(from: components) {
             startWorkHour.dateValue = date
         }
-        
+        lastStartValue = startWorkHour.dateValue
+        startWorkHour.datePickerElements = [.hourMinute]
         startWorkHour.target = self
-        startWorkHour.action = #selector(datePickerValueChanged)
+        startWorkHour.action = #selector(startWorkHourChanged)
+        
         NSLayoutConstraint.activate([
             startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
             startWorkHour.leadingAnchor.constraint(equalTo: text1Line1.trailingAnchor, constant: 25),
             startWorkHour.widthAnchor.constraint(equalToConstant: 65),
             startWorkHour.heightAnchor.constraint(equalToConstant: 36)
         ])
+        
+        updateStopWorkHour()
     }
     
     func configureText2Line1(){
@@ -198,10 +203,13 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    func configureStopWorkHour(){
+    func configureStopWorkHour() {
         view.addSubview(stopWorkHour)
-//        stopWorkHour.maxDate = .distantFuture
-        stopWorkHour.minDate = startWorkHour.dateValue.addingTimeInterval(7200)
+        lastStopValue = stopWorkHour.dateValue
+        stopWorkHour.datePickerElements = [.hourMinute]
+        stopWorkHour.target = self
+        stopWorkHour.action = #selector(stopWorkHourChanged)
+        
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -209,6 +217,8 @@ class UserPreferenceVC: NSViewController {
             stopWorkHour.widthAnchor.constraint(equalToConstant: 65),
             stopWorkHour.heightAnchor.constraint(equalToConstant: 36)
         ])
+        
+        updateStopWorkHour()
     }
     
     func configureText1Line2(){
@@ -298,24 +308,6 @@ class UserPreferenceVC: NSViewController {
         ])
         
     }
-    
-    func processSavePreference() -> Int64{
-        
-        if button1.isSelected {
-            return 30
-        }else if button2.isSelected{
-            return 60
-        }else if button3.isSelected{
-            return 90
-        } else if button4.isSelected{
-            return 120
-        }else {
-            print("ERR: at user preference (reminder)")
-            return 0
-        }
-        
-    }
-    
     
     func resetButtonColors() {
         // Reset all buttons to gray
