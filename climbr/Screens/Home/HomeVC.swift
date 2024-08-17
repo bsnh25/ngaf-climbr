@@ -77,7 +77,8 @@ class HomeVC: NSViewController {
         }
         
         if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
-            //TODO: Show Tutorial screen
+            guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
+            push(to: tutorialVc)
         }
         
     }

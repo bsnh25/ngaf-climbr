@@ -82,6 +82,12 @@ extension Container {
             return ChooseCharacterVC(userService: userService)
         }
         
+        container.register(TutorialVC.self){ resolver in
+            
+            return TutorialVC()
+        }
+        
+        
         return container
     }()
 }

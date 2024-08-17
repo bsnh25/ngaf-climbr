@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030DA2472C70884E001F5953 /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030DA2462C70884E001F5953 /* TutorialVC.swift */; };
 		034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C715F2C64BFC50040AD4F /* CLImageButton.swift */; };
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034C71692C664D210040AD4F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71682C664D210040AD4F /* SettingVC.swift */; };
@@ -96,6 +97,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030DA2462C70884E001F5953 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
 		034C71682C664D210040AD4F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		034C716A2C6736040040AD4F /* CLTextLabelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextLabelV2.swift; sourceTree = "<group>"; };
@@ -204,6 +206,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		030DA2452C708836001F5953 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				030DA2462C70884E001F5953 /* TutorialVC.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		034C715E2C64BFB70040AD4F /* Button */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,6 +401,7 @@
 		E7FDDAED2C6433EA00DE2A7A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				030DA2452C708836001F5953 /* Tutorial */,
 				E701F0A42C6A7B850069A2DC /* Splash */,
 				8ABB12922C67D1AA00616C57 /* Onboarding */,
 				E7FDDAF52C64345500DE2A7A /* Shop */,
@@ -644,6 +655,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				030DA2472C70884E001F5953 /* TutorialVC.swift in Sources */,
 				AB9A78FE2C6C7AF400028B36 /* ShopItemVC.swift in Sources */,
 				E7FDDB1A2C64359800DE2A7A /* StretchingVC+Extension.swift in Sources */,
 				E7ABBA462C670605007A702F /* NextMovementView.swift in Sources */,
