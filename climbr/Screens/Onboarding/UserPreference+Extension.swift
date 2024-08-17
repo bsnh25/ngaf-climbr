@@ -72,23 +72,15 @@ extension UserPreferenceVC{
         print("\(isChecked)")
     }
     
-    @objc
-    func datePickerValueChanged(_ sender: NSDatePicker) {
-        // Get the selected date from the date picker
-        let selectedDate = sender.dateValue
-        
-        // Convert the date to a string for display (optional)
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium
-//        dateFormatter.timeStyle = .short
-//        let dateString = dateFormatter.string(from: selectedDate)
-        
-        // Display the selected date
-        print("Date changed to: \(selectedDate)")
-        stopWorkHour.dateValue = selectedDate.addingTimeInterval(7200)
-//        stopWorkHour.minDate = selectedDate.addingTimeInterval(7200)
-        print("\(stopWorkHour.dateValue)")
-        
+    @objc func startWorkHourChanged(_ sender: NSDatePicker) {
+        updateStopWorkHour()
     }
-    
+
+    func updateStopWorkHour() {
+        let calendar = Calendar.current
+        let twoHours = DateComponents(hour: 2)
+        if let stopDate = calendar.date(byAdding: twoHours, to: startWorkHour.dateValue) {
+            stopWorkHour.dateValue = stopDate
+        }
+    }
 }
