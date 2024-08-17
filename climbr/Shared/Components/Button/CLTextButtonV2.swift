@@ -94,5 +94,7 @@ class CLTextButtonV2: NSButton {
         ]
         
         attributedTitle     = NSAttributedString(string: self.title, attributes: attributes)
+        
+        translatesAutoresizingMaskIntoConstraints   = false
     }
 }

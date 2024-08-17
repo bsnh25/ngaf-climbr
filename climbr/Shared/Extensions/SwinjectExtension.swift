@@ -83,8 +83,8 @@ extension Container {
         }
         
         container.register(TutorialVC.self){ resolver in
-            
-            return TutorialVC()
+            let user = resolver.resolve(UserService.self)
+            return TutorialVC(userService: user)
         }
         
         

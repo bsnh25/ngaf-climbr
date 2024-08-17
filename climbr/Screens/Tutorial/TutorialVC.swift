@@ -9,11 +9,12 @@ import Cocoa
 import AppKit
 import SnapKit
 import Combine
+import Swinject
 
 class TutorialVC: NSViewController {
-    
-    let container = NSView()
-    let character = NSImageView()
+
+    let container       = NSView()
+    let character       = NSImageView()
     let startTutorialButton = CLTextButtonV2(
         title: "Yes, please!",
         backgroundColor: .cButton,
@@ -26,26 +27,41 @@ class TutorialVC: NSViewController {
         foregroundColorText: .white,
         fontText: .systemFont(ofSize: 18, weight: .bold)
     )
-    var bags: Set<AnyCancellable> = []
     
-    //    @Published var firstTutorial: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKey.kfirstTutorial)
+    var charLabel       = CLLabel(fontSize: 28, fontWeight: .bold)
+    var tutorialLabel   = CLLabel(fontSize: 24, fontWeight: .bold)
+    var bags: Set<AnyCancellable> = []
+    var userService: UserService?
+    
     @Published var firstTutorial: Bool = true {
         didSet {
             selectorButton()
         }
     }
     
+    init(userService: UserService?){
+        super.init(nibName: nil, bundle: nil)
+        self.userService = userService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        preferredContentSize = NSSize(width: 1200, height: 840)
         
         view.wantsLayer = true
         view.layer?.backgroundColor = .clear
         
         configureChar()
         configureContainer()
+        configureText()
         configureButton()
         selectorButton()
+        setCharName()
         
     }
     
@@ -87,12 +103,8 @@ class TutorialVC: NSViewController {
         view.addSubview(startTutorialButton)
         view.addSubview(skipTutorialButton)
         
-        //        startTutorialButton.stringValue = ""
         startTutorialButton.target = self
-        
-        //        skipTutorialButton.stringValue = ""
         skipTutorialButton.target = self
-        //        skipTutorialButton.action = #selector(actionSkip)
         
         let padding = view.bounds.width * 0.05
         let height = view.bounds.height * 0.1
@@ -113,73 +125,30 @@ class TutorialVC: NSViewController {
         }
     }
     
-    @objc
-    func actionStart(){
-        startTutorialButton.removeFromSuperview()
-        skipTutorialButton.title = "Interesting"
-//        skipTutorialButton.setupTitleForegroundAndFont(title: "Interesting", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-        firstTutorial = false
-//        print("label : \(skipTutorialButton.foregroundColorText.accessibilityName)")
-        print("first tutorial status : \(firstTutorial)")
-    }
-    
-    @objc
-    func actionSkip(){
-        startTutorialButton.removeFromSuperview()
-//        skipTutorialButton.setupTitleForegroundAndFont(title: "See you", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-        skipTutorialButton.title = "See you"
-        firstTutorial = false
-        print("See you")
-        print("first tutorial status : \(firstTutorial)")
-    }
-    
-    @objc
-    func actionSeeyou(){
-        print("close pop up - see you")
-    }
-
-    @objc
-    func actionLetsGo(){
-        print("close pop up - letsgo")
-    }
-    
-    @objc
-    func actionInterest(){
-//        skipTutorialButton.isHidden = true
-        skipTutorialButton.title = "Let's Go!"
-        firstTutorial = false
-        print("let's go")
-        print("action : \(skipTutorialButton.action)")
+    func configureText(){
         
-    }
-    
-    func selectorButton(){
-        if firstTutorial {
-            startTutorialButton.action = #selector(actionStart)
-            skipTutorialButton.action = #selector(actionSkip)
-        } else {
-            skipTutorialButton.isHidden = false
-            if skipTutorialButton.title == "Interesting" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "Interesting", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionInterest)
-//                skipTutorialButton.isHidden = true
-                return
-            } else if skipTutorialButton.title == "See you" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "See you", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionSeeyou)
-                return
-            } else if skipTutorialButton.title == "Let's Go!" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "Let's Go!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionLetsGo)
-                return
-            }
+        container.addSubview(charLabel)
+        container.addSubview(tutorialLabel)
+        
+        charLabel.textColor = .orange
+        tutorialLabel.backgroundColor = .clear
+        
+        let padding = view.bounds.width * 0.04
+        let width = view.bounds.width * 1
+        
+        charLabel.snp.makeConstraints { title in
+            title.top.equalTo(container.snp.top).inset(padding)
+            title.leading.equalTo(container.snp.leading).inset(padding)
         }
         
-        print("first tutorial status : \(firstTutorial)")
+        tutorialLabel.snp.makeConstraints { desc in
+            desc.top.equalTo(charLabel.snp.bottom).offset(padding)
+            desc.leading.equalTo(container.snp.leading).inset(padding)
+            desc.width.equalTo(1100)
+            
+        }
+        
     }
     
 }
 
-#Preview(traits: .defaultLayout, body: {
-    TutorialVC()
-})
