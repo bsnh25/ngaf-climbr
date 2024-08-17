@@ -129,7 +129,7 @@ class SettingVC: NSViewController {
             switch interval{
             case 30:
                 NSApplication.shared.sendAction(#selector(action30min), to: self, from: nil)
-            
+                
             case 60:
                 NSApplication.shared.sendAction(#selector(action60min), to: self, from: nil)
                 
