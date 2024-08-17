@@ -10,6 +10,7 @@ import Foundation
 protocol UserService {
     func getPreferences() -> UserPreferences?
     func savePreferences(data: UserPreferenceModel)
+    func updatePreferences(data: UserPreferenceModel)
     func getUserData() -> User?
     func saveUserData(data: UserModel)
     func updatePoint(user: User, points: Int)

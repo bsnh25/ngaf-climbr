@@ -165,8 +165,10 @@ class SettingVC: NSViewController {
         if let launchAtLogin = userPreferenceData?.launchAtLogin{
             if launchAtLogin{
                 checkboxButton.state = .on
+                isChecked = true
             } else{
                 checkboxButton.state = .off
+                isChecked = false
             }
         }
         

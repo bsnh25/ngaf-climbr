@@ -50,6 +50,31 @@ class UserManager : UserService {
         
     }
     
+    func updatePreferences(data: UserPreferenceModel) {
+        guard let container = container else { return }
+        
+        let request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
+        request.fetchLimit = 1
+        
+        do {
+            if let fetchResult = try container.fetch(request).first {
+                fetchResult.startWorkingHour = data.startWorkingHour
+                fetchResult.endWorkingHour = data.endWorkingHour
+                fetchResult.reminderInterval = data.reminderInterval
+                fetchResult.launchAtLogin = data.launchAtLogin
+                
+                // Save the context after updating
+                try container.save()
+                print("Preferences updated successfully.")
+            } else {
+                print("No preferences found to update.")
+            }
+        } catch {
+            print("Error fetching or updating user preferences: \(error.localizedDescription)")
+        }
+    }
+
+    
     func getUserData() -> User? {
         guard let container = container else {return nil}
         let request: NSFetchRequest<User> = User.fetchRequest()

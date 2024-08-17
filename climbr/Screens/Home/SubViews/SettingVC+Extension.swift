@@ -11,10 +11,6 @@ extension SettingVC {
     @objc
     func actionCheckbox(){
         isChecked = checkboxButton.state == .on
-        
-        ///change print into user deafult settings
-//        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
-//        print("value checkbox : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
 
     }
     
@@ -72,17 +68,19 @@ extension SettingVC {
             print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
             return
         }
+        let updateData = UserPreferenceModel(id: UUID(), endWorkingHour: endTime.dateValue, launchAtLogin: isChecked, reminderInterval: processSaveReminder(), startWorkingHour: startTime.dateValue)
         print("Reminder at \(processSaveReminder())")
         print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
         print("\(startTime.dateValue)")
         
         print("\(endTime.dateValue)")
         ///get checkbox value
+        userService?.updatePreferences(data: updateData)
         
         self.dismiss(self)
     }
     
-    func processSaveReminder() -> Int{
+    func processSaveReminder() -> Int64{
         
         if min30.isSelected {
             return 30
