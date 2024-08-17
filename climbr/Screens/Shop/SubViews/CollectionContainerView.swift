@@ -50,6 +50,7 @@ class CollectionContainerView: NSView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
         
     private func setupCollectionView() {
         collectionView.delegate   = self
@@ -80,6 +81,19 @@ class CollectionContainerView: NSView {
         equipmentCollections = items
         collectionView.reloadData()
     }
+    
+    func selectedItem(item: EquipmentItem) {
+        print(equipmentCollections)
+        if let indexel = equipmentCollections.firstIndex(where: { data in
+            data.item == item
+        }) {
+            print("Index: ", indexel)
+            let index: Set<IndexPath> = [IndexPath(item: indexel, section: 0)]
+            collectionView.selectItems(at: index, scrollPosition: .centeredHorizontally)
+        }
+        
+        
+    }
 }
 
 extension CollectionContainerView: NSCollectionViewDataSource {
@@ -89,19 +103,14 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
+        
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
-//        item.gridDelegate = self
+        
         return item
     }
     
+    
 }
-//
-//extension CollectionContainerView : gridItemSelectionProtocol {
-//    func gridItemSelectionDidChange(to newSelected: GridItem) {
-////        print(newSelected.item?.rawValue ?? 0)
-////        collectionDelegate?.itemSelectedChanged(to: newSelected.item ?? .climberCrownHG)
-//    }
-//}
 
 extension CollectionContainerView: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
@@ -110,8 +119,7 @@ extension CollectionContainerView: NSCollectionViewDelegateFlowLayout {
               let cell = collectionView.item(at: indexPath) as? GridItem else {
             return
         }
-        
-        print("Selected item: ", cell.item?.rawValue)
+    
         
         if let item = cell.item, let type = cell.type {
             collectionDelegate?.itemSelectedChanged(to: item, type: type)

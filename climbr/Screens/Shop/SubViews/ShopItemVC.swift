@@ -61,6 +61,13 @@ class ShopItemVC: NSViewController {
     
     override func viewWillAppear() {
         updateData()
+        
+        /// Assume this code update current equipment from character persistent
+        
+        
+        currentHead = .cozyCragglerHG
+        collectionViewContainer.selectedItem(item: currentHead)
+        
     }
     
     func setupSidebar() {
@@ -164,15 +171,25 @@ class ShopItemVC: NSViewController {
         case 0:
 //            itemType = .head
             updateData(with: .head)
+            currentBack = .cuddlyBP /// shoud set current data with character info
+            collectionViewContainer.selectedItem(item: currentHead)
         case 1:
 //            itemType = .back
             updateData(with: .back)
+            currentBack = .cuddlyBP
+            collectionViewContainer.selectedItem(item: currentBack)
         case 2:
 //            itemType = .hand
+            
             updateData(with: .hand)
+            currentHand = .highWizardS
+            collectionViewContainer.selectedItem(item: currentHand)
+            
         case 3:
 //            itemType = .location
             updateData(with: .location)
+            currentLocation = .snowySummit
+            collectionViewContainer.selectedItem(item: currentLocation)
         default:
             break
         }
@@ -198,38 +215,5 @@ extension ShopItemVC : collectionContainerProtocol {
         case .location:
             break
         }
-        
-//        switch item {
-//        case .climberCrownHG:
-//            currentHead = .climberCrownHG
-//        case .cozyCragglerHG:
-//            currentHead = .cozyCragglerHG
-//        case .festiveFollyHG:
-//            currentHead = .festiveFollyHG
-//        case .trailbazerTamHG:
-//            currentHead = .trailbazerTamHG
-//        case .climbingBP:
-//            currentBack = .climbingBP
-//        case .cuddlyBP:
-//            currentBack = .cuddlyBP
-//        case .duffelBP:
-//            currentBack = .duffelBP
-//        case .hikingBP:
-//            currentBack = .hikingBP
-//        case .highWizardS:
-//            currentHand = .highWizardS
-//        case .iceGripS:
-//            currentHand = .iceGripS
-//        case .natureGuideS:
-//            currentHand = .natureGuideS
-//        case .trekTrooperS:
-//            currentHand = .trekTrooperS
-//        case .jungleJumble:
-//            currentLocation = .jungleJumble
-//        case .snowySummit:
-//            currentLocation = .snowySummit
-//        }
-//        
-//        print("head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
     }
 }
