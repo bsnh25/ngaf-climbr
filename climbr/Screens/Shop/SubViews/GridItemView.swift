@@ -14,7 +14,7 @@ protocol gridItemSelectionProtocol {
 class GridItem: NSCollectionViewItem {
     
     let lockIcon = CLSFSymbol(symbolName: "lock.fill", description: "lock")
-    var gridDelegate : gridItemSelectionProtocol?
+//    var gridDelegate : gridItemSelectionProtocol?
     
     let backgroundImageView: NSImageView = {
         let imageView = NSImageView()
@@ -44,6 +44,12 @@ class GridItem: NSCollectionViewItem {
     var type : EquipmentType?
     var itemId: Int?
     var item: EquipmentItem?
+    
+    override var isSelected: Bool {
+        didSet {
+            highlightItem()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,13 +100,13 @@ class GridItem: NSCollectionViewItem {
         lockIcon.isHidden = equipmentModel.isUnlocked
     }
     
-    override func mouseDown(with event: NSEvent) {
-        super.mouseDown(with: event)
-        gridDelegate?.gridItemSelectionDidChange(to: self)
-    }
+//    override func mouseDown(with event: NSEvent) {
+//        super.mouseDown(with: event)
+//        gridDelegate?.gridItemSelectionDidChange(to: self)
+//    }
     
-    func setSelected(_ selected: Bool) {
-        borderView.layer?.borderWidth = selected ? 4 : 0
+    private func highlightItem() {
+        borderView.layer?.borderWidth = isSelected ? 4 : 0
     }
 }
 
