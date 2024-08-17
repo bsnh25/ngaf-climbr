@@ -67,12 +67,17 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         observeTimer()
+        
         if userService?.getUserData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
             
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
+        }
+        
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
+            //TODO: Show Tutorial screen
         }
         
     }
