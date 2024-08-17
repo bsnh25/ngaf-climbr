@@ -16,6 +16,7 @@ class ShopVC: NSViewController {
     let locationButton = NSButton(title: "Location", target: nil, action: nil)
     let itemButtons = (0..<12).map { _ in NSButton(image: NSImage(named: NSImage.lockLockedTemplateName)!, target: nil, action: nil) }
     let coinsLabel = NSTextField(labelWithString: "100")
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

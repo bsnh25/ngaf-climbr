@@ -28,7 +28,7 @@ class ShopItemVC: NSViewController {
     let backItems1: [EquipmentModel] = EquipmentModel.backPacks
     let locationItems1: [EquipmentModel] = EquipmentModel.locations
     
-    var itemType : EquipmentType = .head
+//    var itemType : EquipmentType = .head
     
     var currentHead : EquipmentItem = .climberCrownHG
     var currentBack : EquipmentItem = .climbingBP
@@ -39,6 +39,8 @@ class ShopItemVC: NSViewController {
     var selectedGridItem: GridItem?
     var selectedItem: EquipmentItem?
     
+    #warning("Just for testing, should inject via Swinject")
+    let service: EquipmentService = EquipmentManager(controller: PersistenceController.shared)
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +57,10 @@ class ShopItemVC: NSViewController {
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
             highlightButton(firstButton)
         }
+    }
+    
+    override func viewWillAppear() {
+        updateData()
     }
     
     func setupSidebar() {
@@ -156,20 +162,25 @@ class ShopItemVC: NSViewController {
         
         switch sender.tag {
         case 0:
-            itemType = .head
-            collectionViewContainer.updateItems(items: headItems1)
+//            itemType = .head
+            updateData(with: .head)
         case 1:
-            itemType = .back
-            collectionViewContainer.updateItems(items: backItems1)
+//            itemType = .back
+            updateData(with: .back)
         case 2:
-            itemType = .hand
-            collectionViewContainer.updateItems(items: handItems1)
+//            itemType = .hand
+            updateData(with: .hand)
         case 3:
-            itemType = .location
-            collectionViewContainer.updateItems(items: locationItems1)
+//            itemType = .location
+            updateData(with: .location)
         default:
             break
         }
+    }
+    
+    func updateData(with type: EquipmentType = .head) {
+        let items = service.getEquipments(equipmentType: type)
+        collectionViewContainer.updateItems(items: items)
     }
 }
 
