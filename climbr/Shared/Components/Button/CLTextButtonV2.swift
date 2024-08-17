@@ -85,4 +85,14 @@ class CLTextButtonV2: NSButton {
             layer?.borderColor = layer?.borderColor?.copy(alpha: 0.2)
         }
    }
+    
+    func setupTitleForegroundAndFont(title: String, foregroundColorText: NSColor, font: NSFont){
+        self.title                  = title
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: foregroundColorText,
+            .font: font
+        ]
+        
+        attributedTitle     = NSAttributedString(string: self.title, attributes: attributes)
+    }
 }

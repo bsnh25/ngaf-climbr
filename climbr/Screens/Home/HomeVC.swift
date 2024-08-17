@@ -12,12 +12,40 @@ import Combine
 
 class HomeVC: NSViewController {
     
-    let settingButton = CLImageButton(imageName: "gear", accesibilityName: "settings", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
-    let audioButton = CLImageButton(imageName: "speaker.wave.3", accesibilityName: "Music Play", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
-    let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
-    let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .cButton
-                                                    , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
-    let textB = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Today’s session goal")
+    let settingButton = CLImageButton(
+        imageName: "gear",
+        accesibilityName: "settings",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
+    
+    let audioButton = CLImageButton(
+        imageName: "speaker.wave.3",
+        accesibilityName: "Music Play",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
+    
+    let storeButton = CLImageButton(
+        imageName: "storefront",
+        accesibilityName: "store",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
+    
+    let startStretchButton = CLTextButtonV2(
+        title: "Start Session",
+        backgroundColor: .cButton,
+        foregroundColorText: .white,
+        fontText: .systemFont(ofSize: 20, weight: .semibold)
+    )
+    
+    let textB = CLTextLabelV2(
+        sizeOfFont: 20,
+        weightOfFont: .bold,
+        contentLabel: "Today’s session goal"
+    )
+    
     let containerView = NSView()
     let imageHome = NSImageView()
     let stack = NSStackView()
