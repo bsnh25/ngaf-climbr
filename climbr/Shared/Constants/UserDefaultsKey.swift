@@ -9,7 +9,6 @@ import Foundation
 
 struct UserDefaultsKey {
     static let kTutorial            = "kTutorial"
-    static let kFinishStretch       = "kFinishStretch"
     static let kDateNow             = "kDateNow"
     static let kBackgroundVolume    = "kBackgroundVolume"
     static let kSFXVolume           = "kSFXVolume"

@@ -29,11 +29,13 @@ extension TutorialVC {
     @objc
     func actionSeeyou(){
         print("close pop up - see you")
+        pop()
     }
     
     @objc
     func actionLetsGo(){
         print("close pop up - letsgo")
+        pop()
     }
     
     @objc
@@ -75,6 +77,10 @@ extension TutorialVC {
     func setCharName(){
         let getUser = userService?.getUserData()
         charLabel.stringValue = "\(getUser?.name ?? "John Doe")"
+    }
+    
+    func updateSelectorButton(){
+        firstTutorial = false
     }
 
 }

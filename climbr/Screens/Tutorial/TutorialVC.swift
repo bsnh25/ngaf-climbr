@@ -54,7 +54,7 @@ class TutorialVC: NSViewController {
         preferredContentSize = NSSize(width: 1200, height: 840)
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = .clear
+        view.layer?.backgroundColor = .white.copy(alpha: 0.5)
         
         configureChar()
         configureContainer()
@@ -62,6 +62,16 @@ class TutorialVC: NSViewController {
         configureButton()
         selectorButton()
         setCharName()
+        
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                
+                DispatchQueue.main.async {
+                    self.updateSelectorButton()
+                }
+            }
+            .store(in: &bags)
         
     }
     
@@ -151,4 +161,3 @@ class TutorialVC: NSViewController {
     }
     
 }
-

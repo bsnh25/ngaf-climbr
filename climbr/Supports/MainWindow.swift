@@ -25,7 +25,7 @@ class MainWindow: NSWindow {
         
         /// Set the window to center axis by default
         center()
-        if let vc                  = Container.shared.resolve(TutorialVC.self) {
+        if let vc                  = Container.shared.resolve(MainVC.self) {
             contentView             = vc.view
             contentViewController   = vc
         }

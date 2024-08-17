@@ -45,7 +45,6 @@ class HomeVC: NSViewController {
         weightOfFont: .bold,
         contentLabel: "Today’s session goal"
     )
-    
     let containerView = NSView()
     let imageHome = NSImageView()
     let stack = NSStackView()
@@ -53,7 +52,6 @@ class HomeVC: NSViewController {
     var audioService: AudioService?
     var userService: UserService?
     var equipmentService: EquipmentService?
-    
     var isSoundTapped: Bool = false
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
@@ -68,7 +66,7 @@ class HomeVC: NSViewController {
         self.userService = userService
         self.equipmentService = equipmentService
     }
-   
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -102,13 +100,8 @@ class HomeVC: NSViewController {
             
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
+            
         }
-        
-        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
-            guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
-            push(to: tutorialVc)
-        }
-        
     }
     
     override func viewWillAppear() {
@@ -122,7 +115,7 @@ class HomeVC: NSViewController {
     
     private func previewAnimaConfig(){
         view.addSubview(imageHome)
-        imageHome.wantsLayer = true 
+        imageHome.wantsLayer = true
         imageHome.image = NSImage(resource: .homebg)
         imageHome.imageScaling = .scaleAxesIndependently
         
@@ -135,7 +128,7 @@ class HomeVC: NSViewController {
     }
     
     private func ButtonConfigure(){
-
+        
         view.addSubview(stack)
         
         stack.wantsLayer = true
@@ -188,7 +181,7 @@ class HomeVC: NSViewController {
             store.height.equalTo(38)
         }
         
-
+        
     }
     
     private func stackConfig(){
@@ -254,11 +247,11 @@ class HomeVC: NSViewController {
         progressStretch.layer?.backgroundColor = NSColor.black.cgColor.copy(alpha: 0.12)
         progressStretch.layer?.cornerRadius = 5
         progressStretch.displayIfNeeded()
-
+        
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
         
         stackConfig()
     }
-  
+    
 }
