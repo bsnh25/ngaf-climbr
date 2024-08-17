@@ -174,40 +174,51 @@ class ShopItemVC: NSViewController {
 }
 
 extension ShopItemVC : collectionContainerProtocol {
-    func itemSelectedChanged(to newSelected: EquipmentItem) {
+    func itemSelectedChanged(to newSelected: EquipmentItem, type: EquipmentType) {
         self.selectedItem = newSelected
         
-        switch newSelected {
-        case .climberCrownHG:
-            currentHead = .climberCrownHG
-        case .cozyCragglerHG:
-            currentHead = .cozyCragglerHG
-        case .festiveFollyHG:
-            currentHead = .festiveFollyHG
-        case .trailbazerTamHG:
-            currentHead = .trailbazerTamHG
-        case .climbingBP:
-            currentBack = .climbingBP
-        case .cuddlyBP:
-            currentBack = .cuddlyBP
-        case .duffelBP:
-            currentBack = .duffelBP
-        case .hikingBP:
-            currentBack = .hikingBP
-        case .highWizardS:
-            currentHand = .highWizardS
-        case .iceGripS:
-            currentHand = .iceGripS
-        case .natureGuideS:
-            currentHand = .natureGuideS
-        case .trekTrooperS:
-            currentHand = .trekTrooperS
-        case .jungleJumble:
-            currentLocation = .jungleJumble
-        case .snowySummit:
-            currentLocation = .snowySummit
+        switch type {
+        case .head:
+            currentHead = newSelected
+        case .hand:
+            currentHand = newSelected
+        case .back:
+            currentBack = newSelected
+        case .location:
+            break
         }
         
-        print("head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
+//        switch newSelected {
+//        case .climberCrownHG:
+//            currentHead = .climberCrownHG
+//        case .cozyCragglerHG:
+//            currentHead = .cozyCragglerHG
+//        case .festiveFollyHG:
+//            currentHead = .festiveFollyHG
+//        case .trailbazerTamHG:
+//            currentHead = .trailbazerTamHG
+//        case .climbingBP:
+//            currentBack = .climbingBP
+//        case .cuddlyBP:
+//            currentBack = .cuddlyBP
+//        case .duffelBP:
+//            currentBack = .duffelBP
+//        case .hikingBP:
+//            currentBack = .hikingBP
+//        case .highWizardS:
+//            currentHand = .highWizardS
+//        case .iceGripS:
+//            currentHand = .iceGripS
+//        case .natureGuideS:
+//            currentHand = .natureGuideS
+//        case .trekTrooperS:
+//            currentHand = .trekTrooperS
+//        case .jungleJumble:
+//            currentLocation = .jungleJumble
+//        case .snowySummit:
+//            currentLocation = .snowySummit
+//        }
+//        
+//        print("head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
     }
 }
