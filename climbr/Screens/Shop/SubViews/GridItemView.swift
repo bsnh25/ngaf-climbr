@@ -34,7 +34,7 @@ class GridItem: NSCollectionViewItem {
     let borderView: NSView = {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.borderColor = NSColor.systemBlue.cgColor
+        view.layer?.borderColor = NSColor.orange.cgColor
         view.layer?.cornerRadius = 10
         view.layer?.borderWidth = 0
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +44,11 @@ class GridItem: NSCollectionViewItem {
     var type : EquipmentType?
     var itemId: Int?
     var item: EquipmentItem?
+    
+    var currentHead : EquipmentItem?
+    var currentBack : EquipmentItem?
+    var currentHand : EquipmentItem?
+    var currentLocation : EquipmentItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +93,7 @@ class GridItem: NSCollectionViewItem {
     func configure(equipmentModel: EquipmentModel) {
         backgroundImageView.image = NSImage(named: equipmentModel.item.image)
         item = equipmentModel.item
-        itemId = equipmentModel.item.itemID
+        itemId = Int(equipmentModel.item.itemID)
         type = equipmentModel.type
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
@@ -112,12 +117,55 @@ class GridItem: NSCollectionViewItem {
         }
     }
     
-    func updateItemSelected(item: EquipmentItem){
-        if self.item == item {
+    func updateItemSelected(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
+        self.currentHead = head
+        self.currentHand = hand
+        self.currentBack = back
+        self.currentLocation = location
+//        print("=========================")
+//        print("inside gridItem -> head: \(currentHead!.rawValue), back: \(currentBack!.rawValue), hand:\(currentHand!.rawValue), location: \(currentLocation!.rawValue)")
+        
+        if head == item || hand == item || back == item || location == item {
             setSelected(true)
-        } else{
+        }else{
             setSelected(false)
         }
+        
+//        if self.item == item {
+//            setSelected(true)
+//        } else {
+//            setSelected(false)
+//        }
+    }
+    
+    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
+//        print("updating current item")
+        self.currentHead = head
+        self.currentHand = hand
+        self.currentBack = back
+        self.currentLocation = location
+        
+//        print("=========================")
+//        print("inside gridItem -> head: \(currentHead!.rawValue), back: \(currentBack!.rawValue), hand:\(currentHand!.rawValue), location: \(currentLocation!.rawValue)")
+        
+//        if head == item || hand == item || back == item || location == item {
+//            setSelected(true)
+//        }else{
+//            setSelected(false)
+//        }
+        
+//        switch type {
+//        case .head:
+//            updateItemSelected(item: self.currentHead!)
+//        case .hand:
+//            updateItemSelected(item: self.currentHand!)
+//        case .back:
+//            updateItemSelected(item: self.currentBack!)
+//        case .location:
+//            updateItemSelected(item: self.currentLocation!)
+//        case nil:
+//            break
+//        }
     }
     
     func updateSelectedItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){

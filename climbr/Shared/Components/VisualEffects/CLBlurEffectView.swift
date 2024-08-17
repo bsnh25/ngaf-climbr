@@ -26,8 +26,9 @@ class CLBlurEffectView: NSVisualEffectView {
     
     private func configure() {
         blendingMode = .withinWindow
-//        material     = .light
-        appearance   = NSAppearance(named: .aqua)
+        material     = .hudWindow
+//        appearance   = NSAppearance(named: .vibrantLight)
+        
         state        = .active
         autoresizingMask = [.width, .height]
     }

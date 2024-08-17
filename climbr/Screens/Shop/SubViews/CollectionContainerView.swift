@@ -111,7 +111,7 @@ extension CollectionContainerView: NSCollectionViewDataSource {
 
 extension CollectionContainerView : gridItemSelectionProtocol {
     func gridItemSelectionDidChange(to newSelected: GridItem) {
-        newSelected.updateItemSelected(item: newSelected.item!)
+//        newSelected.updateItemSelected(item: newSelected.item!)
 //        print(newSelected.item?.rawValue ?? 0)
         
         switch newSelected.type {
@@ -127,7 +127,7 @@ extension CollectionContainerView : gridItemSelectionProtocol {
             break
         }
         
-        
+        newSelected.updateCurrentItem(head: currentHead!, hand: currentHand!, back: currentBack!, location: currentLocation!)
         
         print("inside collectionView -> head: \(currentHead!.rawValue), back: \(currentBack!.rawValue), hand:\(currentHand!.rawValue), location: \(currentLocation!.rawValue)")
 

@@ -23,10 +23,10 @@ class ShopItemVC: NSViewController {
         ("map.fill", "Location")
     ]
     
-    let headItems: [EquipmentModel] = headGears
-    let handItems: [EquipmentModel] = hikingSticks
-    let backItems: [EquipmentModel] = backPacks
-    let locationItems: [EquipmentModel] = locations
+    let headItems: [EquipmentModel] = EquipmentModel.headGears
+    let handItems: [EquipmentModel] = EquipmentModel.hikingSticks
+    let backItems: [EquipmentModel] = EquipmentModel.backPacks
+    let locationItems: [EquipmentModel] = EquipmentModel.locations
     
     var itemType : EquipmentType = .head
     
@@ -37,24 +37,42 @@ class ShopItemVC: NSViewController {
     
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
-    var selectedItem: EquipmentItem?
+    var selectedItem: EquipmentItem? {
+        didSet {
+            updateGridItemsWithSelectedItem()
+        }
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         
-        
-        collectionViewContainer.updateItems(items: headItems)
-        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         collectionViewContainer.collectionDelegate = self
+        collectionViewContainer.updateItems(items: headItems)
+        
+        print(collectionViewContainer.collectionView.visibleItems())
+        
+        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+        
         setupSidebar()
         setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
-        
+//        print("ok1")
+//        
+//        print("ok2")
+//        
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
+            print("helo")
+            updateGridItemsWithSelectedItem()
             highlightButton(firstButton)
         }
+        
+        print(collectionViewContainer.collectionView.visibleItems())
+    }
+    
+    override func viewDidAppear() {
+        collectionViewContainer.updateItems(items: headItems)
     }
     
     func setupSidebar() {
@@ -151,25 +169,52 @@ class ShopItemVC: NSViewController {
         selectedButton?.layer?.backgroundColor = NSColor.gray.cgColor // Highlight color
     }
     
+    func updateGridItemsWithSelectedItem() {
+//        guard let selectedItem = selectedItem else { return }
+            
+            // Loop through all visible items in the collection view
+//        for case let gridItem as GridItem in collectionViewContainer.collectionView.visibleItems() {
+//            print("grid item in this collection = \(String(describing: gridItem.item?.rawValue))")
+////            gridItem.updateItemSelected(item: selectedItem)
+//            gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+//        }
+//        print("masuk updateGridItemsWithSelectedItem")
+        for index in 0..<collectionViewContainer.collectionView.numberOfItems(inSection: 0) {
+            if let gridItem = collectionViewContainer.collectionView.item(at: index) as? GridItem {
+                // Perform operations on each gridItem
+                print(gridItem.item?.rawValue ?? "No item")
+                gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+            }
+        }
+    }
+    
     @objc func sidebarButtonClicked(_ sender: TypeButton) {
         highlightButton(sender)
         
         switch sender.tag {
         case 0:
             itemType = .head
+            print("head")
             collectionViewContainer.updateItems(items: headItems)
         case 1:
             itemType = .back
+            print("back")
             collectionViewContainer.updateItems(items: backItems)
         case 2:
             itemType = .hand
+            print("hand")
             collectionViewContainer.updateItems(items: handItems)
         case 3:
             itemType = .location
+            print("location")
             collectionViewContainer.updateItems(items: locationItems)
         default:
             break
         }
+        
+//        print("before update grid item in sidebarButtonClicked")
+        updateGridItemsWithSelectedItem()
+//        print("after update grid item in sidebarButtonClicked")
     }
 }
 
@@ -181,6 +226,7 @@ extension ShopItemVC : collectionContainerProtocol {
     
     func itemSelectedChanged(to newSelected: EquipmentItem) {
         self.selectedItem = newSelected
+        updateGridItemsWithSelectedItem()
         
         switch newSelected {
         case .climberCrownHG:
