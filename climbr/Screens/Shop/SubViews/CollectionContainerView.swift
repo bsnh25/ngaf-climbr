@@ -8,7 +8,7 @@
 import Cocoa
 
 protocol collectionContainerProtocol {
-    func itemSelectedChanged(to newSelected: EquipmentItem, type: EquipmentType)
+    func itemSelectedChanged(to item: EquipmentItem, type: EquipmentType)
 }
 
 class CollectionContainerView: NSView {

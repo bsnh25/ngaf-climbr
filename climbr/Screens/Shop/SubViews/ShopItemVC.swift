@@ -174,21 +174,21 @@ class ShopItemVC: NSViewController {
 }
 
 extension ShopItemVC : collectionContainerProtocol {
-    func itemSelectedChanged(to newSelected: EquipmentItem, type: EquipmentType) {
-        self.selectedItem = newSelected
+    func itemSelectedChanged(to item: EquipmentItem, type: EquipmentType) {
+        self.selectedItem = item
         
         switch type {
         case .head:
-            currentHead = newSelected
+            currentHead = item
         case .hand:
-            currentHand = newSelected
+            currentHand = item
         case .back:
-            currentBack = newSelected
+            currentBack = item
         case .location:
             break
         }
         
-//        switch newSelected {
+//        switch item {
 //        case .climberCrownHG:
 //            currentHead = .climberCrownHG
 //        case .cozyCragglerHG:
