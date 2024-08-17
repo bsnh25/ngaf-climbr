@@ -218,7 +218,7 @@ class ChooseCharacterVC: NSViewController {
             resetBorderContainer()
             container1.layer?.borderWidth = 5
             container1.layer?.borderColor = .white
-            containerIsClicked.toggle()
+            containerIsClicked = true
             genderChar = Gender.female
             validateUserInput()
         }
@@ -229,7 +229,7 @@ class ChooseCharacterVC: NSViewController {
             resetBorderContainer()
             container2.layer?.borderWidth = 5
             container2.layer?.borderColor = .white
-            containerIsClicked.toggle()
+            containerIsClicked = true
             genderChar = Gender.male
             validateUserInput()
         }
@@ -239,7 +239,7 @@ class ChooseCharacterVC: NSViewController {
         if textField.stringValue.isEmpty || !containerIsClicked{
             buttonStart.isEnabled = false
         }else{
-            buttonStart.isEnabled.toggle()
+            buttonStart.isEnabled = true
         }
     }
     
