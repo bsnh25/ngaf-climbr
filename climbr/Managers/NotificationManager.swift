@@ -33,10 +33,6 @@ class NotificationManager: NotificationService {
         
         
         //MARK: Logic Reminder
-//        let start = stride(
-//            from: reminder.startWorkingHour,
-//            to: reminder.endWorkingHour,
-//            by: Date.Stride(reminder.reminderInterval * 60)).filter( $0 < Date())
 
         let start = stride(
             from: reminder.startWorkingHour,
