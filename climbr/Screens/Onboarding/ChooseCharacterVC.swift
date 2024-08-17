@@ -20,6 +20,7 @@ class ChooseCharacterVC: NSViewController {
     private let femalechar = NSImageView(image: .femalecharacter)
     private let textField = CLTextField(placeholder: "Type your climbr's name here")
     private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
+    private var containerIsClicked: Bool = false
     
     enum Gender{
         case male, female
@@ -178,6 +179,8 @@ class ChooseCharacterVC: NSViewController {
         
         buttonStart.target = self
         buttonStart.action = #selector(actButtonStart)
+        
+        
         buttonStart.isEnabled = false
         
         NSLayoutConstraint.activate([
@@ -220,8 +223,9 @@ class ChooseCharacterVC: NSViewController {
             resetBorderContainer()
             container1.layer?.borderWidth = 5
             container1.layer?.borderColor = .white
+            containerIsClicked = true
             genderChar = Gender.female
-            buttonStart.isEnabled = true
+            validateUserInput()
         }
     }
     
@@ -230,7 +234,16 @@ class ChooseCharacterVC: NSViewController {
             resetBorderContainer()
             container2.layer?.borderWidth = 5
             container2.layer?.borderColor = .white
+            containerIsClicked = true
             genderChar = Gender.male
+            validateUserInput()
+        }
+    }
+    
+    private func validateUserInput(){
+        if textField.stringValue.isEmpty || !containerIsClicked{
+            buttonStart.isEnabled = false
+        }else{
             buttonStart.isEnabled = true
         }
     }
