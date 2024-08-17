@@ -8,7 +8,7 @@
 import Cocoa
 
 protocol collectionContainerProtocol {
-    func itemSelectedChanged(to newSelected: EquipmentItem)
+    func itemSelectedChanged(to newSelected: EquipmentItem, type: EquipmentType)
 }
 
 class CollectionContainerView: NSView {
@@ -32,6 +32,7 @@ class CollectionContainerView: NSView {
         flowLayout.minimumInteritemSpacing = 20
         flowLayout.minimumLineSpacing = 20
         flowLayout.scrollDirection = .vertical
+        
             
         collectionView = NSCollectionView()
         collectionView.collectionViewLayout = flowLayout
@@ -51,9 +52,14 @@ class CollectionContainerView: NSView {
     }
         
     private func setupCollectionView() {
+        collectionView.delegate   = self
+        
         collectionView.dataSource = self
         collectionView.wantsLayer = true
         collectionView.layer?.backgroundColor = .white
+        
+        collectionView.isSelectable = true
+        collectionView.allowsMultipleSelection = false
         
         let scrollView = NSScrollView()
         scrollView.documentView = collectionView
@@ -84,15 +90,32 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
-        item.gridDelegate = self
+//        item.gridDelegate = self
         return item
     }
+    
 }
+//
+//extension CollectionContainerView : gridItemSelectionProtocol {
+//    func gridItemSelectionDidChange(to newSelected: GridItem) {
+////        print(newSelected.item?.rawValue ?? 0)
+////        collectionDelegate?.itemSelectedChanged(to: newSelected.item ?? .climberCrownHG)
+//    }
+//}
 
-extension CollectionContainerView : gridItemSelectionProtocol {
-    func gridItemSelectionDidChange(to newSelected: GridItem) {
-        print(newSelected.item?.rawValue ?? 0)
-        collectionDelegate?.itemSelectedChanged(to: newSelected.item ?? .climberCrownHG)
+extension CollectionContainerView: NSCollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        
+        guard let indexPath = indexPaths.first,
+              let cell = collectionView.item(at: indexPath) as? GridItem else {
+            return
+        }
+        
+        print("Selected item: ", cell.item?.rawValue)
+        
+        if let item = cell.item, let type = cell.type {
+            collectionDelegate?.itemSelectedChanged(to: item, type: type)
+        }
     }
 }
 
