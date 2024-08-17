@@ -103,6 +103,8 @@ class GridItem: NSCollectionViewItem {
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
         gridDelegate?.gridItemSelectionDidChange(to: self)
+//        print("click?")
+        setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
     }
     
     func setSelected(_ selected: Bool) {
@@ -124,13 +126,15 @@ class GridItem: NSCollectionViewItem {
         self.currentLocation = location
 //        print("=========================")
 //        print("inside gridItem -> head: \(currentHead!.rawValue), back: \(currentBack!.rawValue), hand:\(currentHand!.rawValue), location: \(currentLocation!.rawValue)")
+        setSelected(head == item || hand == item || back == item || location == item)
         
-        if head == item || hand == item || back == item || location == item {
-            setSelected(true)
-        }else{
-            setSelected(false)
-        }
-        
+//        if head == item || hand == item || back == item || location == item {
+//            print(" should have been \(head == item || hand == item || back == item || location == item)")
+//            setSelected(true)
+//        }else{
+//            setSelected(false)
+//        }
+//        
 //        if self.item == item {
 //            setSelected(true)
 //        } else {

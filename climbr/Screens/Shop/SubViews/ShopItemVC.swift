@@ -31,17 +31,18 @@ class ShopItemVC: NSViewController {
     var itemType : EquipmentType = .head
     
     var currentHead : EquipmentItem = .climberCrownHG
-    var currentBack : EquipmentItem = .climbingBP
+    var currentBack : EquipmentItem = .cuddlyBP
     var currentHand : EquipmentItem = .highWizardS
     var currentLocation : EquipmentItem = .jungleJumble
     
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
-    var selectedItem: EquipmentItem? {
-        didSet {
-            updateGridItemsWithSelectedItem()
-        }
-    }
+//    var selectedItem: EquipmentItem? {
+//        didSet {
+//            updateGridItemsWithSelectedItem()
+//        }
+//    }
+    var selectedItem : EquipmentItem?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +50,6 @@ class ShopItemVC: NSViewController {
         
         collectionViewContainer.collectionDelegate = self
         collectionViewContainer.updateItems(items: headItems)
-        
-        print(collectionViewContainer.collectionView.visibleItems())
-        
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         
         setupSidebar()
@@ -67,8 +65,6 @@ class ShopItemVC: NSViewController {
             updateGridItemsWithSelectedItem()
             highlightButton(firstButton)
         }
-        
-        print(collectionViewContainer.collectionView.visibleItems())
     }
     
     override func viewDidAppear() {
@@ -182,7 +178,7 @@ class ShopItemVC: NSViewController {
         for index in 0..<collectionViewContainer.collectionView.numberOfItems(inSection: 0) {
             if let gridItem = collectionViewContainer.collectionView.item(at: index) as? GridItem {
                 // Perform operations on each gridItem
-                print(gridItem.item?.rawValue ?? "No item")
+//                print(gridItem.item?.rawValue ?? "No item")
                 gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
             }
         }
@@ -194,19 +190,19 @@ class ShopItemVC: NSViewController {
         switch sender.tag {
         case 0:
             itemType = .head
-            print("head")
+//            print("head")
             collectionViewContainer.updateItems(items: headItems)
         case 1:
             itemType = .back
-            print("back")
+//            print("back")
             collectionViewContainer.updateItems(items: backItems)
         case 2:
             itemType = .hand
-            print("hand")
+//            print("hand")
             collectionViewContainer.updateItems(items: handItems)
         case 3:
             itemType = .location
-            print("location")
+//            print("location")
             collectionViewContainer.updateItems(items: locationItems)
         default:
             break
@@ -222,6 +218,21 @@ extension ShopItemVC : collectionContainerProtocol {
     func gridItemSelectedChange(to newSelected: GridItem) {
         self.selectedGridItem = newSelected
         collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
+    }
+    
+    func itemSelectedChanged(to item: EquipmentItem, type: EquipmentType) {
+        self.selectedItem = item
+        
+        switch type {
+        case .head:
+            currentHead = item
+        case .hand:
+            currentHand = item
+        case .back:
+            currentBack = item
+        case .location:
+            break
+        }
     }
     
     func itemSelectedChanged(to newSelected: EquipmentItem) {
@@ -258,9 +269,10 @@ extension ShopItemVC : collectionContainerProtocol {
         case .snowySummit:
             currentLocation = .snowySummit
         }
-        print("inside ShopItemVC -> head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
+//        print("inside ShopItemVC -> head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
         
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+        collectionViewContainer.collectionView.reloadData()
     }
     
     

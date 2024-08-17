@@ -104,6 +104,7 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
+        item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
         item.gridDelegate = self
         return item
     }
@@ -127,12 +128,13 @@ extension CollectionContainerView : gridItemSelectionProtocol {
             break
         }
         
-        newSelected.updateCurrentItem(head: currentHead!, hand: currentHand!, back: currentBack!, location: currentLocation!)
+//        newSelected.updateCurrentItem(head: currentHead!, hand: currentHand!, back: currentBack!, location: currentLocation!)
+//        newSelected.updateItemSelected(head: currentHead!, hand: currentHand!, back: currentBack!, location: currentLocation!)
         
-        print("inside collectionView -> head: \(currentHead!.rawValue), back: \(currentBack!.rawValue), hand:\(currentHand!.rawValue), location: \(currentLocation!.rawValue)")
+//        print("inside collectionView -> head: \(currentHead!.rawValue), back: \(currentBack!.rawValue), hand:\(currentHand!.rawValue), location: \(currentLocation!.rawValue)")
 
         collectionDelegate?.itemSelectedChanged(to: newSelected.item ?? .climberCrownHG)
-        collectionDelegate?.gridItemSelectedChange(to: newSelected)
+//        collectionDelegate?.gridItemSelectedChange(to: newSelected)
     }
 }
 
