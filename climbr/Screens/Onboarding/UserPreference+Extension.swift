@@ -96,14 +96,59 @@ extension UserPreferenceVC{
     }
     
     @objc func startWorkHourChanged(_ sender: NSDatePicker) {
-        updateStopWorkHour()
+        let calendar = Calendar.current
+        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
+        
+        if difference.minute == 120 && isTimeIncreased(from: lastStartValue, to: startWorkHour.dateValue) {
+            // Start time increased and difference was 2 hours
+            updateStopWorkHour()
+        }
+        
+        lastStartValue = startWorkHour.dateValue
     }
-
+    
+    @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
+        let calendar = Calendar.current
+        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
+        
+        if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: stopWorkHour.dateValue) {
+            // Stop time decreased and difference was 2 hours
+            updateStartWorkHour()
+        }
+        
+        lastStopValue = stopWorkHour.dateValue
+    }
+    
     func updateStopWorkHour() {
         let calendar = Calendar.current
         let twoHours = DateComponents(hour: 2)
         if let stopDate = calendar.date(byAdding: twoHours, to: startWorkHour.dateValue) {
             stopWorkHour.dateValue = stopDate
+            lastStopValue = stopDate
         }
+    }
+    
+    func updateStartWorkHour() {
+        let calendar = Calendar.current
+        let minusTwoHours = DateComponents(hour: -2)
+        if let startDate = calendar.date(byAdding: minusTwoHours, to: stopWorkHour.dateValue) {
+            startWorkHour.dateValue = startDate
+            lastStartValue = startDate
+        }
+    }
+    
+    func isTimeIncreased(from oldTime: Date, to newTime: Date) -> Bool {
+        let calendar = Calendar.current
+        let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
+        let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
+        
+        let oldMinutes = oldComponents.hour! * 60 + oldComponents.minute!
+        let newMinutes = newComponents.hour! * 60 + newComponents.minute!
+        
+        return (newMinutes - oldMinutes + 1440) % 1440 <= 720
+    }
+    
+    func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
+        return !isTimeIncreased(from: oldTime, to: newTime)
     }
 }
