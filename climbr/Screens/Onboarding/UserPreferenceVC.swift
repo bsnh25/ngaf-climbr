@@ -165,7 +165,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    func configureStartWorkHour(){
+    func configureStartWorkHour() {
         view.addSubview(startWorkHour)
         
         let calendar = Calendar.current
@@ -177,14 +177,18 @@ class UserPreferenceVC: NSViewController {
             startWorkHour.dateValue = date
         }
         
+        startWorkHour.datePickerElements = [.hourMinute]
         startWorkHour.target = self
-        startWorkHour.action = #selector(datePickerValueChanged)
+        startWorkHour.action = #selector(startWorkHourChanged)
+        
         NSLayoutConstraint.activate([
             startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
             startWorkHour.leadingAnchor.constraint(equalTo: text1Line1.trailingAnchor, constant: 25),
             startWorkHour.widthAnchor.constraint(equalToConstant: 65),
             startWorkHour.heightAnchor.constraint(equalToConstant: 36)
         ])
+        
+        updateStopWorkHour()
     }
     
     func configureText2Line1(){
@@ -197,10 +201,10 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    func configureStopWorkHour(){
+    func configureStopWorkHour() {
         view.addSubview(stopWorkHour)
-//        stopWorkHour.maxDate = .distantFuture
-        stopWorkHour.minDate = startWorkHour.dateValue.addingTimeInterval(7200)
+        
+        stopWorkHour.datePickerElements = [.hourMinute]
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -208,6 +212,8 @@ class UserPreferenceVC: NSViewController {
             stopWorkHour.widthAnchor.constraint(equalToConstant: 65),
             stopWorkHour.heightAnchor.constraint(equalToConstant: 36)
         ])
+        
+        updateStopWorkHour()
     }
     
     func configureText1Line2(){
