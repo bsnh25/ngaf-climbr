@@ -35,6 +35,13 @@ extension StretchingResultVC {
         
         durations /= 60
         
+        guard durations > 0 else {
+            greetingLabel.setText("Same time, here?")
+            stretchingDurationLabel.setText("[Character] is too tired to find coins.")
+            rewardPointLabel.setText("You haven’t reduce your sedentary time.")
+            return
+        }
+        
         if let affirmationText = affirmationTexts.randomElement() {
             greetingLabel.setText(affirmationText)
         }
