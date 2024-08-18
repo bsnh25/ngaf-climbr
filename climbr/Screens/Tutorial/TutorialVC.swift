@@ -12,7 +12,7 @@ import Combine
 import Swinject
 
 class TutorialVC: NSViewController {
-
+    let background      = SubtractedView()
     let container       = NSView()
     let character       = NSImageView()
     let startTutorialButton = CLTextButtonV2(
@@ -51,10 +51,16 @@ class TutorialVC: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        preferredContentSize = NSSize(width: 1200, height: 840)
         
-        view.wantsLayer = true
-        view.layer?.backgroundColor = .white.copy(alpha: 0.5)
+        view.addSubview(background)
+        
+        NSLayoutConstraint.activate([
+            background.topAnchor.constraint(equalTo: view.topAnchor),
+            background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+
         
         configureChar()
         configureContainer()
