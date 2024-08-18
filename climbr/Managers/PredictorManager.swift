@@ -11,11 +11,11 @@ import Vision
 typealias stretchClassifier = ModelFixV2
 
 protocol PredictorDelegate: AnyObject {
-    func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint])
-    func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double)
+    func predictor(didFindNewRecognizedPoints points: [CGPoint])
+    func predictor(didLabelAction action: String, with confidence: Double)
 }
 
-class Predictor {
+class PredictorManager: PredictorService {
     
     weak var delegate : PredictorDelegate?
     
@@ -38,7 +38,7 @@ class Predictor {
         }
     }
     
-    func bodyPoseHandler(request: VNRequest, error: Error?){
+    private func bodyPoseHandler(request: VNRequest, error: Error?){
         guard let observations = request.results as? [VNHumanBodyPoseObservation] else {return}
         
         observations.forEach {
@@ -52,7 +52,7 @@ class Predictor {
         }
     }
     
-    func labelActionType(){
+    private func labelActionType() {
         guard let stretchingClassifier = try? stretchClassifier(configuration: MLModelConfiguration()),
             let poseMultiArray = prepareInputWithObservations(posesWindow),
             let predictions = try? stretchingClassifier.prediction(poses    : poseMultiArray)
@@ -61,10 +61,10 @@ class Predictor {
         let label = predictions.label
         let confident = predictions.labelProbabilities[label] ?? 0
         
-        delegate?.predictor(self, didLabelAction: label, with: confident)
+        delegate?.predictor(didLabelAction: label, with: confident)
     }
     
-    func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
+    private func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
         let numAvailableFrames = observations.count
         let observationNeeded = 30
         var multiArrayBuffer = [MLMultiArray]()
@@ -94,12 +94,12 @@ class Predictor {
         return MLMultiArray(concatenating: [MLMultiArray](multiArrayBuffer), axis: 0, dataType: .float )
     }
     
-    func resetMultiArray(_ predictionWindow: MLMultiArray, with value: Double = 0.0) throws{
+    private func resetMultiArray(_ predictionWindow: MLMultiArray, with value: Double = 0.0) throws{
         let pointer = try UnsafeMutableBufferPointer<Double>(predictionWindow )
         pointer.initialize(repeating: value)
     }
     
-    func storeObservation(_ observation: VNHumanBodyPoseObservation){
+    private func storeObservation(_ observation: VNHumanBodyPoseObservation){
         if posesWindow.count >= predictionWindowSize {
             posesWindow.removeFirst()
         }
@@ -107,7 +107,7 @@ class Predictor {
         posesWindow.append(observation)
     }
     
-    func processObservation(_ observation: VNHumanBodyPoseObservation){
+    private func processObservation(_ observation: VNHumanBodyPoseObservation){
         do{
             let recognizedPoints = try observation.recognizedPoints(forGroupKey: .all)
             
@@ -116,7 +116,7 @@ class Predictor {
 //                print("x: \($0.value.x), y: \(1-$0.value.y) ")
             }
             
-            delegate?.predictor(self, didFindNewRecognizedPoints: displayedPoints)
+            delegate?.predictor(didFindNewRecognizedPoints: displayedPoints)
         }catch{
             print("error finding recognized points")
         }
