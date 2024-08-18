@@ -11,6 +11,12 @@ class TypeButton: NSButton {
     var isSelected: Bool = false
     
     let stack = NSStackView()
+    let icon = CLSFSymbol()
+    
+    var currentHead : EquipmentItem?
+    var currentBack : EquipmentItem?
+    var currentHand : EquipmentItem?
+    var currentLocation : EquipmentItem?
     
     init(imageName: String, text: String){
         super.init(frame: .zero)
@@ -23,7 +29,7 @@ class TypeButton: NSButton {
     }
     
     func configure(imageName: String, text: String){
-        let icon = CLSFSymbol(symbolName: imageName, description: imageName)
+        icon.image = NSImage(systemSymbolName: imageName, accessibilityDescription: imageName)
         icon.contentTintColor = .darkGray
 
         let label = CLLabel(text: text, foregroundColor: .blue)
@@ -40,32 +46,43 @@ class TypeButton: NSButton {
         title = ""
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.lightGray.cgColor
+        layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.7)
         layer?.cornerRadius = 10
         bezelStyle = .flexiblePush
         isBordered = false
-        
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stack)
+//        
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+//        addSubview(stack)
+        addSubview(icon)
         
         NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+//            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            icon.centerXAnchor.constraint(equalTo: centerXAnchor),
+            icon.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            widthAnchor.constraint(equalToConstant: 121),
-            heightAnchor.constraint(equalToConstant: 84)
+            widthAnchor.constraint(equalToConstant: 50),
+            heightAnchor.constraint(equalToConstant: 50)
         ])
     }
-
-    override func updateLayer() {
-       super.updateLayer()
-        if isHighlighted {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
-        } else {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
-        }
-        if !isEnabled {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+    
+    func updateItemIcon(_ isActive: Bool){
+        if isActive{
+            icon.contentTintColor = .cButton
+        }else{
+            icon.contentTintColor = .darkGray
         }
     }
+
+//    override func updateLayer() {
+//       super.updateLayer()
+//        if isHighlighted {
+//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
+//        } else {
+//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
+//        }
+//        if !isEnabled {
+//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+//        }
+//    }
 }
