@@ -85,6 +85,7 @@ extension TutorialVC {
     
     func updateSelectorButton(){
         firstTutorial = false
+        background.subtract(with: .zero)
     }
 
 }
