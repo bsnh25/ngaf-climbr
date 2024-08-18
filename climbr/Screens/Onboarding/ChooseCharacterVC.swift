@@ -183,7 +183,6 @@ class ChooseCharacterVC: NSViewController {
         
         buttonStart.isEnabled = false
         
-        
         NSLayoutConstraint.activate([
             buttonStart.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 466),
             buttonStart.topAnchor.constraint(equalTo: view.topAnchor, constant: 666),
@@ -209,8 +208,14 @@ class ChooseCharacterVC: NSViewController {
         
         let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
         userService?.saveUserData(data: userData)
-        UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
+        
         pop()
+        
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
+            guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
+            push(to: tutorialVc)
+        }
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {
