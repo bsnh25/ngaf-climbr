@@ -117,7 +117,6 @@ class SettingVC: NSViewController {
         }
         lastStartValue = startTime.dateValue
         startTime.datePickerElements = [.hourMinute]
-        
         let calendar = Calendar.current
         // Set the minimum date (01:00)
         var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -144,7 +143,6 @@ class SettingVC: NSViewController {
         }
         lastStopValue = endTime.dateValue
         endTime.datePickerElements = [.hourMinute]
-        
         var minStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         minStopComponents.hour = 3
         minStopComponents.minute = 0
