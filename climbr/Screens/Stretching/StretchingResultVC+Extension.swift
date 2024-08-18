@@ -25,6 +25,7 @@ extension StretchingResultVC {
         
         if let char {
             charService?.updatePoint(character: char, points: points)
+            print("Ini point yang di dapat : \(String((charService?.getCharacterData()!.point)!))")
         }
     }
     
