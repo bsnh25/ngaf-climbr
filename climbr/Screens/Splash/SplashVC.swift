@@ -32,8 +32,10 @@ class SplashVC: NSViewController {
         view.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
         configureMountainImage()
         configureAppLogo()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.animateTransition()
+        if self.charService?.getPreferences() == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.animateTransition()
+            }
         }
         navigateToHome()
     }
