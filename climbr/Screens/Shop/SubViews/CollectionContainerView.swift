@@ -125,6 +125,7 @@ extension CollectionContainerView: gridItemSelectionProtocol {
         case .none:
             break
         }
+        currentGridItem = newSelected
         collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
     }
 }

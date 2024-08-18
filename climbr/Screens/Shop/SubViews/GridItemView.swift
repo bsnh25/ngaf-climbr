@@ -44,6 +44,7 @@ class GridItem: NSCollectionViewItem {
     var type : EquipmentType?
     var itemId: Int?
     var item: EquipmentItem?
+    var isUnlocked = true
     
     var currentHead : EquipmentItem?
     var currentBack : EquipmentItem?
@@ -95,6 +96,7 @@ class GridItem: NSCollectionViewItem {
         item = equipmentModel.item
         itemId = Int(equipmentModel.item.itemID)
         type = equipmentModel.type
+        isUnlocked = equipmentModel.isUnlocked
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
 //        print(item?.rawValue ?? "lol")
@@ -103,7 +105,6 @@ class GridItem: NSCollectionViewItem {
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
         gridDelegate?.gridItemSelectionDidChange(to: self)
-//        print("click?")
         setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
     }
     

@@ -10,7 +10,7 @@ import SnapKit
 
 class BuyButtonView: NSView {
     let itemLabel = CLLabel()
-    var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 50, weight: .medium))
+    var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
     
     var itemName : String?
     var itemPrice : Int?

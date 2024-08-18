@@ -31,10 +31,15 @@ class ShopItemVC: NSViewController {
     
     var itemType : EquipmentType = .head
     
-    var currentHead : EquipmentItem = .climberCrownHG
-    var currentBack : EquipmentItem = .cuddlyBP
-    var currentHand : EquipmentItem = .highWizardS
+    var currentHead : EquipmentItem = .emptyHG
+    var currentBack : EquipmentItem = .emptyBP
+    var currentHand : EquipmentItem = .emptyS
     var currentLocation : EquipmentItem = .jungleJumble
+    
+    var currentHeadModel : EquipmentModel = EquipmentModel(item: .emptyHG, type: .head, isUnlocked: true)
+    var currentHandModel : EquipmentModel = EquipmentModel(item: .emptyS, type: .hand, isUnlocked: true)
+    var currentBackModel : EquipmentModel = EquipmentModel(item: .emptyBP, type: .back, isUnlocked: true)
+    var currentLocationModel : EquipmentModel = EquipmentModel(item: .jungleJumble, type: .location, isUnlocked: true)
     
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
@@ -44,11 +49,14 @@ class ShopItemVC: NSViewController {
         super.viewDidLoad()
         view.wantsLayer = true
         
+        //di sini ngefetch coredata buat currentHeadModel, hand, back, sama location
+        
         collectionViewContainer.collectionDelegate = self
         collectionViewContainer.updateItems(items: headItems)
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         
         buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
+        buyButton.isHidden = currentHeadModel.isUnlocked
         
         setupSidebar()
         setupPointsLabel()
@@ -189,21 +197,25 @@ class ShopItemVC: NSViewController {
             collectionViewContainer.updateItems(items: headItems)
             points.setText("\(self.currentHead.price)")
             buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
+            buyButton.isHidden = currentHeadModel.isUnlocked
         case 1:
             itemType = .back
             collectionViewContainer.updateItems(items: backItems)
             points.setText("\(self.currentBack.price)")
             buyButton.updateItemButtonPreview(name: currentBack.name, price: currentBack.price)
+            buyButton.isHidden = currentBackModel.isUnlocked
         case 2:
             itemType = .hand
             collectionViewContainer.updateItems(items: handItems)
             points.setText("\(self.currentHand.price)")
             buyButton.updateItemButtonPreview(name: currentHand.name, price: currentHand.price)
+            buyButton.isHidden = currentHandModel.isUnlocked
         case 3:
             itemType = .location
             collectionViewContainer.updateItems(items: locationItems)
             points.setText("\(self.currentLocation.price)")
             buyButton.updateItemButtonPreview(name: currentLocation.name, price: currentLocation.price)
+            buyButton.isHidden = currentLocationModel.isUnlocked
         default:
             break
         }
@@ -216,6 +228,7 @@ extension ShopItemVC : collectionContainerProtocol {
         collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
         points.setText("\(String(describing: newSelected.item?.price))")
         buyButton.updateItemButtonPreview(name: newSelected.item!.name, price: newSelected.item!.price)
+        buyButton.isHidden = newSelected.isUnlocked
     }
     
     func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType) {
@@ -224,18 +237,27 @@ extension ShopItemVC : collectionContainerProtocol {
         switch type {
         case .head:
             currentHead = item
+            currentHeadModel.item = item
+            currentHeadModel.isUnlocked = collectionViewContainer.currentGridItem!.isUnlocked
         case .hand:
             currentHand = item
+            currentHandModel.item = item
+            currentHandModel.isUnlocked = collectionViewContainer.currentGridItem!.isUnlocked
         case .back:
             currentBack = item
+            currentBackModel.item = item
+            currentBackModel.isUnlocked = collectionViewContainer.currentGridItem!.isUnlocked
         case .location:
             currentLocation = item
+            currentLocationModel.item = item
+            currentLocationModel.isUnlocked = collectionViewContainer.currentGridItem!.isUnlocked
         }
         
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         points.setText("\(item.price)")
         buyButton.updateItemButtonPreview(name: item.name, price: item.price)
-        
+        buyButton.isHidden = collectionViewContainer.currentGridItem!.isUnlocked
+//        print(selectedGridItem?.item?.name)
         collectionViewContainer.collectionView.reloadData()
     }
 }

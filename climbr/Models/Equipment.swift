@@ -13,6 +13,7 @@ struct EquipmentModel {
     var isUnlocked: Bool
     
     static var headGears : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.emptyHG, type: EquipmentType.head, isUnlocked: true),
         EquipmentModel(item: EquipmentItem.climberCrownHG, type: EquipmentType.head, isUnlocked: false),
         EquipmentModel(item: EquipmentItem.cozyCragglerHG, type: EquipmentType.head, isUnlocked: false),
         EquipmentModel(item: EquipmentItem.festiveFollyHG, type: EquipmentType.head, isUnlocked: false),
@@ -20,6 +21,7 @@ struct EquipmentModel {
     ]
     
     static var backPacks : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.emptyBP, type: EquipmentType.back, isUnlocked: true),
         EquipmentModel(item: EquipmentItem.climbingBP, type: EquipmentType.back, isUnlocked: false),
         EquipmentModel(item: EquipmentItem.cuddlyBP, type: EquipmentType.back, isUnlocked: false),
         EquipmentModel(item: EquipmentItem.duffelBP, type: EquipmentType.back, isUnlocked: false),
@@ -27,6 +29,7 @@ struct EquipmentModel {
     ]
     
     static var hikingSticks : [EquipmentModel] = [
+        EquipmentModel(item: EquipmentItem.emptyS, type: EquipmentType.hand, isUnlocked: true),
         EquipmentModel(item: EquipmentItem.highWizardS, type: EquipmentType.hand, isUnlocked: false),
         EquipmentModel(item: EquipmentItem.iceGripS, type: EquipmentType.hand, isUnlocked: false),
         EquipmentModel(item: EquipmentItem.natureGuideS, type: EquipmentType.hand, isUnlocked: false),
@@ -52,16 +55,19 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         self
     }
     
+    case emptyHG
     case climberCrownHG
     case cozyCragglerHG
     case festiveFollyHG
     case trailbazerTamHG
     
+    case emptyBP
     case climbingBP
     case cuddlyBP
     case duffelBP
     case hikingBP
     
+    case emptyS
     case highWizardS
     case iceGripS
     case natureGuideS
@@ -100,6 +106,12 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             "Jungle Jumble"
         case .snowySummit:
             "Snowy Summit"
+        case .emptyHG:
+            ""
+        case .emptyBP:
+            ""
+        case .emptyS:
+            ""
         }
     }
     
@@ -133,6 +145,12 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             12
         case .snowySummit:
             13
+        case .emptyHG:
+            0
+        case .emptyBP:
+            0
+        case .emptyS:
+            0
         }
     }
     
@@ -166,6 +184,12 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             140
         case .snowySummit:
             150
+        case .emptyHG:
+            0
+        case .emptyBP:
+            0
+        case .emptyS:
+            0
         }
     }
     
@@ -199,6 +223,12 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             "JungleJumble"
         case .snowySummit:
             "SnowySummit"
+        case .emptyHG:
+            "EmptyHG"
+        case .emptyBP:
+            "EmptyBP"
+        case .emptyS:
+            "EmptyS"
         }
     }
     
@@ -231,6 +261,12 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         case .jungleJumble:
             ""
         case .snowySummit:
+            ""
+        case .emptyHG:
+            ""
+        case .emptyBP:
+            ""
+        case .emptyS:
             ""
         }
     }
@@ -265,6 +301,12 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             "Jungle Jumble"
         case .snowySummit:
             "Snowy Summit"
+        case .emptyHG:
+            ""
+        case .emptyBP:
+            ""
+        case .emptyS:
+            ""
         }
     }
 }
