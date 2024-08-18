@@ -55,11 +55,13 @@ class SettingVC: NSViewController {
     var isChecked: Bool = false
     var userService: UserService?
     var notifService: NotificationService?
+    var charService: CharacterService?
     
-    init(userService: UserService?, notifService: NotificationService?) {
+    init(userService: UserService?, notifService: NotificationService?, charService: CharacterService) {
         super.init(nibName: nil, bundle: nil)
         self.userService = userService
         self.notifService = notifService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -91,7 +93,7 @@ class SettingVC: NSViewController {
     }
     
     private func configureUI(){
-        let userPreferenceData = userService?.getPreferences()
+        let userPreferenceData = charService?.getPreferences()
         view.addSubview(settingText)
         view.addSubview(subTitleA)
         view.addSubview(fromText)

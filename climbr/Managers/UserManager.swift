@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class UserManager : UserService {
+class UserManager : CharacterService {
     let container : NSManagedObjectContext?
     
     init(controller: PersistenceController?){
@@ -75,40 +75,29 @@ class UserManager : UserService {
     }
 
     
-    func getUserData() -> User? {
+    func getCharacterData() -> CharacterModel? {
         guard let container = container else {return nil}
-        let request: NSFetchRequest<User> = User.fetchRequest()
-        
+        let request: NSFetchRequest<Character> = Character.fetchRequest()
         
         do {
-            return try container.fetch(request).first
+            guard let charArr = try container.fetch(request).first else {return nil}
+            return CharacterModel(
+                name: charArr.name!,
+                gender: Gender(rawValue: charArr.gender!)!,
+                point: charArr.point,
+                headEquipment: EquipmentItem(rawValue: charArr.headEquipment!)!,
+                handEquipment: EquipmentItem(rawValue: charArr.handEquipment!)!,
+                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!
+            )
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
             return nil
         }
     }
     
-    func saveUserData(data: UserModel) {
-        guard let container = container else { return }
-        
-        let newUserData = User(context: container)
-        
-        newUserData.id = data.id
-        newUserData.name = data.name
-        newUserData.point = data.point
-        
-        do {
-            try container.save()
-            print("saved")
-        } catch {
-            print("Failed to save context: \(error)")
-        }
+    
+    func updatePoint(character: CharacterModel, points: Int) {
         
     }
-    
-    func updatePoint(user: User, points: Int) {
-        
-    }
-    
-    //MARK: TODO
+
 }

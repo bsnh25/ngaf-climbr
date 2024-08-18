@@ -10,7 +10,7 @@ import Swinject
 
 
 
-class ChooseCharacterVC: NSViewController {
+class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     private let containerBig = NSView()
     private let container1 = NSView()
     private let container2 = NSView()
@@ -22,16 +22,12 @@ class ChooseCharacterVC: NSViewController {
     private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
     private var containerIsClicked: Bool = false
     
-    enum Gender{
-        case male, female
-    }
-    
     var genderChar: Gender?
-    var userService: UserService?
+    var charService: CharacterService?
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -85,7 +81,7 @@ class ChooseCharacterVC: NSViewController {
     
     private func configureTextField(){
         view.addSubview(textField)
-        //        textField.delegate = self
+        textField.delegate = self
         
         
         NSLayoutConstraint.activate([
@@ -183,7 +179,6 @@ class ChooseCharacterVC: NSViewController {
         
         buttonStart.isEnabled = false
         
-        
         NSLayoutConstraint.activate([
             buttonStart.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 466),
             buttonStart.topAnchor.constraint(equalTo: view.topAnchor, constant: 666),
@@ -196,21 +191,26 @@ class ChooseCharacterVC: NSViewController {
     @objc
     private func actButtonStart(){
         print("tapped and inputed \(textField.stringValue)")
+        var gender: Gender!
         
         if let genderChar{
-            if genderChar == Gender.female{
-                print("user choose female")
-            }else if genderChar == Gender.male{
-                print("user choose male")
-            }
+            gender = genderChar
         }else {
             print("user not choose character")
         }
         
-        let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
-        userService?.saveUserData(data: userData)
-        UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)
+        print("gender pal user is : \(String(describing: gender))")
+        
+        let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
+        charService?.saveCharacterData(data: userData)
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
+        
         pop()
+        
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
+            guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
+            push(to: tutorialVc)
+        }
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {
@@ -248,6 +248,26 @@ class ChooseCharacterVC: NSViewController {
         container2.layer?.borderWidth = 0
     }
     
+    
+    func controlTextDidChange(_ obj: Notification) {
+        if let textField = obj.object as? NSTextField {
+            performActionBasedOnText(textField.stringValue)
+        }
+    }
+    
+    
+    private func performActionBasedOnText(_ text: String) {
+        if validateText(text) {
+            validateUserInput()
+        } else {
+            validateUserInput()
+        }
+    }
+    
+  
+    private func validateText(_ text: String) -> Bool {
+        return !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
 }
 
 //#Preview(traits: .defaultLayout, body: {

@@ -21,6 +21,7 @@ extension HomeVC {
     
     @objc
     func actionStartSession(){
+        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         if let vc = Container.shared.resolve(StretchingVC.self) {
             push(to: vc)
             print("go to stretching session")

@@ -42,7 +42,7 @@ extension UserPreferenceVC{
         ///get checkbox value
         let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
         
-        userService?.savePreferences(data: userPreferenceData)
+        charService?.savePreferences(data: userPreferenceData)
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
         replace(with: homeVc)
         guard let notif = Container.shared.resolve(NotificationService.self) else {return}
