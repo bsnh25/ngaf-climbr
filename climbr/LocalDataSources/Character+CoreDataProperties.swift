@@ -22,6 +22,7 @@ extension Character {
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var point: Int64
+    @NSManaged public var gender: String?
 
 }
 

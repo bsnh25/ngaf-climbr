@@ -40,7 +40,7 @@ class StretchingResultVC: NSViewController {
     )
     
     let padding: CGFloat        = 64
-    var char: Character?
+    var char: CharacterModel?
     
     var movementList: [Movement] = []
     

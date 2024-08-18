@@ -50,20 +50,27 @@ class UserManager : CharacterService {
         
     }
     
-    func getCharacterData() -> Character? {
+    func getCharacterData() -> CharacterModel? {
         guard let container = container else {return nil}
         let request: NSFetchRequest<Character> = Character.fetchRequest()
         
-        
         do {
-            return try container.fetch(request).first
+            guard let charArr = try container.fetch(request).first else {return nil}
+            return CharacterModel(
+                name: charArr.name!,
+                gender: Gender(rawValue: charArr.gender!)!,
+                point: charArr.point,
+                headEquipment: EquipmentItem(rawValue: charArr.headEquipment!)!,
+                handEquipment: EquipmentItem(rawValue: charArr.handEquipment!)!,
+                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!
+            )
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
             return nil
         }
     }
     
-    func saveCharacterData(data: UserModel) {
+    func saveCharacterData(data: CharacterModel) {
         guard let container = container else { return }
         
         let newUserData = Character(context: container)
@@ -71,6 +78,10 @@ class UserManager : CharacterService {
         newUserData.id = data.id
         newUserData.name = data.name
         newUserData.point = data.point
+        newUserData.gender = data.gender.rawValue
+        newUserData.headEquipment = data.headEquipment.rawValue
+        newUserData.handEquipment = data.handEquipment.rawValue
+        newUserData.backEquipment = data.backEquipment.rawValue
         
         do {
             try container.save()
@@ -81,9 +92,8 @@ class UserManager : CharacterService {
         
     }
     
-    func updatePoint(character: Character, points: Int) {
+    func updatePoint(character: CharacterModel, points: Int) {
         
     }
-    
-    //MARK: TODO
+
 }
