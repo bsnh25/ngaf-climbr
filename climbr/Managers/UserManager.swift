@@ -95,6 +95,28 @@ class UserManager : CharacterService {
         }
     }
     
+    func saveCharacterData(data: CharacterModel) {
+            guard let container = container else { return }
+            
+            let newUserData = Character(context: container)
+            
+            newUserData.id = data.id
+            newUserData.name = data.name
+            newUserData.point = data.point
+            newUserData.gender = data.gender.rawValue
+            newUserData.headEquipment = data.headEquipment.rawValue
+            newUserData.handEquipment = data.handEquipment.rawValue
+            newUserData.backEquipment = data.backEquipment.rawValue
+            
+            do {
+                try container.save()
+                print("saved")
+            } catch {
+                print("Failed to save context: \(error)")
+            }
+            
+        }
+    
     
     func updatePoint(character: CharacterModel, points: Int) {
         

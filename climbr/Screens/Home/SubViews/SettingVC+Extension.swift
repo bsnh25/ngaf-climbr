@@ -76,8 +76,8 @@ extension SettingVC {
         print("\(endTime.dateValue)")
         ///get checkbox value
         
-        guard let user = userService else {return}
-        user.updatePreferences(data: updateData)
+        guard let char = charService else {return}
+        char.updatePreferences(data: updateData)
         guard let notif = notifService else {return}
         notif.sendNotification(title: "title coba", body: "body coba", reminder: updateData)
         

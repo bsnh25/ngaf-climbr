@@ -13,9 +13,9 @@ class SplashVC: NSViewController {
     let appLogoView = NSImageView()
     var charService: CharacterService?
     
-    init(userService: CharacterService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.charService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
