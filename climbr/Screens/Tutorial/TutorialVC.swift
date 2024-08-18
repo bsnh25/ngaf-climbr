@@ -120,7 +120,7 @@ class TutorialVC: NSViewController {
         startTutorialButton.target = self
         skipTutorialButton.target = self
         
-        let padding = view.bounds.width * 0.02
+        let padding = view.bounds.width * 0.05
         let height = view.bounds.height * 0.1
         let width = view.bounds.width * 0.4
         
