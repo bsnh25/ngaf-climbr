@@ -8,22 +8,27 @@
 import AppKit
 
 fileprivate var overlayView: CustomOverlayView!
+fileprivate var addBlockerView: Bool = true
 
 extension NSViewController {
     func addSubViewController(_ vc: NSViewController, to view: NSView) {
         addChild(vc)
         
-        overlayView = CustomOverlayView(frame: view.bounds)
-        overlayView.wantsLayer = true
-        overlayView.layer?.backgroundColor = .clear
-        overlayView.autoresizingMask = [.width, .height]
-        
         view.addSubview(vc.view)
         vc.view.frame = view.bounds
-        vc.view.addSubview(overlayView, positioned: .below, relativeTo: nil)
+        
+        if addBlockerView {
+            overlayView = CustomOverlayView(frame: view.bounds)
+            overlayView.wantsLayer = true
+            overlayView.layer?.backgroundColor = .clear
+            overlayView.autoresizingMask = [.width, .height]
+            vc.view.addSubview(overlayView, positioned: .below, relativeTo: nil)
+        }
     }
     
-    func push(to vc: NSViewController) {
+    func push(to vc: NSViewController, disablePreviousInteraction: Bool = true) {
+        
+        addBlockerView = disablePreviousInteraction
         
         if let contentVC = self.view.window?.contentViewController {
             print("NAV - Before Push: ", contentVC.children)
@@ -65,7 +70,9 @@ extension NSViewController {
                 currentVC.view.removeFromSuperview()
                 
                 // Remove overlay from superview
-                overlayView.removeFromSuperview()
+                if addBlockerView {
+                    overlayView.removeFromSuperview()
+                }
                 
                 print("NAV - After Pop: ", contentVC.children)
             }
