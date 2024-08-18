@@ -8,6 +8,8 @@
 import Cocoa
 
 class ShopItemVC: NSViewController {
+    var character : CharacterService?
+    var equipment : EquipmentService?
     
     let pointsLabel = NSTextField(labelWithString: "100")
     let collectionViewContainer = CollectionContainerView()
@@ -24,10 +26,10 @@ class ShopItemVC: NSViewController {
         ("map.fill", "Location")
     ]
     
-    let headItems: [EquipmentModel] = EquipmentModel.headGears
-    let handItems: [EquipmentModel] = EquipmentModel.hikingSticks
-    let backItems: [EquipmentModel] = EquipmentModel.backPacks
-    let locationItems: [EquipmentModel] = EquipmentModel.locations
+    var headItems: [EquipmentModel] = EquipmentModel.headGears
+    var handItems: [EquipmentModel] = EquipmentModel.hikingSticks
+    var backItems: [EquipmentModel] = EquipmentModel.backPacks
+    var locationItems: [EquipmentModel] = EquipmentModel.locations
     
     var itemType : EquipmentType = .head
     
@@ -44,12 +46,39 @@ class ShopItemVC: NSViewController {
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
     var selectedItem : EquipmentItem?
-        
+    
+    init(character: CharacterService?, equipment : EquipmentService?){
+        super.init(nibName: nil, bundle: nil)
+        self.character = character
+        self.equipment = equipment
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         
         //di sini ngefetch coredata buat currentHeadModel, hand, back, sama location
+//        if let heads = equipment?.getEquipments(equipmentType: .head) {
+//            print("berhasil fetch head")
+//            headItems = heads
+//        }
+//        if let backs = equipment?.getEquipments(equipmentType: .back) {
+//            print("berhasil fetch back")
+//            backItems = backs
+//        }
+//        if let hands = equipment?.getEquipments(equipmentType: .hand) {
+//            print("berhasil fetch hand")
+//            handItems = hands
+//        }
+//        if let locations = equipment?.getEquipments(equipmentType: .location) {
+//            print("berhasil fetch locs")
+//            locationItems = locations
+//        }
+        
         
         collectionViewContainer.collectionDelegate = self
         collectionViewContainer.updateItems(items: headItems)
