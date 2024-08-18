@@ -10,8 +10,12 @@ import Swinject
 
 class SplashVC: NSViewController {
     
-    let appLogoView = NSImageView()
+    let appLogoView = NSImageView(image: .appLogoWhite)
+    let mountainImage = NSImageView(image: .onboardingmountain)
     var charService: CharacterService?
+    var mountainImageTopConstraint: NSLayoutConstraint!
+    var mountainImageCenterYConstraint: NSLayoutConstraint!
+    var appLogoCenterYConstraint: NSLayoutConstraint!
     
     init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
@@ -25,22 +29,57 @@ class SplashVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
-        view.layer?.backgroundColor = .white
+        view.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
+        configureMountainImage()
         configureAppLogo()
+        if self.charService?.getPreferences() == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.animateTransition()
+            }
+        }
         navigateToHome()
+    }
+    
+    private func configureMountainImage() {
+        view.addSubview(mountainImage)
+        mountainImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Initial constraints
+        mountainImageTopConstraint = mountainImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 550)
+        mountainImageCenterYConstraint = mountainImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 700)
+        
+        NSLayoutConstraint.activate([
+            mountainImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75),
+            mountainImageCenterYConstraint
+        ])
     }
     
     private func configureAppLogo() {
         view.addSubview(appLogoView)
-        appLogoView.image   = NSImage.appLogo
         appLogoView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Initial constraints
+        appLogoCenterYConstraint = appLogoView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         
         NSLayoutConstraint.activate([
             appLogoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            appLogoView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            appLogoCenterYConstraint,
             appLogoView.widthAnchor.constraint(equalToConstant: 238)
         ])
     }
+    
+    private func animateTransition() {
+            // Animate the layout change
+        NSAnimationContext.runAnimationGroup { context in
+                    context.duration = 2.0
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                    
+                    self.mountainImageCenterYConstraint.animator().constant = 0
+                    self.appLogoCenterYConstraint.animator().constant = -115
+                    
+                    self.view.animator().layoutSubtreeIfNeeded()
+                }
+        }
     
     private func navigateToHome() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
