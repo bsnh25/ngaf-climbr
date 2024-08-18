@@ -10,7 +10,7 @@ import Swinject
 
 class SplashVC: NSViewController {
     
-    let appLogoView = NSImageView(image: .appLogo)
+    let appLogoView = NSImageView(image: .appLogoWhite)
     let mountainImage = NSImageView(image: .onboardingmountain)
     var charService: CharacterService?
     var mountainImageTopConstraint: NSLayoutConstraint!
