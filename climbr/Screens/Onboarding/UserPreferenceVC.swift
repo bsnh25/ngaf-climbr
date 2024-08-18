@@ -14,7 +14,7 @@ class UserPreferenceVC: NSViewController {
     
     let bgContainer = NSView()
     let pathImage = NSImageView(image: .onboardingmountain)
-    let appLogoImage = NSImageView(image: NSImage(resource: .appLogo))
+    let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
     let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your work hours")
     let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
     let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .black, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
@@ -183,6 +183,23 @@ class UserPreferenceVC: NSViewController {
         lastStartValue = startWorkHour.dateValue
         startWorkHour.datePickerElements = [.hourMinute]
         startWorkHour.textColor = .white
+        
+        // Set the minimum date (01:00)
+        var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        minComponents.hour = 1
+        minComponents.minute = 0
+        if let minDate = calendar.date(from: minComponents) {
+            startWorkHour.minDate = minDate
+        }
+        
+        // Set the maximum date (21:00)
+        var maxComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        maxComponents.hour = 21
+        maxComponents.minute = 0
+        if let maxDate = calendar.date(from: maxComponents) {
+            startWorkHour.maxDate = maxDate
+        }
+        
         startWorkHour.target = self
         startWorkHour.action = #selector(startWorkHourChanged)
         
@@ -214,6 +231,22 @@ class UserPreferenceVC: NSViewController {
         lastStopValue = stopWorkHour.dateValue
         stopWorkHour.datePickerElements = [.hourMinute]
         stopWorkHour.textColor = .white
+        let calendar1 = Calendar.current
+        
+        var minStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
+        minStopComponents.hour = 3
+        minStopComponents.minute = 0
+        if let minStopDate = calendar1.date(from: minStopComponents) {
+            stopWorkHour.minDate = minStopDate
+        }
+        
+        var maxStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
+        maxStopComponents.hour = 23
+        maxStopComponents.minute = 0
+        if let maxStopDate = calendar1.date(from: maxStopComponents) {
+            stopWorkHour.maxDate = maxStopDate
+        }
+        
         stopWorkHour.target = self
         stopWorkHour.action = #selector(stopWorkHourChanged)
         
