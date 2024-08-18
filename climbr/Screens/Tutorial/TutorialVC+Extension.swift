@@ -45,10 +45,6 @@ extension TutorialVC {
         tutorialLabel.stringValue = "Everyday, we need to meet a goal of a minimum of four stretching sessions, as per recommended by WHO. Let’s give it a go! Click start session to begin."
         print("title skip : \(skipTutorialButton.title)")
         
-        
-        /// Subtract the background to highlight the progress view container
-        let padding = view.bounds.width * 0.05
-        
         let height: CGFloat = 150
         let width: CGFloat = 450
         background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))

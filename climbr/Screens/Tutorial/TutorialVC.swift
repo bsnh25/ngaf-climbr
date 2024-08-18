@@ -33,7 +33,7 @@ class TutorialVC: NSViewController {
     var bags: Set<AnyCancellable> = []
     var userService: UserService?
     
-    @Published var firstTutorial: Bool = true {
+    var firstTutorial: Bool = true {
         didSet {
             selectorButton()
         }
