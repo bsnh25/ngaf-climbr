@@ -13,7 +13,7 @@ import Swinject
 class UserPreferenceVC: NSViewController {
     
     let bgContainer = NSView()
-    let pathImage = NSImageView(image: NSImage(resource: .mountainPath))
+    let pathImage = NSImageView(image: .onboardingmountain)
     let appLogoImage = NSImageView(image: NSImage(resource: .appLogo))
     let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your work hours")
     let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
@@ -100,10 +100,8 @@ class UserPreferenceVC: NSViewController {
         pathImage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pathImage.topAnchor.constraint(equalTo: view.topAnchor),
-            pathImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            pathImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pathImage.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -50),
+            pathImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
@@ -123,6 +121,7 @@ class UserPreferenceVC: NSViewController {
     func configureWorkHoursLabel(){
         view.addSubview(workHoursLabel)
         workHoursLabel.translatesAutoresizingMaskIntoConstraints = false
+        workHoursLabel.textColor = .white
         
         NSLayoutConstraint.activate([
             workHoursLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
@@ -134,6 +133,7 @@ class UserPreferenceVC: NSViewController {
     func configureReminderLabel(){
         view.addSubview(reminderLabel)
         reminderLabel.translatesAutoresizingMaskIntoConstraints = false
+        reminderLabel.textColor = .white
         
         NSLayoutConstraint.activate([
             reminderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
@@ -160,6 +160,7 @@ class UserPreferenceVC: NSViewController {
     func configureTextLine1(){
         view.addSubview(text1Line1)
         text1Line1.translatesAutoresizingMaskIntoConstraints = false
+        text1Line1.textColor = .white
         
         NSLayoutConstraint.activate([
             text1Line1.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -169,6 +170,8 @@ class UserPreferenceVC: NSViewController {
     
     func configureStartWorkHour() {
         view.addSubview(startWorkHour)
+        startWorkHour.wantsLayer = true
+        startWorkHour.layer?.backgroundColor = .clear
         
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -180,11 +183,12 @@ class UserPreferenceVC: NSViewController {
         }
         lastStartValue = startWorkHour.dateValue
         startWorkHour.datePickerElements = [.hourMinute]
+        startWorkHour.textColor = .white
         startWorkHour.target = self
         startWorkHour.action = #selector(startWorkHourChanged)
         
         NSLayoutConstraint.activate([
-            startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
+            startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 15),
             startWorkHour.leadingAnchor.constraint(equalTo: text1Line1.trailingAnchor, constant: 25),
             startWorkHour.widthAnchor.constraint(equalToConstant: 65),
             startWorkHour.heightAnchor.constraint(equalToConstant: 36)
@@ -196,6 +200,7 @@ class UserPreferenceVC: NSViewController {
     func configureText2Line1(){
         view.addSubview(text2Line1)
         text2Line1.translatesAutoresizingMaskIntoConstraints = false
+        text2Line1.textColor = .white
         
         NSLayoutConstraint.activate([
             text2Line1.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -205,14 +210,18 @@ class UserPreferenceVC: NSViewController {
     
     func configureStopWorkHour() {
         view.addSubview(stopWorkHour)
+        stopWorkHour.wantsLayer = true
+        stopWorkHour.layer?.backgroundColor = .clear
         lastStopValue = stopWorkHour.dateValue
         stopWorkHour.datePickerElements = [.hourMinute]
+        stopWorkHour.textColor = .white
         stopWorkHour.target = self
         stopWorkHour.action = #selector(stopWorkHourChanged)
         
         
+        
         NSLayoutConstraint.activate([
-            stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
+            stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 15),
             stopWorkHour.leadingAnchor.constraint(equalTo: text2Line1.trailingAnchor, constant: 25),
             stopWorkHour.widthAnchor.constraint(equalToConstant: 65),
             stopWorkHour.heightAnchor.constraint(equalToConstant: 36)
@@ -224,6 +233,7 @@ class UserPreferenceVC: NSViewController {
     func configureText1Line2(){
         view.addSubview(text1Line2)
         text1Line2.translatesAutoresizingMaskIntoConstraints = false
+        text1Line2.textColor = .white
         
         NSLayoutConstraint.activate([
             text1Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
@@ -286,6 +296,7 @@ class UserPreferenceVC: NSViewController {
     func configureText2Line2(){
         view.addSubview(text2Line2)
         text2Line2.translatesAutoresizingMaskIntoConstraints = false
+        text2Line2.textColor = .white
         
         NSLayoutConstraint.activate([
             text2Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
@@ -297,8 +308,19 @@ class UserPreferenceVC: NSViewController {
     func configureCheckBox(){
         view.addSubview(checkboxButton)
         checkboxButton.translatesAutoresizingMaskIntoConstraints = false
-        checkboxButton.font = NSFont.systemFont(ofSize: 22, weight: .bold)
-        checkboxButton.contentTintColor = .black
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 22, weight: .bold),
+            .foregroundColor: NSColor.cContainerHome
+        ]
+        
+        // Apply the attributed title
+        checkboxButton.attributedTitle = NSAttributedString(string: checkboxButton.title, attributes: attributes)
+        
+        // Set the content tint color (optional, depending on what you want to achieve)
+        checkboxButton.contentTintColor = .white
+        
+        // Set the target and action
         checkboxButton.target = self
         checkboxButton.action = #selector(actionCheckbox)
         
