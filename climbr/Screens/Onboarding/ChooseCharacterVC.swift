@@ -207,7 +207,7 @@ class ChooseCharacterVC: NSViewController {
         }
         
         let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
-        charService?.saveUserData(data: userData)
+        charService?.saveCharacterData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
         
         pop()

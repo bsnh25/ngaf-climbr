@@ -11,6 +11,6 @@ protocol CharacterService {
     func getPreferences() -> UserPreferences?
     func savePreferences(data: UserPreferenceModel)
     func getCharacterData() -> Character?
-    func saveUserData(data: UserModel)
+    func saveCharacterData(data: UserModel)
     func updatePoint(character: Character, points: Int)
 }

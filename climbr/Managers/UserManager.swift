@@ -63,7 +63,7 @@ class UserManager : CharacterService {
         }
     }
     
-    func saveUserData(data: UserModel) {
+    func saveCharacterData(data: UserModel) {
         guard let container = container else { return }
         
         let newUserData = Character(context: container)
