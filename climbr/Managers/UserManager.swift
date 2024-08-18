@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class UserManager : UserService {
+class UserManager : CharacterService {
     let container : NSManagedObjectContext?
     
     init(controller: PersistenceController?){
@@ -50,9 +50,9 @@ class UserManager : UserService {
         
     }
     
-    func getUserData() -> User? {
+    func getCharacterData() -> Character? {
         guard let container = container else {return nil}
-        let request: NSFetchRequest<User> = User.fetchRequest()
+        let request: NSFetchRequest<Character> = Character.fetchRequest()
         
         
         do {
@@ -66,7 +66,7 @@ class UserManager : UserService {
     func saveUserData(data: UserModel) {
         guard let container = container else { return }
         
-        let newUserData = User(context: container)
+        let newUserData = Character(context: container)
         
         newUserData.id = data.id
         newUserData.name = data.name
@@ -81,7 +81,7 @@ class UserManager : UserService {
         
     }
     
-    func updatePoint(user: User, points: Int) {
+    func updatePoint(character: Character, points: Int) {
         
     }
     

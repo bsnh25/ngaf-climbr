@@ -50,7 +50,7 @@ class HomeVC: NSViewController {
     let stack = NSStackView()
     
     var audioService: AudioService?
-    var userService: UserService?
+    var charService: CharacterService?
     var equipmentService: EquipmentService?
     var isSoundTapped: Bool = false
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
@@ -60,10 +60,10 @@ class HomeVC: NSViewController {
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
     
-    init(audioService: AudioService?, userService: UserService?, equipmentService: EquipmentService?) {
+    init(audioService: AudioService?, charService: CharacterService?, equipmentService: EquipmentService?) {
         super.init(nibName: nil, bundle: nil)
         self.audioService = audioService
-        self.userService = userService
+        self.charService = charService
         self.equipmentService = equipmentService
     }
     
@@ -94,7 +94,7 @@ class HomeVC: NSViewController {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
         observeTimer()
         
-        if userService?.getUserData() == nil {
+        if charService?.getCharacterData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
             

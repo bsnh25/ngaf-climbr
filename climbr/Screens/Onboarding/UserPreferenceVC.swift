@@ -33,13 +33,13 @@ class UserPreferenceVC: NSViewController {
     var lastStopValue: Date!
     var isChecked: Bool = false
     var intervalReminder: Int64 = 0
-    var userService: UserService?
+    var charService: CharacterService?
     var notifService: NotificationService?
     
     
-    init(userService: UserService?, notifService: NotificationService?) {
+    init(charService: CharacterService?, notifService: NotificationService?) {
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
         self.notifService = notifService
     }
     

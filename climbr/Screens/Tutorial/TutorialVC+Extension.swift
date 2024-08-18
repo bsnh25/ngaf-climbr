@@ -79,7 +79,7 @@ extension TutorialVC {
     }
     
     func setCharName(){
-        let getUser = userService?.getUserData()
+        let getUser = charService?.getCharacterData()
         charLabel.stringValue = "\(getUser?.name ?? "John Doe")"
     }
     

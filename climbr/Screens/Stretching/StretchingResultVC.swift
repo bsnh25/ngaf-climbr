@@ -40,18 +40,18 @@ class StretchingResultVC: NSViewController {
     )
     
     let padding: CGFloat        = 64
-    var user: User?
+    var char: Character?
     
     var movementList: [Movement] = []
     
     /// Dependencies
-    var userService: UserService?
+    var charService: CharacterService?
     
     
-    init(userService: UserService?) {
+    init(charService: CharacterService?) {
         super.init(nibName: nil, bundle: nil)
         
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {

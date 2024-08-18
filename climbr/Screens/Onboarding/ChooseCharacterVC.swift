@@ -27,11 +27,11 @@ class ChooseCharacterVC: NSViewController {
     }
     
     var genderChar: Gender?
-    var userService: UserService?
+    var charService: CharacterService?
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -207,7 +207,7 @@ class ChooseCharacterVC: NSViewController {
         }
         
         let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
-        userService?.saveUserData(data: userData)
+        charService?.saveUserData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
         
         pop()

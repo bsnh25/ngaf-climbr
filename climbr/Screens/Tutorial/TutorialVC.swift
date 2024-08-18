@@ -31,7 +31,7 @@ class TutorialVC: NSViewController {
     var charLabel       = CLLabel(fontSize: 28, fontWeight: .bold)
     var tutorialLabel   = CLLabel(fontSize: 24, fontWeight: .bold)
     var bags: Set<AnyCancellable> = []
-    var userService: UserService?
+    var charService: CharacterService?
     
     var firstTutorial: Bool = true {
         didSet {
@@ -39,9 +39,9 @@ class TutorialVC: NSViewController {
         }
     }
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -150,7 +150,6 @@ class TutorialVC: NSViewController {
         tutorialLabel.backgroundColor = .clear
         
         let padding = view.bounds.width * 0.04
-        let width = view.bounds.width * 1
         
         charLabel.snp.makeConstraints { title in
             title.top.equalTo(container.snp.top).inset(padding)

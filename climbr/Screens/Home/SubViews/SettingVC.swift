@@ -53,11 +53,11 @@ class SettingVC: NSViewController {
     var lastStartValue: Date!
     var lastStopValue: Date!
     var isChecked: Bool = false
-    var userService: UserService?
+    var charService: CharacterService?
     
-    init(userService: UserService?) {
+    init(charService: CharacterService?) {
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -89,7 +89,7 @@ class SettingVC: NSViewController {
     }
     
     private func configureUI(){
-        let userPreferenceData = userService?.getPreferences()
+        let userPreferenceData = charService?.getPreferences()
         view.addSubview(settingText)
         view.addSubview(subTitleA)
         view.addSubview(fromText)
