@@ -53,10 +53,12 @@ class SettingVC: NSViewController {
     var lastStartValue: Date!
     var lastStopValue: Date!
     var isChecked: Bool = false
+    var notifService: NotificationService?
     var charService: CharacterService?
     
-    init(charService: CharacterService?) {
+    init(notifService: NotificationService?, charService: CharacterService?) {
         super.init(nibName: nil, bundle: nil)
+        self.notifService = notifService
         self.charService = charService
     }
     
@@ -165,10 +167,15 @@ class SettingVC: NSViewController {
         if let launchAtLogin = userPreferenceData?.launchAtLogin{
             if launchAtLogin{
                 checkboxButton.state = .on
+                isChecked = true
             } else{
                 checkboxButton.state = .off
+                isChecked = false
             }
         }
+        
+        checkboxButton.target = self
+        checkboxButton.action = #selector(actionCheckbox)
         
         
         saveButton.target = self

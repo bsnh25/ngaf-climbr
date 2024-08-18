@@ -318,8 +318,11 @@ class UserPreferenceVC: NSViewController {
         
         // Set the content tint color (optional, depending on what you want to achieve)
         checkboxButton.contentTintColor = .white
-        
-        // Set the target and action
+        if isChecked{
+            checkboxButton.state = .on
+        } else {
+            checkboxButton.state = .off
+        }
         checkboxButton.target = self
         checkboxButton.action = #selector(actionCheckbox)
         
