@@ -11,6 +11,7 @@ class CurrentMovementView: NSStackView {
     
     let movementLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
     let movementPreview         = NSView()
+    let imageView               = NSImageView()
     let durationContainerView   = NSStackView()
     let durationImageView       = CLSFSymbol(symbolName: "timer", description: "Duration")
     let durationLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
@@ -28,6 +29,7 @@ class CurrentMovementView: NSStackView {
         orientation       = .vertical
         spacing           = 16
         alignment         = .leading
+        clipsToBounds = true
         
         let views = [movementLabel, movementPreview, durationContainerView]
         setViews(views, in: .center)
@@ -44,6 +46,8 @@ class CurrentMovementView: NSStackView {
     func updateData(_ data: Movement) {
         movementLabel.setText(data.name.rawValue)
         durationLabel.setText("\(String(format: "%.f", data.duration)) seconds")
+        imageView.image   = data.thumbnail
+        imageView.image?.size           = NSSize(width: 328, height: 200)
     }
     
     func setDuration(_ time: Double) {
@@ -79,11 +83,23 @@ class CurrentMovementView: NSStackView {
         movementPreview.wantsLayer                = true
         movementPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor.copy(alpha: 0.5)
         movementPreview.layer?.cornerRadius       = 10
+        movementPreview.clipsToBounds             = true
+        
+        imageView.imageAlignment        = .alignCenter
+        imageView.imageScaling          = .scaleProportionallyUpOrDown
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        movementPreview.addSubview(imageView)
         
         NSLayoutConstraint.activate([
             movementPreview.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
             movementPreview.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
-            movementPreview.heightAnchor.constraint(equalToConstant: 200)
+            movementPreview.widthAnchor.constraint(equalTo: movementPreview.widthAnchor),
+            movementPreview.heightAnchor.constraint(equalToConstant: 200),
+            
+            imageView.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
+            imageView.heightAnchor.constraint(equalTo: movementPreview.heightAnchor),
         ])
     }
     
