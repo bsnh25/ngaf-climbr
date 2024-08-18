@@ -6,6 +6,8 @@
 //
 
 import Cocoa
+import AppKit
+import SnapKit
 
 class ShopItemVC: NSViewController {
     var character : CharacterService?
@@ -18,6 +20,7 @@ class ShopItemVC: NSViewController {
     let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     let buyButton = BuyButtonView()
+    
     
     let sidebarItems: [(imageName: String, text: String)] = [
         ("person.fill", "Headgear"),
@@ -46,6 +49,13 @@ class ShopItemVC: NSViewController {
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
     var selectedItem : EquipmentItem?
+    
+    let backButton = CLImageButton(
+        imageName: "arrowshape.backward",
+        accesibilityName: "back home",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
     
     init(character: CharacterService?, equipment : EquipmentService?){
         super.init(nibName: nil, bundle: nil)
@@ -87,11 +97,14 @@ class ShopItemVC: NSViewController {
         buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
         buyButton.isHidden = currentHeadModel.isUnlocked
         
+        view.layer?.backgroundColor = NSColor.blue.cgColor
+        
         setupSidebar()
         setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
         setupBuyButton()
+        setupBackButton()
         
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
             updateGridItemsWithSelectedItem()
@@ -166,6 +179,27 @@ class ShopItemVC: NSViewController {
             collectionViewContainer.widthAnchor.constraint(equalToConstant: 350),
             collectionViewContainer.heightAnchor.constraint(equalToConstant: 700)
         ])
+    }
+    
+    func setupBackButton(){
+        view.addSubview(backButton)
+
+        backButton.action = #selector(backToMenu)
+        backButton.target = self
+        
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            backButton.heightAnchor.constraint(equalToConstant: 45),
+            backButton.widthAnchor.constraint(equalToConstant: 45)
+        ])
+//        backButton.snp.makeConstraints { make in
+//            make.leading.equalToSuperview().offset(50)
+//            make.top.equalToSuperview().offset(50)
+//            make.height.width.equalTo(38)
+//        }
     }
     
     func setupPointsLabel() {
@@ -250,6 +284,10 @@ class ShopItemVC: NSViewController {
         default:
             break
         }
+    }
+    
+    @objc func backToMenu(){
+        pop()
     }
 }
 
