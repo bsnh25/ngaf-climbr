@@ -231,20 +231,20 @@ class UserPreferenceVC: NSViewController {
         lastStopValue = stopWorkHour.dateValue
         stopWorkHour.datePickerElements = [.hourMinute]
         stopWorkHour.textColor = .white
-        let calendar = Calendar.current
+        let calendar1 = Calendar.current
         
-        var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-        minComponents.hour = 2
-        minComponents.minute = 0
-        if let minDate = calendar.date(from: minComponents) {
-            stopWorkHour.minDate = minDate
+        var minStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
+        minStopComponents.hour = 3
+        minStopComponents.minute = 0
+        if let minStopDate = calendar1.date(from: minStopComponents) {
+            stopWorkHour.minDate = minStopDate
         }
         
-        var maxComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-        maxComponents.hour = 23
-        maxComponents.minute = 0
-        if let maxDate = calendar.date(from: maxComponents) {
-            stopWorkHour.maxDate = maxDate
+        var maxStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
+        maxStopComponents.hour = 23
+        maxStopComponents.minute = 0
+        if let maxStopDate = calendar1.date(from: maxStopComponents) {
+            stopWorkHour.maxDate = maxStopDate
         }
         
         stopWorkHour.target = self

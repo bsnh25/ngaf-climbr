@@ -146,16 +146,17 @@ class SettingVC: NSViewController {
         endTime.datePickerElements = [.hourMinute]
         
         var minStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-        minStopComponents.hour = 2
+        minStopComponents.hour = 3
         minStopComponents.minute = 0
-        if let minStopDate = calendar.date(from: minComponents) {
+        if let minStopDate = calendar.date(from: minStopComponents) {
             endTime.minDate = minStopDate
         }
         
         var maxStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         maxStopComponents.hour = 23
         maxStopComponents.minute = 0
-        if let maxStopDate = calendar.date(from: maxComponents) {
+        
+        if let maxStopDate = calendar.date(from: maxStopComponents) {
             endTime.maxDate = maxStopDate
         }
         endTime.target = self
