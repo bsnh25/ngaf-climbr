@@ -40,6 +40,7 @@ class StretchingResultVC: NSViewController {
     )
     
     let padding: CGFloat        = 64
+    var user: User?
     
     var movementList: [Movement] = []
     
@@ -69,6 +70,10 @@ class StretchingResultVC: NSViewController {
         
         self.calculatePoints()
         self.calculateDurations()
+    }
+    
+    override func viewWillAppear() {
+        self.getUserData()
     }
     
     private func configureVC() {
