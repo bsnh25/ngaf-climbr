@@ -56,7 +56,8 @@ extension Container {
         
         container.register(SettingVC.self) { resolver in
             let user = resolver.resolve(UserService.self)
-            return SettingVC(userService: user)
+            let notif = resolver.resolve(NotificationService.self)
+            return SettingVC(userService: user, notifService: notif)
         }
         
         container.register(ShopItemVC.self) { resolver in

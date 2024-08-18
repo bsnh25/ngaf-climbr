@@ -54,10 +54,12 @@ class SettingVC: NSViewController {
     var lastStopValue: Date!
     var isChecked: Bool = false
     var userService: UserService?
+    var notifService: NotificationService?
     
-    init(userService: UserService?) {
+    init(userService: UserService?, notifService: NotificationService?) {
         super.init(nibName: nil, bundle: nil)
         self.userService = userService
+        self.notifService = notifService
     }
     
     required init?(coder: NSCoder) {
