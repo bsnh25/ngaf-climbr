@@ -46,7 +46,9 @@ extension UserPreferenceVC{
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
         replace(with: homeVc)
         guard let notif = Container.shared.resolve(NotificationService.self) else {return}
-        notif.sendNotification(title: "Title Coba", body: "Body Coba", reminder: userPreferenceData)
+
+        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
+
     }
     
     @objc
