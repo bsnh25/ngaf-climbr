@@ -83,7 +83,7 @@ class UserPreferenceVC: NSViewController {
     func configureBgContainer(){
         view.addSubview(bgContainer)
         bgContainer.wantsLayer = true
-        bgContainer.layer?.backgroundColor = NSColor.white.cgColor
+        bgContainer.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
         bgContainer.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -100,7 +100,7 @@ class UserPreferenceVC: NSViewController {
         pathImage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -50),
+            pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75),
             pathImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
@@ -110,8 +110,7 @@ class UserPreferenceVC: NSViewController {
         appLogoImage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            appLogoImage.widthAnchor.constraint(equalToConstant: 252),
-            appLogoImage.heightAnchor.constraint(equalToConstant: 78.57),
+            appLogoImage.widthAnchor.constraint(equalToConstant: 238),
             appLogoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -115)
         ])
