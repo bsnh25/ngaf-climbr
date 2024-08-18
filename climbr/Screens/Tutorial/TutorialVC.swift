@@ -103,7 +103,7 @@ class TutorialVC: NSViewController {
         container.layer?.cornerRadius = 10
         
         let padding = view.bounds.width * 0.05
-        let topPadding = view.bounds.width * 0.08
+        let topPadding = view.bounds.width * 0.1
         let height = view.bounds.height * 0.35
         
         container.snp.makeConstraints { container in
@@ -120,12 +120,12 @@ class TutorialVC: NSViewController {
         startTutorialButton.target = self
         skipTutorialButton.target = self
         
-        let padding = view.bounds.width * 0.02
+        let padding = view.bounds.width * 0.05
         let height = view.bounds.height * 0.1
         let width = view.bounds.width * 0.4
         
         skipTutorialButton.snp.makeConstraints { skip in
-            skip.top.equalTo(container.snp.bottom).offset(padding)
+            skip.top.equalTo(container.snp.bottom).offset(view.bounds.width * 0.02)
             skip.trailing.equalToSuperview().inset(padding)
             skip.height.equalTo(height)
             skip.width.equalTo(width)

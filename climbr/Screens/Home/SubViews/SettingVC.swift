@@ -117,6 +117,22 @@ class SettingVC: NSViewController {
         }
         lastStartValue = startTime.dateValue
         startTime.datePickerElements = [.hourMinute]
+        let calendar = Calendar.current
+        // Set the minimum date (01:00)
+        var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        minComponents.hour = 1
+        minComponents.minute = 0
+        if let minDate = calendar.date(from: minComponents) {
+            startTime.minDate = minDate
+        }
+        
+        // Set the maximum date (21:00)
+        var maxComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        maxComponents.hour = 21
+        maxComponents.minute = 0
+        if let maxDate = calendar.date(from: maxComponents) {
+            startTime.maxDate = maxDate
+        }
         startTime.target = self
         startTime.action = #selector(startWorkHourChanged)
         
@@ -127,6 +143,20 @@ class SettingVC: NSViewController {
         }
         lastStopValue = endTime.dateValue
         endTime.datePickerElements = [.hourMinute]
+        var minStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        minStopComponents.hour = 3
+        minStopComponents.minute = 0
+        if let minStopDate = calendar.date(from: minStopComponents) {
+            endTime.minDate = minStopDate
+        }
+        
+        var maxStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        maxStopComponents.hour = 23
+        maxStopComponents.minute = 0
+        
+        if let maxStopDate = calendar.date(from: maxStopComponents) {
+            endTime.maxDate = maxStopDate
+        }
         endTime.target = self
         endTime.action = #selector(stopWorkHourChanged)
         
