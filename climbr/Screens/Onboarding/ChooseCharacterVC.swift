@@ -260,7 +260,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
         if validateText(text) {
             validateUserInput()
         } else {
-            print("Text field is empty or invalid.")
+            validateUserInput()
         }
     }
     
