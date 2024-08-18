@@ -10,7 +10,7 @@ import Swinject
 
 
 
-class ChooseCharacterVC: NSViewController {
+class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     private let containerBig = NSView()
     private let container1 = NSView()
     private let container2 = NSView()
@@ -85,7 +85,7 @@ class ChooseCharacterVC: NSViewController {
     
     private func configureTextField(){
         view.addSubview(textField)
-        //        textField.delegate = self
+        textField.delegate = self
         
         
         NSLayoutConstraint.activate([
@@ -248,6 +248,26 @@ class ChooseCharacterVC: NSViewController {
         container2.layer?.borderWidth = 0
     }
     
+    
+    func controlTextDidChange(_ obj: Notification) {
+        if let textField = obj.object as? NSTextField {
+            performActionBasedOnText(textField.stringValue)
+        }
+    }
+    
+    
+    private func performActionBasedOnText(_ text: String) {
+        if validateText(text) {
+            validateUserInput()
+        } else {
+            print("Text field is empty or invalid.")
+        }
+    }
+    
+  
+    private func validateText(_ text: String) -> Bool {
+        return !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
 }
 
 //#Preview(traits: .defaultLayout, body: {
