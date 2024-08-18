@@ -15,6 +15,7 @@ class ShopItemVC: NSViewController {
     let contentStack = NSStackView()
     let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
+    let buyButton = BuyButtonView()
     
     let sidebarItems: [(imageName: String, text: String)] = [
         ("person.fill", "Headgear"),
@@ -37,11 +38,6 @@ class ShopItemVC: NSViewController {
     
     private var selectedButton: TypeButton?
     var selectedGridItem: GridItem?
-//    var selectedItem: EquipmentItem? {
-//        didSet {
-//            updateGridItemsWithSelectedItem()
-//        }
-//    }
     var selectedItem : EquipmentItem?
         
     override func viewDidLoad() {
@@ -52,16 +48,15 @@ class ShopItemVC: NSViewController {
         collectionViewContainer.updateItems(items: headItems)
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         
+        buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
+        
         setupSidebar()
         setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
-//        print("ok1")
-//        
-//        print("ok2")
-//        
+        setupBuyButton()
+        
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
-            print("helo")
             updateGridItemsWithSelectedItem()
             highlightButton(firstButton)
         }
@@ -69,6 +64,16 @@ class ShopItemVC: NSViewController {
     
     override func viewDidAppear() {
         collectionViewContainer.updateItems(items: headItems)
+    }
+    
+    func setupBuyButton(){
+        buyButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(buyButton)
+        
+        NSLayoutConstraint.activate([
+            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 225),
+            buyButton.bottomAnchor.constraint(equalTo: contentStack.bottomAnchor)
+        ])
     }
     
     func setupSidebar() {
@@ -95,6 +100,7 @@ class ShopItemVC: NSViewController {
         contentStack.orientation = .horizontal
         contentStack.alignment = .top
         contentStack.spacing = 10
+        
         
         contentStack.setViews([sidebar, collectionViewContainer], in: .top)
         self.view.addSubview(contentStack)
@@ -140,7 +146,7 @@ class ShopItemVC: NSViewController {
         pointsView.orientation = .horizontal
         pointsView.alignment = .centerY
         pointsView.distribution = .equalSpacing
-        pointsView.layer?.backgroundColor = .white
+        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.7)
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
@@ -155,30 +161,20 @@ class ShopItemVC: NSViewController {
     }
     
     func highlightButton(_ button: TypeButton) {
-        // Unhighlight the previously selected button
         selectedButton?.isSelected = false
-        selectedButton?.layer?.backgroundColor = NSColor.lightGray.cgColor // Default color
-            
-        // Highlight the newly selected button
+        selectedButton?.layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.7)
+        selectedButton?.updateItemIcon(false)
+        
+
         selectedButton = button
         selectedButton?.isSelected = true
-        selectedButton?.layer?.backgroundColor = NSColor.gray.cgColor // Highlight color
+        selectedButton?.layer?.backgroundColor = NSColor.white.cgColor // Highlight color
+        selectedButton?.updateItemIcon(true)
     }
     
     func updateGridItemsWithSelectedItem() {
-//        guard let selectedItem = selectedItem else { return }
-            
-            // Loop through all visible items in the collection view
-//        for case let gridItem as GridItem in collectionViewContainer.collectionView.visibleItems() {
-//            print("grid item in this collection = \(String(describing: gridItem.item?.rawValue))")
-////            gridItem.updateItemSelected(item: selectedItem)
-//            gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
-//        }
-//        print("masuk updateGridItemsWithSelectedItem")
         for index in 0..<collectionViewContainer.collectionView.numberOfItems(inSection: 0) {
             if let gridItem = collectionViewContainer.collectionView.item(at: index) as? GridItem {
-                // Perform operations on each gridItem
-//                print(gridItem.item?.rawValue ?? "No item")
                 gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
             }
         }
@@ -186,31 +182,31 @@ class ShopItemVC: NSViewController {
     
     @objc func sidebarButtonClicked(_ sender: TypeButton) {
         highlightButton(sender)
-        
+
         switch sender.tag {
         case 0:
             itemType = .head
-//            print("head")
             collectionViewContainer.updateItems(items: headItems)
+            points.setText("\(self.currentHead.price)")
+            buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
         case 1:
             itemType = .back
-//            print("back")
             collectionViewContainer.updateItems(items: backItems)
+            points.setText("\(self.currentBack.price)")
+            buyButton.updateItemButtonPreview(name: currentBack.name, price: currentBack.price)
         case 2:
             itemType = .hand
-//            print("hand")
             collectionViewContainer.updateItems(items: handItems)
+            points.setText("\(self.currentHand.price)")
+            buyButton.updateItemButtonPreview(name: currentHand.name, price: currentHand.price)
         case 3:
             itemType = .location
-//            print("location")
             collectionViewContainer.updateItems(items: locationItems)
+            points.setText("\(self.currentLocation.price)")
+            buyButton.updateItemButtonPreview(name: currentLocation.name, price: currentLocation.price)
         default:
             break
         }
-        
-//        print("before update grid item in sidebarButtonClicked")
-        updateGridItemsWithSelectedItem()
-//        print("after update grid item in sidebarButtonClicked")
     }
 }
 
@@ -218,9 +214,11 @@ extension ShopItemVC : collectionContainerProtocol {
     func gridItemSelectedChange(to newSelected: GridItem) {
         self.selectedGridItem = newSelected
         collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
+        points.setText("\(String(describing: newSelected.item?.price))")
+        buyButton.updateItemButtonPreview(name: newSelected.item!.name, price: newSelected.item!.price)
     }
     
-    func itemSelectedChanged(to item: EquipmentItem, type: EquipmentType) {
+    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType) {
         self.selectedItem = item
         
         switch type {
@@ -231,49 +229,13 @@ extension ShopItemVC : collectionContainerProtocol {
         case .back:
             currentBack = item
         case .location:
-            break
+            currentLocation = item
         }
-    }
-    
-    func itemSelectedChanged(to newSelected: EquipmentItem) {
-        self.selectedItem = newSelected
-        updateGridItemsWithSelectedItem()
-        
-        switch newSelected {
-        case .climberCrownHG:
-            currentHead = .climberCrownHG
-        case .cozyCragglerHG:
-            currentHead = .cozyCragglerHG
-        case .festiveFollyHG:
-            currentHead = .festiveFollyHG
-        case .trailbazerTamHG:
-            currentHead = .trailbazerTamHG
-        case .climbingBP:
-            currentBack = .climbingBP
-        case .cuddlyBP:
-            currentBack = .cuddlyBP
-        case .duffelBP:
-            currentBack = .duffelBP
-        case .hikingBP:
-            currentBack = .hikingBP
-        case .highWizardS:
-            currentHand = .highWizardS
-        case .iceGripS:
-            currentHand = .iceGripS
-        case .natureGuideS:
-            currentHand = .natureGuideS
-        case .trekTrooperS:
-            currentHand = .trekTrooperS
-        case .jungleJumble:
-            currentLocation = .jungleJumble
-        case .snowySummit:
-            currentLocation = .snowySummit
-        }
-//        print("inside ShopItemVC -> head: \(currentHead.rawValue), back: \(currentBack.rawValue), hand:\(currentHand.rawValue), location: \(currentLocation.rawValue)")
         
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+        points.setText("\(item.price)")
+        buyButton.updateItemButtonPreview(name: item.name, price: item.price)
+        
         collectionViewContainer.collectionView.reloadData()
     }
-    
-    
 }

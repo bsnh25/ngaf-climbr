@@ -56,6 +56,7 @@
 		AB9A79082C6C952600028B36 /* TypeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A79072C6C952600028B36 /* TypeButtonView.swift */; };
 		AB9A790C2C6FCBF000028B36 /* ShopItemVC.swift in Resources */ = {isa = PBXBuildFile; fileRef = AB9A790B2C6FCBF000028B36 /* ShopItemVC.swift */; };
 		AB9A790D2C6FCC0C00028B36 /* ShopItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A790B2C6FCBF000028B36 /* ShopItemVC.swift */; };
+		AB9A790F2C70D8F700028B36 /* BuyButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A790E2C70D8F700028B36 /* BuyButtonView.swift */; };
 		E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701F0A52C6A7B980069A2DC /* SplashVC.swift */; };
 		E71F6E642C6B8B3B001BCFEB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = E71F6E632C6B8B3B001BCFEB /* Swinject */; };
 		E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */; };
@@ -148,6 +149,7 @@
 		AB9A79012C6C7C1C00028B36 /* GridItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemView.swift; sourceTree = "<group>"; };
 		AB9A79072C6C952600028B36 /* TypeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeButtonView.swift; sourceTree = "<group>"; };
 		AB9A790B2C6FCBF000028B36 /* ShopItemVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopItemVC.swift; sourceTree = "<group>"; };
+		AB9A790E2C70D8F700028B36 /* BuyButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyButtonView.swift; sourceTree = "<group>"; };
 		E701F0A52C6A7B980069A2DC /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		E71F6E652C6B8E16001BCFEB /* SwinjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwinjectExtension.swift; sourceTree = "<group>"; };
 		E71F6E6B2C6E314C001BCFEB /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				AB9A78FF2C6C7BD300028B36 /* CollectionContainerView.swift */,
 				AB9A79012C6C7C1C00028B36 /* GridItemView.swift */,
 				AB9A79072C6C952600028B36 /* TypeButtonView.swift */,
+				AB9A790E2C70D8F700028B36 /* BuyButtonView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 				E7FDDB142C64354300DE2A7A /* UserPreference.swift in Sources */,
 				E7FDDAE62C64307900DE2A7A /* main.swift in Sources */,
 				E7FDDB0E2C64351300DE2A7A /* User.swift in Sources */,
+				AB9A790F2C70D8F700028B36 /* BuyButtonView.swift in Sources */,
 				AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */,
 				AB9A787C2C64C9EF00028B36 /* UserManager.swift in Sources */,
 				AB9A787E2C64C9FA00028B36 /* EquipmentManager.swift in Sources */,

@@ -70,6 +70,39 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
     case jungleJumble
     case snowySummit
     
+    var itemName: String{
+        switch self {
+        case .climberCrownHG:
+            "Climber Crown"
+        case .cozyCragglerHG:
+            "Cozy Craggler"
+        case .festiveFollyHG:
+            "Festive Folly"
+        case .trailbazerTamHG:
+            "Trailblazer Tam"
+        case .climbingBP:
+            "Climbing"
+        case .cuddlyBP:
+            "Cuddly"
+        case .duffelBP:
+            "Duffel"
+        case .hikingBP:
+            "Hikinh"
+        case .highWizardS:
+            "High Wizard"
+        case .iceGripS:
+            "Ice Grip"
+        case .natureGuideS:
+            "Nature Guide"
+        case .trekTrooperS:
+            "Trek Trooper"
+        case .jungleJumble:
+            "Jungle Jumble"
+        case .snowySummit:
+            "Snowy Summit"
+        }
+    }
+    
     var itemID: Int{
         switch self {
         case .climberCrownHG:
@@ -108,31 +141,31 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         case .climberCrownHG:
             80
         case .cozyCragglerHG:
-            80
+            90
         case .festiveFollyHG:
-            80
+            100
         case .trailbazerTamHG:
-            80
+            110
         case .climbingBP:
             80
         case .cuddlyBP:
-            80
+            90
         case .duffelBP:
-            80
+            100
         case .hikingBP:
-            80
+            110
         case .highWizardS:
             80
         case .iceGripS:
-            80
+            90
         case .natureGuideS:
-            80
+            100
         case .trekTrooperS:
-            80
+            110
         case .jungleJumble:
-            80
+            140
         case .snowySummit:
-            80
+            150
         }
     }
     
