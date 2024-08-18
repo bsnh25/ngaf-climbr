@@ -102,6 +102,7 @@ class HomeVC: NSViewController {
             equipmentService?.seedDatabase()
             
         }
+        
     }
     
     override func viewWillAppear() {

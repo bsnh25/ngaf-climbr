@@ -106,5 +106,12 @@ class EquipmentManager: EquipmentService {
             return nil
         }
     }
+    
+//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
+//        self.currentHead = head
+//        self.currentHand = hand
+//        self.currentBack = back
+//        self.currentLocation = location
+//    }
 
 }

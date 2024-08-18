@@ -62,7 +62,9 @@ extension Container {
         }
         
         container.register(ShopItemVC.self) { resolver in
-            return ShopItemVC()
+            let char = resolver.resolve(CharacterService.self)
+            let equipment = resolver.resolve(EquipmentService.self)
+            return ShopItemVC(character: char, equipment: equipment)
         }
         
         container.register(StretchingResultVC.self) { resolver in

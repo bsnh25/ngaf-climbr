@@ -58,12 +58,14 @@ class CLTextButtonV2: NSButton {
     }
 
     private func configure(foregroundColorText: NSColor, font: NSFont) {
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: foregroundColorText,
-            .font: font
-        ]
+//        let attributes: [NSAttributedString.Key: Any] = [
+//            .foregroundColor: foregroundColorText,
+//            .font: font
+//        ]
         
-        attributedTitle     = NSAttributedString(string: self.title, attributes: attributes)
+//        attributedTitle     = NSAttributedString(string: self.title, attributes: attributes)
+        self.font = font
+        self.contentTintColor = foregroundColorText
         layer?.cornerRadius = 10
         bezelStyle          = .flexiblePush
         
