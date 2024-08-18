@@ -6,10 +6,10 @@
 //
 
 import Cocoa
+import Swinject
 
 class MainWindow: NSWindow {
     init() {
-        
         /// Init the main window with following parameters:
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 1200, height: 840),
@@ -25,9 +25,9 @@ class MainWindow: NSWindow {
         
         /// Set the window to center axis by default
         center()
-        
-        let vc                  = ViewController()
-        contentView             = vc.view
-        contentViewController   = vc
+        if let vc                  = Container.shared.resolve(MainVC.self) {
+            contentView             = vc.view
+            contentViewController   = vc
+        }
     }
 }

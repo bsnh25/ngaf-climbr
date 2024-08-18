@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct UserPreference {
-    
+struct UserPreferenceModel {
+    var id: UUID
+    var endWorkingHour: Date
+    var launchAtLogin: Bool
+    var reminderInterval: Int64
+    var startWorkingHour: Date
 }
