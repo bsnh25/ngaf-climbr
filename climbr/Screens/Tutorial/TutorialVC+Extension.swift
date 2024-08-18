@@ -44,6 +44,14 @@ extension TutorialVC {
         skipTutorialButton.title = "Let's Go!"
         tutorialLabel.stringValue = "Everyday, we need to meet a goal of a minimum of four stretching sessions, as per recommended by WHO. Let’s give it a go! Click start session to begin."
         print("title skip : \(skipTutorialButton.title)")
+        
+        
+        /// Subtract the background to highlight the progress view container
+        let padding = view.bounds.width * 0.05
+        
+        let height: CGFloat = 150
+        let width: CGFloat = 450
+        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
     }
     
     func selectorButton(){
@@ -57,17 +65,17 @@ extension TutorialVC {
                 skipTutorialButton.setupTitleForegroundAndFont(title: "Interesting", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
                 skipTutorialButton.action = #selector(actionInterest)
                 tutorialLabel.stringValue = "It’s actually pretty simple. When you work, I’ll climb. When you stretch, I’ll rest. The more you stretch, I’ll be able to find more coins during my rest."
-                return
+                
             } else if skipTutorialButton.title == "See you" {
                 skipTutorialButton.setupTitleForegroundAndFont(title: "See you", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
                 skipTutorialButton.action = #selector(actionSeeyou)
                 tutorialLabel.stringValue = "Alrighty! I’ll see you around :)"
-                return
+                
             } else if skipTutorialButton.title == "Let's Go!" {
                 skipTutorialButton.setupTitleForegroundAndFont(title: "Let's Go!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
                 skipTutorialButton.action = #selector(actionLetsGo)
                 tutorialLabel.stringValue = "Look at that. We’re progressing! Each session a step closer to a healthier work life. Keep going and let’s conquer all the mountains in the world!"
-                return
+                
             }
         }
         
