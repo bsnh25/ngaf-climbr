@@ -11,11 +11,6 @@ extension SettingVC {
     @objc
     func actionCheckbox(){
         isChecked = checkboxButton.state == .on
-        
-        ///change print into user deafult settings
-//        isChecked ? UserDefaults.standard.set(true, forKey: UserDefaultsKey.kIsOpenAtLogin) : UserDefaults.standard.set(false, forKey: UserDefaultsKey.kIsOpenAtLogin)
-//        print("value checkbox : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
-
     }
     
     @objc

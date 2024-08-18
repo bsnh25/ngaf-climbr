@@ -13,6 +13,7 @@ extension Container {
         let container = Container()
         
         /// Managers
+        container.register(PredictorService.self) { _ in PredictorManager() }
         container.register(AudioService.self) { _ in AudioManager.shared }
         container.register(CameraService.self) { _ in CameraManager() }
         container.register(NotificationService.self) { _ in NotificationManager.shared }
@@ -72,8 +73,9 @@ extension Container {
         container.register(StretchingVC.self) { resolver in
             let audioService    = resolver.resolve(AudioService.self)
             let cameraService   = resolver.resolve(CameraService.self)
+            let predictorService   = resolver.resolve(PredictorService.self)
             
-            return StretchingVC(audioService: audioService, cameraService: cameraService)
+            return StretchingVC(audioService: audioService, cameraService: cameraService, predictor: predictorService)
         }
         
         container.register(ChooseCharacterVC.self){ resolver in
@@ -81,6 +83,12 @@ extension Container {
             
             return ChooseCharacterVC(userService: userService)
         }
+        
+        container.register(TutorialVC.self){ resolver in
+            let user = resolver.resolve(UserService.self)
+            return TutorialVC(userService: user)
+        }
+        
         
         return container
     }()

@@ -31,7 +31,6 @@ class StretchingVC: NSViewController {
     let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     let movementStateView       = MovementStateView()
-    let predictor               = Predictor()
     
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
@@ -56,12 +55,14 @@ class StretchingVC: NSViewController {
     /// Dependencies
     var audioService: AudioService?
     var cameraService: CameraService?
+    var predictor: PredictorService?
     
-    init(audioService: AudioService?, cameraService: CameraService?) {
+    init(audioService: AudioService?, cameraService: CameraService?, predictor: PredictorService?) {
         super.init(nibName: nil, bundle: nil)
         
         self.audioService = audioService
         self.cameraService = cameraService
+        self.predictor = predictor
     }
     
     required init?(coder: NSCoder) {
@@ -76,7 +77,7 @@ class StretchingVC: NSViewController {
         cameraService?.startSession()
         configureCameraPreview()
         configureMovementView()
-        predictor.delegate = self
+        predictor?.delegate = self
         cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
