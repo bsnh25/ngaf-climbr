@@ -10,8 +10,12 @@ import AppKit
 extension SettingVC {
     @objc
     func actionCheckbox(){
-        isChecked = checkboxButton.state == .on
-
+        let buttonState = checkboxButton.state
+        if buttonState == .on {
+            isChecked = true
+        } else {
+            isChecked = false
+        }
     }
     
     @objc

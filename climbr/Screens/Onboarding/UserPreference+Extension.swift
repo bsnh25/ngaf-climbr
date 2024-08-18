@@ -90,9 +90,13 @@ extension UserPreferenceVC{
     }
     
     @objc
-    func actionCheckbox(){
-        isChecked = checkboxButton.state == .on
-        print("\(isChecked)")
+    func actionCheckbox() {
+        let buttonState = checkboxButton.state
+        if buttonState == .on {
+            isChecked = true
+        } else {
+            isChecked = false
+        }
     }
     
     @objc func startWorkHourChanged(_ sender: NSDatePicker) {

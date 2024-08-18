@@ -174,6 +174,9 @@ class SettingVC: NSViewController {
             }
         }
         
+        checkboxButton.target = self
+        checkboxButton.action = #selector(actionCheckbox)
+        
         
         saveButton.target = self
         saveButton.action = #selector(actionSave)
