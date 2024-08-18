@@ -309,4 +309,37 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             ""
         }
     }
+    
+    var name: String {
+        switch self {
+        case .climberCrownHG:
+            "Climber Crown"
+        case .cozyCragglerHG:
+            "Cozy Craggler"
+        case .festiveFollyHG:
+            "Festive Folly"
+        case .trailbazerTamHG:
+            "Trailblazer Tam"
+        case .climbingBP:
+            "Climbing"
+        case .cuddlyBP:
+            "Cuddly"
+        case .duffelBP:
+            "Duffel"
+        case .hikingBP:
+            "Hiking"
+        case .highWizardS:
+            "High Wizard"
+        case .iceGripS:
+            "Ice Grip"
+        case .natureGuideS:
+            "Nature Guide"
+        case .trekTrooperS:
+            "Trek Trooper"
+        case .jungleJumble:
+            "Jungle Jumble"
+        case .snowySummit:
+            "Snowy Summit"
+        }
+    }
 }

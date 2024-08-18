@@ -12,32 +12,34 @@ import Swinject
 
 class UserPreferenceVC: NSViewController {
     
-    private let bgContainer = NSView()
-    private let pathImage = NSImageView(image: NSImage(resource: .mountainPath))
-    private let appLogoImage = NSImageView(image: NSImage(resource: .appLogo))
-    private let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your work hours")
-    private let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
-    private let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .black, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
-    private let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
-    private let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
-    private let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
-    private let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
-    private let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
-    private let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
-    private let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    private let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    let bgContainer = NSView()
+    let pathImage = NSImageView(image: NSImage(resource: .mountainPath))
+    let appLogoImage = NSImageView(image: NSImage(resource: .appLogo))
+    let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your work hours")
+    let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
+    let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .black, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
+    let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
+    let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
+    let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
+    let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
+    let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
+    let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
+    let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    var lastStartValue: Date!
+    var lastStopValue: Date!
     var isChecked: Bool = false
     var intervalReminder: Int64 = 0
-    var userService: UserService?
+    var charService: CharacterService?
     var notifService: NotificationService?
     
     
-    init(userService: UserService?, notifService: NotificationService?) {
+    init(charService: CharacterService?, notifService: NotificationService?) {
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
         self.notifService = notifService
     }
     
@@ -55,11 +57,10 @@ class UserPreferenceVC: NSViewController {
         super.viewDidAppear()
         UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         notifService?.askUserPermission()
-        //        notif?.sendNotification(title: "Test Title", body: "This is notification user", reminder: UserPreferences())
     }
     
     
-    private func configure(){
+    func configure(){
         configureBgContainer()
         configureImagePath()
         configureAppLogo()
@@ -79,7 +80,7 @@ class UserPreferenceVC: NSViewController {
         configureCheckBox()
     }
     
-    private func configureBgContainer(){
+    func configureBgContainer(){
         view.addSubview(bgContainer)
         bgContainer.wantsLayer = true
         bgContainer.layer?.backgroundColor = NSColor.white.cgColor
@@ -93,7 +94,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureImagePath(){
+    func configureImagePath(){
         view.addSubview(pathImage)
         pathImage.wantsLayer = true
         pathImage.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +107,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureAppLogo(){
+    func configureAppLogo(){
         view.addSubview(appLogoImage)
         appLogoImage.translatesAutoresizingMaskIntoConstraints = false
         
@@ -119,7 +120,7 @@ class UserPreferenceVC: NSViewController {
         
     }
     
-    private func configureWorkHoursLabel(){
+    func configureWorkHoursLabel(){
         view.addSubview(workHoursLabel)
         workHoursLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -130,7 +131,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureReminderLabel(){
+    func configureReminderLabel(){
         view.addSubview(reminderLabel)
         reminderLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -141,7 +142,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureNextButton(){
+    func configureNextButton(){
         view.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.isEnabled = false
@@ -156,7 +157,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureTextLine1(){
+    func configureTextLine1(){
         view.addSubview(text1Line1)
         text1Line1.translatesAutoresizingMaskIntoConstraints = false
         
@@ -166,9 +167,21 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureStartWorkHour(){
+    func configureStartWorkHour() {
         view.addSubview(startWorkHour)
-        startWorkHour.maxDate = .distantFuture
+        
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day], from: Date())
+        components.hour = 8
+        components.minute = 0
+        
+        if let date = calendar.date(from: components) {
+            startWorkHour.dateValue = date
+        }
+        lastStartValue = startWorkHour.dateValue
+        startWorkHour.datePickerElements = [.hourMinute]
+        startWorkHour.target = self
+        startWorkHour.action = #selector(startWorkHourChanged)
         
         NSLayoutConstraint.activate([
             startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -176,9 +189,11 @@ class UserPreferenceVC: NSViewController {
             startWorkHour.widthAnchor.constraint(equalToConstant: 65),
             startWorkHour.heightAnchor.constraint(equalToConstant: 36)
         ])
+        
+        updateStopWorkHour()
     }
     
-    private func configureText2Line1(){
+    func configureText2Line1(){
         view.addSubview(text2Line1)
         text2Line1.translatesAutoresizingMaskIntoConstraints = false
         
@@ -188,10 +203,13 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureStopWorkHour(){
+    func configureStopWorkHour() {
         view.addSubview(stopWorkHour)
-        stopWorkHour.maxDate = .distantFuture
-        stopWorkHour.minDate = .init(timeInterval: 7200, since: startWorkHour.dateValue)
+        lastStopValue = stopWorkHour.dateValue
+        stopWorkHour.datePickerElements = [.hourMinute]
+        stopWorkHour.target = self
+        stopWorkHour.action = #selector(stopWorkHourChanged)
+        
         
         NSLayoutConstraint.activate([
             stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
@@ -199,9 +217,11 @@ class UserPreferenceVC: NSViewController {
             stopWorkHour.widthAnchor.constraint(equalToConstant: 65),
             stopWorkHour.heightAnchor.constraint(equalToConstant: 36)
         ])
+        
+        updateStopWorkHour()
     }
     
-    private func configureText1Line2(){
+    func configureText1Line2(){
         view.addSubview(text1Line2)
         text1Line2.translatesAutoresizingMaskIntoConstraints = false
         
@@ -211,7 +231,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureButton1(){
+    func configureButton1(){
         view.addSubview(button1)
         button1.target = self
         button1.action = #selector(action30min)
@@ -224,7 +244,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureButton2(){
+    func configureButton2(){
         view.addSubview(button2)
         button2.target = self
         button2.action = #selector(action60min)
@@ -237,7 +257,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureButton3(){
+    func configureButton3(){
         view.addSubview(button3)
         button3.target = self
         button3.action = #selector(action90min)
@@ -250,7 +270,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureButton4(){
+    func configureButton4(){
         view.addSubview(button4)
         button4.target = self
         button4.action = #selector(action120min)
@@ -263,7 +283,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureText2Line2(){
+    func configureText2Line2(){
         view.addSubview(text2Line2)
         text2Line2.translatesAutoresizingMaskIntoConstraints = false
         
@@ -274,7 +294,7 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    private func configureCheckBox(){
+    func configureCheckBox(){
         view.addSubview(checkboxButton)
         checkboxButton.translatesAutoresizingMaskIntoConstraints = false
         checkboxButton.font = NSFont.systemFont(ofSize: 22, weight: .bold)
@@ -289,27 +309,7 @@ class UserPreferenceVC: NSViewController {
         
     }
     
-    private func processSavePreference() -> Int64{
-        
-        if button1.isSelected {
-            return 30
-        }else if button2.isSelected{
-            return 60
-        }else if button3.isSelected{
-            return 90
-        } else if button4.isSelected{
-            return 120
-        }else {
-            print("ERR: at user preference (reminder)")
-            return 0
-        }
-        
-    }
-    
-    
-    
-    
-    private func resetButtonColors() {
+    func resetButtonColors() {
         // Reset all buttons to gray
         button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
         button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
@@ -326,79 +326,11 @@ class UserPreferenceVC: NSViewController {
         button3.isSelected = false
         button4.isSelected = false
     }
-    
-    @objc
-    private func actNextButton(){
-        
-        UserDefaults.standard.setValue(true, forKey: "kStretch")
-        guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
-            print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
-            return
-        }
-        print("Start Work Hour : \(startWorkHour.dateValue)")
-        print("End Work Hour : \(stopWorkHour.dateValue)")
-        
-        print("Reminder at \(processSavePreference())")
-        print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
-        ///get checkbox value
-        print("value checkbox is : \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kIsOpenAtLogin))")
-        let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
-        
-        userService?.savePreferences(data: userPreferenceData)
-        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-        replace(with: homeVc)
-    }
-    
-    @objc
-    private func action30min(){
-        resetButtonColors()
-        button1.isSelected = true
-        button1.layer?.backgroundColor = .white
-        button1.foregroundColorText = .black
-        nextButton.isEnabled = true
-        print("\(button1.title) choose")
-    }
-    
-    @objc
-    private func action60min(){
-        resetButtonColors()
-        button2.isSelected = true
-        button2.layer?.backgroundColor = .white
-        button2.foregroundColorText = .black
-        nextButton.isEnabled = true
-        print("\(button2.title) choose")
-    }
-    
-    @objc
-    private func action90min(){
-        resetButtonColors()
-        button3.isSelected = true
-        button3.layer?.backgroundColor = .white
-        button3.foregroundColorText = .black
-        nextButton.isEnabled = true
-        print("\(button3.title) choose")
-    }
-    
-    @objc
-    private func action120min(){
-        resetButtonColors()
-        button4.isSelected = true
-        button4.layer?.backgroundColor = .white
-        button4.foregroundColorText = .black
-        nextButton.isEnabled = true
-        print("\(button4.title) choose")
-    }
-    
-    @objc
-    private func actionCheckbox(){
-        isChecked = checkboxButton.state == .on
-        print("\(isChecked)")
-    }
 }
 
 
 
-//
+
 //#Preview(traits: .defaultLayout, body: {
 //    UserPreferenceVC()
 //})

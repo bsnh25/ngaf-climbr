@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class UserManager : UserService {
+class UserManager : CharacterService {
     let container : NSManagedObjectContext?
     
     init(controller: PersistenceController?){
@@ -38,6 +38,7 @@ class UserManager : UserService {
         newUserPreference.launchAtLogin = data.launchAtLogin
         newUserPreference.reminderInterval = data.reminderInterval
         newUserPreference.startWorkingHour = data.startWorkingHour
+        newUserPreference.endWorkingHour = data.endWorkingHour
         
         
         do {
@@ -49,19 +50,38 @@ class UserManager : UserService {
         
     }
     
-    func getUserData() -> User? {
-    #warning("change the return data later")
-        return User()
+    func getCharacterData() -> CharacterModel? {
+        guard let container = container else {return nil}
+        let request: NSFetchRequest<Character> = Character.fetchRequest()
+        
+        do {
+            guard let charArr = try container.fetch(request).first else {return nil}
+            return CharacterModel(
+                name: charArr.name!,
+                gender: Gender(rawValue: charArr.gender!)!,
+                point: charArr.point,
+                headEquipment: EquipmentItem(rawValue: charArr.headEquipment!)!,
+                handEquipment: EquipmentItem(rawValue: charArr.handEquipment!)!,
+                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!
+            )
+        } catch {
+            print("Error fetching user preference entries: \(error.localizedDescription)")
+            return nil
+        }
     }
     
-    func saveUserData(data: UserModel) {
+    func saveCharacterData(data: CharacterModel) {
         guard let container = container else { return }
         
-        let newUserData = User(context: container)
+        let newUserData = Character(context: container)
         
         newUserData.id = data.id
         newUserData.name = data.name
         newUserData.point = data.point
+        newUserData.gender = data.gender.rawValue
+        newUserData.headEquipment = data.headEquipment.rawValue
+        newUserData.handEquipment = data.handEquipment.rawValue
+        newUserData.backEquipment = data.backEquipment.rawValue
         
         do {
             try container.save()
@@ -72,9 +92,8 @@ class UserManager : UserService {
         
     }
     
-    func updatePoint(user: User, points: Int) {
+    func updatePoint(character: CharacterModel, points: Int) {
         
     }
-    
-    //MARK: TODO
+
 }

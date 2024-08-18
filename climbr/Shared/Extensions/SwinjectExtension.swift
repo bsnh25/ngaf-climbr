@@ -13,11 +13,12 @@ extension Container {
         let container = Container()
         
         /// Managers
+        container.register(PredictorService.self) { _ in PredictorManager() }
         container.register(AudioService.self) { _ in AudioManager.shared }
         container.register(CameraService.self) { _ in CameraManager() }
         container.register(NotificationService.self) { _ in NotificationManager.shared }
         container.register(PersistenceController.self) { _ in return PersistenceController.shared }
-        container.register(UserService.self) { resolver in
+        container.register(CharacterService.self) { resolver in
             let persistence = resolver.resolve(PersistenceController.self)
             return UserManager(controller: persistence)
         }
@@ -32,30 +33,31 @@ extension Container {
         }
         
         container.register(SplashVC.self) { resolver in
-            let user = resolver.resolve(UserService.self)
+            let user = resolver.resolve(CharacterService.self)
             return SplashVC(userService: user)
         }
         
         container.register(UserPreferenceVC.self) { resolver in
             let notif = resolver.resolve(NotificationService.self)
-            let user = resolver.resolve(UserService.self)
-            return UserPreferenceVC(userService: user, notifService: notif)
+            let char = resolver.resolve(CharacterService.self)
+            return UserPreferenceVC(charService: char, notifService: notif)
         }
         
         container.register(ChooseCharacterVC.self) { resolver in
-            let userService     = resolver.resolve(UserService.self)
-            return ChooseCharacterVC(userService: userService)
+            let char     = resolver.resolve(CharacterService.self)
+            return ChooseCharacterVC(charService: char)
         }
         
         container.register(HomeVC.self) { resolver in
             let audio = resolver.resolve(AudioService.self)
-            let user = resolver.resolve(UserService.self)
+            let char = resolver.resolve(CharacterService.self)
             let equipment = resolver.resolve(EquipmentService.self)
-            return HomeVC(audioService: audio, userService: user, equipmentService: equipment)
+            return HomeVC(audioService: audio, charService: char, equipmentService: equipment)
         }
         
         container.register(SettingVC.self) { resolver in
-            return SettingVC()
+            let char = resolver.resolve(CharacterService.self)
+            return SettingVC(charService: char)
         }
         
         container.register(ShopItemVC.self) { resolver in
@@ -63,23 +65,30 @@ extension Container {
         }
         
         container.register(StretchingResultVC.self) { resolver in
-            let userService     = resolver.resolve(UserService.self)
+            let char     = resolver.resolve(CharacterService.self)
             
-            return StretchingResultVC(userService: userService)
+            return StretchingResultVC(charService: char)
         }
         
         container.register(StretchingVC.self) { resolver in
             let audioService    = resolver.resolve(AudioService.self)
             let cameraService   = resolver.resolve(CameraService.self)
+            let predictorService   = resolver.resolve(PredictorService.self)
             
-            return StretchingVC(audioService: audioService, cameraService: cameraService)
+            return StretchingVC(audioService: audioService, cameraService: cameraService, predictor: predictorService)
         }
         
         container.register(ChooseCharacterVC.self){ resolver in
-            let userService     = resolver.resolve(UserService.self)
+            let char     = resolver.resolve(CharacterService.self)
             
-            return ChooseCharacterVC(userService: userService)
+            return ChooseCharacterVC(charService: char)
         }
+        
+        container.register(TutorialVC.self){ resolver in
+            let char = resolver.resolve(CharacterService.self)
+            return TutorialVC(charService: char)
+        }
+        
         
         return container
     }()

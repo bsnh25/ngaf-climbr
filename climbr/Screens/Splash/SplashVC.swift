@@ -11,11 +11,11 @@ import Swinject
 class SplashVC: NSViewController {
     
     let appLogoView = NSImageView()
-    var userService: UserService?
+    var charService: CharacterService?
     
-    init(userService: UserService?){
+    init(userService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = userService
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +45,7 @@ class SplashVC: NSViewController {
     private func navigateToHome() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
-            if self.userService?.getPreferences() == nil {
+            if self.charService?.getPreferences() == nil {
                 guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
                 UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)

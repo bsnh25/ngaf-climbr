@@ -8,10 +8,9 @@
 import Foundation
 
 struct UserDefaultsKey {
-    static let kFirstTime           = "isFirstUser"
+    static let kTutorial            = "kTutorial"
     static let kDateNow             = "kDateNow"
     static let kBackgroundVolume    = "kBackgroundVolume"
     static let kSFXVolume           = "kSFXVolume"
-    static let kIsOpenAtLogin       = "kIsOpenAtLogin"
     static let kProgressSession     = "kProgressSession"
 }

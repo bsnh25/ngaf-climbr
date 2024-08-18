@@ -12,20 +12,46 @@ import Combine
 
 class HomeVC: NSViewController {
     
-    let settingButton = CLImageButton(imageName: "gear", accesibilityName: "settings", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
-    let audioButton = CLImageButton(imageName: "speaker.wave.3", accesibilityName: "Music Play", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
-    let storeButton = CLImageButton(imageName: "storefront", accesibilityName: "store", imgColor: .black.withAlphaComponent(0.5), bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!)
-    let startStretchButton = CLTextButtonV2(title: "Start Session", backgroundColor: .cButton
-                                                    , foregroundColorText: .white, fontText: .systemFont(ofSize: 20, weight: .semibold))
-    let textB = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Today’s session goal")
+    let settingButton = CLImageButton(
+        imageName: "gear",
+        accesibilityName: "settings",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
+    
+    let audioButton = CLImageButton(
+        imageName: "speaker.wave.3",
+        accesibilityName: "Music Play",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
+    
+    let storeButton = CLImageButton(
+        imageName: "storefront",
+        accesibilityName: "store",
+        imgColor: .black.withAlphaComponent(0.5),
+        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+    )
+    
+    let startStretchButton = CLTextButtonV2(
+        title: "Start Session",
+        backgroundColor: .cButton,
+        foregroundColorText: .white,
+        fontText: .systemFont(ofSize: 20, weight: .semibold)
+    )
+    
+    let textB = CLTextLabelV2(
+        sizeOfFont: 20,
+        weightOfFont: .bold,
+        contentLabel: "Today’s session goal"
+    )
     let containerView = NSView()
     let imageHome = NSImageView()
     let stack = NSStackView()
     
     var audioService: AudioService?
-    var userService: UserService?
+    var charService: CharacterService?
     var equipmentService: EquipmentService?
-    
     var isSoundTapped: Bool = false
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
@@ -34,13 +60,13 @@ class HomeVC: NSViewController {
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
     
-    init(audioService: AudioService?, userService: UserService?, equipmentService: EquipmentService?) {
+    init(audioService: AudioService?, charService: CharacterService?, equipmentService: EquipmentService?) {
         super.init(nibName: nil, bundle: nil)
         self.audioService = audioService
-        self.userService = userService
+        self.charService = charService
         self.equipmentService = equipmentService
     }
-   
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -66,13 +92,15 @@ class HomeVC: NSViewController {
     
     override func viewDidAppear() {
         audioService?.playBackgroundMusic(fileName: "bgmusic")
+        observeTimer()
         
-        if userService?.getPreferences() == nil {
+        if charService?.getCharacterData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
             
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
+            
         }
         
     }
@@ -88,7 +116,7 @@ class HomeVC: NSViewController {
     
     private func previewAnimaConfig(){
         view.addSubview(imageHome)
-        imageHome.wantsLayer = true 
+        imageHome.wantsLayer = true
         imageHome.image = NSImage(resource: .homebg)
         imageHome.imageScaling = .scaleAxesIndependently
         
@@ -101,7 +129,7 @@ class HomeVC: NSViewController {
     }
     
     private func ButtonConfigure(){
-
+        
         view.addSubview(stack)
         
         stack.wantsLayer = true
@@ -154,7 +182,7 @@ class HomeVC: NSViewController {
             store.height.equalTo(38)
         }
         
-
+        
     }
     
     private func stackConfig(){
@@ -220,11 +248,11 @@ class HomeVC: NSViewController {
         progressStretch.layer?.backgroundColor = NSColor.black.cgColor.copy(alpha: 0.12)
         progressStretch.layer?.cornerRadius = 5
         progressStretch.displayIfNeeded()
-
+        
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
         
         stackConfig()
     }
-  
+    
 }

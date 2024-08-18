@@ -10,7 +10,7 @@ import Swinject
 
 
 
-class ChooseCharacterVC: NSViewController {
+class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     private let containerBig = NSView()
     private let container1 = NSView()
     private let container2 = NSView()
@@ -20,17 +20,14 @@ class ChooseCharacterVC: NSViewController {
     private let femalechar = NSImageView(image: .femalecharacter)
     private let textField = CLTextField(placeholder: "Type your climbr's name here")
     private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
-    
-    enum Gender{
-        case male, female
-    }
+    private var containerIsClicked: Bool = false
     
     var genderChar: Gender?
-    var userService: UserService?
+    var charService: CharacterService?
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -84,7 +81,7 @@ class ChooseCharacterVC: NSViewController {
     
     private func configureTextField(){
         view.addSubview(textField)
-        //        textField.delegate = self
+        textField.delegate = self
         
         
         NSLayoutConstraint.activate([
@@ -178,8 +175,9 @@ class ChooseCharacterVC: NSViewController {
         
         buttonStart.target = self
         buttonStart.action = #selector(actButtonStart)
-        buttonStart.isEnabled = false
         
+        
+        buttonStart.isEnabled = false
         
         NSLayoutConstraint.activate([
             buttonStart.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 466),
@@ -193,25 +191,26 @@ class ChooseCharacterVC: NSViewController {
     @objc
     private func actButtonStart(){
         print("tapped and inputed \(textField.stringValue)")
+        var gender: Gender!
         
         if let genderChar{
-            if genderChar == Gender.female{
-                print("user choose female")
-            }else if genderChar == Gender.male{
-                print("user choose male")
-            }
+            gender = genderChar
         }else {
             print("user not choose character")
         }
         
-        let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
+        print("gender pal user is : \(String(describing: gender))")
         
-        userService?.saveUserData(data: userData)
+        let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
+        charService?.saveCharacterData(data: userData)
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
         
-       
-        UserDefaults.standard.setValue(false, forKey: "kStretch")
-        UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kFirstTime)
         pop()
+        
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
+            guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
+            push(to: tutorialVc)
+        }
     }
     
     @objc private func container1Clicked(_ gesture: NSClickGestureRecognizer) {
@@ -219,8 +218,9 @@ class ChooseCharacterVC: NSViewController {
             resetBorderContainer()
             container1.layer?.borderWidth = 5
             container1.layer?.borderColor = .white
+            containerIsClicked = true
             genderChar = Gender.female
-            buttonStart.isEnabled = true
+            validateUserInput()
         }
     }
     
@@ -229,7 +229,16 @@ class ChooseCharacterVC: NSViewController {
             resetBorderContainer()
             container2.layer?.borderWidth = 5
             container2.layer?.borderColor = .white
+            containerIsClicked = true
             genderChar = Gender.male
+            validateUserInput()
+        }
+    }
+    
+    private func validateUserInput(){
+        if textField.stringValue.isEmpty || !containerIsClicked{
+            buttonStart.isEnabled = false
+        }else{
             buttonStart.isEnabled = true
         }
     }
@@ -239,6 +248,26 @@ class ChooseCharacterVC: NSViewController {
         container2.layer?.borderWidth = 0
     }
     
+    
+    func controlTextDidChange(_ obj: Notification) {
+        if let textField = obj.object as? NSTextField {
+            performActionBasedOnText(textField.stringValue)
+        }
+    }
+    
+    
+    private func performActionBasedOnText(_ text: String) {
+        if validateText(text) {
+            validateUserInput()
+        } else {
+            validateUserInput()
+        }
+    }
+    
+  
+    private func validateText(_ text: String) -> Bool {
+        return !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
 }
 
 //#Preview(traits: .defaultLayout, body: {

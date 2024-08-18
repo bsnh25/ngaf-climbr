@@ -16,10 +16,10 @@ class StretchingResultVC: NSViewController {
     
     let affirmationTexts: [String]  = [
         "Wow! That’s a power move!",
-        "Great Job! You’ve unlocked a new energy boost!",
+        "Great Job! Unlocked a new energy boost!",
         "Fantastic! Your body thanks you!",
-        "Cool! You’ve gained extra endurance points!",
-        "You did it! Bonus points for self-care!"
+        "Cool! Gained extra endurance coins!",
+        "You did it! Bonus coins for self-care!"
     ]
     let awardsText              = "You’ve reduced your sedentary time by"
     
@@ -40,17 +40,18 @@ class StretchingResultVC: NSViewController {
     )
     
     let padding: CGFloat        = 64
+    var char: CharacterModel?
     
     var movementList: [Movement] = []
     
     /// Dependencies
-    var userService: UserService?
+    var charService: CharacterService?
     
     
-    init(userService: UserService?) {
+    init(charService: CharacterService?) {
         super.init(nibName: nil, bundle: nil)
         
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -69,6 +70,10 @@ class StretchingResultVC: NSViewController {
         
         self.calculatePoints()
         self.calculateDurations()
+    }
+    
+    override func viewWillAppear() {
+        self.getUserData()
     }
     
     private func configureVC() {

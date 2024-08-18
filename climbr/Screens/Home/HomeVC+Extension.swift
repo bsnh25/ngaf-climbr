@@ -7,6 +7,7 @@
 
 import AppKit
 import Swinject
+import UserNotifications
 
 extension HomeVC {
     
@@ -20,6 +21,7 @@ extension HomeVC {
     
     @objc
     func actionStartSession(){
+        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         if let vc = Container.shared.resolve(StretchingVC.self) {
             push(to: vc)
             print("go to stretching session")
@@ -55,18 +57,28 @@ extension HomeVC {
         progressStretch.doubleValue = progressValue
     }
     
-    func validateYesterday(_ date: Date){
+    @objc
+    func validateYesterday(){
+        let date = UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date
         if Calendar.current.isDateInYesterday(date) {
             print("Date param : \(date)")
             print("Date current : \(Calendar.current)")
             UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
+            UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
+            return
         }
+        
     }
     
     func updateProgressData(){
         let progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
         progressStretch.doubleValue = progress
         progressText.setText("\(Int(progress)) / 4 sessions")
+    }
+    
+    
+    func observeTimer(){
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
     }
 }
 
