@@ -9,6 +9,22 @@ import AppKit
 
 class SubtractedView: NSView {
     
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        return false
+    }
+    override var allowedTouchTypes: NSTouch.TouchTypeMask {
+        get { return [] }
+        set { }
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        
+        /// Only enable touch on specific area
+        if subtractRect.contains(event.locationInWindow) {
+            super.mouseDown(with: event)
+        }
+    }
+    
     private var subtractRect: NSRect = .zero
     
     override init(frame frameRect: NSRect) {
