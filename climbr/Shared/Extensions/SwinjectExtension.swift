@@ -33,8 +33,8 @@ extension Container {
         }
         
         container.register(SplashVC.self) { resolver in
-            let user = resolver.resolve(CharacterService.self)
-            return SplashVC(userService: user)
+            let char = resolver.resolve(CharacterService.self)
+            return SplashVC(charService: char)
         }
         
         container.register(UserPreferenceVC.self) { resolver in
@@ -56,8 +56,9 @@ extension Container {
         }
         
         container.register(SettingVC.self) { resolver in
+            let notif = resolver.resolve(NotificationService.self)
             let char = resolver.resolve(CharacterService.self)
-            return SettingVC(charService: char)
+            return SettingVC(notifService: notif, charService: char)
         }
         
         container.register(ShopItemVC.self) { resolver in

@@ -10,7 +10,12 @@ import AppKit
 extension SettingVC {
     @objc
     func actionCheckbox(){
-        isChecked = checkboxButton.state == .on
+        let buttonState = checkboxButton.state
+        if buttonState == .on {
+            isChecked = true
+        } else {
+            isChecked = false
+        }
     }
     
     @objc
@@ -67,6 +72,7 @@ extension SettingVC {
             print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
             return
         }
+        let updateData = UserPreferenceModel(id: UUID(), endWorkingHour: endTime.dateValue, launchAtLogin: isChecked, reminderInterval: processSaveReminder(), startWorkingHour: startTime.dateValue)
         print("Reminder at \(processSaveReminder())")
         print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
         print("\(startTime.dateValue)")
@@ -74,10 +80,15 @@ extension SettingVC {
         print("\(endTime.dateValue)")
         ///get checkbox value
         
+        guard let char = charService else {return}
+        char.updatePreferences(data: updateData)
+        guard let notif = notifService else {return}
+        notif.sendNotification(title: "title coba", body: "body coba", reminder: updateData)
+        
         self.dismiss(self)
     }
     
-    func processSaveReminder() -> Int{
+    func processSaveReminder() -> Int64{
         
         if min30.isSelected {
             return 30
