@@ -256,7 +256,7 @@ extension StretchingVC {
 }
 
 extension StretchingVC : PredictorDelegate {
-    func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double) {
+    func predictor(didLabelAction action: String, with confidence: Double) {
         
         for name in ExerciseName.allCases {
             if name.rawValue == action && confidence > 0.7 {
@@ -270,7 +270,7 @@ extension StretchingVC : PredictorDelegate {
         }
     }
     
-    func predictor(_ predictor: Predictor, didFindNewRecognizedPoints points: [CGPoint]) {
+    func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
 //        guard let previewLayer = cameraService?.previewLayer else { return }
 //        
 //        let convertedPoints = points.map{
@@ -298,6 +298,6 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
         if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
             connection.isVideoMirrored = true
         }
-        predictor.estimation(sampleBuffer: sampleBuffer)
+        predictor?.estimation(sampleBuffer: sampleBuffer)
     }
 }
