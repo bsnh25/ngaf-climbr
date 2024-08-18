@@ -40,11 +40,6 @@ class NotificationManager: NotificationService {
             by: Date.Stride(reminder.reminderInterval * 60)).filter { $0 > Date() }
         
         start.forEach { reminder in
-            let dateFormatter = {
-                let formatter = DateFormatter()
-                formatter.locale = Locale(identifier: "id")
-                return formatter
-            }
             let rangeTime = Calendar.current.dateComponents([.hour, .minute], from: reminder)
             let trigger = UNCalendarNotificationTrigger(dateMatching: rangeTime, repeats: true)
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)

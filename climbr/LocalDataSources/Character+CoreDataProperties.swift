@@ -2,7 +2,7 @@
 //  Character+CoreDataProperties.swift
 //  climbr
 //
-//  Created by Bayu Septyan Nur Hidayat on 08/08/24.
+//  Created by Bayu Septyan Nur Hidayat on 18/08/24.
 //
 //
 
@@ -16,28 +16,13 @@ extension Character {
         return NSFetchRequest<Character>(entityName: "Character")
     }
 
+    @NSManaged public var backEquipment: String?
+    @NSManaged public var handEquipment: String?
+    @NSManaged public var headEquipment: String?
     @NSManaged public var id: UUID?
-    @NSManaged public var user: NSSet?
-    @NSManaged public var backEquipment: Equipment?
-    @NSManaged public var headEquipment: Equipment?
-    @NSManaged public var handEquipment: Equipment?
-
-}
-
-// MARK: Generated accessors for user
-extension Character {
-
-    @objc(addUserObject:)
-    @NSManaged public func addToUser(_ value: User)
-
-    @objc(removeUserObject:)
-    @NSManaged public func removeFromUser(_ value: User)
-
-    @objc(addUser:)
-    @NSManaged public func addToUser(_ values: NSSet)
-
-    @objc(removeUser:)
-    @NSManaged public func removeFromUser(_ values: NSSet)
+    @NSManaged public var name: String?
+    @NSManaged public var point: Int64
+    @NSManaged public var gender: String?
 
 }
 
