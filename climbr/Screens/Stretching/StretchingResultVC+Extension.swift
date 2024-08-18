@@ -37,8 +37,8 @@ extension StretchingResultVC {
         
         guard durations > 0 else {
             greetingLabel.setText("Same time, here?")
-            stretchingDurationLabel.setText("\(char?.name ?? "Character") is too tired to find coins.")
-            rewardPointLabel.setText("You haven’t reduce your sedentary time.")
+            rewardPointLabel.setText("\(char?.name ?? "Character") is too tired to find coins.")
+            stretchingDurationLabel.setText("You haven’t reduce your sedentary time.")
             return
         }
         
