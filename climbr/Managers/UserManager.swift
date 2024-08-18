@@ -50,6 +50,31 @@ class UserManager : CharacterService {
         
     }
     
+    func updatePreferences(data: UserPreferenceModel) {
+        guard let container = container else { return }
+        
+        let request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
+        request.fetchLimit = 1
+        
+        do {
+            if let fetchResult = try container.fetch(request).first {
+                fetchResult.startWorkingHour = data.startWorkingHour
+                fetchResult.endWorkingHour = data.endWorkingHour
+                fetchResult.reminderInterval = data.reminderInterval
+                fetchResult.launchAtLogin = data.launchAtLogin
+                
+                // Save the context after updating
+                try container.save()
+                print("Preferences updated successfully.")
+            } else {
+                print("No preferences found to update.")
+            }
+        } catch {
+            print("Error fetching or updating user preferences: \(error.localizedDescription)")
+        }
+    }
+
+    
     func getCharacterData() -> CharacterModel? {
         guard let container = container else {return nil}
         let request: NSFetchRequest<Character> = Character.fetchRequest()
@@ -71,26 +96,27 @@ class UserManager : CharacterService {
     }
     
     func saveCharacterData(data: CharacterModel) {
-        guard let container = container else { return }
-        
-        let newUserData = Character(context: container)
-        
-        newUserData.id = data.id
-        newUserData.name = data.name
-        newUserData.point = data.point
-        newUserData.gender = data.gender.rawValue
-        newUserData.headEquipment = data.headEquipment.rawValue
-        newUserData.handEquipment = data.handEquipment.rawValue
-        newUserData.backEquipment = data.backEquipment.rawValue
-        
-        do {
-            try container.save()
-            print("saved")
-        } catch {
-            print("Failed to save context: \(error)")
+            guard let container = container else { return }
+            
+            let newUserData = Character(context: container)
+            
+            newUserData.id = data.id
+            newUserData.name = data.name
+            newUserData.point = data.point
+            newUserData.gender = data.gender.rawValue
+            newUserData.headEquipment = data.headEquipment.rawValue
+            newUserData.handEquipment = data.handEquipment.rawValue
+            newUserData.backEquipment = data.backEquipment.rawValue
+            
+            do {
+                try container.save()
+                print("saved")
+            } catch {
+                print("Failed to save context: \(error)")
+            }
+            
         }
-        
-    }
+    
     
     func updatePoint(character: CharacterModel, points: Int) {
         

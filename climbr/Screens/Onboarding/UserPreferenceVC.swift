@@ -299,6 +299,11 @@ class UserPreferenceVC: NSViewController {
         checkboxButton.translatesAutoresizingMaskIntoConstraints = false
         checkboxButton.font = NSFont.systemFont(ofSize: 22, weight: .bold)
         checkboxButton.contentTintColor = .black
+        if isChecked{
+            checkboxButton.state = .on
+        } else {
+            checkboxButton.state = .off
+        }
         checkboxButton.target = self
         checkboxButton.action = #selector(actionCheckbox)
         
