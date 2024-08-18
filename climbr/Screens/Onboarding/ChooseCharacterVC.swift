@@ -22,16 +22,12 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     private let buttonStart = CLTextButtonV2(title: "Start Climbing", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 26, weight: .bold))
     private var containerIsClicked: Bool = false
     
-    enum Gender{
-        case male, female
-    }
-    
     var genderChar: Gender?
-    var userService: UserService?
+    var charService: CharacterService?
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -195,19 +191,18 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     @objc
     private func actButtonStart(){
         print("tapped and inputed \(textField.stringValue)")
+        var gender: Gender!
         
         if let genderChar{
-            if genderChar == Gender.female{
-                print("user choose female")
-            }else if genderChar == Gender.male{
-                print("user choose male")
-            }
+            gender = genderChar
         }else {
             print("user not choose character")
         }
         
-        let userData = UserModel(id: UUID(), name: textField.stringValue, point: 0)
-        userService?.saveUserData(data: userData)
+        print("gender pal user is : \(String(describing: gender))")
+        
+        let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
+        charService?.saveCharacterData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
         
         pop()

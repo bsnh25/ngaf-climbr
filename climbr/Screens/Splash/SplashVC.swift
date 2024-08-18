@@ -12,14 +12,14 @@ class SplashVC: NSViewController {
     
     let appLogoView = NSImageView(image: .appLogo)
     let mountainImage = NSImageView(image: .onboardingmountain)
-    var userService: UserService?
+    var charService: CharacterService?
     var mountainImageTopConstraint: NSLayoutConstraint!
     var mountainImageCenterYConstraint: NSLayoutConstraint!
     var appLogoCenterYConstraint: NSLayoutConstraint!
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +82,7 @@ class SplashVC: NSViewController {
     private func navigateToHome() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
-            if self.userService?.getPreferences() == nil {
+            if self.charService?.getPreferences() == nil {
                 guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
                 UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)

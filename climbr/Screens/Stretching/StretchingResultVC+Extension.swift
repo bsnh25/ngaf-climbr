@@ -14,17 +14,17 @@ extension StretchingResultVC {
             return partial + next.rewardPoint
         }
         
-        var label: String = "\(user?.name ?? "Character") is too tired to find coins."
+        var label: String = "\(char?.name ?? "Character") is too tired to find coins."
         
         if points > 0 {
-            label = "While resting, \(user?.name ?? "Character") found \(points) coins!"
+            label = "While resting, \(char?.name ?? "Character") found \(points) coins!"
             updateProgress()
         }
         
         rewardPointLabel.setText(label)
         
-        if let user {
-            userService?.updatePoint(user: user, points: points)
+        if let char {
+            charService?.updatePoint(character: char, points: points)
         }
     }
     
@@ -37,7 +37,7 @@ extension StretchingResultVC {
         
         guard durations > 0 else {
             greetingLabel.setText("Same time, here?")
-            stretchingDurationLabel.setText("\(user?.name ?? "Character") is too tired to find coins.")
+            stretchingDurationLabel.setText("\(char?.name ?? "Character") is too tired to find coins.")
             rewardPointLabel.setText("You haven’t reduce your sedentary time.")
             return
         }
@@ -50,7 +50,7 @@ extension StretchingResultVC {
     }
     
     func getUserData() {
-        self.user = userService?.getUserData()
+        self.char = charService?.getCharacterData()
     }
     
     @objc func goToMainMenu() {

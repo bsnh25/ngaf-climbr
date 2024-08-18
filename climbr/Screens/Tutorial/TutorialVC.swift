@@ -28,10 +28,11 @@ class TutorialVC: NSViewController {
         fontText: .systemFont(ofSize: 18, weight: .bold)
     )
     
+    var getUser: CharacterModel!
     var charLabel       = CLLabel(fontSize: 28, fontWeight: .bold)
     var tutorialLabel   = CLLabel(fontSize: 24, fontWeight: .bold)
     var bags: Set<AnyCancellable> = []
-    var userService: UserService?
+    var charService: CharacterService?
     
     var firstTutorial: Bool = true {
         didSet {
@@ -39,9 +40,9 @@ class TutorialVC: NSViewController {
         }
     }
     
-    init(userService: UserService?){
+    init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
-        self.userService = userService
+        self.charService = charService
     }
     
     required init?(coder: NSCoder) {
@@ -67,7 +68,7 @@ class TutorialVC: NSViewController {
         configureText()
         configureButton()
         selectorButton()
-        setCharName()
+        
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -84,12 +85,8 @@ class TutorialVC: NSViewController {
     func configureChar(){
         view.addSubview(character)
         
-        let padding = view.bounds.width * 0.15
-        let height = view.bounds.height * 0.55
-        let width = view.bounds.width * 0.3
-        
-        character.image = NSImage(resource: .boyHalf)
-        character.image?.size = CGSize(width: width, height: height)
+        let padding = view.bounds.width * 0.05
+        setCharName()
         
         character.snp.makeConstraints { char in
             char.leading.equalToSuperview().inset(padding)
@@ -106,10 +103,11 @@ class TutorialVC: NSViewController {
         container.layer?.cornerRadius = 10
         
         let padding = view.bounds.width * 0.05
+        let topPadding = view.bounds.width * 0.08
         let height = view.bounds.height * 0.35
         
         container.snp.makeConstraints { container in
-            container.top.equalTo(character.snp.bottom).inset(padding)
+            container.top.equalTo(character.snp.bottom).inset(topPadding)
             container.leading.trailing.equalToSuperview().inset(padding)
             container.height.equalTo(height)
         }
@@ -122,7 +120,7 @@ class TutorialVC: NSViewController {
         startTutorialButton.target = self
         skipTutorialButton.target = self
         
-        let padding = view.bounds.width * 0.05
+        let padding = view.bounds.width * 0.02
         let height = view.bounds.height * 0.1
         let width = view.bounds.width * 0.4
         
@@ -150,7 +148,7 @@ class TutorialVC: NSViewController {
         tutorialLabel.backgroundColor = .clear
         
         let padding = view.bounds.width * 0.04
-        let width = view.bounds.width * 1
+        let descPadding = view.bounds.width * 0.02
         
         charLabel.snp.makeConstraints { title in
             title.top.equalTo(container.snp.top).inset(padding)
@@ -158,7 +156,7 @@ class TutorialVC: NSViewController {
         }
         
         tutorialLabel.snp.makeConstraints { desc in
-            desc.top.equalTo(charLabel.snp.bottom).offset(padding)
+            desc.top.equalTo(charLabel.snp.bottom).offset(descPadding)
             desc.leading.equalTo(container.snp.leading).inset(padding)
             desc.width.equalTo(1100)
             

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Swinject
+import AppKit
 
 extension TutorialVC {
     
@@ -79,12 +81,31 @@ extension TutorialVC {
     }
     
     func setCharName(){
-        let getUser = userService?.getUserData()
+        var height: CGFloat = 0
+        var width: CGFloat = 0
+        
+        getUser = charService?.getCharacterData()
         charLabel.stringValue = "\(getUser?.name ?? "John Doe")"
+        
+        if getUser?.gender == .male {
+            character.image = NSImage(resource: .boyHalf)
+            height = view.bounds.height * 0.82
+            width = view.bounds.width * 0.42
+        } else {
+            character.image = NSImage(resource: .femaleHalf)
+            height = view.bounds.height * 0.74
+            width = view.bounds.width * 0.64
+        }
+        
+        character.image?.size = CGSize(width: width, height: height)
+        
+        print("Height char : \(height)")
+        print("Width char : \(width)")
     }
     
     func updateSelectorButton(){
         firstTutorial = false
+        background.subtract(with: .zero)
     }
 
 }
