@@ -117,8 +117,12 @@ extension UserPreferenceVC{
         let calendar = Calendar.current
         let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
         
+        if handleSpecialCases(oldTime: lastStopValue, newTime: stopWorkHour.dateValue){
+            stopWorkHour.dateValue = lastStopValue
+            return
+        }
+        
         if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: stopWorkHour.dateValue) {
-            // Stop time decreased and difference was 2 hours
             updateStartWorkHour()
         }
         
@@ -151,10 +155,34 @@ extension UserPreferenceVC{
         let oldMinutes = oldComponents.hour! * 60 + oldComponents.minute!
         let newMinutes = newComponents.hour! * 60 + newComponents.minute!
         
-        return (newMinutes - oldMinutes + 1440) % 1440 <= 720
+        let difference = (newMinutes - oldMinutes + 1440) % 1440
+        
+        return difference <= 720
     }
-    
+
     func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
         return !isTimeIncreased(from: oldTime, to: newTime)
     }
+    
+    func handleSpecialCases(oldTime: Date, newTime: Date) -> Bool {
+            let calendar = Calendar.current
+            let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
+            let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
+            
+            let oldHour = oldComponents.hour!
+            let newHour = newComponents.hour!
+            
+            // Special case: from 23:00-23:59 to 00:00-00:59 (next day)
+            if oldHour == 23 && newHour == 0 {
+                return true  // Allow this change
+            }
+            
+            // Special case: from 00:00-00:59 to 23:00-23:59 (same day)
+            if oldHour == 0 && newHour == 23 {
+                return false  // Prevent this change
+            }
+            
+            // No special case detected
+            return false
+        }
 }
