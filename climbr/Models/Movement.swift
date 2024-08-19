@@ -94,4 +94,5 @@ enum ExerciseName: String, CaseIterable {
     case UpperBackStretchRight = "Upper Back Stretch Right"
     case UpperBackStretchUp = "Upper Back Stretch Up"
     case Still = "Still"
+    case Negative = "negative"
 }
