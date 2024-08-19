@@ -8,6 +8,7 @@
 import AppKit
 import AVFoundation
 import Swinject
+import Vision
 
 extension StretchingVC {
     func updateMovementData() {
@@ -48,11 +49,27 @@ extension StretchingVC {
     }
     
     func updateMovementState() {
+        
+        $showTutorial.sink { value in
+            if !value {
+                self.instructionView.hide()
+            } else {
+                self.instructionView.unhide()
+            }
+        }
+        .store(in: &bags)
+        
         $exerciseName.sink { [weak self] name in
             guard let self else { return }
             
             /// Get current movement data
             guard let movement = self.setOfMovements[safe: self.currentIndex] else {
+                return
+            }
+            
+            guard !self.showTutorial else {
+                self.movementStateView.hide()
+                self.pauseTimer()
                 return
             }
             
@@ -71,7 +88,7 @@ extension StretchingVC {
                     /// Set label, foreground, and background color based on each state
                     var label: String = "Please move according to the guidance"
                     
-                    if name == .Still {
+                    if name == .Still || name == .Negative {
                         label = "Please move according to the guidance"
                         self.movementStateView.setForegroundColor(.black)
                         self.movementStateView.setBackgroundColor(.white)
@@ -261,17 +278,18 @@ extension StretchingVC {
 
 extension StretchingVC : PredictorDelegate {
     func predictor(didLabelAction action: String, with confidence: Double) {
-        
         for name in ExerciseName.allCases {
             if name.rawValue == action && confidence > 0.7 {
                 if exerciseName != name {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.exerciseName = name
-                    }
+                    self.exerciseName = name
                     print("\(name) and the confidence is \(confidence)")
                 }
             }
         }
+    }
+    
+    func predictor(didDetectUpperBody value: Bool, with joints: [VNHumanBodyPoseObservation.JointName]) {
+        self.showTutorial = !value
     }
     
     func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
@@ -302,6 +320,8 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
         if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
             connection.isVideoMirrored = true
         }
-        predictor?.estimation(sampleBuffer: sampleBuffer)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.predictor?.estimation(sampleBuffer: sampleBuffer)
+        }
     }
 }
