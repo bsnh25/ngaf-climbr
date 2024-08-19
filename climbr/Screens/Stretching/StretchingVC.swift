@@ -12,6 +12,7 @@ import AVFoundation
 class StretchingVC: NSViewController {
     let cameraPreview           = CameraPreviewView()
     let movementInfoView        = NSView()
+    let instructionView         = ExerciseInstructionView()
     let movementStack           = NSStackView()
     let currentMovementView     = CurrentMovementView()
     let movementDivider         = Divider()
@@ -51,6 +52,7 @@ class StretchingVC: NSViewController {
     var timer: Timer?
     var isTimerRunning: Bool = false
     var isTimerPaused: Bool = false
+    @Published var showTutorial: Bool = true
     
     /// Dependencies
     var audioService: AudioService?
@@ -81,24 +83,31 @@ class StretchingVC: NSViewController {
         cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
-        
+        configureInstructionView()
         view.wantsLayer = true
         
         updateMovementData()
         updateMovementState()
 
     }
-    
-    override func viewDidAppear() {
-        push(to: ExerciseInstructionVC())
-    }
-
+  
     override func viewDidDisappear() {
         super.viewDidDisappear()
         cameraService?.stopSession()
         
         stopTimer()
         bags.removeAll()
+    }
+    
+    private func configureInstructionView() {
+        view.addSubview(instructionView)
+        
+        NSLayoutConstraint.activate([
+            instructionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            instructionView.topAnchor.constraint(equalTo: view.topAnchor),
+            instructionView.trailingAnchor.constraint(equalTo: movementInfoView.leadingAnchor),
+            instructionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     private func setupVideoPreview(){
