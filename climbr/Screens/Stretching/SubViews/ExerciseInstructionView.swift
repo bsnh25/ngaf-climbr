@@ -1,5 +1,5 @@
 //
-//  ExerciseInstructionVC.swift
+//  ExerciseInstructionView.swift
 //  climbr
 //
 //  Created by Ivan Nur Ilham Syah on 16/08/24.
@@ -9,6 +9,7 @@ import Cocoa
 
 class ExerciseInstructionView: NSView {
     let imageView = NSImageView()
+    let label = CLLabel(fontSize: 24, fontWeight: .semibold)
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -17,18 +18,29 @@ class ExerciseInstructionView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         
+        addSubview(imageView)
+        addSubview(label)
+        
         wantsLayer = true
-        layer?.backgroundColor = .black.copy(alpha: 0.8)
+        layer?.backgroundColor = .black.copy(alpha: 0.6)
         translatesAutoresizingMaskIntoConstraints = false
+        
+        label.setText("Fit yourself to this shape so we can see you better")
+        label.alignment = .center
+        label.textColor = .white
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
         
         imageView.image = .upperBodyOutline
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.imageScaling = .scaleProportionallyUpOrDown
         imageView.image?.size = NSSize(width: 720, height: 720)
         
-        addSubview(imageView)
-        
         NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 24),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
@@ -75,59 +87,4 @@ class ExerciseInstructionView: NSView {
         /// Add animation to layer
         layer.add(animation, forKey: "opacity")
     }
-}
-
-class ExerciseInstructionVC: NSViewController {
-    
-    let icon             = CLSFSymbol(
-        symbolName: "person.crop.square.badge.camera",
-        description: "Exercise Instruction"
-    )
-    let instructionLabel = CLLabel(fontSize: 24, fontWeight: .semibold)
-    let ctaLabel         = CLLabel(fontSize: 24, fontWeight: .regular)
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.kDarkGray.cgColor.copy(alpha: 0.9)
-        
-        configure()
-        setupClickGesture()
-    }
-    
-    private func configure() {
-        let stack = NSStackView(views: [icon, instructionLabel, ctaLabel])
-        
-        stack.orientation   = .vertical
-        stack.spacing       = 24
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        icon.setConfiguration(size: 60, weight: .bold)
-        icon.contentTintColor = .white
-        
-        instructionLabel.setText("Make sure you’re visible from head to waist for a better experience")
-        instructionLabel.setTextColor(.white)
-        
-        ctaLabel.setText("Click anywhere to start")
-        ctaLabel.setTextColor(.white.withAlphaComponent(0.8))
-        
-        view.addSubview(stack)
-        
-        NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
-    }
-    
-    private func setupClickGesture() {
-        let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleClick))
-        
-        view.addGestureRecognizer(clickGesture)
-    }
-    
-    @objc private func handleClick(_ sender: NSClickGestureRecognizer) {
-        self.pop()
-    }
-    
 }
