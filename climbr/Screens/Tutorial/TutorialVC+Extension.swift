@@ -42,10 +42,31 @@ extension TutorialVC {
     
     @objc
     func actionInterest(){
+        print("Hitted Action Interest")
         skipTutorialButton.isHidden = true
         skipTutorialButton.title = "Let's Go!"
-        tutorialLabel.stringValue = "Everyday, we need to meet a goal of a minimum of four stretching sessions, as per recommended by WHO. Let’s give it a go! Click start session to begin."
-        print("title skip : \(skipTutorialButton.title)")
+        let firstAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let startAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .black),
+            NSAttributedString.Key.foregroundColor: NSColor.cButton
+        ]
+        
+        let endAttr : [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let firstText    = NSMutableAttributedString(string: "Everyday, we need to meet a goal of a minimum of four stretching sessions, as per recommended by WHO. Let’s give it a go! Click ", attributes: firstAttr)
+        
+        let midText  = NSAttributedString(string: "START SESSION ", attributes: startAttr)
+        let endText  = NSAttributedString(string: "to begin.", attributes: endAttr)
+        
+        firstText.append(midText)
+        firstText.append(endText)
+        
+        tutorialLabel.attributedStringValue = firstText
         
         let height: CGFloat = 150
         let width: CGFloat = 450

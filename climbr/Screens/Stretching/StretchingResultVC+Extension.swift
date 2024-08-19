@@ -55,6 +55,7 @@ extension StretchingResultVC {
     }
     
     @objc func goToMainMenu() {
+        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         self.pop()
     }
     

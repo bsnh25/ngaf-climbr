@@ -11,7 +11,7 @@ import Swinject
 
 
 class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
-    private let containerBig = NSView()
+    private let containerBig = SubtractedView()
     private let container1 = NSView()
     private let container2 = NSView()
     private let text1 = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Name your climbr")
@@ -54,9 +54,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     
     private func configureContainerBig(){
         view.addSubview(containerBig)
-        containerBig.wantsLayer = true
-        containerBig.layer?.backgroundColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
-        //        containerBig.layer?.backgroundColor = NSColor.red.cgColor
+
         containerBig.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([

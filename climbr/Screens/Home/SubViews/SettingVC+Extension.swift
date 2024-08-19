@@ -22,7 +22,8 @@ extension SettingVC {
     func action30min(){
         resetButtonColors()
         min30.isSelected = true
-        min30.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
+        min30.layer?.backgroundColor = NSColor.cButton.cgColor
+        min30.foregroundColorText = .white
         print("\( min30.isSelected) : 30 choose")
     }
     
@@ -30,7 +31,8 @@ extension SettingVC {
     func action60min(){
         resetButtonColors()
         min60.isSelected = true
-        min60.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
+        min60.layer?.backgroundColor = NSColor.cButton.cgColor
+        min60.foregroundColorText = .white
         print("\( min60.isSelected) : 60 choose")
     }
     
@@ -38,7 +40,8 @@ extension SettingVC {
     func action90min(){
         resetButtonColors()
         min90.isSelected = true
-        min90.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
+        min90.layer?.backgroundColor = NSColor.cButton.cgColor
+        min90.foregroundColorText = .white
         print("\( min90.isSelected) : 90 choose")
     }
     
@@ -46,16 +49,22 @@ extension SettingVC {
     func action120min(){
         resetButtonColors()
         min120.isSelected = true
-        min120.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.1).cgColor
+        min120.layer?.backgroundColor = NSColor.cButton.cgColor
+        min120.foregroundColorText = .white
         print("\( min120.isSelected) : 120 choose")
     }
     
     func resetButtonColors() {
         // Reset all buttons to gray
-        min30.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        min60.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        min90.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
-        min120.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.05).cgColor
+        min30.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
+        min60.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
+        min90.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
+        min120.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
+        
+        min30.foregroundColorText = .black
+        min60.foregroundColorText = .black
+        min90.foregroundColorText = .black
+        min120.foregroundColorText = .black
         
         min30.isSelected = false
         min60.isSelected = false

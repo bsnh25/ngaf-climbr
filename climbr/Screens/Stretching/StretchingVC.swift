@@ -92,7 +92,7 @@ class StretchingVC: NSViewController {
     override func viewDidAppear() {
         push(to: ExerciseInstructionVC())
     }
-  
+
     override func viewDidDisappear() {
         super.viewDidDisappear()
         cameraService?.stopSession()
@@ -228,7 +228,7 @@ class StretchingVC: NSViewController {
         cameraPreview.addSubview(movementStateView)
         
         NSLayoutConstraint.activate([
-            movementStateView.topAnchor.constraint(equalTo: cameraPreview.safeAreaLayoutGuide.topAnchor, constant: padding),
+            movementStateView.bottomAnchor.constraint(equalTo: cameraPreview.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             movementStateView.centerXAnchor.constraint(equalTo: cameraPreview.centerXAnchor),
             movementStateView.widthAnchor.constraint(equalTo: cameraPreview.widthAnchor, multiplier: 0.3),
             movementStateView.heightAnchor.constraint(equalToConstant: 48),
