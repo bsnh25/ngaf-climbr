@@ -45,9 +45,14 @@ class HomeVC: NSViewController {
         weightOfFont: .bold,
         contentLabel: "Today’s session goal"
     )
+    let points  = CLLabel(
+        fontSize: 18.79,
+        fontWeight: .bold
+    )
     let containerView = NSView()
     let imageHome = NSImageView()
     let stack = NSStackView()
+    let pointsView = NSStackView()
     
     var audioService: AudioService?
     var charService: CharacterService?
@@ -78,6 +83,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
+        setupPointsLabel()
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -253,6 +259,39 @@ class HomeVC: NSViewController {
         startStretchButton.target = self
         
         stackConfig()
+    }
+    
+    func setupPointsLabel() {
+        
+        let icon = CLSFSymbol(symbolName: "c.circle", description: "coins")
+        icon.setConfiguration(size: 18.79, weight: .bold)
+        icon.contentTintColor = .black
+        
+        points.setText("100")
+        points.backgroundColor = .clear
+        points.setTextColor(.black)
+        
+        pointsView.wantsLayer = true
+        
+        pointsView.setViews([icon, points], in: .center)
+        pointsView.translatesAutoresizingMaskIntoConstraints = false
+        pointsView.orientation = .horizontal
+        pointsView.alignment = .centerY
+        pointsView.distribution = .equalSpacing
+        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.7)
+        pointsView.layer?.cornerRadius = 10
+        pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        view.addSubview(pointsView)
+        
+        let hPadding = view.bounds.width * 0.02
+        
+        NSLayoutConstraint.activate([
+            pointsView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: hPadding),
+            pointsView.topAnchor.constraint(equalTo: storeButton.topAnchor),
+            pointsView.widthAnchor.constraint(equalToConstant: 160),
+            pointsView.heightAnchor.constraint(equalToConstant: 38)
+        ])
     }
     
 }

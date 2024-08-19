@@ -95,6 +95,9 @@ extension TutorialVC {
                 skipTutorialButton.action = #selector(actionLetsGo)
                 tutorialLabel.stringValue = "Look at that. We’re progressing! Each session a step closer to a healthier work life. Keep going and let’s conquer all the mountains in the world!"
                 
+                let height: CGFloat = 150
+                let width: CGFloat = 450
+                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
             }
         }
         
@@ -126,7 +129,6 @@ extension TutorialVC {
     
     func updateSelectorButton(){
         firstTutorial = false
-        background.subtract(with: .zero)
     }
 
 }
