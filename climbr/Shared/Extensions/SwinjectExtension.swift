@@ -13,10 +13,11 @@ extension Container {
         let container = Container()
         
         /// Managers
+        /// Ubah yang masih shared
         container.register(PredictorService.self) { _ in PredictorManager() }
-        container.register(AudioService.self) { _ in AudioManager.shared }
-        container.register(CameraService.self) { _ in CameraManager() }
-        container.register(NotificationService.self) { _ in NotificationManager.shared }
+        container.register(AudioService.self) { _ in AudioManager.shared } ///dipake di banyak tempat
+        container.register(CameraService.self) { _ in CameraManager() } ///dipake di satu tempat saja
+        container.register(NotificationService.self) { _ in NotificationManager.shared } ///dipake di dua tempatx
         container.register(PersistenceController.self) { _ in return PersistenceController.shared }
         container.register(CharacterService.self) { resolver in
             let persistence = resolver.resolve(PersistenceController.self)

@@ -36,7 +36,7 @@ class SubtractedView: NSView {
         
         subtractRect = self.bounds
         // Optionally, give the view a background color to make the effect visible
-        self.layer?.backgroundColor = .white.copy(alpha: 0.5)
+        self.layer?.backgroundColor = .black.copy(alpha: 0.8)
     }
     
     required init?(coder: NSCoder) {

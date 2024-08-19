@@ -21,10 +21,17 @@ extension HomeVC {
     
     @objc
     func actionStartSession(){
-        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         if let vc = Container.shared.resolve(StretchingVC.self) {
+            
+            let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
+            
+            if isTutorial {
+                vc.setOfMovements = Movement.setOfMovements.first!
+            }
+            
             push(to: vc)
             print("go to stretching session")
+            
         }
     }
     
@@ -78,6 +85,8 @@ extension HomeVC {
     
     
     func observeTimer(){
+        //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
+        
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
     }
 }

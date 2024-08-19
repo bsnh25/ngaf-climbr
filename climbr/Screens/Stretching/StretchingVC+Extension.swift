@@ -21,6 +21,7 @@ extension StretchingVC {
             }
             
             self.currentMovementView.updateData(movement)
+            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
@@ -100,7 +101,7 @@ extension StretchingVC {
                 } else {
                     self.playSfx("correct")
                     self.startExerciseSession(duration: movement.duration)
-                    self.movementStateView.hide()
+//                    self.movementStateView.hide()
                 }
             }
         }.store(in: &bags)
@@ -116,7 +117,7 @@ extension StretchingVC {
             ///
             /// Assume that if remaining time is zero, it means the movement has done
             guard time > 0 else {
-                self.movementStateView.hide()
+//                self.movementStateView.hide()
                 
                 self.next()
                 
@@ -127,6 +128,9 @@ extension StretchingVC {
                 self.playSfx("countdown")
             }
             
+            self.movementStateView.setLabel("\(Int(time)) seconds left")
+            self.movementStateView.setForegroundColor(.black)
+            self.movementStateView.setBackgroundColor(.white)
             self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)

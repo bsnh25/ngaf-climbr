@@ -34,21 +34,88 @@ import SnapKit
 
 class SettingVC: NSViewController {
     
-    let settingText = CLTextLabelV2(sizeOfFont: 20, weightOfFont: .bold, contentLabel: "Setting Preference")
-    let subTitleA = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Your work hours")
-    let subTitleB = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
-    let fromText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "From")
-    let startTime = CLDatePicker(backgroundColor: .cHourPicker, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
-    let toText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "to")
-    let endTime = CLDatePicker(backgroundColor: .cHourPicker, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 17))
-    let everyText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
-    let min30 = CLPickerButton(title: "30", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    let min60 = CLPickerButton(title: "60", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    let min90 = CLPickerButton(title: "90", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    let min120 = CLPickerButton(title: "120", backgroundColor: .black.withAlphaComponent(0.05), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold))
-    let minutesText = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "minutes")
-    let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
-    let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 13, weight: .regular))
+    let settingText = CLTextLabelV2(
+        sizeOfFont: 20,
+        weightOfFont: .bold,
+        contentLabel: "Preference"
+    )
+    let subTitleA = CLTextLabelV2(
+        sizeOfFont: 17,
+        weightOfFont: .bold,
+        contentLabel: "Your work hours in a 24hr format"
+    )
+    let subTitleB = CLTextLabelV2(
+        sizeOfFont: 17,
+        weightOfFont: .bold,
+        contentLabel: "When do you want to be reminded"
+    )
+    let fromText = CLTextLabelV2(
+        sizeOfFont: 17,
+        weightOfFont: .regular,
+        contentLabel: "From"
+    )
+    let startTime = CLDatePicker(
+        backgroundColor: .cHourPicker,
+        textColor: .black,
+        datePickerStyleElement: .hourMinute,
+        font: NSFont.systemFont(ofSize: 17)
+    )
+    let toText = CLTextLabelV2(
+        sizeOfFont: 17,
+        weightOfFont: .regular,
+        contentLabel: "to"
+    )
+    let endTime = CLDatePicker(
+        backgroundColor: .cHourPicker,
+        textColor: .black, 
+        datePickerStyleElement: .hourMinute,
+        font: NSFont.systemFont(ofSize: 17)
+    )
+    let everyText = CLTextLabelV2(
+        sizeOfFont: 17,
+        weightOfFont: .regular,
+        contentLabel: "Every"
+    )
+    let min30 = CLPickerButton(
+        title: "30",
+        backgroundColor: .cContainerHome.withAlphaComponent(0.5),
+        foregroundColorText: .black,
+        fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold)
+    )
+    let min60 = CLPickerButton(
+        title: "60",
+        backgroundColor: .cContainerHome.withAlphaComponent(0.5),
+        foregroundColorText: .black,
+        fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold)
+    )
+    let min90 = CLPickerButton(
+        title: "90",
+        backgroundColor: .cContainerHome.withAlphaComponent(0.5),
+        foregroundColorText: .black,
+        fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold)
+    )
+    let min120 = CLPickerButton(
+        title: "120",
+        backgroundColor: .cContainerHome.withAlphaComponent(0.5),
+        foregroundColorText: .black,
+        fontText: NSFont.systemFont(ofSize: 13.68, weight: .bold)
+    )
+    let minutesText = CLTextLabelV2(
+        sizeOfFont: 17,
+        weightOfFont: .regular,
+        contentLabel: "minutes"
+    )
+    let checkboxButton = NSButton(
+        checkboxWithTitle: "Launch Limbr on startup",
+        target: nil,
+        action: #selector(actionCheckbox)
+    )
+    let saveButton = CLTextButtonV2(
+        title: "Save",
+        backgroundColor: .cButton,
+        foregroundColorText: .white,
+        fontText: NSFont.systemFont(ofSize: 13, weight: .regular)
+    )
     
     var lastStartValue: Date!
     var lastStopValue: Date!
@@ -69,7 +136,7 @@ class SettingVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.cBox.cgColor
+        view.layer?.backgroundColor = NSColor.cBox.cgColor.copy(alpha: 0.84)
         
         configureUI()
         
@@ -211,17 +278,16 @@ class SettingVC: NSViewController {
         saveButton.target = self
         saveButton.action = #selector(actionSave)
         
-        let topPaddingSetting = view.bounds.height * 0.1
         let leadingPaddingSetting = view.bounds.height * 0.05
         let padding = view.bounds.height * 0.02
         
         settingText.snp.makeConstraints { mainTitle in
-            mainTitle.top.equalToSuperview().inset(topPaddingSetting)
+            mainTitle.top.equalToSuperview().inset(20)
             mainTitle.leading.equalToSuperview().inset(leadingPaddingSetting)
         }
         
         subTitleA.snp.makeConstraints { subA in
-            subA.top.equalTo(settingText.snp.bottom).offset(padding)
+            subA.top.equalTo(settingText.snp.bottom).offset(32)
             subA.leading.equalTo(settingText.snp.leading)
         }
         
