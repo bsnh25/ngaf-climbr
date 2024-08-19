@@ -64,6 +64,11 @@ extension StretchingVC {
                 return
             }
             
+            guard !self.showTutorial else {
+                self.movementStateView.hide()
+                return
+            }
+            
             /// Return true if the name equals to current movement
             let positionState   = name == movement.name
             
@@ -83,10 +88,6 @@ extension StretchingVC {
                         label = "Please move according to the guidance"
                         self.movementStateView.setForegroundColor(.black)
                         self.movementStateView.setBackgroundColor(.white)
-                        
-                        if self.showTutorial {
-                            self.movementStateView.hide()
-                        }
                     } else {
                         label = "Position Incorrect"
                         self.movementStateView.setForegroundColor(.black)
