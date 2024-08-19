@@ -53,6 +53,8 @@ extension StretchingVC {
         $showTutorial.sink { value in
             if !value {
                 self.instructionView.hide()
+            } else {
+                self.instructionView.unhide()
             }
         }
         .store(in: &bags)
@@ -67,6 +69,7 @@ extension StretchingVC {
             
             guard !self.showTutorial else {
                 self.movementStateView.hide()
+                self.pauseTimer()
                 return
             }
             
@@ -85,7 +88,7 @@ extension StretchingVC {
                     /// Set label, foreground, and background color based on each state
                     var label: String = "Please move according to the guidance"
                     
-                    if name == .Still {
+                    if name == .Still || name == .Negative {
                         label = "Please move according to the guidance"
                         self.movementStateView.setForegroundColor(.black)
                         self.movementStateView.setBackgroundColor(.white)
@@ -286,9 +289,7 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(didDetectUpperBody value: Bool, with joints: [VNHumanBodyPoseObservation.JointName]) {
-        if value {
-            self.showTutorial = false
-        }
+        self.showTutorial = !value
     }
     
     func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
@@ -319,7 +320,7 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
         if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
             connection.isVideoMirrored = true
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.predictor?.estimation(sampleBuffer: sampleBuffer)
         }
     }
