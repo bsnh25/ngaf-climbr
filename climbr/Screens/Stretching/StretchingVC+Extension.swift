@@ -8,6 +8,7 @@
 import AppKit
 import AVFoundation
 import Swinject
+import Vision
 
 extension StretchingVC {
     func updateMovementData() {
@@ -47,6 +48,14 @@ extension StretchingVC {
     }
     
     func updateMovementState() {
+        
+        $showTutorial.sink { value in
+            if !value {
+                self.instructionView.hide()
+            }
+        }
+        .store(in: &bags)
+        
         $exerciseName.sink { [weak self] name in
             guard let self else { return }
             
@@ -74,6 +83,10 @@ extension StretchingVC {
                         label = "Please move according to the guidance"
                         self.movementStateView.setForegroundColor(.black)
                         self.movementStateView.setBackgroundColor(.white)
+                        
+                        if self.showTutorial {
+                            self.movementStateView.hide()
+                        }
                     } else {
                         label = "Position Incorrect"
                         self.movementStateView.setForegroundColor(.black)
@@ -257,16 +270,19 @@ extension StretchingVC {
 
 extension StretchingVC : PredictorDelegate {
     func predictor(didLabelAction action: String, with confidence: Double) {
-        
         for name in ExerciseName.allCases {
             if name.rawValue == action && confidence > 0.7 {
                 if exerciseName != name {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.exerciseName = name
-                    }
+                    self.exerciseName = name
                     print("\(name) and the confidence is \(confidence)")
                 }
             }
+        }
+    }
+    
+    func predictor(didDetectUpperBody value: Bool, with joints: [VNHumanBodyPoseObservation.JointName]) {
+        if value {
+            self.showTutorial = false
         }
     }
     
@@ -298,6 +314,8 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
         if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
             connection.isVideoMirrored = true
         }
-        predictor?.estimation(sampleBuffer: sampleBuffer)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.predictor?.estimation(sampleBuffer: sampleBuffer)
+        }
     }
 }
