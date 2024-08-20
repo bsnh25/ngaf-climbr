@@ -78,6 +78,8 @@ extension HomeVC {
     
     
     func observeTimer(){
+        //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
+        
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
     }
 }

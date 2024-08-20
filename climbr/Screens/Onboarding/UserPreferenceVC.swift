@@ -15,15 +15,15 @@ class UserPreferenceVC: NSViewController {
     let bgContainer = NSView()
     let pathImage = NSImageView(image: .onboardingmountain)
     let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
-    let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your work hours")
+    let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
     let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
-    let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .black, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
+    let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
     let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
     let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
     let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
     let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
-    let startWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
-    let stopWorkHour = CLDatePicker(backgroundColor: .lightGray, textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
+    let startWorkHour = CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
+    let stopWorkHour = CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
     let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
@@ -170,7 +170,6 @@ class UserPreferenceVC: NSViewController {
     func configureStartWorkHour() {
         view.addSubview(startWorkHour)
         startWorkHour.wantsLayer = true
-        startWorkHour.layer?.backgroundColor = .clear
         
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -182,7 +181,6 @@ class UserPreferenceVC: NSViewController {
         }
         lastStartValue = startWorkHour.dateValue
         startWorkHour.datePickerElements = [.hourMinute]
-        startWorkHour.textColor = .white
       
         // Set the minimum date (01:00)
         var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -226,10 +224,8 @@ class UserPreferenceVC: NSViewController {
     func configureStopWorkHour() {
         view.addSubview(stopWorkHour)
         stopWorkHour.wantsLayer = true
-        stopWorkHour.layer?.backgroundColor = .clear
         lastStopValue = stopWorkHour.dateValue
         stopWorkHour.datePickerElements = [.hourMinute]
-        stopWorkHour.textColor = .white
       
         let calendar1 = Calendar.current
         
