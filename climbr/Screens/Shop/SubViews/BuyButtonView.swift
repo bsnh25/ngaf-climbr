@@ -24,13 +24,15 @@ class BuyButtonView: NSView {
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        itemButton.action = #selector(buttonClicked)
+        itemButton.action = #selector(buyButtonClicked)
+        itemButton.target = self
         setupUI()
     }
         
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        itemButton.action = #selector(buttonClicked)
+        itemButton.action = #selector(buyButtonClicked)
+        itemButton.target = self
         setupUI()
     }
     
@@ -43,7 +45,7 @@ class BuyButtonView: NSView {
         itemButton.title = "Get for 🪙 \(price)"
         
         if currentPoint! >= itemPrice! {
-            itemButton.backgroundColor = .cBox
+            itemButton.backgroundColor = .cButton
         }else{
             itemButton.backgroundColor = .darkGray
         }
@@ -55,10 +57,6 @@ class BuyButtonView: NSView {
         layer?.cornerRadius = 10
         layer?.shadowRadius = 5
         layer?.shadowOpacity = 0.3
-        
-//        addSubview(itemButton)
-//        addSubview(itemLabel)
-        
         setupItemButton()
         setupItemLabel()
         
@@ -94,7 +92,7 @@ class BuyButtonView: NSView {
         }
     }
     
-    @objc func buttonClicked(){
+    @objc func buyButtonClicked(){
         print("halo")
         if currentPoint! >= itemPrice! {
             equipment?.purchaseEquipment(data: self.item!)

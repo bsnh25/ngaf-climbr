@@ -51,7 +51,10 @@ class EquipmentManager: EquipmentService {
         
         let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
         
+        let sortDescriptorUnlock = NSSortDescriptor(key: "isUnlocked", ascending: false)
+        
         request.sortDescriptors = [sortDescriptor]
+        request.sortDescriptors = [sortDescriptorUnlock]
         
         request.predicate = predicate
         
