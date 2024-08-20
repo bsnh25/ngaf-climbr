@@ -173,13 +173,13 @@ extension UserPreferenceVC{
             let newHour = newComponents.hour!
             
             // Special case: from 23:00-23:59 to 00:00-00:59 (next day)
-            if oldHour == 23 && newHour == 0 {
-                return true  // Allow this change
+            if oldHour == 23 && newHour == 3 {
+                return true
             }
             
             // Special case: from 00:00-00:59 to 23:00-23:59 (same day)
-            if oldHour == 0 && newHour == 23 {
-                return false  // Prevent this change
+            if oldHour == 3 && newHour == 23 {
+                return false
             }
             
             // No special case detected

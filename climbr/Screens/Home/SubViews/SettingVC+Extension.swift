@@ -129,6 +129,11 @@ extension SettingVC {
         let calendar = Calendar.current
         let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
         
+        if handleSpecialCases(oldTime: lastStopValue, newTime: endTime.dateValue){
+            endTime.dateValue = lastStopValue
+            return
+        }
+        
         if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: endTime.dateValue) {
             // Stop time decreased and difference was 2 hours
             updateStartWorkHour()
@@ -169,4 +174,26 @@ extension SettingVC {
     func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
         return !isTimeIncreased(from: oldTime, to: newTime)
     }
+    
+    func handleSpecialCases(oldTime: Date, newTime: Date) -> Bool {
+            let calendar = Calendar.current
+            let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
+            let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
+            
+            let oldHour = oldComponents.hour!
+            let newHour = newComponents.hour!
+            
+            // Special case: from 23:00-23:59 to 00:00-00:59 (next day)
+            if oldHour == 23 && newHour == 3 {
+                return true
+            }
+            
+            // Special case: from 00:00-00:59 to 23:00-23:59 (same day)
+            if oldHour == 3 && newHour == 23 {
+                return false
+            }
+            
+            // No special case detected
+            return false
+        }
 }
