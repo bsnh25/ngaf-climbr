@@ -12,25 +12,41 @@ class BuyButtonView: NSView {
     let itemLabel = CLLabel()
     var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
     
-    var itemName : String?
+    var item : EquipmentItem?
     var itemPrice : Int?
+    var currentPoint: Int?
+    
+    var equipment: EquipmentService?
+    
+    func setupService(equipment: EquipmentService){
+        self.equipment = equipment
+    }
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        itemButton.action = #selector(buttonClicked)
         setupUI()
     }
         
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        itemButton.action = #selector(buttonClicked)
         setupUI()
     }
-        
-    func updateItemButtonPreview(name: String, price: Int){
-        self.itemName = name
+    
+    func updateItemButtonPreview(item: EquipmentItem, price: Int, point: Int){
+        self.item = item
         self.itemPrice = price
+        self.currentPoint = point
         
-        itemLabel.setText(name)
+        itemLabel.setText(item.name)
         itemButton.title = "Get for 🪙 \(price)"
+        
+        if currentPoint! >= itemPrice! {
+            itemButton.backgroundColor = .cBox
+        }else{
+            itemButton.backgroundColor = .darkGray
+        }
     }
     
     func setupUI(){
@@ -75,6 +91,15 @@ class BuyButtonView: NSView {
         itemButton.snp.makeConstraints { button in
             button.leading.trailing.bottom.equalToSuperview().inset(20)
             button.height.equalTo(50)
+        }
+    }
+    
+    @objc func buttonClicked(){
+        print("halo")
+        if currentPoint! >= itemPrice! {
+            equipment?.purchaseEquipment(data: self.item!)
+        }else{
+            print("kurang point")
         }
     }
 }

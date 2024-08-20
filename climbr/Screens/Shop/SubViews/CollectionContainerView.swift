@@ -179,7 +179,7 @@ extension CollectionContainerView: collectionItemProtocol {
             currentLocation = newSelected
         }
         
-        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
+//        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
         
         collectionDelegate?.updateCurrentItem(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!, isUnlocked: isUnlocked, type: type)
     }

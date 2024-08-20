@@ -67,11 +67,11 @@ class EquipmentManager: EquipmentService {
         }
     }
     
-    func purchaseEquipment(data: EquipmentModel) {
+    func purchaseEquipment(data: EquipmentItem) {
         guard let container = container else { return }
         
-        guard let equipment = fetchEquipment(byID: data.item.rawValue , context: container) else {
-            print("No equipment found with ID \(data.item.itemID)")
+        guard let equipment = fetchEquipment(byID: data.rawValue , context: container) else {
+            print("No equipment found with ID \(data.itemID)")
              return
          }
         

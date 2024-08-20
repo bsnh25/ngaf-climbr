@@ -61,6 +61,7 @@ class ShopItemVC: NSViewController {
         super.init(nibName: nil, bundle: nil)
         self.character = character
         self.equipment = equipment
+        buyButton.setupService(equipment: equipment!)
     }
     
     required init?(coder: NSCoder) {
@@ -71,21 +72,16 @@ class ShopItemVC: NSViewController {
         super.viewDidLoad()
         view.wantsLayer = true
         
-        //di sini ngefetch coredata buat currentHeadModel, hand, back, sama location
         if let heads = equipment?.getEquipments(equipmentType: .head) {
-//            print("berhasil fetch head")
             headItems = heads
         }
         if let backs = equipment?.getEquipments(equipmentType: .back) {
-//            print("berhasil fetch back")
             backItems = backs
         }
         if let hands = equipment?.getEquipments(equipmentType: .hand) {
-//            print("berhasil fetch hand")
             handItems = hands
         }
         if let locations = equipment?.getEquipments(equipmentType: .location) {
-//            print("berhasil fetch locs")
             locationItems = locations
         }
         
@@ -95,7 +91,7 @@ class ShopItemVC: NSViewController {
         collectionViewContainer.updateItems(items: headItems)
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         
-        buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
+        buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
         buyButton.isHidden = currentHeadModel.isUnlocked
         
         view.layer?.backgroundColor = NSColor.blue.cgColor
@@ -196,11 +192,6 @@ class ShopItemVC: NSViewController {
             backButton.heightAnchor.constraint(equalToConstant: 45),
             backButton.widthAnchor.constraint(equalToConstant: 45)
         ])
-//        backButton.snp.makeConstraints { make in
-//            make.leading.equalToSuperview().offset(50)
-//            make.top.equalToSuperview().offset(50)
-//            make.height.width.equalTo(38)
-//        }
     }
     
     func setupPointsLabel() {
@@ -209,7 +200,6 @@ class ShopItemVC: NSViewController {
         icon.setConfiguration(size: 24, weight: .bold)
         icon.contentTintColor = .black
         
-//        points.setText("100")
         points.backgroundColor = .clear
         points.setTextColor(.black)
         
@@ -261,26 +251,22 @@ class ShopItemVC: NSViewController {
         case 0:
             itemType = .head
             collectionViewContainer.updateItems(items: headItems)
-//            points.setText("\(self.currentHead.price)")
-            buyButton.updateItemButtonPreview(name: currentHead.name, price: currentHead.price)
+            buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
             buyButton.isHidden = currentHeadModel.isUnlocked
         case 1:
             itemType = .back
             collectionViewContainer.updateItems(items: backItems)
-//            points.setText("\(self.currentBack.price)")
-            buyButton.updateItemButtonPreview(name: currentBack.name, price: currentBack.price)
+            buyButton.updateItemButtonPreview(item: currentBack, price: currentBack.price, point: Int((character?.getCharacterData()!.point)!))
             buyButton.isHidden = currentBackModel.isUnlocked
         case 2:
             itemType = .hand
             collectionViewContainer.updateItems(items: handItems)
-//            points.setText("\(self.currentHand.price)")
-            buyButton.updateItemButtonPreview(name: currentHand.name, price: currentHand.price)
+            buyButton.updateItemButtonPreview(item: currentHand, price: currentHand.price, point: Int((character?.getCharacterData()!.point)!))
             buyButton.isHidden = currentHandModel.isUnlocked
         case 3:
             itemType = .location
             collectionViewContainer.updateItems(items: locationItems)
-//            points.setText("\(self.currentLocation.price)")
-            buyButton.updateItemButtonPreview(name: currentLocation.name, price: currentLocation.price)
+            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((character?.getCharacterData()!.point)!))
             buyButton.isHidden = currentLocationModel.isUnlocked
         default:
             break
@@ -294,6 +280,8 @@ class ShopItemVC: NSViewController {
 
 extension ShopItemVC : collectionContainerProtocol {
     func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType) {
+//        self.collectionViewContainer.collectionView.reloadData()
+        
         currentHead = head
         currentHeadModel.item = head
         currentHand = hand
@@ -305,71 +293,66 @@ extension ShopItemVC : collectionContainerProtocol {
         
         switch type {
         case .head:
-//            selectedItem = head
             currentHeadModel.isUnlocked = isUnlocked
-            buyButton.updateItemButtonPreview(name: head.name, price: head.price)
+            buyButton.updateItemButtonPreview(item: head, price: head.price, point: Int((character?.getCharacterData()!.point)!))
+            
+            print("di dalem head \(head.name)")
             if selectedItem != head {
                 let temporaryItem = selectedItem
                 selectedItem = head
                 buyButton.isHidden = isUnlocked
-//                print("isUnlocked \(isUnlocked)")
-//                selectedItem = head
-//                print("di dalem head")
                 if temporaryItem != selectedItem{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.collectionViewContainer.collectionView.reloadData()
                     }
                 }
             }
         case .hand:
-//            selectedItem = hand
             currentHandModel.isUnlocked = isUnlocked
-            buyButton.updateItemButtonPreview(name: hand.name, price: hand.price)
+            buyButton.updateItemButtonPreview(item: hand, price: hand.price, point: Int((character?.getCharacterData()!.point)!))
+            
+            
+            print("di dalem hand \(hand.name)")
             if selectedItem != hand {
                 let temporaryItem = selectedItem
                 selectedItem = hand
                 buyButton.isHidden = isUnlocked
-//                selectedItem = hand
-//                print("di dalem hand")
                 if temporaryItem != selectedItem{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.collectionViewContainer.collectionView.reloadData()
                     }
                 }
             }
         case .back:
-//            selectedItem = back
             currentBackModel.isUnlocked = isUnlocked
-            buyButton.updateItemButtonPreview(name: back.name, price: back.price)
+            buyButton.updateItemButtonPreview(item: back, price: back.price, point: Int((character?.getCharacterData()!.point)!))
+            print("di dalem back \(back.name)")
             if selectedItem != back {
                 let temporaryItem = selectedItem
                 selectedItem = back
                 buyButton.isHidden = isUnlocked
-//                selectedItem = back
-//                print("di dalem back")
                 if temporaryItem != selectedItem{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.collectionViewContainer.collectionView.reloadData()
                     }
                 }
             }
         case .location:
-//            selectedItem = location
             currentLocationModel.isUnlocked = isUnlocked
-            buyButton.updateItemButtonPreview(name: location.name, price: location.price)
+            buyButton.updateItemButtonPreview(item: location, price: location.price, point: Int((character?.getCharacterData()!.point)!))
+            print("di dalem loc \(location.name)")
             if selectedItem != location {
                 let temporaryItem = selectedItem
                 selectedItem = location
                 buyButton.isHidden = isUnlocked
-//                selectedItem = location
-//                print("di dalem location")
                 if temporaryItem != selectedItem{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.collectionViewContainer.collectionView.reloadData()
                     }
                 }
             }
         }
+//        self.collectionViewContainer.collectionView.reloadData()
     }
     
     func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
@@ -398,7 +381,7 @@ extension ShopItemVC : collectionContainerProtocol {
         
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
 //        points.setText("\(item.price)")
-        buyButton.updateItemButtonPreview(name: item.name, price: item.price)
+        buyButton.updateItemButtonPreview(item: item, price: item.price, point: Int((character?.getCharacterData()!.point)!))
         buyButton.isHidden = isUnlocked
 //        print(selectedGridItem?.item?.name)
         collectionViewContainer.collectionView.reloadData()
@@ -408,7 +391,7 @@ extension ShopItemVC : collectionContainerProtocol {
 extension ShopItemVC: gridItemSelectionProtocol {
     func gridItemSelectionDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
         selectedItem = newSelected
-        buyButton.updateItemButtonPreview(name: newSelected.name, price: newSelected.price)
+        buyButton.updateItemButtonPreview(item: newSelected, price: newSelected.price, point: Int((character?.getCharacterData()!.point)!))
         buyButton.isHidden = isUnlocked
         print("buyButton")
     }
@@ -418,7 +401,7 @@ extension ShopItemVC: gridItemSelectionProtocol {
         self.selectedGridItem = newSelected
         collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
         points.setText("\(String(describing: newSelected.item?.price))")
-        buyButton.updateItemButtonPreview(name: newSelected.item!.name, price: newSelected.item!.price)
+        buyButton.updateItemButtonPreview(item: newSelected.item!, price: newSelected.item!.price, point: Int((character?.getCharacterData()!.point)!))
         buyButton.isHidden = newSelected.isUnlocked
     }
 }
@@ -446,10 +429,12 @@ extension ShopItemVC: collectionItemProtocol{
             currentLocationModel.isUnlocked = isUnlocked
         }
         
+        collectionViewContainer.collectionView.reloadData()
+        
         print("head : \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
         
         print(newSelected.name)
-        buyButton.updateItemButtonPreview(name: newSelected.name, price: newSelected.price)
+        buyButton.updateItemButtonPreview(item: newSelected, price: newSelected.price, point: Int((character?.getCharacterData()!.point)!))
         buyButton.isHidden = isUnlocked
         print("dalam collectionItemDidChange di VC -> \(newSelected.name)")
     }
