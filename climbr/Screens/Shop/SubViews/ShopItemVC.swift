@@ -462,18 +462,27 @@ extension ShopItemVC: BuyButtonDelegate {
         switch itemType {
         case .head:
             collectionViewContainer.updateItems(items: headItems)
+            
+            buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
+            buyButton.isHidden = true
         case .hand:
             collectionViewContainer.updateItems(items: handItems)
+            
+            buyButton.updateItemButtonPreview(item: currentHand, price: currentHand.price, point: Int((character?.getCharacterData()!.point)!))
+            buyButton.isHidden = true
         case .back:
             collectionViewContainer.updateItems(items: backItems)
+            
+            buyButton.updateItemButtonPreview(item: currentBack, price: currentBack.price, point: Int((character?.getCharacterData()!.point)!))
+            buyButton.isHidden = true
         case .location:
             collectionViewContainer.updateItems(items: locationItems)
+            
+            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((character?.getCharacterData()!.point)!))
+            buyButton.isHidden = true
         }
         
         collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
-        
-        buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
-        buyButton.isHidden = currentHeadModel.isUnlocked
         
         collectionViewContainer.collectionView.reloadData()
         points.setText(String((character?.getCharacterData()!.point)!))
