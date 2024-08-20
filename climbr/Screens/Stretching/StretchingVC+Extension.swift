@@ -20,6 +20,7 @@ extension StretchingVC {
             }
             
             self.currentMovementView.updateData(movement)
+            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
@@ -86,7 +87,7 @@ extension StretchingVC {
                 } else {
                     self.playSfx("correct")
                     self.startExerciseSession(duration: movement.duration)
-                    self.movementStateView.hide()
+//                    self.movementStateView.hide()
                 }
             }
         }.store(in: &bags)
@@ -113,6 +114,7 @@ extension StretchingVC {
                 self.playSfx("countdown")
             }
             
+            self.movementStateView.setLabel("\(time) seconds left")
             self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)

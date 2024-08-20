@@ -9,6 +9,7 @@ import AppKit
 
 class CurrentMovementView: NSStackView {
     
+    let stretchLabel            = CLLabel(fontSize: 36, fontWeight: .bold)
     let movementLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
     let movementPreview         = NSView()
     let imageView               = NSImageView()
@@ -16,6 +17,8 @@ class CurrentMovementView: NSStackView {
     let durationImageView       = CLSFSymbol(symbolName: "timer", description: "Duration")
     let durationLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
     
+    var currentIndex: Int?
+    var maxIndex: Int?
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         configure()
@@ -31,7 +34,7 @@ class CurrentMovementView: NSStackView {
         alignment         = .leading
         clipsToBounds = true
         
-        let views = [movementLabel, movementPreview, durationContainerView]
+        let views = [stretchLabel, movementLabel, movementPreview/*, durationContainerView*/]
         setViews(views, in: .center)
         
         for item in views {
@@ -40,7 +43,7 @@ class CurrentMovementView: NSStackView {
         
         configureMovementLabel()
         configureMovementPreview()
-        configureDurationLabel()
+//        configureDurationLabel()
     }
     
     func updateData(_ data: Movement) {
@@ -69,11 +72,21 @@ class CurrentMovementView: NSStackView {
     }
     
     private func configureMovementLabel() {
+        
         movementLabel.setText("Movement Title")
+//        stretchLabel.setText("1/8")
         
         NSLayoutConstraint.activate([
-            movementLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            movementLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stretchLabel.topAnchor.constraint(equalTo: topAnchor),
+            stretchLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stretchLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stretchLabel.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            movementLabel.topAnchor.constraint(equalTo: stretchLabel.bottomAnchor),
+            movementLabel.leadingAnchor.constraint(equalTo: stretchLabel.leadingAnchor),
+            movementLabel.trailingAnchor.constraint(equalTo: stretchLabel.trailingAnchor),
             movementLabel.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
@@ -115,6 +128,11 @@ class CurrentMovementView: NSStackView {
             durationContainerView.centerXAnchor.constraint(equalTo: movementPreview.centerXAnchor),
             durationContainerView.heightAnchor.constraint(equalToConstant: 32)
         ])
+    }
+    
+    func getIndexMovement(current: Int, maxIndex: Int){
+        let showIndex = current + 1
+        stretchLabel.setText("\(showIndex) / \(maxIndex)")
     }
 }
 
