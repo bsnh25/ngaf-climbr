@@ -9,6 +9,6 @@ import Foundation
 
 protocol EquipmentService {
     func getEquipments(equipmentType: EquipmentType) -> [EquipmentModel]
-    func purchaseEquipment(data: EquipmentModel)
+    func purchaseEquipment(data: EquipmentItem)
     func seedDatabase()
 }

@@ -8,8 +8,8 @@
 import Cocoa
 
 protocol collectionContainerProtocol {
-    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType)
-    func gridItemSelectedChange(to newSelected: GridItem)
+    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
+    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
 }
 
 class CollectionContainerView: NSView {
@@ -31,6 +31,7 @@ class CollectionContainerView: NSView {
     var currentLocation: EquipmentItem?
     
     var currentGridItem: GridItem?
+//    var currentSelectedItem: EquipmentItem?
     
     override init(frame frameRect: NSRect) {
         
@@ -65,6 +66,10 @@ class CollectionContainerView: NSView {
         collectionView.delegate = self as? NSCollectionViewDelegate // If needed
         collectionView.wantsLayer = true
         collectionView.layer?.backgroundColor = NSColor.clear.cgColor
+        
+        collectionView.isSelectable = true
+        collectionView.allowsEmptySelection = false
+        collectionView.allowsMultipleSelection = false
         
         // Add the collectionView directly to the container view
         self.addSubview(collectionView)
@@ -107,26 +112,7 @@ extension CollectionContainerView: NSCollectionViewDataSource {
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
         item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
         item.gridDelegate = self
+        item.itemDelegate = self
         return item
     }
 }
-
-extension CollectionContainerView: gridItemSelectionProtocol {
-    func gridItemSelectionDidChange(to newSelected: GridItem) {
-        switch newSelected.type {
-        case .head:
-            currentHead = newSelected.item
-        case .hand:
-            currentHand = newSelected.item
-        case .back:
-            currentBack = newSelected.item
-        case .location:
-            currentLocation = newSelected.item
-        case .none:
-            break
-        }
-        currentGridItem = newSelected
-        collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
-    }
-}
-

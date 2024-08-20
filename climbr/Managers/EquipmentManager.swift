@@ -30,7 +30,7 @@ class EquipmentManager: EquipmentService {
             data.id         = Int64(equipment.item.itemID)
             data.type       = equipment.type.rawValue
             data.name       = equipment.item.rawValue
-            data.isUnlocked = false
+            data.isUnlocked = equipment.isUnlocked
             data.image      = equipment.item.image
             data.price      = Int64(equipment.item.price)
         }
@@ -49,6 +49,13 @@ class EquipmentManager: EquipmentService {
         
         let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        
+        let sortDescriptorUnlock = NSSortDescriptor(key: "isUnlocked", ascending: false)
+        
+        request.sortDescriptors = [sortDescriptor]
+        request.sortDescriptors = [sortDescriptorUnlock]
+        
         request.predicate = predicate
         
         do {
@@ -63,11 +70,11 @@ class EquipmentManager: EquipmentService {
         }
     }
     
-    func purchaseEquipment(data: EquipmentModel) {
+    func purchaseEquipment(data: EquipmentItem) {
         guard let container = container else { return }
         
-        guard let equipment = fetchEquipment(byID: data.item.rawValue , context: container) else {
-            print("No equipment found with ID \(data.item.itemID)")
+        guard let equipment = fetchEquipment(byID: data.rawValue , context: container) else {
+            print("No equipment found with ID \(data.itemID)")
              return
          }
         

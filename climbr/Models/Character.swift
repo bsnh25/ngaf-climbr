@@ -12,9 +12,10 @@ struct CharacterModel {
     var name: String
     var gender: Gender
     var point: Int64
-    var headEquipment: EquipmentItem = .climberCrownHG
-    var handEquipment: EquipmentItem = .climbingBP
-    var backEquipment: EquipmentItem = .climbingBP
+    var headEquipment: EquipmentItem = .emptyHG
+    var handEquipment: EquipmentItem = .emptyS
+    var backEquipment: EquipmentItem = .emptyBP
+    
 }
 
 enum Gender: String{
