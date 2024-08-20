@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var mainWindow: MainWindow?
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
+    let audio = Container.shared.resolve(AudioService.self)
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -42,13 +43,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         NSApp.appearance = NSAppearance(named: .aqua)
         ///audio setup
+        audio?.playBackgroundMusic(fileName: "bgmusic")
         mainWindow.makeKeyAndOrderFront(nil)
     }
     
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-        // AudioManager.shared.stopBackground()
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
@@ -63,6 +64,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
+    
+    
+    func applicationDidResignActive(_ notification: Notification) {
+        audio?.stopBackground()
+        print("Mati")
+    }
+
 
 }
 
