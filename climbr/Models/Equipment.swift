@@ -93,7 +93,7 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         case .duffelBP:
             "Duffel"
         case .hikingBP:
-            "Hikinh"
+            "Hiking"
         case .highWizardS:
             "High Wizard"
         case .iceGripS:

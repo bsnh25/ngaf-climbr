@@ -50,7 +50,6 @@
 		AB9A79002C6C7BD300028B36 /* CollectionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78FF2C6C7BD300028B36 /* CollectionContainerView.swift */; };
 		AB9A79022C6C7C1C00028B36 /* GridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A79012C6C7C1C00028B36 /* GridItemView.swift */; };
 		AB9A79082C6C952600028B36 /* TypeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A79072C6C952600028B36 /* TypeButtonView.swift */; };
-		AB9A790C2C6FCBF000028B36 /* ShopItemVC.swift in Resources */ = {isa = PBXBuildFile; fileRef = AB9A790B2C6FCBF000028B36 /* ShopItemVC.swift */; };
 		AB9A790F2C70D8F700028B36 /* BuyButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A790E2C70D8F700028B36 /* BuyButtonView.swift */; };
 		ABAFFC1E2C72301A004C729A /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD0A0C2C6F887300BEEE8B /* PersistenceController.swift */; };
 		ABAFFC1F2C72301F004C729A /* Character+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB22C646889004BC8C8 /* Character+CoreDataClass.swift */; };
@@ -664,7 +663,6 @@
 			files = (
 				8AB71C6D2C6BAEB500635C85 /* huh.mp3 in Resources */,
 				E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */,
-				AB9A790C2C6FCBF000028B36 /* ShopItemVC.swift in Resources */,
 				8AB71C6F2C6BAEB500635C85 /* next-move.mp3 in Resources */,
 				8A1962332C6B0E1900F7064B /* bgmusic.mp3 in Resources */,
 				E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */,
@@ -896,7 +894,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -930,7 +928,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;

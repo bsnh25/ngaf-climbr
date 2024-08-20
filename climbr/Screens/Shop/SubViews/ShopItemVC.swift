@@ -74,12 +74,24 @@ class ShopItemVC: NSViewController {
         
         if let heads = equipment?.getEquipments(equipmentType: .head) {
             headItems = heads
+            if let char = character?.getCharacterData()?.headEquipment{
+                currentHead = char
+                print("head di sini \(char.name)")
+            }
         }
         if let backs = equipment?.getEquipments(equipmentType: .back) {
             backItems = backs
+            if let char = character?.getCharacterData()?.backEquipment{
+                currentBack = char
+                print("back di sini \(char.name)")
+            }
         }
         if let hands = equipment?.getEquipments(equipmentType: .hand) {
             handItems = hands
+            if let char = character?.getCharacterData()?.handEquipment{
+                currentHand = char
+                print("hand di sini \(char.name)")
+            }
         }
         if let locations = equipment?.getEquipments(equipmentType: .location) {
             locationItems = locations

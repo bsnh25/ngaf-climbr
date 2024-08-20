@@ -265,7 +265,12 @@ class HomeVC: NSViewController {
         icon.setConfiguration(size: 18.79, weight: .bold)
         icon.contentTintColor = .black
         
-        points.setText("100")
+        
+//        points.setText(String(charService?.getCharacterData()!.point))
+        //perlu perbaikan buat point di homeVC
+        if let pointChar = charService?.getCharacterData() {
+            points.setText(String(pointChar.point))
+        }
         points.backgroundColor = .clear
         points.setTextColor(.black)
         
