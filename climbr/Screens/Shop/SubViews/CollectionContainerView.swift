@@ -8,7 +8,8 @@
 import Cocoa
 
 protocol collectionContainerProtocol {
-    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType)
+    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
+    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
     func gridItemSelectedChange(to newSelected: GridItem)
 }
 
@@ -31,6 +32,7 @@ class CollectionContainerView: NSView {
     var currentLocation: EquipmentItem?
     
     var currentGridItem: GridItem?
+//    var currentSelectedItem: EquipmentItem?
     
     override init(frame frameRect: NSRect) {
         
@@ -112,6 +114,25 @@ extension CollectionContainerView: NSCollectionViewDataSource {
 }
 
 extension CollectionContainerView: gridItemSelectionProtocol {
+    func gridItemSelectionDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
+        switch type {
+        case .head:
+            currentHead = newSelected
+        case .hand:
+            currentHand = newSelected
+        case .back:
+            currentBack = newSelected
+        case .location:
+            currentLocation = newSelected
+        }
+        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
+        
+        collectionDelegate?.updateCurrentItem(head: currentHead!, hand: currentHand!, back: currentBack!, location: currentLocation!, isUnlocked: isUnlocked, type: type)
+//        collectionDelegate?.itemSelectedChangedWithType(to: newSelected, type: type, isUnlocked: isUnlocked)
+//        currentGridItem = newSelected
+//        collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
+    }
+    
     func gridItemSelectionDidChange(to newSelected: GridItem) {
         switch newSelected.type {
         case .head:
@@ -125,8 +146,9 @@ extension CollectionContainerView: gridItemSelectionProtocol {
         case .none:
             break
         }
+//        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
         currentGridItem = newSelected
-        collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
+//        collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
     }
 }
 
