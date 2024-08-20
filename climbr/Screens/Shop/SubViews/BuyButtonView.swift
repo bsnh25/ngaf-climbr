@@ -8,6 +8,10 @@
 import Cocoa
 import SnapKit
 
+protocol BuyButtonDelegate: AnyObject {
+    func didPurchaseItem()
+}
+
 class BuyButtonView: NSView {
     let itemLabel = CLLabel()
     var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
@@ -17,9 +21,13 @@ class BuyButtonView: NSView {
     var currentPoint: Int?
     
     var equipment: EquipmentService?
+    var character: CharacterService?
     
-    func setupService(equipment: EquipmentService){
+    var delegate: BuyButtonDelegate?
+    
+    func setupService(equipment: EquipmentService, character: CharacterService){
         self.equipment = equipment
+        self.character = character
     }
     
     override init(frame frameRect: NSRect) {
@@ -96,6 +104,13 @@ class BuyButtonView: NSView {
         print("halo")
         if currentPoint! >= itemPrice! {
             equipment?.purchaseEquipment(data: self.item!)
+            
+//            character?.getCharacterData()!.point = Int64(currentPoint! - itemPrice!)
+            if let charMod = character?.getCharacterData(){
+                let point = currentPoint! - itemPrice!
+                character?.updatePoint(character: charMod, points: point)
+            }
+            delegate?.didPurchaseItem()
         }else{
             print("kurang point")
         }

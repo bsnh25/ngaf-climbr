@@ -61,7 +61,7 @@ class ShopItemVC: NSViewController {
         super.init(nibName: nil, bundle: nil)
         self.character = character
         self.equipment = equipment
-        buyButton.setupService(equipment: equipment!)
+        buyButton.setupService(equipment: equipment!, character: character!)
     }
     
     required init?(coder: NSCoder) {
@@ -93,6 +93,7 @@ class ShopItemVC: NSViewController {
         
         buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
         buyButton.isHidden = currentHeadModel.isUnlocked
+        buyButton.delegate = self
         
         view.layer?.backgroundColor = NSColor.blue.cgColor
         
@@ -438,6 +439,43 @@ extension ShopItemVC: collectionItemProtocol{
         buyButton.isHidden = isUnlocked
         print("dalam collectionItemDidChange di VC -> \(newSelected.name)")
     }
-    
-    
+}
+
+extension ShopItemVC: BuyButtonDelegate {
+    func didPurchaseItem() {
+        print("masuk ke didPurchaseItem")
+        print(itemType.rawValue)
+        if let heads = equipment?.getEquipments(equipmentType: .head) {
+            headItems = heads
+        }
+        if let backs = equipment?.getEquipments(equipmentType: .back) {
+            backItems = backs
+        }
+        if let hands = equipment?.getEquipments(equipmentType: .hand) {
+            handItems = hands
+        }
+        if let locations = equipment?.getEquipments(equipmentType: .location) {
+            locationItems = locations
+        }
+        
+//        collectionViewContainer.updateItems
+        switch itemType {
+        case .head:
+            collectionViewContainer.updateItems(items: headItems)
+        case .hand:
+            collectionViewContainer.updateItems(items: handItems)
+        case .back:
+            collectionViewContainer.updateItems(items: backItems)
+        case .location:
+            collectionViewContainer.updateItems(items: locationItems)
+        }
+        
+        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+        
+        buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
+        buyButton.isHidden = currentHeadModel.isUnlocked
+        
+        collectionViewContainer.collectionView.reloadData()
+        points.setText(String((character?.getCharacterData()!.point)!))
+    }
 }
