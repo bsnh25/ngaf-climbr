@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NSApp.appearance = NSAppearance(named: .aqua)
         ///audio setup
         if let audio = audio {
-            audio.playBackgroundMusic(fileName: "bgmusic")
+            audio.playBackgroundMusic(fileName: "summer")
         } else {
             print("AudioService not resolved.")
         }
