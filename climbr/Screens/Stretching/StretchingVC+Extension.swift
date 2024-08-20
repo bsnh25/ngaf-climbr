@@ -103,7 +103,7 @@ extension StretchingVC {
             ///
             /// Assume that if remaining time is zero, it means the movement has done
             guard time > 0 else {
-                self.movementStateView.hide()
+//                self.movementStateView.hide()
                 
                 self.next()
                 
@@ -114,7 +114,9 @@ extension StretchingVC {
                 self.playSfx("countdown")
             }
             
-            self.movementStateView.setLabel("\(time) seconds left")
+            self.movementStateView.setLabel("\(Int(time)) seconds left")
+            self.movementStateView.setForegroundColor(.black)
+            self.movementStateView.setBackgroundColor(.white)
             self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)

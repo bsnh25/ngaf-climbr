@@ -34,7 +34,7 @@ class CurrentMovementView: NSStackView {
         alignment         = .leading
         clipsToBounds = true
         
-        let views = [stretchLabel, movementLabel, movementPreview/*, durationContainerView*/]
+        let views = [stretchLabel, movementLabel, movementPreview, durationContainerView]
         setViews(views, in: .center)
         
         for item in views {
@@ -74,7 +74,6 @@ class CurrentMovementView: NSStackView {
     private func configureMovementLabel() {
         
         movementLabel.setText("Movement Title")
-//        stretchLabel.setText("1/8")
         
         NSLayoutConstraint.activate([
             stretchLabel.topAnchor.constraint(equalTo: topAnchor),
