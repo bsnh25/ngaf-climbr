@@ -61,6 +61,7 @@ class CollectionContainerView: NSView {
         
         collectionView.isSelectable = true
         collectionView.allowsMultipleSelection = false
+        collectionView.allowsEmptySelection = false
         
         let scrollView = NSScrollView()
         scrollView.documentView = collectionView
