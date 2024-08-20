@@ -73,19 +73,19 @@ class ShopItemVC: NSViewController {
         
         //di sini ngefetch coredata buat currentHeadModel, hand, back, sama location
         if let heads = equipment?.getEquipments(equipmentType: .head) {
-            print("berhasil fetch head")
+//            print("berhasil fetch head")
             headItems = heads
         }
         if let backs = equipment?.getEquipments(equipmentType: .back) {
-            print("berhasil fetch back")
+//            print("berhasil fetch back")
             backItems = backs
         }
         if let hands = equipment?.getEquipments(equipmentType: .hand) {
-            print("berhasil fetch hand")
+//            print("berhasil fetch hand")
             handItems = hands
         }
         if let locations = equipment?.getEquipments(equipmentType: .location) {
-            print("berhasil fetch locs")
+//            print("berhasil fetch locs")
             locationItems = locations
         }
         
@@ -312,10 +312,13 @@ extension ShopItemVC : collectionContainerProtocol {
                 let temporaryItem = selectedItem
                 selectedItem = head
                 buyButton.isHidden = isUnlocked
+//                print("isUnlocked \(isUnlocked)")
 //                selectedItem = head
-                print("di dalem head")
+//                print("di dalem head")
                 if temporaryItem != selectedItem{
-                    collectionViewContainer.collectionView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.collectionViewContainer.collectionView.reloadData()
+                    }
                 }
             }
         case .hand:
@@ -327,9 +330,11 @@ extension ShopItemVC : collectionContainerProtocol {
                 selectedItem = hand
                 buyButton.isHidden = isUnlocked
 //                selectedItem = hand
-                print("di dalem hand")
+//                print("di dalem hand")
                 if temporaryItem != selectedItem{
-                    collectionViewContainer.collectionView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.collectionViewContainer.collectionView.reloadData()
+                    }
                 }
             }
         case .back:
@@ -341,9 +346,11 @@ extension ShopItemVC : collectionContainerProtocol {
                 selectedItem = back
                 buyButton.isHidden = isUnlocked
 //                selectedItem = back
-                print("di dalem back")
+//                print("di dalem back")
                 if temporaryItem != selectedItem{
-                    collectionViewContainer.collectionView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.collectionViewContainer.collectionView.reloadData()
+                    }
                 }
             }
         case .location:
@@ -355,26 +362,14 @@ extension ShopItemVC : collectionContainerProtocol {
                 selectedItem = location
                 buyButton.isHidden = isUnlocked
 //                selectedItem = location
-                print("di dalem location")
+//                print("di dalem location")
                 if temporaryItem != selectedItem{
-                    collectionViewContainer.collectionView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.collectionViewContainer.collectionView.reloadData()
+                    }
                 }
             }
         }
-        
-        print("di dalam shop item VC head : \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
-        
-//        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
-        
-//        collectionViewContainer.collectionView.reloadData()
-    }
-    
-    func gridItemSelectedChange(to newSelected: GridItem) {
-//        self.selectedGridItem = newSelected
-//        collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
-//        points.setText("\(String(describing: newSelected.item?.price))")
-//        buyButton.updateItemButtonPreview(name: newSelected.item!.name, price: newSelected.item!.price)
-//        buyButton.isHidden = newSelected.isUnlocked
     }
     
     func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
@@ -419,10 +414,45 @@ extension ShopItemVC: gridItemSelectionProtocol {
     }
     
     func gridItemSelectionDidChange(to newSelected: GridItem) {
-//        self.selectedGridItem = newSelected
-//        collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
-//        points.setText("\(String(describing: newSelected.item?.price))")
-//        buyButton.updateItemButtonPreview(name: newSelected.item!.name, price: newSelected.item!.price)
-//        buyButton.isHidden = newSelected.isUnlocked
+        print("dalam sini")
+        self.selectedGridItem = newSelected
+        collectionViewContainer.updateCurrentGridItem(gridItem: newSelected)
+        points.setText("\(String(describing: newSelected.item?.price))")
+        buyButton.updateItemButtonPreview(name: newSelected.item!.name, price: newSelected.item!.price)
+        buyButton.isHidden = newSelected.isUnlocked
     }
+}
+
+extension ShopItemVC: collectionItemProtocol{
+    func collectionItemDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
+        selectedItem = newSelected
+        
+        switch type {
+        case .head:
+            currentHead = newSelected
+            currentHeadModel.item = newSelected
+            currentHeadModel.isUnlocked = isUnlocked
+        case .hand:
+            currentHand = newSelected
+            currentHandModel.item = newSelected
+            currentHandModel.isUnlocked = isUnlocked
+        case .back:
+            currentBack = newSelected
+            currentBackModel.item = newSelected
+            currentBackModel.isUnlocked = isUnlocked
+        case .location:
+            currentLocation = newSelected
+            currentLocationModel.item = newSelected
+            currentLocationModel.isUnlocked = isUnlocked
+        }
+        
+        print("head : \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
+        
+        print(newSelected.name)
+        buyButton.updateItemButtonPreview(name: newSelected.name, price: newSelected.price)
+        buyButton.isHidden = isUnlocked
+        print("dalam collectionItemDidChange di VC -> \(newSelected.name)")
+    }
+    
+    
 }

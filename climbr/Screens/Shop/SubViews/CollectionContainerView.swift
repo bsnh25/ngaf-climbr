@@ -10,7 +10,6 @@ import Cocoa
 protocol collectionContainerProtocol {
     func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
     func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
-    func gridItemSelectedChange(to newSelected: GridItem)
 }
 
 class CollectionContainerView: NSView {
@@ -68,6 +67,10 @@ class CollectionContainerView: NSView {
         collectionView.wantsLayer = true
         collectionView.layer?.backgroundColor = NSColor.clear.cgColor
         
+        collectionView.isSelectable = true
+        collectionView.allowsEmptySelection = false
+        collectionView.allowsMultipleSelection = false
+        
         // Add the collectionView directly to the container view
         self.addSubview(collectionView)
         
@@ -109,6 +112,7 @@ extension CollectionContainerView: NSCollectionViewDataSource {
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
         item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
         item.gridDelegate = self
+        item.itemDelegate = self
         return item
     }
 }
@@ -125,7 +129,7 @@ extension CollectionContainerView: gridItemSelectionProtocol {
         case .location:
             currentLocation = newSelected
         }
-        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
+//        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
         
         collectionDelegate?.updateCurrentItem(head: currentHead!, hand: currentHand!, back: currentBack!, location: currentLocation!, isUnlocked: isUnlocked, type: type)
 //        collectionDelegate?.itemSelectedChangedWithType(to: newSelected, type: type, isUnlocked: isUnlocked)
@@ -146,9 +150,37 @@ extension CollectionContainerView: gridItemSelectionProtocol {
         case .none:
             break
         }
-//        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
         currentGridItem = newSelected
-//        collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
     }
 }
 
+
+extension CollectionContainerView: NSCollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        
+        guard let indexPath = indexPaths.first,
+              let cell = collectionView.item(at: indexPath) as? GridItem else {
+            return
+        }
+    }
+}
+
+//cek di sini!!!!
+extension CollectionContainerView: collectionItemProtocol {
+    func collectionItemDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
+        switch type {
+        case .head:
+            currentHead = newSelected
+        case .hand:
+            currentHand = newSelected
+        case .back:
+            currentBack = newSelected
+        case .location:
+            currentLocation = newSelected
+        }
+        
+        print("di dalam collection view head: \(currentHead), hand: \(currentHand), back: \(currentBack), location: \(currentLocation)")
+        
+        collectionDelegate?.updateCurrentItem(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!, isUnlocked: isUnlocked, type: type)
+    }
+}

@@ -30,7 +30,7 @@ class EquipmentManager: EquipmentService {
             data.id         = Int64(equipment.item.itemID)
             data.type       = equipment.type.rawValue
             data.name       = equipment.item.rawValue
-            data.isUnlocked = false
+            data.isUnlocked = equipment.isUnlocked
             data.image      = equipment.item.image
             data.price      = Int64(equipment.item.price)
         }
@@ -48,6 +48,10 @@ class EquipmentManager: EquipmentService {
         let predicate: NSPredicate = NSPredicate(format: "type == %@", equipmentType.rawValue)
         
         let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
+        
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        
+        request.sortDescriptors = [sortDescriptor]
         
         request.predicate = predicate
         

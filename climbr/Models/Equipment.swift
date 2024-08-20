@@ -117,45 +117,47 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
     
     var itemID: Int{
         switch self {
-        case .climberCrownHG:
-            0
-        case .cozyCragglerHG:
-            1
-        case .festiveFollyHG:
-            2
-        case .trailbazerTamHG:
-            3
-        case .climbingBP:
-            4
-        case .cuddlyBP:
-            5
-        case .duffelBP:
-            6
-        case .hikingBP:
-            7
-        case .highWizardS:
-            8
-        case .iceGripS:
-            9
-        case .natureGuideS:
-            10
-        case .trekTrooperS:
-            11
-        case .jungleJumble:
-            12
-        case .snowySummit:
-            13
         case .emptyHG:
             0
+        case .climberCrownHG:
+            1
+        case .cozyCragglerHG:
+            2
+        case .festiveFollyHG:
+            3
+        case .trailbazerTamHG:
+            4
         case .emptyBP:
-            0
+            5
+        case .climbingBP:
+            6
+        case .cuddlyBP:
+            7
+        case .duffelBP:
+            8
+        case .hikingBP:
+            9
         case .emptyS:
-            0
+            10
+        case .highWizardS:
+            11
+        case .iceGripS:
+            12
+        case .natureGuideS:
+            13
+        case .trekTrooperS:
+            14
+        case .jungleJumble:
+            15
+        case .snowySummit:
+            16
         }
     }
     
     var price: Int{
         switch self {
+        case .emptyHG:
+            0
         case .climberCrownHG:
             80
         case .cozyCragglerHG:
@@ -164,6 +166,8 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             100
         case .trailbazerTamHG:
             110
+        case .emptyBP:
+            0
         case .climbingBP:
             80
         case .cuddlyBP:
@@ -172,6 +176,8 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             100
         case .hikingBP:
             110
+        case .emptyS:
+            0
         case .highWizardS:
             80
         case .iceGripS:
@@ -184,12 +190,6 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
             140
         case .snowySummit:
             150
-        case .emptyHG:
-            0
-        case .emptyBP:
-            0
-        case .emptyS:
-            0
         }
     }
     

@@ -12,10 +12,15 @@ protocol gridItemSelectionProtocol {
     func gridItemSelectionDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
 }
 
+protocol collectionItemProtocol{
+    func collectionItemDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
+}
+
 class GridItem: NSCollectionViewItem {
     
     let lockIcon = CLSFSymbol(symbolName: "lock.fill", description: "lock")
     var gridDelegate : gridItemSelectionProtocol?
+    var itemDelegate : collectionItemProtocol?
     
 //    override var isSelected: Bool
     
@@ -107,13 +112,21 @@ class GridItem: NSCollectionViewItem {
     
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
-        gridDelegate?.gridItemSelectionDidChange(to: item!, type: type!, isUnlocked: isUnlocked)
-        setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
+        print("button \(self.item?.name)")
+        itemDelegate?.collectionItemDidChange(to: self.item!, type: self.type!, isUnlocked: self.isUnlocked)
+//        print("di bawah delegate")
+//        gridDelegate?.gridItemSelectionDidChange(to: item!, type: type!, isUnlocked: isUnlocked)
+//        setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
     }
+//    
+//    func setSelectedForGrid(){
+//        gridDelegate?.gridItemSelectionDidChange(to: item!, type: type!, isUnlocked: isUnlocked)
+//        setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
+//    }
     
     func setSelected(_ selected: Bool) {
         borderView.layer?.borderWidth = selected ? 4 : 0
-        print("\(item?.name) is currently selected with \(selected)")
+//        print("\(item?.name) is currently selected with \(selected)")
     }
     
 //    func updateSelectedGridItem(gridItemSelected: GridItem){
