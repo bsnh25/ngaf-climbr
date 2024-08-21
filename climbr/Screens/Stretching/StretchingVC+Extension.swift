@@ -20,7 +20,7 @@ extension StretchingVC {
                 return
             }
             
-//            self.currentMovementView.updateData(movement)
+            self.currentMovementView.updateData(movement)
             self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
             
             /// Disable skip button and remove next movement view

@@ -223,6 +223,7 @@ class StretchingVC: NSViewController {
         finishButton.target = self
         finishButton.action = #selector(showEndSessionAlert)
         finishButton.hasDestructiveAction = true
+        finishButton.exitFullScreenMode()
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
