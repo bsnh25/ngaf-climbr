@@ -63,7 +63,6 @@ class ShopItemVC: NSViewController {
         super.init(nibName: nil, bundle: nil)
         self.characterService = character
         self.equipmentService = equipment
-        buyButton.setupService(equipment: equipment!, character: character!)
     }
     
     required init?(coder: NSCoder) {

@@ -24,9 +24,6 @@ extension ShopItemVC {
             character.locationEquipment = data.item
         }
         
-        print("Location: ", character.locationEquipment)
-        print("Location item: ", data.item)
-        
         characterService.updateCharacter(with: character)
         
         
@@ -115,6 +112,12 @@ extension ShopItemVC : collectionContainerProtocol {
         #warning("refactor this delegate")
         self.selectedItem = EquipmentModel(item: item, type: type, isUnlocked: isUnlocked)
         
+        
+        if let character {
+            print("price: ", Int(character.point) < item.price)
+            buyButton.itemButton.isEnabled = !(Int(character.point) < item.price)
+        }
+        
         if isUnlocked, let selectedItem = self.selectedItem {
             self.updateCharacter(with: selectedItem)
         }
@@ -201,14 +204,34 @@ extension ShopItemVC : collectionContainerProtocol {
 //    }
 //}
 
-#warning("refactor this delegate")
 extension ShopItemVC: BuyButtonDelegate {
-    func didPurchaseItem() {
-        if let selectedItem {
+    func didPurchased() {
+        guard let character, let selectedItem else { return }
+        
+        print("halo")
+        if character.point >= selectedItem.item.price {
+            equipmentService?.purchaseEquipment(data: selectedItem.item)
+            
+            //            character?.getCharacterData()!.point = Int64(currentPoint! - itemPrice!)
+//            if let charMod = character?.getCharacterData(){
+//                let point = currentPoint! - itemPrice!
+//                character?.updatePoint(character: charMod, points: point)
+//            }
+            let point = Int(character.point) - selectedItem.item.price
+            characterService?.updatePoint(character: character, points: point)
+//            delegate?.didPurchaseItem()
+            
             updateData(with: selectedItem.type)
             
             self.updateCharacter(with: selectedItem)
+            buyButton.isHidden = true
+        }else{
+            print("kurang point")
         }
+        
+        
+        
+        
         
         
         
