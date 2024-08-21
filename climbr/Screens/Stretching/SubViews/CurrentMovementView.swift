@@ -6,13 +6,14 @@
 //
 
 import AppKit
+import AVFoundation
 
 class CurrentMovementView: NSStackView {
     
     let stretchLabel            = CLLabel(fontSize: 36, fontWeight: .bold)
     let movementLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
     let movementPreview         = NSView()
-    let imageView               = NSImageView()
+    var playerLayer             : AVPlayerLayer?
     let durationContainerView   = NSStackView()
     let durationImageView       = CLSFSymbol(symbolName: "timer", description: "Duration")
     let durationLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
@@ -42,15 +43,17 @@ class CurrentMovementView: NSStackView {
         }
         
         configureMovementLabel()
-        configureMovementPreview()
+//        configureMovementPreview()
 //        configureDurationLabel()
     }
     
     func updateData(_ data: Movement) {
+        let player = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: data.thumbnail.rawValue, ofType: "mp3")!))
         movementLabel.setText(data.name.rawValue)
         durationLabel.setText("\(String(format: "%.f", data.duration)) seconds")
-        imageView.image   = data.thumbnail
-        imageView.image?.size           = NSSize(width: 328, height: 200)
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.videoGravity = .resizeAspect
+        //NSSize(width: 328, height: 200)
     }
     
     func setDuration(_ time: Double) {
@@ -97,11 +100,12 @@ class CurrentMovementView: NSStackView {
         movementPreview.layer?.cornerRadius       = 10
         movementPreview.clipsToBounds             = true
         
-        imageView.imageAlignment        = .alignCenter
-        imageView.imageScaling          = .scaleProportionallyUpOrDown
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.imageAlignment        = .alignCenter
+//        imageView.imageScaling          = .scaleProportionallyUpOrDown
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        movementPreview.addSubview(imageView)
+//        movementPreview.addSubview()
+        playerLayer?.player?.play()
         
         NSLayoutConstraint.activate([
             movementPreview.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
@@ -109,9 +113,9 @@ class CurrentMovementView: NSStackView {
             movementPreview.widthAnchor.constraint(equalTo: movementPreview.widthAnchor),
             movementPreview.heightAnchor.constraint(equalToConstant: 200),
             
-            imageView.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
-            imageView.heightAnchor.constraint(equalTo: movementPreview.heightAnchor),
+//            playerLayer.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
+//            playerLayer.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
+//            playerLayer.heightAnchor.constraint(equalTo: movementPreview.heightAnchor),
         ])
     }
     
@@ -225,3 +229,7 @@ class CurrentMovementView: NSStackView {
 //    }
 //    
 //}
+
+#Preview(traits: .defaultLayout, body: {
+    CurrentMovementView()
+})
