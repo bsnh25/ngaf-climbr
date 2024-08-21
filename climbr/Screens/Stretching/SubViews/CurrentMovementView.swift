@@ -142,50 +142,9 @@ class CurrentMovementView: NSStackView {
         ])
     }
     
-    private func configureVideoPlayer() {
-//        playerView = AVPlayerView
-    }
-    
-//    private func configureDurationLabel() {
-//        durationContainerView.setViews([durationImageView, durationLabel], in: .center)
-//        durationContainerView.spacing           = 8
-//        durationContainerView.orientation       = .horizontal
-//        
-//        durationLabel.setText("15 seconds")
-//        durationImageView.setConfiguration(size: 20, weight: .bold)
-//        
-//        NSLayoutConstraint.activate([
-//            durationContainerView.centerXAnchor.constraint(equalTo: videoView.centerXAnchor),
-//            durationContainerView.heightAnchor.constraint(equalToConstant: 32)
-//        ])
-//    }
-    
     func getIndexMovement(current: Int, maxIndex: Int){
         let showIndex = current + 1
         stretchLabel.setText("\(showIndex) / \(maxIndex)")
-    }
-
-    func setupVideo(for data: Movement) {
-        guard let filePath = Bundle.main.path(forResource: data.preview.rawValue, ofType: "mp4") else {
-            print("File path not found for sample.mp4")
-            return
-        }
-        
-        let fileURL = URL(fileURLWithPath: filePath)
-        player = AVPlayer(url: fileURL)
-        
-//        if let player = player {
-//            print("AVPlayer initialized successfully.")
-//            playerLayer = AVPlayerLayer(player: player)
-//        } else {
-//            print("Failed to initialize AVPlayer.")
-//        }
-//        
-//        if playerLayer == nil {
-//            print("AVPlayerLayer initialization failed.")
-//        } else {
-//            print("AVPlayerLayer initialized successfully.")
-//        }
     }
     
 }
@@ -225,7 +184,6 @@ class VideoPreviewView: NSView {
     
     override func layout() {
         super.layout()
-        // Ensure the preview layer resizes with the view
         previewLayer?.frame = self.bounds
     }
 }
