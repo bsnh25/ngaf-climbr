@@ -15,7 +15,9 @@ class SplashVC: NSViewController {
     var charService: CharacterService?
     var mountainImageTopConstraint: NSLayoutConstraint!
     var mountainImageCenterYConstraint: NSLayoutConstraint!
+    var mountainImageCenterXConstraint: NSLayoutConstraint!
     var appLogoCenterYConstraint: NSLayoutConstraint!
+    var appLogoCenterXConstraint: NSLayoutConstraint!
     
     init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
@@ -36,6 +38,10 @@ class SplashVC: NSViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.animateTransition()
             }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.animateTransition1()
+            }
         }
         navigateToHome()
     }
@@ -47,9 +53,10 @@ class SplashVC: NSViewController {
         // Initial constraints
         mountainImageTopConstraint = mountainImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 550)
         mountainImageCenterYConstraint = mountainImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 700)
+        mountainImageCenterXConstraint = mountainImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75)
         
         NSLayoutConstraint.activate([
-            mountainImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75),
+            mountainImageCenterXConstraint,
             mountainImageCenterYConstraint
         ])
     }
@@ -60,15 +67,29 @@ class SplashVC: NSViewController {
         
         // Initial constraints
         appLogoCenterYConstraint = appLogoView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        appLogoCenterXConstraint = appLogoView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         
         NSLayoutConstraint.activate([
-            appLogoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            appLogoCenterXConstraint,
             appLogoCenterYConstraint,
             appLogoView.widthAnchor.constraint(equalToConstant: 238)
         ])
     }
     
     private func animateTransition() {
+            // Animate the layout change
+        NSAnimationContext.runAnimationGroup { context in
+                    context.duration = 2.0
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                    
+                    self.mountainImageCenterYConstraint.animator().constant = 0
+                    self.appLogoCenterYConstraint.animator().constant = -115
+                    
+                    self.view.animator().layoutSubtreeIfNeeded()
+                }
+        }
+    
+    private func animateTransition1() {
             // Animate the layout change
         NSAnimationContext.runAnimationGroup { context in
                     context.duration = 2.0
