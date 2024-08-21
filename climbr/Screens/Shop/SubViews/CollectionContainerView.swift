@@ -18,10 +18,10 @@ class CollectionContainerView: NSView {
     
     var equipmentCollections: [EquipmentModel] = []
     
-    private var selectedItemHead: GridItem?
-    private var selectedItemBack: GridItem?
-    private var selectedItemHand: GridItem?
-    private var selectedItemLoc: GridItem?
+//    private var selectedItemHead: GridItem?
+//    private var selectedItemBack: GridItem?
+//    private var selectedItemHand: GridItem?
+//    private var selectedItemLoc: GridItem?
     
     var collectionDelegate: collectionContainerProtocol?
     
