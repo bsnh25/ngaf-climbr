@@ -13,7 +13,7 @@ struct Movement {
     var type: ExerciseType
     var duration: TimeInterval = 15
     var preview: ExerciseVideo
-    var thumbnail: ExerciseVideo
+    var thumbnail: NSImage
     var rewardPoint: Int
     
     static var setOfMovements: [[Movement]] = [
@@ -97,7 +97,7 @@ enum ExerciseName: String, CaseIterable {
     case Negative = "negative"
 }
 
-enum ExerciseVideo: String, CaseIterable {
+enum ExerciseVideo: String {
     case thumbnailCrossBodyShoudlerLeft = "crossBodyShoulder-Left"
     case thumbnailCrossBodyShoudlerRight = "crossBodyShoulder-Right"
     case thumbnailFrontShoulderStaticLeft = "frontShoulderStatic-Left"
