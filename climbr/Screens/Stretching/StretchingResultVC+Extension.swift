@@ -52,6 +52,7 @@ extension StretchingResultVC {
     
     func getUserData() {
         self.char = charService?.getCharacterData()
+        self.dummyCharacter.image = char?.gender == .male ? .maleCoin : .femaleCoin
     }
     
     @objc func goToMainMenu() {
