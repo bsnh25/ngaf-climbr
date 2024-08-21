@@ -15,7 +15,7 @@ struct CharacterModel {
     var headEquipment: EquipmentItem = .emptyHG
     var handEquipment: EquipmentItem = .emptyS
     var backEquipment: EquipmentItem = .emptyBP
-    
+    var locationEquipment: EquipmentItem = .jungleJumble
 }
 
 enum Gender: String{

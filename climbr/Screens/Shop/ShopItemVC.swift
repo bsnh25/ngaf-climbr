@@ -10,8 +10,8 @@ import AppKit
 import SnapKit
 
 class ShopItemVC: NSViewController {
-    var character : CharacterService?
-    var equipment : EquipmentService?
+    var characterService : CharacterService?
+    var equipmentService : EquipmentService?
     
     let pointsLabel = NSTextField(labelWithString: "100")
     let collectionViewContainer = CollectionContainerView()
@@ -29,26 +29,28 @@ class ShopItemVC: NSViewController {
         ("map.fill", "Location")
     ]
     
-    var headItems: [EquipmentModel] = EquipmentModel.headGears
-    var handItems: [EquipmentModel] = EquipmentModel.hikingSticks
-    var backItems: [EquipmentModel] = EquipmentModel.backPacks
-    var locationItems: [EquipmentModel] = EquipmentModel.locations
+//    var headItems: [EquipmentModel] = EquipmentModel.headGears
+//    var handItems: [EquipmentModel] = EquipmentModel.hikingSticks
+//    var backItems: [EquipmentModel] = EquipmentModel.backPacks
+//    var locationItems: [EquipmentModel] = EquipmentModel.locations
     
     var itemType : EquipmentType = .head
     
-    var currentHead : EquipmentItem = .emptyHG
-    var currentBack : EquipmentItem = .emptyBP
-    var currentHand : EquipmentItem = .emptyS
-    var currentLocation : EquipmentItem = .jungleJumble
+    var character: CharacterModel?
     
-    var currentHeadModel : EquipmentModel = EquipmentModel(item: .emptyHG, type: .head, isUnlocked: true)
-    var currentHandModel : EquipmentModel = EquipmentModel(item: .emptyS, type: .hand, isUnlocked: true)
-    var currentBackModel : EquipmentModel = EquipmentModel(item: .emptyBP, type: .back, isUnlocked: true)
-    var currentLocationModel : EquipmentModel = EquipmentModel(item: .jungleJumble, type: .location, isUnlocked: true)
+//    var currentHead : EquipmentItem = .emptyHG
+//    var currentBack : EquipmentItem = .emptyBP
+//    var currentHand : EquipmentItem = .emptyS
+//    var currentLocation : EquipmentItem = .jungleJumble
+//    
+//    var currentHeadModel : EquipmentModel = EquipmentModel(item: .emptyHG, type: .head, isUnlocked: true)
+//    var currentHandModel : EquipmentModel = EquipmentModel(item: .emptyS, type: .hand, isUnlocked: true)
+//    var currentBackModel : EquipmentModel = EquipmentModel(item: .emptyBP, type: .back, isUnlocked: true)
+//    var currentLocationModel : EquipmentModel = EquipmentModel(item: .jungleJumble, type: .location, isUnlocked: true)
     
     private var selectedButton: TypeButton?
-    var selectedGridItem: GridItem?
-    var selectedItem : EquipmentItem?
+//    var selectedGridItem: GridItem?
+    var selectedItem : EquipmentModel?
     
     let backButton = CLImageButton(
         imageName: "arrowshape.backward",
@@ -59,9 +61,8 @@ class ShopItemVC: NSViewController {
     
     init(character: CharacterService?, equipment : EquipmentService?){
         super.init(nibName: nil, bundle: nil)
-        self.character = character
-        self.equipment = equipment
-        buyButton.setupService(equipment: equipment!, character: character!)
+        self.characterService = character
+        self.equipmentService = equipment
     }
     
     required init?(coder: NSCoder) {
@@ -72,39 +73,13 @@ class ShopItemVC: NSViewController {
         super.viewDidLoad()
         view.wantsLayer = true
         
-        if let heads = equipment?.getEquipments(equipmentType: .head) {
-            headItems = heads
-            if let char = character?.getCharacterData()?.headEquipment{
-                currentHead = char
-                print("head di sini \(char.name)")
-            }
-        }
-        if let backs = equipment?.getEquipments(equipmentType: .back) {
-            backItems = backs
-            if let char = character?.getCharacterData()?.backEquipment{
-                currentBack = char
-                print("back di sini \(char.name)")
-            }
-        }
-        if let hands = equipment?.getEquipments(equipmentType: .hand) {
-            handItems = hands
-            if let char = character?.getCharacterData()?.handEquipment{
-                currentHand = char
-                print("hand di sini \(char.name)")
-            }
-        }
-        if let locations = equipment?.getEquipments(equipmentType: .location) {
-            locationItems = locations
-        }
-        
-        selectedItem = .emptyHG
         
         collectionViewContainer.collectionDelegate = self
-        collectionViewContainer.updateItems(items: headItems)
-        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+//        collectionViewContainer.updateItems(items: headItems)
+//        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
         
-        buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
-        buyButton.isHidden = currentHeadModel.isUnlocked
+//        buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((characterService?.getCharacterData()!.point)!))
+//        buyButton.isHidden = currentHeadModel.isUnlocked
         buyButton.delegate = self
         
         view.layer?.backgroundColor = NSColor.blue.cgColor
@@ -117,20 +92,33 @@ class ShopItemVC: NSViewController {
         setupBackButton()
         
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
-            updateGridItemsWithSelectedItem()
+//            updateGridItemsWithSelectedItem()
             highlightButton(firstButton)
         }
-        
-        points.setText(String((character?.getCharacterData()!.point)!))
     }
     
     override func viewDidAppear() {
-        collectionViewContainer.updateItems(items: headItems)
+        self.updateData(with: itemType)
+        getCharacterData()
+    }
+    
+    func getCharacterData() {
+        self.character = characterService?.getCharacterData()
+        
+        if let character = self.character {
+            /// Set current character's point
+            points.setText("\(character.point)")
+            /// Select first init to current head equipment
+            collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
+        }
     }
     
     func setupBuyButton(){
         buyButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buyButton)
+        
+        /// Hide the buy button for the first time
+        buyButton.isHidden = true
         
         NSLayoutConstraint.activate([
             buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 225),
@@ -249,40 +237,59 @@ class ShopItemVC: NSViewController {
         selectedButton?.updateItemIcon(true)
     }
     
-    func updateGridItemsWithSelectedItem() {
-        for index in 0..<collectionViewContainer.collectionView.numberOfItems(inSection: 0) {
-            if let gridItem = collectionViewContainer.collectionView.item(at: index) as? GridItem {
-                gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
-            }
-        }
-    }
+//    func updateGridItemsWithSelectedItem() {
+//        for index in 0..<collectionViewContainer.collectionView.numberOfItems(inSection: 0) {
+//            if let gridItem = collectionViewContainer.collectionView.item(at: index) as? GridItem {
+////                gridItem.updateItemSelected(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
+//            }
+//        }
+//    }
     
     @objc func sidebarButtonClicked(_ sender: TypeButton) {
+        guard let character else { return }
+        
         highlightButton(sender)
 
         switch sender.tag {
         case 0:
             itemType = .head
-            collectionViewContainer.updateItems(items: headItems)
-            buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((character?.getCharacterData()!.point)!))
-            buyButton.isHidden = currentHeadModel.isUnlocked
+            updateData(with: .head)
+            collectionViewContainer.selectCurrentItem(with: character.headEquipment)
+//            collectionViewContainer.updateItems(items: headItems)
+//            buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((characterService?.getCharacterData()!.point)!))
+//            buyButton.isHidden = currentHeadModel.isUnlocked
         case 1:
             itemType = .back
-            collectionViewContainer.updateItems(items: backItems)
-            buyButton.updateItemButtonPreview(item: currentBack, price: currentBack.price, point: Int((character?.getCharacterData()!.point)!))
-            buyButton.isHidden = currentBackModel.isUnlocked
+            updateData(with: .back)
+            collectionViewContainer.selectCurrentItem(with: character.backEquipment)
+//            collectionViewContainer.updateItems(items: backItems)
+//            buyButton.updateItemButtonPreview(item: currentBack, price: currentBack.price, point: Int((characterService?.getCharacterData()!.point)!))
+//            buyButton.isHidden = currentBackModel.isUnlocked
         case 2:
             itemType = .hand
-            collectionViewContainer.updateItems(items: handItems)
-            buyButton.updateItemButtonPreview(item: currentHand, price: currentHand.price, point: Int((character?.getCharacterData()!.point)!))
-            buyButton.isHidden = currentHandModel.isUnlocked
+            updateData(with: .hand)
+            collectionViewContainer.selectCurrentItem(with: character.handEquipment)
+//            collectionViewContainer.updateItems(items: handItems)
+//            buyButton.updateItemButtonPreview(item: currentHand, price: currentHand.price, point: Int((characterService?.getCharacterData()!.point)!))
+//            buyButton.isHidden = currentHandModel.isUnlocked
         case 3:
             itemType = .location
-            collectionViewContainer.updateItems(items: locationItems)
-            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((character?.getCharacterData()!.point)!))
-            buyButton.isHidden = currentLocationModel.isUnlocked
+            updateData(with: .location)
+            collectionViewContainer.selectCurrentItem(with: character.locationEquipment)
+//            collectionViewContainer.selectCurrentItem(with: character.location)
+//            collectionViewContainer.updateItems(items: locationItems)
+//            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((characterService?.getCharacterData()!.point)!))
+//            buyButton.isHidden = currentLocationModel.isUnlocked
         default:
             break
+        }
+        
+        
+    }
+    
+    func updateData(with type: EquipmentType = .head) {
+        if let items = equipmentService?.getEquipments(equipmentType: type) {
+            collectionViewContainer.updateItems(items: items)
         }
     }
     

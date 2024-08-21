@@ -9,7 +9,7 @@ import Cocoa
 import SnapKit
 
 protocol BuyButtonDelegate: AnyObject {
-    func didPurchaseItem()
+    func didPurchased()
 }
 
 class BuyButtonView: NSView {
@@ -17,18 +17,18 @@ class BuyButtonView: NSView {
     var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
     
     var item : EquipmentItem?
-    var itemPrice : Int?
-    var currentPoint: Int?
+//    var itemPrice : Int?
+//    var currentPoint: Int?
     
-    var equipment: EquipmentService?
-    var character: CharacterService?
+//    var equipment: EquipmentService?
+//    var character: CharacterService?
     
     var delegate: BuyButtonDelegate?
     
-    func setupService(equipment: EquipmentService, character: CharacterService){
-        self.equipment = equipment
-        self.character = character
-    }
+//    func setupService(equipment: EquipmentService, character: CharacterService){
+//        self.equipment = equipment
+//        self.character = character
+//    }
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -46,17 +46,17 @@ class BuyButtonView: NSView {
     
     func updateItemButtonPreview(item: EquipmentItem, price: Int, point: Int){
         self.item = item
-        self.itemPrice = price
-        self.currentPoint = point
+//        self.itemPrice = price
+//        self.currentPoint = point
         
         itemLabel.setText(item.name)
         itemButton.title = "Get for 🪙 \(price)"
         
-        if currentPoint! >= itemPrice! {
-            itemButton.backgroundColor = .cButton
-        }else{
-            itemButton.backgroundColor = .darkGray
-        }
+//        if currentPoint! >= itemPrice! {
+//            itemButton.backgroundColor = .cButton
+//        }else{
+//            itemButton.backgroundColor = .darkGray
+//        }
     }
     
     func setupUI(){
@@ -101,18 +101,6 @@ class BuyButtonView: NSView {
     }
     
     @objc func buyButtonClicked(){
-        print("halo")
-        if currentPoint! >= itemPrice! {
-            equipment?.purchaseEquipment(data: self.item!)
-            
-//            character?.getCharacterData()!.point = Int64(currentPoint! - itemPrice!)
-            if let charMod = character?.getCharacterData(){
-                let point = currentPoint! - itemPrice!
-                character?.updatePoint(character: charMod, points: point)
-            }
-            delegate?.didPurchaseItem()
-        }else{
-            print("kurang point")
-        }
+        delegate?.didPurchased()
     }
 }
