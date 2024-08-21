@@ -284,7 +284,7 @@ class ShopItemVC: NSViewController {
             break
         }
         
-        
+        buyButton.isHidden = true
     }
     
     func updateData(with type: EquipmentType = .head) {
