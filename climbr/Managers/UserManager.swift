@@ -148,7 +148,7 @@ class UserManager : CharacterService {
         
         do {
             if let response = try container.fetch(request).first {
-                response.point = Int64(points)
+                response.point += Int64(points)
                 try container.save()
             }
         } catch {

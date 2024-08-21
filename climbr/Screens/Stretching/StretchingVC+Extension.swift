@@ -289,7 +289,9 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(didDetectUpperBody value: Bool, with joints: [VNHumanBodyPoseObservation.JointName]) {
-        self.showTutorial = !value
+        if value {
+            self.showTutorial = false
+        }
     }
     
     func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
