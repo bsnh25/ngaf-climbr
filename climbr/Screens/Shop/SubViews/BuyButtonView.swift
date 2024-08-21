@@ -17,8 +17,8 @@ class BuyButtonView: NSView {
     var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
     
     var item : EquipmentItem?
-    var itemPrice : Int?
-    var currentPoint: Int?
+//    var itemPrice : Int?
+//    var currentPoint: Int?
     
 //    var equipment: EquipmentService?
 //    var character: CharacterService?
@@ -46,17 +46,17 @@ class BuyButtonView: NSView {
     
     func updateItemButtonPreview(item: EquipmentItem, price: Int, point: Int){
         self.item = item
-        self.itemPrice = price
-        self.currentPoint = point
+//        self.itemPrice = price
+//        self.currentPoint = point
         
         itemLabel.setText(item.name)
         itemButton.title = "Get for 🪙 \(price)"
         
-        if currentPoint! >= itemPrice! {
-            itemButton.backgroundColor = .cButton
-        }else{
-            itemButton.backgroundColor = .darkGray
-        }
+//        if currentPoint! >= itemPrice! {
+//            itemButton.backgroundColor = .cButton
+//        }else{
+//            itemButton.backgroundColor = .darkGray
+//        }
     }
     
     func setupUI(){

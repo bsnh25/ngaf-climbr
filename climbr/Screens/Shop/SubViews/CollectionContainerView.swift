@@ -25,12 +25,12 @@ class CollectionContainerView: NSView {
     
     var collectionDelegate: CollectionContainerProtocol?
     
-    var currentHead: EquipmentItem?
-    var currentBack: EquipmentItem?
-    var currentHand: EquipmentItem?
-    var currentLocation: EquipmentItem?
+//    var currentHead: EquipmentItem?
+//    var currentBack: EquipmentItem?
+//    var currentHand: EquipmentItem?
+//    var currentLocation: EquipmentItem?
     
-    var currentGridItem: GridItem?
+//    var currentGridItem: GridItem?
 //    var currentSelectedItem: EquipmentItem?
     
     override init(frame frameRect: NSRect) {
