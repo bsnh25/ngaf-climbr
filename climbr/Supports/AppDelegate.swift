@@ -47,11 +47,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         NSApp.appearance = NSAppearance(named: .aqua)
         ///audio setup
-        if let audio = audio {
-            audio.playBackgroundMusic(fileName: "bgmusic")
-        } else {
-            print("AudioService not resolved.")
-        }
+//        if let audio = audio {
+//            audio.playBackgroundMusic(fileName: "summer")
+//        } else {
+//            print("AudioService not resolved.")
+//        }
 
         mainWindow.makeKeyAndOrderFront(nil)
     }
@@ -77,13 +77,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             print("Main window is not available.")
         }
     }
-    
-    
-    func applicationDidResignActive(_ notification: Notification) {
-        audio?.stopBackground()
-        print("Application resigned active")
-        
-    }
+//    
+//    func applicationDidResignActive(_ notification: Notification) {
+//        audio?.stopBackground()
+//        print("Application resigned active")
+//    }
 
     func windowWillClose(_ notification: Notification) {
         NSApp.hide(nil) // Menyembunyikan aplikasi saat jendela ditutup
@@ -98,9 +96,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NSApplication.shared.setActivationPolicy(.accessory)
     }
     
+//    func applicationWillUpdate(_ notification: Notification) {
+//        ///audio setup
+//        if let audio = audio {
+//            audio.playBackgroundMusic(fileName: "summer")
+//        } else {
+//            print("AudioService not resolved.")
+//        }
+//    }
+    
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-
         
         if !flag {
             mainWindow?.orderFront(self)
@@ -116,7 +122,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 NSApplication.shared.activate(ignoringOtherApps: true)
             }
         }
-        
         return true
     }
 }

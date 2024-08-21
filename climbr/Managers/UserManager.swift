@@ -87,11 +87,32 @@ class UserManager : CharacterService {
                 point: charArr.point,
                 headEquipment: EquipmentItem(rawValue: charArr.headEquipment!)!,
                 handEquipment: EquipmentItem(rawValue: charArr.handEquipment!)!,
-                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!
+                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!,
+                locationEquipment: EquipmentItem(rawValue: charArr.locationEquipment!)!
             )
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
             return nil
+        }
+    }
+    
+    func updateCharacter(with data: CharacterModel) {
+        guard let container = container else { return }
+        
+        let request: NSFetchRequest<Character> = Character.fetchRequest()
+        let predicate: NSPredicate = NSPredicate(format: "name == %@", data.name)
+        request.predicate = predicate
+        
+        do {
+            if let response = try container.fetch(request).first {
+                response.headEquipment = data.headEquipment.rawValue
+                response.backEquipment = data.backEquipment.rawValue
+                response.handEquipment = data.handEquipment.rawValue
+                response.locationEquipment = data.locationEquipment.rawValue
+                try container.save()
+            }
+        } catch {
+            print("Error fetching user preference entries: \(error.localizedDescription)")
         }
     }
     
@@ -107,6 +128,7 @@ class UserManager : CharacterService {
             newUserData.headEquipment = data.headEquipment.rawValue
             newUserData.handEquipment = data.handEquipment.rawValue
             newUserData.backEquipment = data.backEquipment.rawValue
+            newUserData.locationEquipment = data.locationEquipment.rawValue
             
             do {
                 try container.save()
@@ -126,7 +148,7 @@ class UserManager : CharacterService {
         
         do {
             if let response = try container.fetch(request).first {
-                response.point = Int64(points)
+                response.point += Int64(points)
                 try container.save()
             }
         } catch {

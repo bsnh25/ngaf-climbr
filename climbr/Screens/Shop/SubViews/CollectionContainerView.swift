@@ -7,9 +7,9 @@
 
 import Cocoa
 
-protocol collectionContainerProtocol {
-    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType)
-    func gridItemSelectedChange(to newSelected: GridItem)
+protocol CollectionContainerProtocol {
+    func itemSelectedChangedWithType(to data: EquipmentModel)
+//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
 }
 
 class CollectionContainerView: NSView {
@@ -18,19 +18,20 @@ class CollectionContainerView: NSView {
     
     var equipmentCollections: [EquipmentModel] = []
     
-    private var selectedItemHead: GridItem?
-    private var selectedItemBack: GridItem?
-    private var selectedItemHand: GridItem?
-    private var selectedItemLoc: GridItem?
+//    private var selectedItemHead: GridItem?
+//    private var selectedItemBack: GridItem?
+//    private var selectedItemHand: GridItem?
+//    private var selectedItemLoc: GridItem?
     
-    var collectionDelegate: collectionContainerProtocol?
+    var collectionDelegate: CollectionContainerProtocol?
     
-    var currentHead: EquipmentItem?
-    var currentBack: EquipmentItem?
-    var currentHand: EquipmentItem?
-    var currentLocation: EquipmentItem?
+//    var currentHead: EquipmentItem?
+//    var currentBack: EquipmentItem?
+//    var currentHand: EquipmentItem?
+//    var currentLocation: EquipmentItem?
     
-    var currentGridItem: GridItem?
+//    var currentGridItem: GridItem?
+//    var currentSelectedItem: EquipmentItem?
     
     override init(frame frameRect: NSRect) {
         
@@ -62,9 +63,13 @@ class CollectionContainerView: NSView {
     
     private func setupCollectionView() {
         collectionView.dataSource = self
-        collectionView.delegate = self as? NSCollectionViewDelegate // If needed
+        collectionView.delegate = self // If needed
         collectionView.wantsLayer = true
         collectionView.layer?.backgroundColor = NSColor.clear.cgColor
+        
+        collectionView.isSelectable = true
+        collectionView.allowsEmptySelection = false
+        collectionView.allowsMultipleSelection = false
         
         // Add the collectionView directly to the container view
         self.addSubview(collectionView)
@@ -85,16 +90,16 @@ class CollectionContainerView: NSView {
         collectionView.reloadData()
     }
     
-    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
-        self.currentHead = head
-        self.currentHand = hand
-        self.currentBack = back
-        self.currentLocation = location
-    }
+//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
+//        self.currentHead = head
+//        self.currentHand = hand
+//        self.currentBack = back
+//        self.currentLocation = location
+//    }
     
-    func updateCurrentGridItem(gridItem: GridItem) {
-        self.currentGridItem = gridItem
-    }
+//    func updateCurrentGridItem(gridItem: GridItem) {
+//        self.currentGridItem = gridItem
+//    }
 }
 
 extension CollectionContainerView: NSCollectionViewDataSource {
@@ -105,28 +110,9 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
-        item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
-        item.gridDelegate = self
+//        item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
+//        item.gridDelegate = self
+//        item.itemDelegate = self
         return item
     }
 }
-
-extension CollectionContainerView: gridItemSelectionProtocol {
-    func gridItemSelectionDidChange(to newSelected: GridItem) {
-        switch newSelected.type {
-        case .head:
-            currentHead = newSelected.item
-        case .hand:
-            currentHand = newSelected.item
-        case .back:
-            currentBack = newSelected.item
-        case .location:
-            currentLocation = newSelected.item
-        case .none:
-            break
-        }
-        currentGridItem = newSelected
-        collectionDelegate?.itemSelectedChangedWithType(to: newSelected.item!, type: newSelected.type!)
-    }
-}
-

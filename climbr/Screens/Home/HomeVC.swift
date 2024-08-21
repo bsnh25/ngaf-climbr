@@ -97,6 +97,8 @@ class HomeVC: NSViewController {
     }
     
     override func viewDidAppear() {
+        let audio = Container.shared.resolve(AudioService.self)
+        audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()
         if charService?.getCharacterData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
@@ -265,7 +267,6 @@ class HomeVC: NSViewController {
         icon.setConfiguration(size: 18.79, weight: .bold)
         icon.contentTintColor = .black
         
-        points.setText("100")
         points.backgroundColor = .clear
         points.setTextColor(.black)
         

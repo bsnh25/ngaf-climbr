@@ -8,29 +8,55 @@
 import Cocoa
 import SnapKit
 
+protocol BuyButtonDelegate: AnyObject {
+    func didPurchased()
+}
+
 class BuyButtonView: NSView {
     let itemLabel = CLLabel()
     var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
     
-    var itemName : String?
-    var itemPrice : Int?
+    var item : EquipmentItem?
+//    var itemPrice : Int?
+//    var currentPoint: Int?
+    
+//    var equipment: EquipmentService?
+//    var character: CharacterService?
+    
+    var delegate: BuyButtonDelegate?
+    
+//    func setupService(equipment: EquipmentService, character: CharacterService){
+//        self.equipment = equipment
+//        self.character = character
+//    }
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        itemButton.action = #selector(buyButtonClicked)
+        itemButton.target = self
         setupUI()
     }
         
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        itemButton.action = #selector(buyButtonClicked)
+        itemButton.target = self
         setupUI()
     }
+    
+    func updateItemButtonPreview(item: EquipmentItem, price: Int, point: Int){
+        self.item = item
+//        self.itemPrice = price
+//        self.currentPoint = point
         
-    func updateItemButtonPreview(name: String, price: Int){
-        self.itemName = name
-        self.itemPrice = price
-        
-        itemLabel.setText(name)
+        itemLabel.setText(item.name)
         itemButton.title = "Get for 🪙 \(price)"
+        
+//        if currentPoint! >= itemPrice! {
+//            itemButton.backgroundColor = .cButton
+//        }else{
+//            itemButton.backgroundColor = .darkGray
+//        }
     }
     
     func setupUI(){
@@ -39,10 +65,6 @@ class BuyButtonView: NSView {
         layer?.cornerRadius = 10
         layer?.shadowRadius = 5
         layer?.shadowOpacity = 0.3
-        
-//        addSubview(itemButton)
-//        addSubview(itemLabel)
-        
         setupItemButton()
         setupItemLabel()
         
@@ -76,5 +98,9 @@ class BuyButtonView: NSView {
             button.leading.trailing.bottom.equalToSuperview().inset(20)
             button.height.equalTo(50)
         }
+    }
+    
+    @objc func buyButtonClicked(){
+        delegate?.didPurchased()
     }
 }

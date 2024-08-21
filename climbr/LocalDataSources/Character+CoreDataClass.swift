@@ -2,7 +2,7 @@
 //  Character+CoreDataClass.swift
 //  climbr
 //
-//  Created by Bayu Septyan Nur Hidayat on 18/08/24.
+//  Created by Ivan Nur Ilham Syah on 21/08/24.
 //
 //
 

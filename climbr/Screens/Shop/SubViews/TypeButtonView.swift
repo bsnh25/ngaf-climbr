@@ -13,10 +13,10 @@ class TypeButton: NSButton {
     let stack = NSStackView()
     let icon = CLSFSymbol()
     
-    var currentHead : EquipmentItem?
-    var currentBack : EquipmentItem?
-    var currentHand : EquipmentItem?
-    var currentLocation : EquipmentItem?
+//    var currentHead : EquipmentItem?
+//    var currentBack : EquipmentItem?
+//    var currentHand : EquipmentItem?
+//    var currentLocation : EquipmentItem?
     
     init(imageName: String, text: String){
         super.init(frame: .zero)

@@ -81,6 +81,7 @@ extension HomeVC {
         let progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
         progressStretch.doubleValue = progress
         progressText.setText("\(Int(progress)) / 4 sessions")
+        updatePoint()
     }
     
     
@@ -88,6 +89,14 @@ extension HomeVC {
         //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
         
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
+    }
+    
+    func updatePoint(){
+        if let pointChar = charService?.getCharacterData() {
+            points.setText(String(pointChar.point))
+        } else {
+            points.setText("0")
+        }
     }
 }
 
