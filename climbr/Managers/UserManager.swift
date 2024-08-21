@@ -95,6 +95,26 @@ class UserManager : CharacterService {
         }
     }
     
+    func updateCharacter(with data: CharacterModel) {
+        guard let container = container else { return }
+        
+        let request: NSFetchRequest<Character> = Character.fetchRequest()
+        let predicate: NSPredicate = NSPredicate(format: "name == %@", data.name)
+        request.predicate = predicate
+        
+        do {
+            if let response = try container.fetch(request).first {
+                response.headEquipment = data.headEquipment.rawValue
+                response.backEquipment = data.backEquipment.rawValue
+                response.handEquipment = data.handEquipment.rawValue
+                #warning("add location")
+                try container.save()
+            }
+        } catch {
+            print("Error fetching user preference entries: \(error.localizedDescription)")
+        }
+    }
+    
     func saveCharacterData(data: CharacterModel) {
             guard let container = container else { return }
             
