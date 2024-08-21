@@ -63,7 +63,7 @@ class CollectionContainerView: NSView {
     
     private func setupCollectionView() {
         collectionView.dataSource = self
-        collectionView.delegate = self as? NSCollectionViewDelegate // If needed
+        collectionView.delegate = self // If needed
         collectionView.wantsLayer = true
         collectionView.layer?.backgroundColor = NSColor.clear.cgColor
         
@@ -90,16 +90,16 @@ class CollectionContainerView: NSView {
         collectionView.reloadData()
     }
     
-    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
-        self.currentHead = head
-        self.currentHand = hand
-        self.currentBack = back
-        self.currentLocation = location
-    }
+//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
+//        self.currentHead = head
+//        self.currentHand = hand
+//        self.currentBack = back
+//        self.currentLocation = location
+//    }
     
-    func updateCurrentGridItem(gridItem: GridItem) {
-        self.currentGridItem = gridItem
-    }
+//    func updateCurrentGridItem(gridItem: GridItem) {
+//        self.currentGridItem = gridItem
+//    }
 }
 
 extension CollectionContainerView: NSCollectionViewDataSource {
@@ -110,9 +110,9 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
-        item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
-        item.gridDelegate = self
-        item.itemDelegate = self
+//        item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
+//        item.gridDelegate = self
+//        item.itemDelegate = self
         return item
     }
 }
