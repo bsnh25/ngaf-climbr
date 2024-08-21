@@ -87,7 +87,8 @@ class UserManager : CharacterService {
                 point: charArr.point,
                 headEquipment: EquipmentItem(rawValue: charArr.headEquipment!)!,
                 handEquipment: EquipmentItem(rawValue: charArr.handEquipment!)!,
-                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!
+                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!,
+                locationEquipment: EquipmentItem(rawValue: charArr.locationEquipment!)!
             )
         } catch {
             print("Error fetching user preference entries: \(error.localizedDescription)")
@@ -107,7 +108,7 @@ class UserManager : CharacterService {
                 response.headEquipment = data.headEquipment.rawValue
                 response.backEquipment = data.backEquipment.rawValue
                 response.handEquipment = data.handEquipment.rawValue
-                #warning("add location")
+                response.locationEquipment = data.locationEquipment.rawValue
                 try container.save()
             }
         } catch {
