@@ -21,7 +21,7 @@ extension ShopItemVC {
         case .back:
             character.backEquipment = data.item
         case .location:
-            #warning("tambahin location")
+            character.locationEquipment = data.item
             return
         }
         
@@ -199,6 +199,7 @@ extension ShopItemVC : collectionContainerProtocol {
 //    }
 //}
 
+#warning("refactor this delegate")
 extension ShopItemVC: BuyButtonDelegate {
     func didPurchaseItem() {
         if let selectedItem {

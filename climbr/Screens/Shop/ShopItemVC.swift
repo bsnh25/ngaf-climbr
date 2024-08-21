@@ -99,7 +99,7 @@ class ShopItemVC: NSViewController {
     }
     
     override func viewDidAppear() {
-        self.updateData()
+        self.updateData(with: itemType)
         getCharacterData()
     }
     
@@ -276,6 +276,7 @@ class ShopItemVC: NSViewController {
         case 3:
             itemType = .location
             updateData(with: .location)
+            collectionViewContainer.selectCurrentItem(with: character.locationEquipment)
 //            collectionViewContainer.selectCurrentItem(with: character.location)
 //            collectionViewContainer.updateItems(items: locationItems)
 //            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((characterService?.getCharacterData()!.point)!))
