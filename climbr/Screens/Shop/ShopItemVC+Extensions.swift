@@ -31,8 +31,8 @@ extension ShopItemVC {
     }
 }
 
-extension ShopItemVC : collectionContainerProtocol {
-    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType) {
+extension ShopItemVC : CollectionContainerProtocol {
+//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType) {
 //        self.collectionViewContainer.collectionView.reloadData()
         
 //        currentHead = head
@@ -106,19 +106,18 @@ extension ShopItemVC : collectionContainerProtocol {
 //            }
 //        }
 //        self.collectionViewContainer.collectionView.reloadData()
-    }
+//    }
     
-    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool) {
-        #warning("refactor this delegate")
-        self.selectedItem = EquipmentModel(item: item, type: type, isUnlocked: isUnlocked)
+    func itemSelectedChangedWithType(to equipment: EquipmentModel) {
+        self.selectedItem = equipment
         
         
         if let character {
-            print("price: ", Int(character.point) < item.price)
-            buyButton.itemButton.isEnabled = !(Int(character.point) < item.price)
+            print("price: ", Int(character.point) < equipment.item.price)
+            buyButton.itemButton.isEnabled = !(Int(character.point) < equipment.item.price)
         }
         
-        if isUnlocked, let selectedItem = self.selectedItem {
+        if equipment.isUnlocked, let selectedItem = self.selectedItem {
             self.updateCharacter(with: selectedItem)
         }
         
@@ -145,8 +144,8 @@ extension ShopItemVC : collectionContainerProtocol {
         
 //        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
 //        points.setText("\(item.price)")
-        buyButton.updateItemButtonPreview(item: item, price: item.price, point: Int(character?.point ?? 0))
-        buyButton.isHidden = isUnlocked
+        buyButton.updateItemButtonPreview(item: equipment.item, price: equipment.item.price, point: Int(character?.point ?? 0))
+        buyButton.isHidden = equipment.isUnlocked
 //        print(selectedGridItem?.item?.name)
 //        collectionViewContainer.collectionView.reloadData()
     }

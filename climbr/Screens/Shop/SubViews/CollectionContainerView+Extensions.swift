@@ -69,7 +69,7 @@ extension CollectionContainerView: NSCollectionViewDelegateFlowLayout {
         print(indexPath)
         
         if let data = cell.data {
-            collectionDelegate?.itemSelectedChangedWithType(to: data.item, type: data.type, isUnlocked: data.isUnlocked)
+            collectionDelegate?.itemSelectedChangedWithType(to: data)
         }
     }
 }

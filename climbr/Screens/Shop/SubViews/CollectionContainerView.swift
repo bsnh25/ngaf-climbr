@@ -7,9 +7,9 @@
 
 import Cocoa
 
-protocol collectionContainerProtocol {
-    func itemSelectedChangedWithType(to item: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
-    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
+protocol CollectionContainerProtocol {
+    func itemSelectedChangedWithType(to data: EquipmentModel)
+//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
 }
 
 class CollectionContainerView: NSView {
@@ -23,7 +23,7 @@ class CollectionContainerView: NSView {
 //    private var selectedItemHand: GridItem?
 //    private var selectedItemLoc: GridItem?
     
-    var collectionDelegate: collectionContainerProtocol?
+    var collectionDelegate: CollectionContainerProtocol?
     
     var currentHead: EquipmentItem?
     var currentBack: EquipmentItem?

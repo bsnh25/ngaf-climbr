@@ -12,9 +12,9 @@ import Cocoa
 //    func gridItemSelectionDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
 //}
 
-protocol collectionItemProtocol{
-    func collectionItemDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
-}
+//protocol collectionItemProtocol{
+//    func collectionItemDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
+//}
 
 class GridItem: NSCollectionViewItem {
     
