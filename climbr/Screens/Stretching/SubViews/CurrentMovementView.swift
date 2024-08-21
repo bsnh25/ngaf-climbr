@@ -6,19 +6,36 @@
 //
 
 import AppKit
+import AVFoundation
+import Combine
 
 class CurrentMovementView: NSStackView {
     
-    let stretchLabel            = CLLabel(fontSize: 36, fontWeight: .bold)
-    let movementLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
-    let movementPreview         = NSView()
-    let imageView               = NSImageView()
-    let durationContainerView   = NSStackView()
-    let durationImageView       = CLSFSymbol(symbolName: "timer", description: "Duration")
-    let durationLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
+    let stretchLabel = CLLabel(
+        fontSize: 36,
+        fontWeight: .bold
+    )
+    let movementLabel = CLLabel(
+        fontSize: 20,
+        fontWeight: .bold
+    )
+    let videoView = NSView()
+    let durationContainerView = NSStackView()
+    let durationImageView = CLSFSymbol(
+        symbolName: "timer",
+        description: "Duration"
+    )
+    let durationLabel = CLLabel(
+        fontSize: 20,
+        fontWeight: .bold
+    )
     
     var currentIndex: Int?
     var maxIndex: Int?
+    var playerLayer : AVPlayerLayer!
+    var player : AVPlayer?
+    
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         configure()
@@ -34,7 +51,7 @@ class CurrentMovementView: NSStackView {
         alignment         = .leading
         clipsToBounds = true
         
-        let views = [stretchLabel, movementLabel, movementPreview, durationContainerView]
+        let views = [stretchLabel, movementLabel, videoView]
         setViews(views, in: .center)
         
         for item in views {
@@ -43,14 +60,30 @@ class CurrentMovementView: NSStackView {
         
         configureMovementLabel()
         configureMovementPreview()
-//        configureDurationLabel()
     }
     
     func updateData(_ data: Movement) {
+        
+        if playerLayer == nil {
+            setupVideo(for: data)
+            videoView.layer?.addSublayer(playerLayer)
+            print("success setup video")
+        }
+        
+        guard let playerLayer = playerLayer else {
+            print("playerLayer is still nil after attempting setup")
+            return
+        }
+        
+//        if videoView.layer?.sublayers?.contains(playerLayer) == false {
+//            videoView.layer?.addSublayer(playerLayer)
+//            print("video view : \(String(describing: videoView.layer?.sublayers?.contains(playerLayer)))")
+//        }
+        playerLayer.frame = videoView.bounds
+        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.player?.play()
+        
         movementLabel.setText(data.name.rawValue)
-        durationLabel.setText("\(String(format: "%.f", data.duration)) seconds")
-        imageView.image   = data.thumbnail
-        imageView.image?.size           = NSSize(width: 328, height: 200)
     }
     
     func setDuration(_ time: Double) {
@@ -91,137 +124,59 @@ class CurrentMovementView: NSStackView {
     }
     
     private func configureMovementPreview() {
-        movementPreview.translatesAutoresizingMaskIntoConstraints = false
-        movementPreview.wantsLayer                = true
-        movementPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor.copy(alpha: 0.5)
-        movementPreview.layer?.cornerRadius       = 10
-        movementPreview.clipsToBounds             = true
-        
-        imageView.imageAlignment        = .alignCenter
-        imageView.imageScaling          = .scaleProportionallyUpOrDown
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        movementPreview.addSubview(imageView)
+        videoView.wantsLayer = true
+        videoView.layer?.cornerRadius = 10
+        videoView.layer?.borderWidth = 2
+        videoView.layer?.borderColor = .black
+//        videoView.layer?.backgroundColor = .black
         
         NSLayoutConstraint.activate([
-            movementPreview.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
-            movementPreview.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
-            movementPreview.widthAnchor.constraint(equalTo: movementPreview.widthAnchor),
-            movementPreview.heightAnchor.constraint(equalToConstant: 200),
-            
-            imageView.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
-            imageView.heightAnchor.constraint(equalTo: movementPreview.heightAnchor),
+            videoView.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
+            videoView.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
+            videoView.heightAnchor.constraint(equalToConstant: 200),
         ])
     }
     
-    private func configureDurationLabel() {
-        durationContainerView.setViews([durationImageView, durationLabel], in: .center)
-        durationContainerView.spacing           = 8
-        durationContainerView.orientation       = .horizontal
-        
-        durationLabel.setText("15 seconds")
-        durationImageView.setConfiguration(size: 20, weight: .bold)
-        
-        NSLayoutConstraint.activate([
-            durationContainerView.centerXAnchor.constraint(equalTo: movementPreview.centerXAnchor),
-            durationContainerView.heightAnchor.constraint(equalToConstant: 32)
-        ])
-    }
+//    private func configureDurationLabel() {
+//        durationContainerView.setViews([durationImageView, durationLabel], in: .center)
+//        durationContainerView.spacing           = 8
+//        durationContainerView.orientation       = .horizontal
+//        
+//        durationLabel.setText("15 seconds")
+//        durationImageView.setConfiguration(size: 20, weight: .bold)
+//        
+//        NSLayoutConstraint.activate([
+//            durationContainerView.centerXAnchor.constraint(equalTo: videoView.centerXAnchor),
+//            durationContainerView.heightAnchor.constraint(equalToConstant: 32)
+//        ])
+//    }
     
     func getIndexMovement(current: Int, maxIndex: Int){
         let showIndex = current + 1
         stretchLabel.setText("\(showIndex) / \(maxIndex)")
     }
-}
 
-//class ExcerciseVideoVC: NSViewController {
-//    let currentExcerciseLabel   = CLLabel(fontSize: 20, fontWeight: .bold)
-//    let excerciseVideoPreview   = NSView()
-//    let durationContainerView   = NSStackView()
-//    let durationImageView       = CLSFSymbol(symbolName: "timer", description: "Duration")
-//    let durationLabel           = CLLabel(fontSize: 20, fontWeight: .bold)
-//    
-//    var movement: Movement! {
-//        didSet {
-//            currentExcerciseLabel.setText(movement.title)
-//        }
-//    }
-//    
-//    init(movement: Movement) {
-//        super.init(nibName: nil, bundle: nil)
-//        self.movement = movement
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        configureUI()
-//        configureCurrentExcerciseLabel()
-//        configureExcerciseVideoPreview()
-//        configureDurationLabel()
-//    }
-//    
-//    func updateData(_ data: Movement) {
-//        movement = data
-//        currentExcerciseLabel.setText(data.title)
-//    }
-//    
-//    private func configureUI() {
-//        let views = [currentExcerciseLabel, excerciseVideoPreview, durationContainerView]
-//        
-//        for itemView in views {
-//            view.addSubview(itemView)
-//            itemView.translatesAutoresizingMaskIntoConstraints = false
-//        }
-//    }
-//    
-//    private func configureCurrentExcerciseLabel() {
-//        currentExcerciseLabel.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        currentExcerciseLabel.setText(movement.title)
-//        
-//        NSLayoutConstraint.activate([
-//            currentExcerciseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            currentExcerciseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            currentExcerciseLabel.topAnchor.constraint(equalTo: view.topAnchor),
-//            currentExcerciseLabel.heightAnchor.constraint(equalToConstant: 32)
-//        ])
-//    }
-//    
-//    private func configureExcerciseVideoPreview() {
-//        excerciseVideoPreview.translatesAutoresizingMaskIntoConstraints = false
-//        excerciseVideoPreview.wantsLayer                = true
-//        excerciseVideoPreview.layer?.backgroundColor    = NSColor.systemGray.cgColor.copy(alpha: 0.5)
-//        excerciseVideoPreview.layer?.cornerRadius       = 10
-//        
-//        NSLayoutConstraint.activate([
-//            excerciseVideoPreview.topAnchor.constraint(equalTo: currentExcerciseLabel.bottomAnchor, constant: 16),
-//            excerciseVideoPreview.trailingAnchor.constraint(equalTo: currentExcerciseLabel.trailingAnchor),
-//            excerciseVideoPreview.leadingAnchor.constraint(equalTo: currentExcerciseLabel.leadingAnchor),
-//            excerciseVideoPreview.heightAnchor.constraint(equalToConstant: 200)
-//        ])
-//    }
-//    
-//    private func configureDurationLabel() {
-//        
-//        durationContainerView.setViews([durationImageView, durationLabel], in: .center)
-//        durationContainerView.spacing           = 8
-//        durationContainerView.orientation       = .horizontal
-//        
-//        durationLabel.setText("\(movement.duration) seconds")
-//        durationImageView.setConfiguration(size: 20, weight: .bold)
-//        
-//        NSLayoutConstraint.activate([
-//            durationContainerView.centerXAnchor.constraint(equalTo: excerciseVideoPreview.centerXAnchor),
-//            durationContainerView.topAnchor.constraint(equalTo: excerciseVideoPreview.bottomAnchor, constant: 16),
-//            durationContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            durationContainerView.heightAnchor.constraint(equalToConstant: 32)
-//        ])
-//    }
-//    
-//}
+    func setupVideo(for data: Movement) {
+        guard let filePath = Bundle.main.path(forResource: data.preview.rawValue, ofType: "mp4") else {
+            print("File path not found for sample.mp4")
+            return
+        }
+        
+        let fileURL = URL(fileURLWithPath: filePath)
+        player = AVPlayer(url: fileURL)
+        
+        if let player = player {
+            print("AVPlayer initialized successfully.")
+            playerLayer = AVPlayerLayer(player: player)
+        } else {
+            print("Failed to initialize AVPlayer.")
+        }
+        
+        if playerLayer == nil {
+            print("AVPlayerLayer initialization failed.")
+        } else {
+            print("AVPlayerLayer initialized successfully.")
+        }
+    }
+    
+}

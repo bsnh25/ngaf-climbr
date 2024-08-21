@@ -12,7 +12,7 @@ struct Movement {
     var name: ExerciseName
     var type: ExerciseType
     var duration: TimeInterval = 15
-    var preview: NSImage
+    var preview: ExerciseVideo
     var thumbnail: NSImage
     var rewardPoint: Int
     
@@ -95,4 +95,25 @@ enum ExerciseName: String, CaseIterable {
     case UpperBackStretchUp = "Upper Back Stretch Up"
     case Still = "Still"
     case Negative = "negative"
+}
+
+enum ExerciseVideo: String {
+    case thumbnailCrossBodyShoudlerLeft = "crossBodyShoulder-Left"
+    case thumbnailCrossBodyShoudlerRight = "crossBodyShoulder-Right"
+    case thumbnailFrontShoulderStaticLeft = "frontShoulderStatic-Left"
+    case thumbnailFrontShoulderStaticRight = "frontShoulderStatic-Right"
+    case thumbnailLowerBackSpinLeft = "lowerBackSpin-Left"
+    case thumbnailLowerBackSpinRight = "lowerBackSpin-Right"
+    case thumbnailNeckDeepLeft = "neckDeep-Left"
+    case thumbnailNeckDeepRight = "neckDeep-Right"
+    case thumbnailNeckExtensionBack = "neckExtension-Back"
+    case thumbnailNeckExtensionFront = "neckExtension-Front"
+    case thumbnailNeckRotationLeft = "neckRotation-Left"
+    case thumbnailNeckRotationRight = "neckRotation-Right"
+    case thumbnailTricepStaticLeft = "tricepStatic-Left"
+    case thumbnailTricepStaticRight = "tricepStatic-Right"
+    case thumbnailUpperBackStretchFront = "upperBackStretch-Front"
+    case thumbnailUpperBackStretchLeft = "upperBackStretch-Left"
+    case thumbnailUpperBackStretchRight = "upperBackStretch-Right"
+    case thumbnailUpperBackStretchUp = "upperBackStretch-Up"
 }
