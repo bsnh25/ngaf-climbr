@@ -90,14 +90,6 @@ class StretchingVC: NSViewController {
         updateMovementState()
 
     }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        
-        if let data = setOfMovements.first {
-            currentMovementView.playVideo(data.preview.rawValue)
-        }
-    }
   
     override func viewDidDisappear() {
         super.viewDidDisappear()
