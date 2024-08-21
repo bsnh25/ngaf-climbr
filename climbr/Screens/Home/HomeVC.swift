@@ -284,6 +284,9 @@ class HomeVC: NSViewController {
         
         view.addSubview(pointsView)
         
+        let blur = CLBlurEffectView(frame: pointsView.bounds)
+        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
+        
         let hPadding = view.bounds.width * 0.02
         
         NSLayoutConstraint.activate([

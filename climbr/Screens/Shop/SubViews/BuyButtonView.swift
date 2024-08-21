@@ -68,6 +68,9 @@ class BuyButtonView: NSView {
         setupItemButton()
         setupItemLabel()
         
+        let blur = CLBlurEffectView(frame: bounds)
+        addSubview(blur, positioned: .below, relativeTo: nil)
+        
         NSLayoutConstraint.activate([
             self.widthAnchor.constraint(equalToConstant: 300),
             self.heightAnchor.constraint(equalToConstant: 150)

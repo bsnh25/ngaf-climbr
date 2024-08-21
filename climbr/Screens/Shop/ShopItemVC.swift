@@ -23,10 +23,10 @@ class ShopItemVC: NSViewController {
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
-        ("person.fill", "Headgear"),
-        ("bag.fill", "Backpack"),
-        ("figure.walk", "Hiking stick"),
-        ("map.fill", "Location")
+        ("headphones", "Headgear"),
+        ("backpack", "Backpack"),
+        ("figure.hiking", "Hiking stick"),
+        ("map", "Location")
     ]
     
 //    var headItems: [EquipmentModel] = EquipmentModel.headGears
@@ -206,12 +206,16 @@ class ShopItemVC: NSViewController {
         
         pointsView.wantsLayer = true
         
+        let blur = CLBlurEffectView(frame: pointsView.bounds)
+        
+        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
+        
         pointsView.setViews([icon, points], in: .center)
         pointsView.translatesAutoresizingMaskIntoConstraints = false
         pointsView.orientation = .horizontal
         pointsView.alignment = .centerY
         pointsView.distribution = .equalSpacing
-        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.7)
+        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.72)
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
@@ -233,7 +237,7 @@ class ShopItemVC: NSViewController {
 
         selectedButton = button
         selectedButton?.isSelected = true
-        selectedButton?.layer?.backgroundColor = NSColor.white.cgColor // Highlight color
+        selectedButton?.layer?.backgroundColor = .white.copy(alpha: 0.84) // Highlight color
         selectedButton?.updateItemIcon(true)
     }
     
@@ -284,7 +288,7 @@ class ShopItemVC: NSViewController {
             break
         }
         
-        
+        buyButton.isHidden = true
     }
     
     func updateData(with type: EquipmentType = .head) {
