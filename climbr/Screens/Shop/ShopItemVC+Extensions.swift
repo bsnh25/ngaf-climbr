@@ -22,8 +22,10 @@ extension ShopItemVC {
             character.backEquipment = data.item
         case .location:
             character.locationEquipment = data.item
-            return
         }
+        
+        print("Location: ", character.locationEquipment)
+        print("Location item: ", data.item)
         
         characterService.updateCharacter(with: character)
         
