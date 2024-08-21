@@ -128,6 +128,7 @@ class UserManager : CharacterService {
             newUserData.headEquipment = data.headEquipment.rawValue
             newUserData.handEquipment = data.handEquipment.rawValue
             newUserData.backEquipment = data.backEquipment.rawValue
+            newUserData.locationEquipment = data.locationEquipment.rawValue
             
             do {
                 try container.save()
