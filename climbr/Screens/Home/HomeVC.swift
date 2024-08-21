@@ -79,6 +79,7 @@ class HomeVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        view.wantsLayer = true
         previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()

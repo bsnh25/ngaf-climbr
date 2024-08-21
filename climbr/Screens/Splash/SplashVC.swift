@@ -39,11 +39,8 @@ class SplashVC: NSViewController {
                 self.animateTransition()
             }
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.animateTransition1()
-            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.animateTransition2()
+                self.animateTransition1()
             }
         }
         navigateToHome()
@@ -95,24 +92,11 @@ class SplashVC: NSViewController {
     private func animateTransition1() {
             // Animate the layout change
         NSAnimationContext.runAnimationGroup { context in
-                    context.duration = 1.0
+                    context.duration = 2.0
             context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                     
                     self.mountainImageCenterYConstraint.animator().constant = 0
                     self.appLogoCenterYConstraint.animator().constant = -115
-                    
-                    self.view.animator().layoutSubtreeIfNeeded()
-                }
-        }
-    
-    private func animateTransition2() {
-            // Animate the layout change
-        NSAnimationContext.runAnimationGroup { context in
-                    context.duration = 1.0
-            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                    
-                    self.appLogoCenterYConstraint.animator().constant = -840
-                    self.mountainImageCenterYConstraint.animator().constant = -1000
                     
                     self.view.animator().layoutSubtreeIfNeeded()
                 }
