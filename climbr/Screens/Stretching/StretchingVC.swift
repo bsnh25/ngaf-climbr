@@ -75,6 +75,7 @@ class StretchingVC: NSViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        view.wantsLayer = true
         
         cameraService?.startSession()
         configureCameraPreview()
@@ -84,11 +85,18 @@ class StretchingVC: NSViewController {
         configureButton()
         configurePositionStateLabel()
         configureInstructionView()
-        view.wantsLayer = true
         
         updateMovementData()
         updateMovementState()
 
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        if let data = setOfMovements.first {
+            currentMovementView.playVideo(data.preview.rawValue)
+        }
     }
   
     override func viewDidDisappear() {

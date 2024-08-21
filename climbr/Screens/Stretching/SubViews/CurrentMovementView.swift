@@ -19,7 +19,7 @@ class CurrentMovementView: NSStackView {
         fontSize: 20,
         fontWeight: .bold
     )
-    let videoView = NSView()
+    let videoView = VideoPreviewView()
     let durationContainerView = NSStackView()
     let durationImageView = CLSFSymbol(
         symbolName: "timer",
@@ -32,7 +32,7 @@ class CurrentMovementView: NSStackView {
     
     var currentIndex: Int?
     var maxIndex: Int?
-    var playerLayer : AVPlayerLayer!
+    var playerView : AVPlayerLayer?
     var player : AVPlayer?
     
     
@@ -60,30 +60,36 @@ class CurrentMovementView: NSStackView {
         
         configureMovementLabel()
         configureMovementPreview()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loopVideo), name: AVPlayerItem.didPlayToEndTimeNotification, object: player?.currentItem)
+    }
+    
+    @objc private func loopVideo(notification: Notification) {
+        print("URL: end video ")
+        if let playerItem = notification.object as? AVPlayerItem {
+            print("URL: player item ")
+            playerItem.seek(to: .zero, completionHandler: nil)
+        }
     }
     
     func updateData(_ data: Movement) {
-        
-        if playerLayer == nil {
-            setupVideo(for: data)
-            videoView.layer?.addSublayer(playerLayer)
-            print("success setup video")
-        }
-        
-        guard let playerLayer = playerLayer else {
-            print("playerLayer is still nil after attempting setup")
-            return
-        }
-        
-//        if videoView.layer?.sublayers?.contains(playerLayer) == false {
-//            videoView.layer?.addSublayer(playerLayer)
-//            print("video view : \(String(describing: videoView.layer?.sublayers?.contains(playerLayer)))")
-//        }
-        playerLayer.frame = videoView.bounds
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.player?.play()
-        
+        playVideo(data.preview.rawValue)
         movementLabel.setText(data.name.rawValue)
+    }
+    
+    func playVideo(_ url: String) {
+        guard let url = Bundle.main.url(forResource: url, withExtension: "mp4") else { return }
+        print("url: ", url)
+        player = AVPlayer(url: url)
+        
+        playerView = AVPlayerLayer(player: player)
+        playerView?.frame = videoView.bounds
+        playerView?.videoGravity = .resizeAspectFill
+        videoView.setupPreviewLayer(with: playerView)
+        
+        player?.play()
+        player?.volume = 0
+        player?.actionAtItemEnd = .none
     }
     
     func setDuration(_ time: Double) {
@@ -125,16 +131,19 @@ class CurrentMovementView: NSStackView {
     
     private func configureMovementPreview() {
         videoView.wantsLayer = true
+        videoView.layer?.backgroundColor = NSColor.darkGray.cgColor
+        videoView.clipsToBounds = true
         videoView.layer?.cornerRadius = 10
-        videoView.layer?.borderWidth = 2
-        videoView.layer?.borderColor = .black
-//        videoView.layer?.backgroundColor = .black
         
         NSLayoutConstraint.activate([
             videoView.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
             videoView.leadingAnchor.constraint(equalTo: movementLabel.leadingAnchor),
             videoView.heightAnchor.constraint(equalToConstant: 200),
         ])
+    }
+    
+    private func configureVideoPlayer() {
+//        playerView = AVPlayerView
     }
     
 //    private func configureDurationLabel() {
@@ -165,18 +174,58 @@ class CurrentMovementView: NSStackView {
         let fileURL = URL(fileURLWithPath: filePath)
         player = AVPlayer(url: fileURL)
         
-        if let player = player {
-            print("AVPlayer initialized successfully.")
-            playerLayer = AVPlayerLayer(player: player)
-        } else {
-            print("Failed to initialize AVPlayer.")
-        }
+//        if let player = player {
+//            print("AVPlayer initialized successfully.")
+//            playerLayer = AVPlayerLayer(player: player)
+//        } else {
+//            print("Failed to initialize AVPlayer.")
+//        }
+//        
+//        if playerLayer == nil {
+//            print("AVPlayerLayer initialization failed.")
+//        } else {
+//            print("AVPlayerLayer initialized successfully.")
+//        }
+    }
+    
+}
+
+class VideoPreviewView: NSView {
+    private var previewLayer: AVPlayerLayer?
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        self.wantsLayer = true
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.wantsLayer = true
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.wantsLayer = true
+    }
+    
+    func setupPreviewLayer(with layer: AVPlayerLayer?) {
+        previewLayer = layer
         
-        if playerLayer == nil {
-            print("AVPlayerLayer initialization failed.")
-        } else {
-            print("AVPlayerLayer initialized successfully.")
+        if let previewLayer = previewLayer {
+            previewLayer.frame = self.bounds
+            self.layer?.addSublayer(previewLayer)
         }
     }
     
+    func addOtherSubLayer(layer: CAShapeLayer){
+        self.layer?.addSublayer(layer)
+        layer.frame = self.frame
+        layer.strokeColor = NSColor.red.cgColor
+    }
+    
+    override func layout() {
+        super.layout()
+        // Ensure the preview layer resizes with the view
+        previewLayer?.frame = self.bounds
+    }
 }
