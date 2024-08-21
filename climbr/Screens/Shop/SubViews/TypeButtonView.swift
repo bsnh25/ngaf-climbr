@@ -46,7 +46,7 @@ class TypeButton: NSButton {
         title = ""
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.7)
+        layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.6)
         layer?.cornerRadius = 10
         bezelStyle = .flexiblePush
         isBordered = false
@@ -54,6 +54,9 @@ class TypeButton: NSButton {
 //        stack.translatesAutoresizingMaskIntoConstraints = false
 //        addSubview(stack)
         addSubview(icon)
+        
+        let blur = CLBlurEffectView(frame: bounds)
+        addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
 //            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
