@@ -22,6 +22,24 @@
 		03CD09BE2C6DE1B200BEEE8B /* ProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */; };
 		03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */; };
 		03E796CB2C6C70DD003C6121 /* HomeVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */; };
+		03E7B4602C75EF71008D12F5 /* lowerBackSpin-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B44E2C75EF70008D12F5 /* lowerBackSpin-Right.mp4 */; };
+		03E7B4612C75EF71008D12F5 /* upperBackStretch-Up.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B44F2C75EF70008D12F5 /* upperBackStretch-Up.mp4 */; };
+		03E7B4622C75EF71008D12F5 /* frontShoulderStatic-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4502C75EF70008D12F5 /* frontShoulderStatic-Right.mp4 */; };
+		03E7B4632C75EF71008D12F5 /* neckExtension-Front.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4512C75EF70008D12F5 /* neckExtension-Front.mp4 */; };
+		03E7B4642C75EF71008D12F5 /* neckDeep-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4522C75EF70008D12F5 /* neckDeep-Right.mp4 */; };
+		03E7B4652C75EF71008D12F5 /* crossBodyShoulder-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4532C75EF70008D12F5 /* crossBodyShoulder-Left.mp4 */; };
+		03E7B4662C75EF71008D12F5 /* neckRotation-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4542C75EF70008D12F5 /* neckRotation-Left.mp4 */; };
+		03E7B4672C75EF71008D12F5 /* tricepStatic-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4552C75EF70008D12F5 /* tricepStatic-Left.mp4 */; };
+		03E7B4682C75EF71008D12F5 /* neckRotation-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4562C75EF70008D12F5 /* neckRotation-Right.mp4 */; };
+		03E7B4692C75EF71008D12F5 /* neckDeep-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4572C75EF70008D12F5 /* neckDeep-Left.mp4 */; };
+		03E7B46A2C75EF71008D12F5 /* crossBodyShoulder-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4582C75EF70008D12F5 /* crossBodyShoulder-Right.mp4 */; };
+		03E7B46B2C75EF71008D12F5 /* upperBackStretch-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B4592C75EF71008D12F5 /* upperBackStretch-Left.mp4 */; };
+		03E7B46C2C75EF71008D12F5 /* lowerBackSpin-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45A2C75EF71008D12F5 /* lowerBackSpin-Left.mp4 */; };
+		03E7B46D2C75EF71008D12F5 /* upperBackStretch-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45B2C75EF71008D12F5 /* upperBackStretch-Right.mp4 */; };
+		03E7B46E2C75EF71008D12F5 /* neckExtension-Back.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45C2C75EF71008D12F5 /* neckExtension-Back.mp4 */; };
+		03E7B46F2C75EF71008D12F5 /* upperBackStretch-Front.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45D2C75EF71008D12F5 /* upperBackStretch-Front.mp4 */; };
+		03E7B4702C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45E2C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 */; };
+		03E7B4712C75EF71008D12F5 /* tricepStatic-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45F2C75EF71008D12F5 /* tricepStatic-Right.mp4 */; };
 		8A19622D2C6AF79000F7064B /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A19622C2C6AF79000F7064B /* CLTextField.swift */; };
 		8A1962302C6B030B00F7064B /* CLGradientContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A19622F2C6B030B00F7064B /* CLGradientContainer.swift */; };
 		8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71C692C6BAEB500635C85 /* correct.mp3 */; };
@@ -120,6 +138,24 @@
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPickerButton.swift; sourceTree = "<group>"; };
 		03E796CA2C6C70DD003C6121 /* HomeVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Extension.swift"; sourceTree = "<group>"; };
+		03E7B44E2C75EF70008D12F5 /* lowerBackSpin-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lowerBackSpin-Right.mp4"; sourceTree = "<group>"; };
+		03E7B44F2C75EF70008D12F5 /* upperBackStretch-Up.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "upperBackStretch-Up.mp4"; sourceTree = "<group>"; };
+		03E7B4502C75EF70008D12F5 /* frontShoulderStatic-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "frontShoulderStatic-Right.mp4"; sourceTree = "<group>"; };
+		03E7B4512C75EF70008D12F5 /* neckExtension-Front.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "neckExtension-Front.mp4"; sourceTree = "<group>"; };
+		03E7B4522C75EF70008D12F5 /* neckDeep-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "neckDeep-Right.mp4"; sourceTree = "<group>"; };
+		03E7B4532C75EF70008D12F5 /* crossBodyShoulder-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "crossBodyShoulder-Left.mp4"; sourceTree = "<group>"; };
+		03E7B4542C75EF70008D12F5 /* neckRotation-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "neckRotation-Left.mp4"; sourceTree = "<group>"; };
+		03E7B4552C75EF70008D12F5 /* tricepStatic-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "tricepStatic-Left.mp4"; sourceTree = "<group>"; };
+		03E7B4562C75EF70008D12F5 /* neckRotation-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "neckRotation-Right.mp4"; sourceTree = "<group>"; };
+		03E7B4572C75EF70008D12F5 /* neckDeep-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "neckDeep-Left.mp4"; sourceTree = "<group>"; };
+		03E7B4582C75EF70008D12F5 /* crossBodyShoulder-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "crossBodyShoulder-Right.mp4"; sourceTree = "<group>"; };
+		03E7B4592C75EF71008D12F5 /* upperBackStretch-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "upperBackStretch-Left.mp4"; sourceTree = "<group>"; };
+		03E7B45A2C75EF71008D12F5 /* lowerBackSpin-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lowerBackSpin-Left.mp4"; sourceTree = "<group>"; };
+		03E7B45B2C75EF71008D12F5 /* upperBackStretch-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "upperBackStretch-Right.mp4"; sourceTree = "<group>"; };
+		03E7B45C2C75EF71008D12F5 /* neckExtension-Back.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "neckExtension-Back.mp4"; sourceTree = "<group>"; };
+		03E7B45D2C75EF71008D12F5 /* upperBackStretch-Front.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "upperBackStretch-Front.mp4"; sourceTree = "<group>"; };
+		03E7B45E2C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "frontShoulderStatic-Left.mp4"; sourceTree = "<group>"; };
+		03E7B45F2C75EF71008D12F5 /* tricepStatic-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "tricepStatic-Right.mp4"; sourceTree = "<group>"; };
 		8A19622C2C6AF79000F7064B /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
 		8A19622F2C6B030B00F7064B /* CLGradientContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLGradientContainer.swift; sourceTree = "<group>"; };
 		8AB71C692C6BAEB500635C85 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
@@ -249,6 +285,31 @@
 				8AB71C6A2C6BAEB500635C85 /* next-move.mp3 */,
 			);
 			path = sfx;
+			sourceTree = "<group>";
+		};
+		03E7B44D2C75EC48008D12F5 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				03E7B4532C75EF70008D12F5 /* crossBodyShoulder-Left.mp4 */,
+				03E7B4582C75EF70008D12F5 /* crossBodyShoulder-Right.mp4 */,
+				03E7B45E2C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 */,
+				03E7B4502C75EF70008D12F5 /* frontShoulderStatic-Right.mp4 */,
+				03E7B45A2C75EF71008D12F5 /* lowerBackSpin-Left.mp4 */,
+				03E7B44E2C75EF70008D12F5 /* lowerBackSpin-Right.mp4 */,
+				03E7B4572C75EF70008D12F5 /* neckDeep-Left.mp4 */,
+				03E7B4522C75EF70008D12F5 /* neckDeep-Right.mp4 */,
+				03E7B45C2C75EF71008D12F5 /* neckExtension-Back.mp4 */,
+				03E7B4512C75EF70008D12F5 /* neckExtension-Front.mp4 */,
+				03E7B4542C75EF70008D12F5 /* neckRotation-Left.mp4 */,
+				03E7B4562C75EF70008D12F5 /* neckRotation-Right.mp4 */,
+				03E7B4552C75EF70008D12F5 /* tricepStatic-Left.mp4 */,
+				03E7B45F2C75EF71008D12F5 /* tricepStatic-Right.mp4 */,
+				03E7B45D2C75EF71008D12F5 /* upperBackStretch-Front.mp4 */,
+				03E7B4592C75EF71008D12F5 /* upperBackStretch-Left.mp4 */,
+				03E7B45B2C75EF71008D12F5 /* upperBackStretch-Right.mp4 */,
+				03E7B44F2C75EF70008D12F5 /* upperBackStretch-Up.mp4 */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		8A19622B2C6AF77300F7064B /* TextField */ = {
@@ -426,6 +487,7 @@
 		E7FDDAEC2C6433C500DE2A7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03E7B44D2C75EC48008D12F5 /* Video */,
 				8A1962322C6B0E1900F7064B /* Music */,
 				8ABB12332C649D9A00616C57 /* VisionModel */,
 				E7FDDADA2C64301F00DE2A7A /* Assets.xcassets */,
@@ -675,10 +737,28 @@
 				E7FDDADB2C64301F00DE2A7A /* Assets.xcassets in Resources */,
 				038E84D62C74FADC00677B31 /* snow.mp3 in Resources */,
 				8AB71C6F2C6BAEB500635C85 /* next-move.mp3 in Resources */,
+				03E7B4612C75EF71008D12F5 /* upperBackStretch-Up.mp4 in Resources */,
+				03E7B4712C75EF71008D12F5 /* tricepStatic-Right.mp4 in Resources */,
+				03E7B4652C75EF71008D12F5 /* crossBodyShoulder-Left.mp4 in Resources */,
+				03E7B4702C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 in Resources */,
 				E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */,
 				8AB71C702C6BAEB500635C85 /* incorrect.mp3 in Resources */,
 				8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */,
+				03E7B46F2C75EF71008D12F5 /* upperBackStretch-Front.mp4 in Resources */,
+				03E7B46A2C75EF71008D12F5 /* crossBodyShoulder-Right.mp4 in Resources */,
+				03E7B4602C75EF71008D12F5 /* lowerBackSpin-Right.mp4 in Resources */,
 				038E84D22C74FACD00677B31 /* summer.mp3 in Resources */,
+				03E7B4692C75EF71008D12F5 /* neckDeep-Left.mp4 in Resources */,
+				03E7B4672C75EF71008D12F5 /* tricepStatic-Left.mp4 in Resources */,
+				03E7B46B2C75EF71008D12F5 /* upperBackStretch-Left.mp4 in Resources */,
+				03E7B4632C75EF71008D12F5 /* neckExtension-Front.mp4 in Resources */,
+				03E7B4662C75EF71008D12F5 /* neckRotation-Left.mp4 in Resources */,
+				03E7B46C2C75EF71008D12F5 /* lowerBackSpin-Left.mp4 in Resources */,
+				03E7B4622C75EF71008D12F5 /* frontShoulderStatic-Right.mp4 in Resources */,
+				03E7B4642C75EF71008D12F5 /* neckDeep-Right.mp4 in Resources */,
+				03E7B46D2C75EF71008D12F5 /* upperBackStretch-Right.mp4 in Resources */,
+				03E7B46E2C75EF71008D12F5 /* neckExtension-Back.mp4 in Resources */,
+				03E7B4682C75EF71008D12F5 /* neckRotation-Right.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
