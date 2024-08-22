@@ -81,13 +81,15 @@ extension HomeVC {
         let progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
         progressStretch.doubleValue = progress
         progressText.setText("\(Int(progress)) / 4 sessions")
+        arrNotif.popLast()
         updatePoint()
     }
     
     
     func observeTimer(){
         //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
-        
+        observeNotif()
+        checkInRange()
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
     }
     
@@ -96,6 +98,52 @@ extension HomeVC {
             points.setText(String(pointChar.point))
         } else {
             points.setText("0")
+        }
+    }
+    
+    func observeNotif(){
+        UNUserNotificationCenter.current().getDeliveredNotifications { notif in
+            guard var identifier = notif.first?.request.identifier else {return}
+            self.arrNotif.append(identifier)
+            print("Ini identifier yang masuk : \(identifier)")
+        }
+    }
+    
+    func showCharSakit(){
+        let totalSakit = arrNotif.count
+        print("total notif \(totalSakit)")
+        switch totalSakit {
+        case 0:
+            print("ganti walking")
+            animationMain?.setInput("WalkingStyle", value: 0.0)
+        case 1:
+            print("ganti lemas")
+            animationMain?.setInput("WalkingStyle", value: 1.0)
+        default:
+            print("ganti jatuh")
+            animationMain?.setInput("WalkingStyle", value: 2.0)
+        }
+    }
+    
+    func checkInRange(){
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+        if let date = calendar.date(from: components) {
+            if let char = Container.shared.resolve(CharacterService.self) {
+                guard let getPreference = char.getPreferences() else {return}
+                guard let start = getPreference.startWorkingHour else {return}
+                guard let end = getPreference.endWorkingHour else {return}
+                
+                print("start : \(start)")
+                print("date : \(date)")
+                print("end : \(end)")
+                
+                if date > start && date < end {
+                    showCharSakit()
+                } else {
+                    UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) == 4 ? animationMain?.setInput("WalkingStyle", value: 3.0) : animationMain?.setInput("WalkingStyle", value: 2.0)
+                }
+            }
         }
     }
 }
