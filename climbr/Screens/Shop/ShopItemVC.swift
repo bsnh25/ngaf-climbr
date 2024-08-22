@@ -8,6 +8,7 @@
 import Cocoa
 import AppKit
 import SnapKit
+import RiveRuntime
 
 class ShopItemVC: NSViewController {
     var characterService : CharacterService?
@@ -52,6 +53,9 @@ class ShopItemVC: NSViewController {
 //    var selectedGridItem: GridItem?
     var selectedItem : EquipmentModel?
     
+//    var simpleVM = RiveViewModel(fileName: "climbr")
+    var animationShop : RiveViewModel?
+    
     let backButton = CLImageButton(
         imageName: "arrowshape.backward",
         accesibilityName: "back home",
@@ -73,6 +77,8 @@ class ShopItemVC: NSViewController {
         super.viewDidLoad()
         view.wantsLayer = true
         
+//        animationShop.setInput(<#T##inputName: String##String#>, value: <#T##Bool#>)
+        
         
         collectionViewContainer.collectionDelegate = self
 //        collectionViewContainer.updateItems(items: headItems)
@@ -82,7 +88,8 @@ class ShopItemVC: NSViewController {
 //        buyButton.isHidden = currentHeadModel.isUnlocked
         buyButton.delegate = self
         
-        view.layer?.backgroundColor = NSColor.blue.cgColor
+//        view.layer?.backgroundColor = NSColor.blue.cgColor
+        setupAnimationView()
         
         setupSidebar()
         setupPointsLabel()
@@ -111,6 +118,28 @@ class ShopItemVC: NSViewController {
             /// Select first init to current head equipment
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
         }
+    }
+    
+    func setupAnimationView(){
+        if characterService?.getCharacterData()?.gender == .male {
+            animationShop = RiveViewModel(fileName: "climbr", artboardName: "ShopscreenMale")
+        }else{
+            animationShop = RiveViewModel(fileName: "climbr", artboardName: "ShopscreenFemale")
+        }
+        
+        let riveView = animationShop!.createRiveView()
+        animationShop!.fit = .fill
+        view.addSubview(riveView)
+//        riveView.frame = view.bounds
+        
+        riveView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            riveView.topAnchor.constraint(equalTo: view.topAnchor),
+            riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     func setupBuyButton(){
@@ -287,6 +316,16 @@ class ShopItemVC: NSViewController {
         default:
             break
         }
+        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
         
         buyButton.isHidden = true
     }

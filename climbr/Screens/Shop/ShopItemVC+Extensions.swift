@@ -111,6 +111,24 @@ extension ShopItemVC : CollectionContainerProtocol {
     func itemSelectedChangedWithType(to equipment: EquipmentModel) {
         self.selectedItem = equipment
         
+        switch equipment.type{
+            
+        case .head:
+            animationShop!.setInput("Headgear", value: Double(equipment.item.itemID))
+        case .hand:
+            animationShop!.setInput("Stick", value: Double(equipment.item.itemID))
+            animationShop!.setInput("Jacket", value: Double(equipment.item.itemID))
+            animationShop!.setInput("RightThigh", value: Double(equipment.item.itemID))
+            animationShop!.setInput("LeftThigh", value: Double(equipment.item.itemID))
+            animationShop!.setInput("RightShin", value: Double(equipment.item.itemID))
+            animationShop!.setInput("LeftShin", value: Double(equipment.item.itemID))
+        case .back:
+            animationShop!.setInput("Backpack", value: Double(equipment.item.itemID))
+            animationShop!.setInput("Tent", value: Double(equipment.item.itemID))
+        case .location:
+            animationShop!.setInput("Background", value: Double(equipment.item.itemID))
+        }
+        
         
         if let character {
             print("price: ", Int(character.point) < equipment.item.price)

@@ -60,7 +60,7 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
     case cozyCragglerHG
     case festiveFollyHG
     case trailbazerTamHG
-    
+     
     case emptyBP
     case climbingBP
     case cuddlyBP
@@ -128,29 +128,29 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         case .trailbazerTamHG:
             4
         case .emptyBP:
-            5
+            0
         case .climbingBP:
-            6
+            1
         case .cuddlyBP:
-            7
+            2
         case .duffelBP:
-            8
+            3
         case .hikingBP:
-            9
+            4
         case .emptyS:
-            10
+            0
         case .highWizardS:
-            11
+            1
         case .iceGripS:
-            12
+            2
         case .natureGuideS:
-            13
+            3
         case .trekTrooperS:
-            14
+            4
         case .jungleJumble:
-            15
+            0
         case .snowySummit:
-            16
+            1
         }
     }
     
