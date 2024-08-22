@@ -123,6 +123,7 @@ class HomeVC: NSViewController {
         if charService?.getCharacterData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
+            choosCharVc.genderDelegate = self
             
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()

@@ -31,7 +31,6 @@ extension HomeVC {
             
             push(to: vc)
             print("go to stretching session")
-            
         }
     }
     
@@ -148,3 +147,22 @@ extension HomeVC {
     }
 }
 
+extension HomeVC : ChooseCaraterDelegate {
+    func selectedGender(gender: Gender) {
+        print("gender adalah : \(gender.rawValue)")
+        
+        if gender == .male{
+            do {
+                try animationMain?.configureModel(artboardName: "HomescreenMale")
+            }catch{
+                print("Error")
+            }
+        }else{
+            do {
+                try animationMain?.configureModel(artboardName: "HomescreenFemale")
+            }catch{
+                print("Error")
+            }
+        }
+    }
+}
