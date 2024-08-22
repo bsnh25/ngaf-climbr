@@ -13,7 +13,7 @@ extension UserPreferenceVC{
     func processSavePreference() -> Int64{
         
         if button1.isSelected {
-            return 30
+            return 5
         }else if button2.isSelected{
             return 60
         }else if button3.isSelected{

@@ -329,7 +329,7 @@ class ShopItemVC: NSViewController {
         
         buyButton.isHidden = true
     }
-    
+   
     func updateData(with type: EquipmentType = .head) {
         if let items = equipmentService?.getEquipments(equipmentType: type) {
             collectionViewContainer.updateItems(items: items)

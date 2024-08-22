@@ -8,7 +8,9 @@
 import Cocoa
 import Swinject
 
-
+protocol ChooseCaraterDelegate {
+    func selectedGender(gender : Gender)
+}
 
 class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     private let containerBig = SubtractedView()
@@ -24,6 +26,8 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     
     var genderChar: Gender?
     var charService: CharacterService?
+    
+    var genderDelegate: ChooseCaraterDelegate?
     
     init(charService: CharacterService?){
         super.init(nibName: nil, bundle: nil)
@@ -218,6 +222,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
             container1.layer?.borderColor = .white
             containerIsClicked = true
             genderChar = Gender.female
+            genderDelegate?.selectedGender(gender: Gender.female)
             validateUserInput()
         }
     }
@@ -229,6 +234,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
             container2.layer?.borderColor = .white
             containerIsClicked = true
             genderChar = Gender.male
+            genderDelegate?.selectedGender(gender: Gender.male)
             validateUserInput()
         }
     }

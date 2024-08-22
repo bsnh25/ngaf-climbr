@@ -9,6 +9,7 @@ import AppKit
 import SnapKit
 import Swinject
 import Combine
+import RiveRuntime
 
 class HomeVC: NSViewController {
     
@@ -61,6 +62,22 @@ class HomeVC: NSViewController {
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
     var bagss: Set<AnyCancellable> = []
+    var arrNotif: [String] = []
+    
+    var animationMain : RiveViewModel? = {
+        let char = Container.shared.resolve(CharacterService.self)
+        var anima: RiveViewModel?
+        if char?.getCharacterData()?.gender == .male {
+            print("male")
+            anima = RiveViewModel(fileName: "climbr", artboardName: "HomescreenMale")
+        }else{
+            print("female")
+            anima = RiveViewModel(fileName: "climbr", artboardName: "HomescreenFemale")
+        }
+        anima?.fit = .fill
+        let riveView = anima!.createRiveView()
+        return anima
+    }()
     
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
@@ -86,6 +103,7 @@ class HomeVC: NSViewController {
         dailyProgress()
         setupPointsLabel()
         
+        
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
                 guard let self = self else {return}
@@ -98,12 +116,14 @@ class HomeVC: NSViewController {
     }
     
     override func viewDidAppear() {
+        observeNotif()
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()
         if charService?.getCharacterData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
+            choosCharVc.genderDelegate = self
             
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
@@ -122,17 +142,38 @@ class HomeVC: NSViewController {
     }
     
     private func previewAnimaConfig(){
-        view.addSubview(imageHome)
-        imageHome.wantsLayer = true
-        imageHome.image = NSImage(resource: .homebg)
-        imageHome.imageScaling = .scaleAxesIndependently
+//        if charService?.getCharacterData()?.gender == .male {
+//            print("male")
+//            animationMain = RiveViewModel(fileName: "climbr", artboardName: "HomescreenMale")
+//        }else{
+//            print("female")
+//            animationMain = RiveViewModel(fileName: "climbr", artboardName: "HomescreenFemale")
+//        }
+        animationMain?.fit = .fill
+        let riveView = animationMain!.createRiveView()
         
-        imageHome.snp.makeConstraints { anime in
-            anime.top.leading.trailing.bottom.equalToSuperview()
-            anime.centerX.centerY.equalToSuperview()
-            anime.width.equalTo(view.snp.width)
-            anime.height.equalTo(view.snp.height)
-        }
+        view.addSubview(riveView)
+        
+        riveView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            riveView.topAnchor.constraint(equalTo: view.topAnchor),
+            riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+//        view.addSubview(imageHome)
+//        imageHome.wantsLayer = true
+//        imageHome.image = NSImage(resource: .homebg)
+//        imageHome.imageScaling = .scaleAxesIndependently
+//        
+//        imageHome.snp.makeConstraints { anime in
+//            anime.top.leading.trailing.bottom.equalToSuperview()
+//            anime.centerX.centerY.equalToSuperview()
+//            anime.width.equalTo(view.snp.width)
+//            anime.height.equalTo(view.snp.height)
+//        }
     }
     
     private func ButtonConfigure(){
