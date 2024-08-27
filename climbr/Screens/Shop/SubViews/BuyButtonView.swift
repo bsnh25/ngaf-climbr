@@ -50,7 +50,7 @@ class BuyButtonView: NSView {
 //        self.currentPoint = point
         
         itemLabel.setText(item.name)
-        itemButton.title = "Get for 🪙 \(price)"
+        itemButton.title = "Get for \(price)"
         
 //        if currentPoint! >= itemPrice! {
 //            itemButton.backgroundColor = .cButton
