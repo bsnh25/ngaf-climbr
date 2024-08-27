@@ -124,7 +124,6 @@ class HomeVC: NSViewController {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
             choosCharVc.genderDelegate = self
-            
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
             
@@ -142,13 +141,6 @@ class HomeVC: NSViewController {
     }
     
     private func previewAnimaConfig(){
-//        if charService?.getCharacterData()?.gender == .male {
-//            print("male")
-//            animationMain = RiveViewModel(fileName: "climbr", artboardName: "HomescreenMale")
-//        }else{
-//            print("female")
-//            animationMain = RiveViewModel(fileName: "climbr", artboardName: "HomescreenFemale")
-//        }
         animationMain?.fit = .fill
         let riveView = animationMain!.createRiveView()
         
@@ -162,18 +154,6 @@ class HomeVC: NSViewController {
             riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
-//        view.addSubview(imageHome)
-//        imageHome.wantsLayer = true
-//        imageHome.image = NSImage(resource: .homebg)
-//        imageHome.imageScaling = .scaleAxesIndependently
-//        
-//        imageHome.snp.makeConstraints { anime in
-//            anime.top.leading.trailing.bottom.equalToSuperview()
-//            anime.centerX.centerY.equalToSuperview()
-//            anime.width.equalTo(view.snp.width)
-//            anime.height.equalTo(view.snp.height)
-//        }
     }
     
     private func ButtonConfigure(){

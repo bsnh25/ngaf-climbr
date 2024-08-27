@@ -13,13 +13,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var mainWindow: MainWindow?
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
+    var mainMenu: NSMenu?
     let audio = Container.shared.resolve(AudioService.self)
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        // Insert code here to initialize your application
         mainWindow = MainWindow()
+        
+        ///create menu
+        mainMenu = NSMenu()
+        NSApp.menu = mainMenu
+        let appMenuItem = NSMenuItem()
+        mainMenu?.addItem(appMenuItem)
+        let appMenu = NSMenu(title: "App")
+        appMenuItem.submenu = appMenu
+        let quitMenuItem = NSMenuItem(title: "Quit \(ProcessInfo.processInfo.processName)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(quitMenuItem)
         
         NSApp.setActivationPolicy(.regular)
         NSApplication.shared.setActivationPolicy(.regular)
@@ -29,7 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         /// Create status bar instance
         statusBar       = NSStatusBar()
-        
         /// Create status item with dynamic size (depends on its content)
         statusBarItem   = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         
@@ -46,12 +55,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             button.target   = self
         }
         NSApp.appearance = NSAppearance(named: .aqua)
-        ///audio setup
-//        if let audio = audio {
-//            audio.playBackgroundMusic(fileName: "summer")
-//        } else {
-//            print("AudioService not resolved.")
-//        }
 
         mainWindow.makeKeyAndOrderFront(nil)
     }
