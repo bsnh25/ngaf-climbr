@@ -21,6 +21,7 @@ class ShopItemVC: NSViewController {
     let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     let buyButton = BuyButtonView()
+    var delegate: ChooseCaraterDelegate?
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
@@ -117,6 +118,8 @@ class ShopItemVC: NSViewController {
             points.setText("\(character.point)")
             /// Select first init to current head equipment
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
+            /// Update character equipment
+            updateCharacterEquipment()
         }
     }
     

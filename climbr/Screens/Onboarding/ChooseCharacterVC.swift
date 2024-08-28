@@ -10,6 +10,7 @@ import Swinject
 
 protocol ChooseCaraterDelegate {
     func selectedGender(gender : Gender)
+    func characterDidUpdate()
 }
 
 class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
