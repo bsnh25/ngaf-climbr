@@ -110,13 +110,16 @@ class HomeVC: NSViewController {
                 
                 DispatchQueue.main.async {
                     self.updateProgressData()
+                    self.observeNotif()
                 }
             }
             .store(in: &bagss)
     }
     
     override func viewDidAppear() {
-        observeNotif()
+        super.viewDidAppear()
+        print("viewDidAppear")
+        
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()
@@ -133,6 +136,7 @@ class HomeVC: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        print("viewWillAppear")
         $progressValue.sink { progress in
             
             self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
