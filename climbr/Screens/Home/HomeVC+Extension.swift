@@ -14,6 +14,7 @@ extension HomeVC {
     @objc
     func actionStore(){
         if let vc = Container.shared.resolve(ShopItemVC.self) {
+            vc.delegate = self
             push(to: vc)
             print("go to stretching shop")
         }
@@ -94,11 +95,7 @@ extension HomeVC {
     }
     
     func updatePoint(){
-        if let pointChar = charService?.getCharacterData() {
-            points.setText(String(pointChar.point))
-        } else {
-            points.setText("0")
-        }
+        points.setText(String(character?.point ?? 0))
     }
     
     func observeNotif(){
@@ -154,6 +151,26 @@ extension HomeVC {
 //            }
 //        }
 //    }
+    
+    func updateCharacter() {
+        guard let character else { return }
+        
+      
+        animationMain!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+       
+        animationMain!.setInput("Stick", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+ 
+        animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+        animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
+ 
+        animationMain!.setInput("Background", value: Double(character.locationEquipment.itemID))
+
+    }
 }
 
 extension HomeVC : ChooseCaraterDelegate {
@@ -173,5 +190,10 @@ extension HomeVC : ChooseCaraterDelegate {
                 print("Error")
             }
         }
+    }
+    
+    func characterDidUpdate() {
+        character = self.charService?.getCharacterData()
+        updateCharacter()
     }
 }

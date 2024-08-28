@@ -63,6 +63,7 @@ class HomeVC: NSViewController {
     var progressStretch = NSProgressIndicator()
     var bagss: Set<AnyCancellable> = []
     var arrNotif: [String] = []
+    var character: CharacterModel?
     
     var animationMain : RiveViewModel? = {
         let char = Container.shared.resolve(CharacterService.self)
@@ -132,16 +133,21 @@ class HomeVC: NSViewController {
             
         }
         
-    }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        print("viewWillAppear")
+        
         $progressValue.sink { progress in
             
             self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
             
         }.store(in: &bagss)
+        
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        print("viewWillAppear")
+        
+        self.character = self.charService?.getCharacterData()
+        self.updateCharacter()
     }
     
     private func previewAnimaConfig(){

@@ -28,6 +28,28 @@ extension ShopItemVC {
         
         
         getCharacterData()
+        
+        self.delegate?.characterDidUpdate()
+    }
+    
+    func updateCharacterEquipment() {
+        guard let character else { return }
+        
+        
+        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+        
+        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+        
+        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
+        
+        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
+        
     }
 }
 
@@ -137,7 +159,9 @@ extension ShopItemVC : CollectionContainerProtocol {
         
         if equipment.isUnlocked, let selectedItem = self.selectedItem {
             self.updateCharacter(with: selectedItem)
+            
         }
+        
         
 //        switch type {
 //        case .head:
