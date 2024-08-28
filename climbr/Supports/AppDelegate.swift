@@ -14,14 +14,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
     let audio = Container.shared.resolve(AudioService.self)
-    var statusBarMenu: NSMenu?
+    var quitMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         mainWindow = MainWindow()
         
         /// Create Quit Menu
-        let quitMenu = NSMenu()
+        quitMenu = NSMenu()
         
         /// Create quit menu item
         let quitMenuItem = NSMenuItem(
@@ -74,11 +74,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             /// Set the action button to run openApp function
             button.action   = #selector(openApp)
             button.target   = self
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         NSApp.appearance = NSAppearance(named: .aqua)
         
         
-        statusBarItem.menu = quitMenu
+//        statusBarItem.menu = quitMenu
 
         mainWindow?.makeKeyAndOrderFront(nil)
     }
@@ -96,13 +97,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     @objc private func openApp() {
         
-        /// Make sure the window is not nill
-        /// Show the window and make window key, then activate the app
-        if let window = NSApplication.shared.windows.first {
-            window.makeKeyAndOrderFront(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
-        } else {
-            print("Main window is not available.")
+        if let event = NSApplication.shared.currentEvent {
+            if event.type == .rightMouseUp  {
+                
+                statusBarItem.menu = quitMenu
+                statusBarItem.button?.performClick(nil)
+                statusBarItem.menu = nil
+                
+                return
+            } else {
+                // Make sure the window is not nill
+                /// Show the window and make window key, then activate the app
+                if let window = NSApplication.shared.windows.first {
+                    window.makeKeyAndOrderFront(nil)
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                } else {
+                    print("Main window is not available.")
+                }
+            }
         }
     }
     
