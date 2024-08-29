@@ -7,6 +7,7 @@
 
 import AppKit
 import Swinject
+import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
@@ -78,8 +79,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         NSApp.appearance = NSAppearance(named: .aqua)
         
-        
-//        statusBarItem.menu = quitMenu
+
+        UNUserNotificationCenter.current().delegate = self
 
         mainWindow?.makeKeyAndOrderFront(nil)
     }
@@ -170,3 +171,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+        
+        print("Notification Did Received on foreground")
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count += 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        print("Notification Did Received on background")
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count += 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+        
+        completionHandler()
+    }
+}
