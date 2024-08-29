@@ -66,7 +66,6 @@ class HomeVC: NSViewController {
     var character: CharacterModel?
     
     var animationMain : RiveViewModel? = {
-        let char = Container.shared.resolve(CharacterService.self)
         var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
         anima.fit = .fill
         let riveView = anima.createRiveView()
@@ -142,6 +141,15 @@ class HomeVC: NSViewController {
         print("viewWillAppear")
         
         self.character = self.charService?.getCharacterData()
+        
+        if let character {
+            /// Configure rive artboard
+            do {
+                try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         self.updateCharacter()
     }
     
