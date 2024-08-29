@@ -35,7 +35,16 @@ class EquipmentManager: EquipmentService {
             data.price      = Int64(equipment.item.price)
         }
         
+        /// Create get equipment req
+        let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
+        
         do {
+            
+            let items = try container.fetch(request)
+            
+            /// Cancel database seeding if data is exist
+            if !items.isEmpty { return }
+            
             try container.save()
             print("Success")
         } catch {
