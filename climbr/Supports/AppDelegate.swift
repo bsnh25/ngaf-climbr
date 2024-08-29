@@ -8,6 +8,7 @@
 import AppKit
 import Swinject
 import UserNotifications
+import RiveRuntime
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
@@ -19,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        
+        RenderContextManager.shared().defaultRenderer = .riveRenderer
         mainWindow = MainWindow()
         
         ///create menu
