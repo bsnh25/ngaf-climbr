@@ -14,29 +14,50 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var mainWindow: MainWindow?
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
-    var mainMenu: NSMenu?
     let audio = Container.shared.resolve(AudioService.self)
-
+    var quitMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         mainWindow = MainWindow()
         
-        ///create menu
-        mainMenu = NSMenu()
-        NSApp.menu = mainMenu
-        let appMenuItem = NSMenuItem()
-        mainMenu?.addItem(appMenuItem)
-        let appMenu = NSMenu(title: "App")
-        appMenuItem.submenu = appMenu
-        let quitMenuItem = NSMenuItem(title: "Quit \(ProcessInfo.processInfo.processName)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
-        appMenu.addItem(quitMenuItem)
+        /// Create Quit Menu
+        quitMenu = NSMenu()
         
-        NSApp.setActivationPolicy(.regular)
+        /// Create quit menu item
+        let quitMenuItem = NSMenuItem(
+            title: "Quit \(ProcessInfo.processInfo.processName)",
+            action: #selector(quitApp(sender:)),
+            keyEquivalent: "q"
+        )
+        
+        quitMenu.addItem(quitMenuItem)
+        
+        ///create menu
+//        let mainMenu = NSMenu()
+//        NSApp.menu = mainMenu
+//        let appMenuItem = NSMenuItem()
+//        mainMenu.addItem(appMenuItem)
+//        let appMenu = NSMenu(title: "App")
+//        appMenuItem.submenu = appMenu
+//        let quitMenuItem = NSMenuItem(
+//            title: "Quit \(ProcessInfo.processInfo.processName)",
+//            action: #selector(quitApp(sender:)),
+//            keyEquivalent: "q"
+//        )
+//        appMenu.addItem(quitMenuItem)
+        
+        /// Get app main menu, the replace the submenu with quit menu
+        if let mainMenu = NSApplication.shared.mainMenu {
+            if let appMenuItem = mainMenu.items.first {
+                appMenuItem.submenu = quitMenu
+            }
+        }
+        
         NSApplication.shared.setActivationPolicy(.regular)
         
-        guard let mainWindow = mainWindow else {return}
-        mainWindow.delegate = self
+        
+        mainWindow?.delegate = self
 
         /// Create status bar instance
         statusBar       = NSStatusBar()
@@ -54,12 +75,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             /// Set the action button to run openApp function
             button.action   = #selector(openApp)
             button.target   = self
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         NSApp.appearance = NSAppearance(named: .aqua)
         
+
         UNUserNotificationCenter.current().delegate = self
 
-        mainWindow.makeKeyAndOrderFront(nil)
+        mainWindow?.makeKeyAndOrderFront(nil)
     }
     
 
@@ -74,16 +97,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     @objc private func openApp() {
-        /// Make sure the window is not nill
-        /// Show the window and make window key, then activate the app
-        if let window = NSApplication.shared.windows.first {
-            window.makeKeyAndOrderFront(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
-        } else {
-            print("Main window is not available.")
+        
+        if let event = NSApplication.shared.currentEvent {
+            if event.type == .rightMouseUp  {
+                
+                statusBarItem.menu = quitMenu
+                statusBarItem.button?.performClick(nil)
+                statusBarItem.menu = nil
+                
+                return
+            } else {
+                // Make sure the window is not nill
+                /// Show the window and make window key, then activate the app
+                if let window = NSApplication.shared.windows.first {
+                    window.makeKeyAndOrderFront(nil)
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                } else {
+                    print("Main window is not available.")
+                }
+            }
         }
     }
-//    
+    
+    @objc private func quitApp(sender: Any?) {
+        NSApplication.shared.terminate(sender)
+    }
+//
 //    func applicationDidResignActive(_ notification: Notification) {
 //        audio?.stopBackground()
 //        print("Application resigned active")
