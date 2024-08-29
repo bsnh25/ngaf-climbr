@@ -155,6 +155,11 @@ extension HomeVC {
     func updateCharacter() {
         guard let character else { return }
         
+        do {
+            try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
+        } catch {
+            print(error.localizedDescription)
+        }
       
         animationMain!.setInput("Headgear", value: Double(character.headEquipment.itemID))
        

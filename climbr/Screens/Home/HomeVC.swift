@@ -67,16 +67,9 @@ class HomeVC: NSViewController {
     
     var animationMain : RiveViewModel? = {
         let char = Container.shared.resolve(CharacterService.self)
-        var anima: RiveViewModel?
-        if char?.getCharacterData()?.gender == .male {
-            print("male")
-            anima = RiveViewModel(fileName: "climbr", artboardName: "HomescreenMale")
-        }else{
-            print("female")
-            anima = RiveViewModel(fileName: "climbr", artboardName: "HomescreenFemale")
-        }
-        anima?.fit = .fill
-        let riveView = anima!.createRiveView()
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
+        anima.fit = .fill
+        let riveView = anima.createRiveView()
         return anima
     }()
     
@@ -105,6 +98,13 @@ class HomeVC: NSViewController {
         setupPointsLabel()
         
         
+        $progressValue.sink { [weak self] progress in
+            guard let self else { return }
+            
+            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
+        }.store(in: &bagss)
+        
+        
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
                 guard let self = self else {return}
@@ -124,21 +124,16 @@ class HomeVC: NSViewController {
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()
-        if charService?.getCharacterData() == nil {
+        
+        guard let character else {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
             choosCharVc.genderDelegate = self
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
             
+            return
         }
-        
-        
-        $progressValue.sink { progress in
-            
-            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
-            
-        }.store(in: &bagss)
         
     }
     
