@@ -188,3 +188,5 @@ class VideoPreviewView: NSView {
         super.layout()
         previewLayer?.frame = self.bounds
     }
+    
+}
