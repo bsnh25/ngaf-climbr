@@ -8,6 +8,7 @@
 import Cocoa
 import AppKit
 import SnapKit
+import RiveRuntime
 
 class ShopItemVC: NSViewController {
     var characterService : CharacterService?
@@ -20,13 +21,14 @@ class ShopItemVC: NSViewController {
     let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     let buyButton = BuyButtonView()
+    var delegate: ChooseCaraterDelegate?
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
-        ("person.fill", "Headgear"),
-        ("bag.fill", "Backpack"),
-        ("figure.walk", "Hiking stick"),
-        ("map.fill", "Location")
+        ("headphones", "Headgear"),
+        ("backpack", "Backpack"),
+        ("figure.hiking", "Hiking stick"),
+        ("map", "Location")
     ]
     
 //    var headItems: [EquipmentModel] = EquipmentModel.headGears
@@ -52,6 +54,9 @@ class ShopItemVC: NSViewController {
 //    var selectedGridItem: GridItem?
     var selectedItem : EquipmentModel?
     
+//    var simpleVM = RiveViewModel(fileName: "climbr")
+    var animationShop : RiveViewModel?
+    
     let backButton = CLImageButton(
         imageName: "arrowshape.backward",
         accesibilityName: "back home",
@@ -73,6 +78,8 @@ class ShopItemVC: NSViewController {
         super.viewDidLoad()
         view.wantsLayer = true
         
+//        animationShop.setInput(<#T##inputName: String##String#>, value: <#T##Bool#>)
+        
         
         collectionViewContainer.collectionDelegate = self
 //        collectionViewContainer.updateItems(items: headItems)
@@ -82,7 +89,8 @@ class ShopItemVC: NSViewController {
 //        buyButton.isHidden = currentHeadModel.isUnlocked
         buyButton.delegate = self
         
-        view.layer?.backgroundColor = NSColor.blue.cgColor
+//        view.layer?.backgroundColor = NSColor.blue.cgColor
+        setupAnimationView()
         
         setupSidebar()
         setupPointsLabel()
@@ -110,7 +118,31 @@ class ShopItemVC: NSViewController {
             points.setText("\(character.point)")
             /// Select first init to current head equipment
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
+            /// Update character equipment
+            updateCharacterEquipment()
         }
+    }
+    
+    func setupAnimationView(){
+        if characterService?.getCharacterData()?.gender == .male {
+            animationShop = RiveViewModel(fileName: "climbr", artboardName: "ShopscreenMale")
+        }else{
+            animationShop = RiveViewModel(fileName: "climbr", artboardName: "ShopscreenFemale")
+        }
+        
+        let riveView = animationShop!.createRiveView()
+        animationShop!.fit = .fill
+        view.addSubview(riveView)
+//        riveView.frame = view.bounds
+        
+        riveView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            riveView.topAnchor.constraint(equalTo: view.topAnchor),
+            riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     func setupBuyButton(){
@@ -206,12 +238,16 @@ class ShopItemVC: NSViewController {
         
         pointsView.wantsLayer = true
         
+        let blur = CLBlurEffectView(frame: pointsView.bounds)
+        
+        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
+        
         pointsView.setViews([icon, points], in: .center)
         pointsView.translatesAutoresizingMaskIntoConstraints = false
         pointsView.orientation = .horizontal
         pointsView.alignment = .centerY
         pointsView.distribution = .equalSpacing
-        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.7)
+        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.72)
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
@@ -233,7 +269,7 @@ class ShopItemVC: NSViewController {
 
         selectedButton = button
         selectedButton?.isSelected = true
-        selectedButton?.layer?.backgroundColor = NSColor.white.cgColor // Highlight color
+        selectedButton?.layer?.backgroundColor = .white.copy(alpha: 0.84) // Highlight color
         selectedButton?.updateItemIcon(true)
     }
     
@@ -283,10 +319,20 @@ class ShopItemVC: NSViewController {
         default:
             break
         }
+        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
         
-        
+        buyButton.isHidden = true
     }
-    
+   
     func updateData(with type: EquipmentType = .head) {
         if let items = equipmentService?.getEquipments(equipmentType: type) {
             collectionViewContainer.updateItems(items: items)

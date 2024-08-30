@@ -9,6 +9,7 @@ import AppKit
 import SnapKit
 import Swinject
 import Combine
+import RiveRuntime
 
 class HomeVC: NSViewController {
     
@@ -61,6 +62,23 @@ class HomeVC: NSViewController {
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
     var progressStretch = NSProgressIndicator()
     var bagss: Set<AnyCancellable> = []
+    var arrNotif: [String] = []
+    var character: CharacterModel?
+    
+    var animationMain : RiveViewModel? = {
+        let char = Container.shared.resolve(CharacterService.self)
+        var anima: RiveViewModel?
+        if char?.getCharacterData()?.gender == .male {
+            print("male")
+            anima = RiveViewModel(fileName: "climbr", artboardName: "HomescreenMale")
+        }else{
+            print("female")
+            anima = RiveViewModel(fileName: "climbr", artboardName: "HomescreenFemale")
+        }
+        anima?.fit = .fill
+        let riveView = anima!.createRiveView()
+        return anima
+    }()
     
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
@@ -79,11 +97,13 @@ class HomeVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        view.wantsLayer = true
         previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
         setupPointsLabel()
+        
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -91,47 +111,59 @@ class HomeVC: NSViewController {
                 
                 DispatchQueue.main.async {
                     self.updateProgressData()
+                    self.observeNotif()
                 }
             }
             .store(in: &bagss)
     }
     
     override func viewDidAppear() {
+        super.viewDidAppear()
+        print("viewDidAppear")
+        
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()
         if charService?.getCharacterData() == nil {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
             push(to: choosCharVc)
-            
+            choosCharVc.genderDelegate = self
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
             
         }
         
-    }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
+        
         $progressValue.sink { progress in
             
             self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
             
         }.store(in: &bagss)
+        
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        print("viewWillAppear")
+        
+        self.character = self.charService?.getCharacterData()
+        self.updateCharacter()
     }
     
     private func previewAnimaConfig(){
-        view.addSubview(imageHome)
-        imageHome.wantsLayer = true
-        imageHome.image = NSImage(resource: .homebg)
-        imageHome.imageScaling = .scaleAxesIndependently
+        animationMain?.fit = .fill
+        let riveView = animationMain!.createRiveView()
         
-        imageHome.snp.makeConstraints { anime in
-            anime.top.leading.trailing.bottom.equalToSuperview()
-            anime.centerX.centerY.equalToSuperview()
-            anime.width.equalTo(view.snp.width)
-            anime.height.equalTo(view.snp.height)
-        }
+        view.addSubview(riveView)
+        
+        riveView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            riveView.topAnchor.constraint(equalTo: view.topAnchor),
+            riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     private func ButtonConfigure(){
@@ -282,6 +314,9 @@ class HomeVC: NSViewController {
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         view.addSubview(pointsView)
+        
+        let blur = CLBlurEffectView(frame: pointsView.bounds)
+        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         let hPadding = view.bounds.width * 0.02
         

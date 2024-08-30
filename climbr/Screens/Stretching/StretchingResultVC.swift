@@ -120,7 +120,6 @@ class StretchingResultVC: NSViewController {
         characterView.wantsLayer                = true
         characterView.layer?.backgroundColor    = .clear
         
-        dummyCharacter.image    = .dummyCharacter
         dummyCharacter.translatesAutoresizingMaskIntoConstraints = false
         
         characterView.addSubview(dummyCharacter)

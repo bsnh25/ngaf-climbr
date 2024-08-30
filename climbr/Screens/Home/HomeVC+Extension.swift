@@ -14,6 +14,7 @@ extension HomeVC {
     @objc
     func actionStore(){
         if let vc = Container.shared.resolve(ShopItemVC.self) {
+            vc.delegate = self
             push(to: vc)
             print("go to stretching shop")
         }
@@ -31,7 +32,6 @@ extension HomeVC {
             
             push(to: vc)
             print("go to stretching session")
-            
         }
     }
     
@@ -71,6 +71,7 @@ extension HomeVC {
             print("Date param : \(date)")
             print("Date current : \(Calendar.current)")
             UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
+            UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
             UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)
             return
         }
@@ -81,22 +82,118 @@ extension HomeVC {
         let progress = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
         progressStretch.doubleValue = progress
         progressText.setText("\(Int(progress)) / 4 sessions")
+//        arrNotif.popLast()
         updatePoint()
     }
     
     
     func observeTimer(){
         //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
-        
+//        observeNotif()
+//        checkInRange()
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
     }
     
     func updatePoint(){
-        if let pointChar = charService?.getCharacterData() {
-            points.setText(String(pointChar.point))
-        } else {
-            points.setText("0")
-        }
+        points.setText(String(character?.point ?? 0))
+    }
+    
+    func observeNotif(){
+//        UNUserNotificationCenter.current().getDeliveredNotifications { notif in
+//            guard var identifier = notif.first?.request.identifier else {return}
+//            self.arrNotif.append(identifier)
+//            print("Ini identifier yang masuk : \(identifier)")
+//        }
+        
+        let progress = UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession)
+        let notificationCount = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        print("Notif count:", notificationCount)
+        print("Progress count:", progress)
+        
+//        if count == progress {
+//            animationMain?.setInput("WalkingStyle", value: 0.0)
+//        } else if count - progress <= 2 {
+//            animationMain?.setInput("WalkingStyle", value: 1.0)
+//        } else {
+//            animationMain?.setInput("WalkingStyle", value: 2.0)
+//        }
+        
+        /// Notification count state
+        /// - state = notificationCount - progress
+        /// 
+        /// state 0: walk
+        /// state 1: tired/fatigue
+        /// state 2: death
+        /// state 3...n: walk
+        var state = notificationCount - progress
+        
+        animationMain?.setInput("WalkingStyle", value: Double(state))
+    }
+    
+//    func checkInRange(){
+//        let calendar = Calendar.current
+//        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+//        if let date = calendar.date(from: components) {
+//            if let char = Container.shared.resolve(CharacterService.self) {
+//                guard let getPreference = char.getPreferences() else {return}
+//                guard let start = getPreference.startWorkingHour else {return}
+//                guard let end = getPreference.endWorkingHour else {return}
+//                
+//                print("start : \(start)")
+//                print("date : \(date)")
+//                print("end : \(end)")
+//                
+//                if date > start && date < end {
+//                    showCharSakit()
+//                } else {
+//                    UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) == 4 ? animationMain?.setInput("WalkingStyle", value: 3.0) : animationMain?.setInput("WalkingStyle", value: 2.0)
+//                }
+//            }
+//        }
+//    }
+    
+    func updateCharacter() {
+        guard let character else { return }
+        
+      
+        animationMain!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+       
+        animationMain!.setInput("Stick", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+        animationMain!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+ 
+        animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+        animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
+ 
+        animationMain!.setInput("Background", value: Double(character.locationEquipment.itemID))
+
     }
 }
 
+extension HomeVC : ChooseCaraterDelegate {
+    func selectedGender(gender: Gender) {
+        print("gender adalah : \(gender.rawValue)")
+        
+        if gender == .male{
+            do {
+                try animationMain?.configureModel(artboardName: "HomescreenMale")
+            }catch{
+                print("Error")
+            }
+        }else{
+            do {
+                try animationMain?.configureModel(artboardName: "HomescreenFemale")
+            }catch{
+                print("Error")
+            }
+        }
+    }
+    
+    func characterDidUpdate() {
+        character = self.charService?.getCharacterData()
+        updateCharacter()
+    }
+}

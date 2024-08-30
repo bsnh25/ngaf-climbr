@@ -34,7 +34,7 @@ class GridItem: NSCollectionViewItem {
     let overlayView: NSView = {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.2).cgColor
+        view.layer?.backgroundColor = NSColor.lightGray.cgColor.copy(alpha: 0.3)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -73,7 +73,7 @@ class GridItem: NSCollectionViewItem {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.lightGray.cgColor.copy(alpha: 0.5)
+        self.view.layer?.backgroundColor = .white
         self.view.layer?.cornerRadius = 10
         
         lockIcon.setConfiguration(size: 24, weight: .bold)

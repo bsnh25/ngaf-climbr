@@ -50,7 +50,7 @@ class BuyButtonView: NSView {
 //        self.currentPoint = point
         
         itemLabel.setText(item.name)
-        itemButton.title = "Get for 🪙 \(price)"
+        itemButton.title = "Get for \(price)"
         
 //        if currentPoint! >= itemPrice! {
 //            itemButton.backgroundColor = .cButton
@@ -67,6 +67,9 @@ class BuyButtonView: NSView {
         layer?.shadowOpacity = 0.3
         setupItemButton()
         setupItemLabel()
+        
+        let blur = CLBlurEffectView(frame: bounds)
+        addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
             self.widthAnchor.constraint(equalToConstant: 300),

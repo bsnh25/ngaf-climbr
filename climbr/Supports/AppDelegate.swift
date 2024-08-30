@@ -7,6 +7,7 @@
 
 import AppKit
 import Swinject
+import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
@@ -14,22 +15,52 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
     let audio = Container.shared.resolve(AudioService.self)
-
+    var quitMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        // Insert code here to initialize your application
         mainWindow = MainWindow()
         
-        NSApp.setActivationPolicy(.regular)
+        /// Create Quit Menu
+        quitMenu = NSMenu()
+        
+        /// Create quit menu item
+        let quitMenuItem = NSMenuItem(
+            title: "Quit \(ProcessInfo.processInfo.processName)",
+            action: #selector(quitApp(sender:)),
+            keyEquivalent: "q"
+        )
+        
+        quitMenu.addItem(quitMenuItem)
+        
+        ///create menu
+//        let mainMenu = NSMenu()
+//        NSApp.menu = mainMenu
+//        let appMenuItem = NSMenuItem()
+//        mainMenu.addItem(appMenuItem)
+//        let appMenu = NSMenu(title: "App")
+//        appMenuItem.submenu = appMenu
+//        let quitMenuItem = NSMenuItem(
+//            title: "Quit \(ProcessInfo.processInfo.processName)",
+//            action: #selector(quitApp(sender:)),
+//            keyEquivalent: "q"
+//        )
+//        appMenu.addItem(quitMenuItem)
+        
+        /// Get app main menu, the replace the submenu with quit menu
+        if let mainMenu = NSApplication.shared.mainMenu {
+            if let appMenuItem = mainMenu.items.first {
+                appMenuItem.submenu = quitMenu
+            }
+        }
+        
         NSApplication.shared.setActivationPolicy(.regular)
         
-        guard let mainWindow = mainWindow else {return}
-        mainWindow.delegate = self
+        
+        mainWindow?.delegate = self
 
         /// Create status bar instance
         statusBar       = NSStatusBar()
-        
         /// Create status item with dynamic size (depends on its content)
         statusBarItem   = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         
@@ -44,16 +75,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             /// Set the action button to run openApp function
             button.action   = #selector(openApp)
             button.target   = self
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         NSApp.appearance = NSAppearance(named: .aqua)
-        ///audio setup
-//        if let audio = audio {
-//            audio.playBackgroundMusic(fileName: "summer")
-//        } else {
-//            print("AudioService not resolved.")
-//        }
+        
 
-        mainWindow.makeKeyAndOrderFront(nil)
+        UNUserNotificationCenter.current().delegate = self
+
+        mainWindow?.makeKeyAndOrderFront(nil)
     }
     
 
@@ -68,16 +97,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     @objc private func openApp() {
-        /// Make sure the window is not nill
-        /// Show the window and make window key, then activate the app
-        if let window = NSApplication.shared.windows.first {
-            window.makeKeyAndOrderFront(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
-        } else {
-            print("Main window is not available.")
+        
+        if let event = NSApplication.shared.currentEvent {
+            if event.type == .rightMouseUp  {
+                
+                statusBarItem.menu = quitMenu
+                statusBarItem.button?.performClick(nil)
+                statusBarItem.menu = nil
+                
+                return
+            } else {
+                // Make sure the window is not nill
+                /// Show the window and make window key, then activate the app
+                if let window = NSApplication.shared.windows.first {
+                    window.makeKeyAndOrderFront(nil)
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                } else {
+                    print("Main window is not available.")
+                }
+            }
         }
     }
-//    
+    
+    @objc private func quitApp(sender: Any?) {
+        NSApplication.shared.terminate(sender)
+    }
+//
 //    func applicationDidResignActive(_ notification: Notification) {
 //        audio?.stopBackground()
 //        print("Application resigned active")
@@ -126,3 +171,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+        
+        print("Notification Did Received on foreground")
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count += 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        print("Notification Did Received on background")
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count += 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+        
+        completionHandler()
+    }
+}

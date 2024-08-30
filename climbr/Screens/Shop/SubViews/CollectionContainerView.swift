@@ -52,7 +52,6 @@ class CollectionContainerView: NSView {
         // Set the alpha value of the container view without affecting its subviews
         
         self.wantsLayer = true
-        self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.8).cgColor
         self.layer?.cornerRadius = 20
         self.layer?.masksToBounds = true
     }
@@ -65,8 +64,7 @@ class CollectionContainerView: NSView {
         collectionView.dataSource = self
         collectionView.delegate = self // If needed
         collectionView.wantsLayer = true
-        collectionView.layer?.backgroundColor = NSColor.clear.cgColor
-        
+        collectionView.backgroundColors = [.white.withAlphaComponent(0.72)]
         collectionView.isSelectable = true
         collectionView.allowsEmptySelection = false
         collectionView.allowsMultipleSelection = false
@@ -75,6 +73,10 @@ class CollectionContainerView: NSView {
         self.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let blur = CLBlurEffectView(frame: collectionView.bounds)
+//        collectionView.addSubview(blur, positioned: .below, relativeTo: nil)
+        collectionView.backgroundView = blur
         
         // Set constraints for the collection view
         NSLayoutConstraint.activate([

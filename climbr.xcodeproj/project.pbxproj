@@ -51,6 +51,7 @@
 		8ABB12942C67D36100616C57 /* UserPreferenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */; };
 		8ABB12992C68940400616C57 /* CLDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12982C68940400616C57 /* CLDatePicker.swift */; };
 		8ABB12AC2C6AEE8200616C57 /* ChooseCharacterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */; };
+		AB1C0B762C76E98F006B2FA8 /* climbr.riv in Resources */ = {isa = PBXBuildFile; fileRef = AB1C0B752C76E98F006B2FA8 /* climbr.riv */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -171,6 +172,7 @@
 		8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferenceVC.swift; sourceTree = "<group>"; };
 		8ABB12982C68940400616C57 /* CLDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLDatePicker.swift; sourceTree = "<group>"; };
 		8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterVC.swift; sourceTree = "<group>"; };
+		AB1C0B752C76E98F006B2FA8 /* climbr.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr.riv; sourceTree = "<group>"; };
 		AB9A78712C64BB2B00028B36 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		AB9A78732C64BB3800028B36 /* EquipmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentService.swift; sourceTree = "<group>"; };
 		AB9A78752C64BB4500028B36 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -355,6 +357,14 @@
 			path = DatePicker;
 			sourceTree = "<group>";
 		};
+		AB1C0B662C76636F006B2FA8 /* Rive */ = {
+			isa = PBXGroup;
+			children = (
+				AB1C0B752C76E98F006B2FA8 /* climbr.riv */,
+			);
+			path = Rive;
+			sourceTree = "<group>";
+		};
 		E701F0A42C6A7B850069A2DC /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +497,7 @@
 		E7FDDAEC2C6433C500DE2A7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB1C0B662C76636F006B2FA8 /* Rive */,
 				03E7B44D2C75EC48008D12F5 /* Video */,
 				8A1962322C6B0E1900F7064B /* Music */,
 				8ABB12332C649D9A00616C57 /* VisionModel */,
@@ -742,6 +753,7 @@
 				03E7B4652C75EF71008D12F5 /* crossBodyShoulder-Left.mp4 in Resources */,
 				03E7B4702C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 in Resources */,
 				E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */,
+				AB1C0B762C76E98F006B2FA8 /* climbr.riv in Resources */,
 				8AB71C702C6BAEB500635C85 /* incorrect.mp3 in Resources */,
 				8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */,
 				03E7B46F2C75EF71008D12F5 /* upperBackStretch-Front.mp4 in Resources */,
@@ -980,14 +992,14 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_LSUIElement = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app will use your webcam to analyze your movement in doing static streching";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -1014,14 +1026,14 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = 57BYB3NG56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_LSUIElement = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app will use your webcam to analyze your movement in doing static streching";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;

@@ -75,6 +75,7 @@ class StretchingVC: NSViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        view.wantsLayer = true
         
         cameraService?.startSession()
         configureCameraPreview()
@@ -84,7 +85,6 @@ class StretchingVC: NSViewController {
         configureButton()
         configurePositionStateLabel()
         configureInstructionView()
-        view.wantsLayer = true
         
         updateMovementData()
         updateMovementState()
@@ -215,6 +215,7 @@ class StretchingVC: NSViewController {
         finishButton.target = self
         finishButton.action = #selector(showEndSessionAlert)
         finishButton.hasDestructiveAction = true
+        finishButton.exitFullScreenMode()
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
