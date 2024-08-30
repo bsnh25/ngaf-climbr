@@ -279,7 +279,7 @@ extension StretchingVC {
 extension StretchingVC : PredictorDelegate {
     func predictor(didLabelAction action: String, with confidence: Double) {
         for name in ExerciseName.allCases {
-            if name.rawValue == action && confidence > 0.7 {
+            if name.rawValue == action && confidence > 0.5 {
                 if exerciseName != name {
                     self.exerciseName = name
                     print("\(name) and the confidence is \(confidence)")
@@ -322,8 +322,6 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
         if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
             connection.isVideoMirrored = true
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.predictor?.estimation(sampleBuffer: sampleBuffer)
-        }
+        self.predictor?.estimation(sampleBuffer: sampleBuffer)
     }
 }

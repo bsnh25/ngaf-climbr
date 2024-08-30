@@ -134,6 +134,9 @@ class CurrentMovementView: NSStackView {
         videoView.layer?.backgroundColor = NSColor.darkGray.cgColor
         videoView.clipsToBounds = true
         videoView.layer?.cornerRadius = 10
+        videoView.layer?.borderWidth = 2
+        videoView.layer?.borderColor = .black
+//        videoView.layer?.backgroundColor = .black
         
         NSLayoutConstraint.activate([
             videoView.trailingAnchor.constraint(equalTo: movementLabel.trailingAnchor),
@@ -148,7 +151,6 @@ class CurrentMovementView: NSStackView {
     }
     
 }
-
 class VideoPreviewView: NSView {
     private var previewLayer: AVPlayerLayer?
     
@@ -186,4 +188,5 @@ class VideoPreviewView: NSView {
         super.layout()
         previewLayer?.frame = self.bounds
     }
+    
 }
