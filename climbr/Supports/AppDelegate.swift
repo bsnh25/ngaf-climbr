@@ -82,6 +82,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         UNUserNotificationCenter.current().delegate = self
 
+=======
+        
+        
+//        statusBarItem.menu = quitMenu
+>>>>>>> f166d05 (fix: status bar item menu not updated)
+
         mainWindow?.makeKeyAndOrderFront(nil)
     }
     
