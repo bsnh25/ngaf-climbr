@@ -100,8 +100,8 @@ extension ShopItemVC: BuyButtonDelegate {
         print("halo")
         if character.point >= selectedItem.item.price {
             equipmentService?.purchaseEquipment(data: selectedItem.item)
-            let point = Int(character.point) - selectedItem.item.price
-            characterService?.updatePoint(character: character, points: point)
+            let point = selectedItem.item.price
+            characterService?.updatePoint(character: character, points: -point)
             
             updateData(with: selectedItem.type)
             
