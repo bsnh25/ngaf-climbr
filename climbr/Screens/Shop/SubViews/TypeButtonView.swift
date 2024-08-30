@@ -13,11 +13,6 @@ class TypeButton: NSButton {
     let stack = NSStackView()
     let icon = CLSFSymbol()
     
-//    var currentHead : EquipmentItem?
-//    var currentBack : EquipmentItem?
-//    var currentHand : EquipmentItem?
-//    var currentLocation : EquipmentItem?
-    
     init(imageName: String, text: String){
         super.init(frame: .zero)
         self.wantsLayer = true
@@ -50,17 +45,13 @@ class TypeButton: NSButton {
         layer?.cornerRadius = 10
         bezelStyle = .flexiblePush
         isBordered = false
-//        
-//        stack.translatesAutoresizingMaskIntoConstraints = false
-//        addSubview(stack)
+
         addSubview(icon)
         
         let blur = CLBlurEffectView(frame: bounds)
         addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
-//            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
-//            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
             icon.centerXAnchor.constraint(equalTo: centerXAnchor),
             icon.centerYAnchor.constraint(equalTo: centerYAnchor),
             
@@ -76,16 +67,4 @@ class TypeButton: NSButton {
             icon.contentTintColor = .darkGray
         }
     }
-
-//    override func updateLayer() {
-//       super.updateLayer()
-//        if isHighlighted {
-//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.7)
-//        } else {
-//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 1.0)
-//        }
-//        if !isEnabled {
-//            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
-//        }
-//    }
 }

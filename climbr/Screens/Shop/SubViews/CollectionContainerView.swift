@@ -9,7 +9,6 @@ import Cocoa
 
 protocol CollectionContainerProtocol {
     func itemSelectedChangedWithType(to data: EquipmentModel)
-//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem, isUnlocked: Bool, type: EquipmentType)
 }
 
 class CollectionContainerView: NSView {
@@ -18,20 +17,8 @@ class CollectionContainerView: NSView {
     
     var equipmentCollections: [EquipmentModel] = []
     
-//    private var selectedItemHead: GridItem?
-//    private var selectedItemBack: GridItem?
-//    private var selectedItemHand: GridItem?
-//    private var selectedItemLoc: GridItem?
     
     var collectionDelegate: CollectionContainerProtocol?
-    
-//    var currentHead: EquipmentItem?
-//    var currentBack: EquipmentItem?
-//    var currentHand: EquipmentItem?
-//    var currentLocation: EquipmentItem?
-    
-//    var currentGridItem: GridItem?
-//    var currentSelectedItem: EquipmentItem?
     
     override init(frame frameRect: NSRect) {
         
@@ -48,8 +35,6 @@ class CollectionContainerView: NSView {
         
         super.init(frame: frameRect)
         setupCollectionView()
-        
-        // Set the alpha value of the container view without affecting its subviews
         
         self.wantsLayer = true
         self.layer?.cornerRadius = 20
@@ -75,7 +60,6 @@ class CollectionContainerView: NSView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         let blur = CLBlurEffectView(frame: collectionView.bounds)
-//        collectionView.addSubview(blur, positioned: .below, relativeTo: nil)
         collectionView.backgroundView = blur
         
         // Set constraints for the collection view
@@ -91,17 +75,6 @@ class CollectionContainerView: NSView {
         equipmentCollections = items
         collectionView.reloadData()
     }
-    
-//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
-//        self.currentHead = head
-//        self.currentHand = hand
-//        self.currentBack = back
-//        self.currentLocation = location
-//    }
-    
-//    func updateCurrentGridItem(gridItem: GridItem) {
-//        self.currentGridItem = gridItem
-//    }
 }
 
 extension CollectionContainerView: NSCollectionViewDataSource {
@@ -112,9 +85,6 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
-//        item.updateItemSelected(head: self.currentHead!, hand: self.currentHand!, back: self.currentBack!, location: self.currentLocation!)
-//        item.gridDelegate = self
-//        item.itemDelegate = self
         return item
     }
 }

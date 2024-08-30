@@ -7,22 +7,10 @@
 
 import Cocoa
 
-//protocol gridItemSelectionProtocol {
-////    func gridItemSelectionDidChange(to newSelected: GridItem)
-//    func gridItemSelectionDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
-//}
-
-//protocol collectionItemProtocol{
-//    func collectionItemDidChange(to newSelected: EquipmentItem, type: EquipmentType, isUnlocked: Bool)
-//}
 
 class GridItem: NSCollectionViewItem {
     
     let lockIcon = CLSFSymbol(symbolName: "lock.fill", description: "lock")
-//    var gridDelegate : gridItemSelectionProtocol?
-//    var itemDelegate : collectionItemProtocol?
-    
-//    override var isSelected: Bool
     
     let backgroundImageView: NSImageView = {
         let imageView = NSImageView()
@@ -55,19 +43,7 @@ class GridItem: NSCollectionViewItem {
         }
     }
     
-    /// No need to define variables that represents equipment data,
-    /// use EquipmentModel instead
-//    var type : EquipmentType?
-//    var itemId: Int?
-//    var item: EquipmentItem?
-//    var isUnlocked = true
-    
     var data: EquipmentModel?
-    
-//    var currentHead : EquipmentItem?
-//    var currentBack : EquipmentItem?
-//    var currentHand : EquipmentItem?
-//    var currentLocation : EquipmentItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,59 +87,8 @@ class GridItem: NSCollectionViewItem {
 
     func configure(equipmentModel: EquipmentModel) {
         backgroundImageView.image = NSImage(named: equipmentModel.item.image)
-//        item = equipmentModel.item
-//        itemId = Int(equipmentModel.item.itemID)
-//        type = equipmentModel.type
-//        isUnlocked = equipmentModel.isUnlocked
         data = equipmentModel
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
-//        print(item?.rawValue ?? "lol")
     }
-    
-//    override func mouseDown(with event: NSEvent) {
-//        super.mouseDown(with: event)
-//        print("button \(self.item?.name)")
-//        itemDelegate?.collectionItemDidChange(to: self.item!, type: self.type!, isUnlocked: self.isUnlocked)
-//        print("di bawah delegate")
-//        gridDelegate?.gridItemSelectionDidChange(to: item!, type: type!, isUnlocked: isUnlocked)
-//        setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
-//    }
-//    
-//    func setSelectedForGrid(){
-//        gridDelegate?.gridItemSelectionDidChange(to: item!, type: type!, isUnlocked: isUnlocked)
-//        setSelected(self.currentHead == item || self.currentHand == item || self.currentBack == item || self.currentLocation == item)
-//    }
-    
-//    func setSelected(_ selected: Bool) {
-//        borderView.layer?.borderWidth = selected ? 4 : 0
-////        print("\(item?.name) is currently selected with \(selected)")
-//    }
-    
-//    func updateSelectedGridItem(gridItemSelected: GridItem){
-//        if gridItemSelected == self {
-//            setSelected(true)
-//        }else{
-//            setSelected(false)
-//        }
-//    }
-    
-//    func updateItemSelected(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem) {
-//        self.currentHead = head
-//        self.currentHand = hand
-//        self.currentBack = back
-//        self.currentLocation = location
-//        setSelected(head == item || hand == item || back == item || location == item)
-//    }
-    
-//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
-//        self.currentHead = head
-//        self.currentHand = hand
-//        self.currentBack = back
-//        self.currentLocation = location
-//    }
-    
-//    func updateSelectedItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
-//        print("head: \(head.rawValue), back: \(back.rawValue), hand:\(hand.rawValue), location: \(location.rawValue)")
-//    }
 }
