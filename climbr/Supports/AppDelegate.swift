@@ -160,7 +160,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if !flag {
             mainWindow?.orderFront(self)
             if let window = mainWindow {
-                mainWindow?.makeKeyAndOrderFront(nil)
+                window.makeKeyAndOrderFront(nil)
                 NSApplication.shared.activate(ignoringOtherApps: true)
             } else {
                 mainWindow?.makeKeyAndOrderFront(self)

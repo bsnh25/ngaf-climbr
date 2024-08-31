@@ -69,7 +69,6 @@ class HomeVC: NSViewController {
     var animationMain : RiveViewModel? = {
         var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
         anima.fit = .fill
-        let riveView = anima.createRiveView()
         return anima
     }()
     
@@ -85,6 +84,23 @@ class HomeVC: NSViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        print("viewWillAppear")
+        reloadAnimation()
+        self.character = self.charService?.getCharacterData()
+        
+        if let character {
+            /// Configure rive artboard
+            do {
+                try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        self.updateCharacter()
     }
     
     override func viewDidLoad() {
@@ -135,23 +151,6 @@ class HomeVC: NSViewController {
             self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
             
         }.store(in: &bagss)
-    }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        print("viewWillAppear")
-        reloadAnimation()
-        self.character = self.charService?.getCharacterData()
-        
-        if let character {
-            /// Configure rive artboard
-            do {
-                try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        self.updateCharacter()
     }
     
     private func previewAnimaConfig(){
@@ -330,6 +329,9 @@ class HomeVC: NSViewController {
     
     private func reloadAnimation() {
         riveView.removeFromSuperview()
+        stack.removeFromSuperview()
+        containerView.removeFromSuperview()
+        pointsView.removeFromSuperview()
         previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()
