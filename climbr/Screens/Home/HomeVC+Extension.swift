@@ -193,6 +193,7 @@ extension HomeVC : ChooseCaraterDelegate {
     
     func characterDidUpdate() {
         character = self.charService?.getCharacterData()
+        updatePoint()
         updateCharacter()
     }
 }
