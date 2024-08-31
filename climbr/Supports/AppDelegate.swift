@@ -8,6 +8,7 @@
 import AppKit
 import Swinject
 import UserNotifications
+import RiveRuntime
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
@@ -109,11 +110,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             } else {
                 // Make sure the window is not nill
                 /// Show the window and make window key, then activate the app
-                if let window = NSApplication.shared.windows.first {
+                if let window = mainWindow /*NSApplication.shared.windows.first*/ {
                     window.makeKeyAndOrderFront(nil)
                     NSApplication.shared.activate(ignoringOtherApps: true)
                 } else {
                     print("Main window is not available.")
+                    mainWindow = MainWindow()
+                    mainWindow?.delegate = self
+                    mainWindow?.makeKeyAndOrderFront(nil)
+                    NSApplication.shared.activate(ignoringOtherApps: true)
                 }
             }
         }
@@ -135,7 +140,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         } else {
             print("AudioService not resolved.")
         }
-
         print("Application will close")
         mainWindow?.isReleasedWhenClosed = false
         NSApplication.shared.setActivationPolicy(.accessory)
@@ -156,7 +160,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if !flag {
             mainWindow?.orderFront(self)
             if let window = mainWindow {
-                window.makeKeyAndOrderFront(nil)
+                mainWindow?.makeKeyAndOrderFront(nil)
                 NSApplication.shared.activate(ignoringOtherApps: true)
             } else {
                 mainWindow?.makeKeyAndOrderFront(self)
