@@ -154,7 +154,6 @@ extension HomeVC {
     
     func updateCharacter() {
         guard let character else { return }
-        
       
         animationMain!.setInput("Headgear", value: Double(character.headEquipment.itemID))
        
