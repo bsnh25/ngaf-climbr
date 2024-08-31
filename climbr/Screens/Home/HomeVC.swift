@@ -96,14 +96,7 @@ class HomeVC: NSViewController {
         viewStretchConfig()
         dailyProgress()
         setupPointsLabel()
-        
-        
-        $progressValue.sink { [weak self] progress in
-            guard let self else { return }
-            
-            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
-        }.store(in: &bagss)
-        
+
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
