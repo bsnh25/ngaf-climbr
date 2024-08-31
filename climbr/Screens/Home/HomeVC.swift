@@ -83,15 +83,6 @@ class HomeVC: NSViewController {
         self.equipmentService = equipmentService
     }
     
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        print("viewWillAppear")
-        
-        self.character = self.charService?.getCharacterData()
-        self.updateCharacter()
-        reloadAnimation()
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -156,7 +147,7 @@ class HomeVC: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         print("viewWillAppear")
-        
+        reloadAnimation()
         self.character = self.charService?.getCharacterData()
         
         if let character {
@@ -342,5 +333,14 @@ class HomeVC: NSViewController {
             pointsView.widthAnchor.constraint(equalToConstant: 160),
             pointsView.heightAnchor.constraint(equalToConstant: 38)
         ])
+    }
+    
+    private func reloadAnimation() {
+        riveView.removeFromSuperview()
+        previewAnimaConfig()
+        ButtonConfigure()
+        viewStretchConfig()
+        dailyProgress()
+        setupPointsLabel()
     }
 }
