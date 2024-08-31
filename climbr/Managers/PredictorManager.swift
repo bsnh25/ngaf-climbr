@@ -72,13 +72,16 @@ class PredictorManager: PredictorService {
     }
     
     private func detectUpperBody() -> Bool {
-        (detectedJoints.contains(.rightShoulder) || detectedJoints.contains(.leftShoulder)) &&
-        (detectedJoints.contains(.rightEye) || detectedJoints.contains(.leftEye)) &&
-        (detectedJoints.contains(.leftEar) || detectedJoints.contains(.rightEar)) &&
-        (detectedJoints.contains(.rightElbow) || detectedJoints.contains(.leftElbow)) &&
-        detectedJoints.contains(.neck) || detectedJoints.contains(.nose) ||
-        detectedJoints.contains(.leftWrist) || detectedJoints.contains(.rightWrist)
-    }
+            /// ARMS
+            (detectedJoints.contains(.rightShoulder) || detectedJoints.contains(.leftShoulder)) &&
+            (detectedJoints.contains(.rightElbow) || detectedJoints.contains(.leftElbow)) &&
+            
+            /// HEAD
+            (detectedJoints.contains(.rightEye) || detectedJoints.contains(.leftEye)) &&
+            detectedJoints.contains(.neck) || detectedJoints.contains(.nose) ||
+            detectedJoints.contains(.leftWrist) || detectedJoints.contains(.rightWrist) ||
+            (detectedJoints.contains(.leftEar) || detectedJoints.contains(.rightEar))
+        }
     
     private func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
         let numAvailableFrames = observations.count
