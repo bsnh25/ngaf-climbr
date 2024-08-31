@@ -76,7 +76,19 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         view.wantsLayer = true
+
+    }
+  
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        cameraService?.stopSession()
         
+        stopTimer()
+        bags.removeAll()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
         cameraService?.startSession()
         configureCameraPreview()
         configureMovementView()
@@ -88,15 +100,6 @@ class StretchingVC: NSViewController {
         
         updateMovementData()
         updateMovementState()
-
-    }
-  
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        cameraService?.stopSession()
-        
-        stopTimer()
-        bags.removeAll()
     }
     
     private func configureInstructionView() {

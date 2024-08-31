@@ -55,6 +55,7 @@ class HomeVC: NSViewController {
     let stack = NSStackView()
     let pointsView = NSStackView()
     
+    var riveView = RiveView()
     var audioService: AudioService?
     var charService: CharacterService?
     var equipmentService: EquipmentService?
@@ -68,7 +69,6 @@ class HomeVC: NSViewController {
     var animationMain : RiveViewModel? = {
         var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
         anima.fit = .fill
-        let riveView = anima.createRiveView()
         return anima
     }()
     
@@ -86,19 +86,33 @@ class HomeVC: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        print("viewWillAppear")
+        reloadAnimation()
+        self.character = self.charService?.getCharacterData()
+        
+        if let character {
+            /// Configure rive artboard
+            do {
+                try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        self.updateCharacter()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         view.wantsLayer = true
-        previewAnimaConfig()
+//        previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
         setupPointsLabel()
-        
-        
-    
-        
+
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -119,6 +133,8 @@ class HomeVC: NSViewController {
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()
+    
+        print("Rive Home Status: \(String(describing: animationMain?.isPlaying))")
         
         guard let character else {
             guard let choosCharVc = Container.shared.resolve(ChooseCharacterVC.self) else {return}
@@ -130,30 +146,21 @@ class HomeVC: NSViewController {
             return
         }
         
-    }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        print("viewWillAppear")
-        
-        self.character = self.charService?.getCharacterData()
-        
-        if let character {
-            /// Configure rive artboard
-            do {
-                try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        self.updateCharacter()
+        $progressValue.sink { progress in
+            
+            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
+            
+        }.store(in: &bagss)
     }
     
     private func previewAnimaConfig(){
-        animationMain?.fit = .fill
-        let riveView = animationMain!.createRiveView()
-        
+        guard let animation = animationMain else {return}
+        animation.fit = .fill
+        riveView = animation.createRiveView()
         view.addSubview(riveView)
+        riveView.wantsLayer = true
+//        riveView.layer?.zPosition = -10
+//        riveView.layer?.backgroundColor = .black
         
         riveView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -186,13 +193,13 @@ class HomeVC: NSViewController {
         storeButton.action = #selector(actionStore)
         storeButton.target = self
         
-        let vPadding = view.bounds.height * 0.08
-        let hPadding = view.bounds.width * 0.02
-        let widthBtn = view.bounds.width * 0.3
-        let heightBtn = view.bounds.height * 0.08
+        let vPadding = 40
+        let hPadding = 10
+        let widthBtn = 250
+        let heightBtn = 40
         
         stack.snp.makeConstraints { stack in
-            stack.leading.equalToSuperview().offset(hPadding)
+            stack.leading.equalToSuperview().offset(20)
             stack.top.equalToSuperview().offset(vPadding)
             stack.width.equalTo(widthBtn)
             stack.height.equalTo(heightBtn)
@@ -218,45 +225,40 @@ class HomeVC: NSViewController {
             store.width.equalTo(38)
             store.height.equalTo(38)
         }
-        
-        
     }
     
     private func stackConfig(){
         
-        let padding = view.bounds.height * 0.04
-        let minPadding = view.bounds.height * 0.02
-        
         containerView.snp.makeConstraints { container in
-            container.trailing.equalToSuperview().inset(padding)
+            container.trailing.equalToSuperview().inset(20)
             container.top.equalTo(settingButton.snp.top)
             container.width.equalTo(435)
             container.height.equalTo(135)
         }
         
         textB.snp.makeConstraints { title in
-            title.top.equalTo(containerView.snp.top).offset(padding)
-            title.leading.equalTo(containerView.snp.leading).offset(padding)
-            title.trailing.equalTo(containerView.snp.trailing).offset(padding)
+            title.top.equalTo(containerView.snp.top).offset(15)
+            title.leading.equalTo(containerView.snp.leading).offset(20)
+            title.trailing.equalTo(containerView.snp.trailing).offset(20)
         }
         
         progressStretch.snp.makeConstraints { progress in
-            progress.top.equalTo(textB.snp.bottom).offset(minPadding)
+            progress.top.equalTo(textB.snp.bottom).offset(20)
             progress.leading.equalTo(textB.snp.leading)
-            progress.height.equalTo(4)
+            progress.height.equalTo(5)
         }
         
         progressText.snp.makeConstraints { text in
-            text.top.equalTo(textB.snp.bottom).offset(minPadding - (view.bounds.height * 0.02))
-            text.leading.equalTo(progressStretch.snp.trailing).offset(minPadding)
-            text.trailing.equalTo(containerView.snp.trailing).inset(padding)
+            text.top.equalTo(textB.snp.bottom).offset(10)
+            text.leading.equalTo(progressStretch.snp.trailing).offset(20)
+            text.trailing.equalTo(containerView.snp.trailing).inset(20)
         }
         
         startStretchButton.snp.makeConstraints { btn in
-            btn.top.equalTo(progressStretch.snp.bottom).offset(padding)
-            btn.leading.equalTo(containerView.snp.leading).inset(padding)
-            btn.trailing.equalTo(containerView.snp.trailing).inset(padding)
-            btn.bottom.equalTo(containerView.snp.bottom).inset(padding)
+            btn.top.equalTo(progressStretch.snp.bottom).offset(20)
+            btn.leading.equalTo(containerView.snp.leading).inset(20)
+            btn.trailing.equalTo(containerView.snp.trailing).inset(20)
+            btn.bottom.equalTo(containerView.snp.bottom).inset(15)
         }
         
     }
@@ -317,14 +319,23 @@ class HomeVC: NSViewController {
         let blur = CLBlurEffectView(frame: pointsView.bounds)
         pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
         
-        let hPadding = view.bounds.width * 0.02
-        
         NSLayoutConstraint.activate([
-            pointsView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: hPadding),
+            pointsView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: 10),
             pointsView.topAnchor.constraint(equalTo: storeButton.topAnchor),
             pointsView.widthAnchor.constraint(equalToConstant: 160),
             pointsView.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
     
+    private func reloadAnimation() {
+        riveView.removeFromSuperview()
+        stack.removeFromSuperview()
+        containerView.removeFromSuperview()
+        pointsView.removeFromSuperview()
+        previewAnimaConfig()
+        ButtonConfigure()
+        viewStretchConfig()
+        dailyProgress()
+        setupPointsLabel()
+    }
 }
