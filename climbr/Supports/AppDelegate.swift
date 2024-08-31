@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var quitMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        
+        RenderContextManager.shared().defaultRenderer = .riveRenderer
         mainWindow = MainWindow()
         
         /// Create Quit Menu
