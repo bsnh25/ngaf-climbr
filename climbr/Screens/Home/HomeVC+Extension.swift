@@ -93,6 +93,7 @@ extension HomeVC {
 //        observeNotif()
 //        checkInRange()
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
+        
     }
     
     func updatePoint(){
@@ -126,9 +127,39 @@ extension HomeVC {
         /// state 1: tired/fatigue
         /// state 2: death
         /// state 3...n: walk
-        var state = notificationCount - progress
+        let state = notificationCount - progress
         
-        animationMain?.setInput("WalkingStyle", value: Double(state))
+        /// State for default walk
+        var characterState: Double = 0
+        var backgroundState: Double = character?.locationEquipment == .jungleJumble ? 0 : 1
+        
+        /// State for tored
+        if state == 1 || state == 2 {
+            characterState = 1
+            backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
+        } else if state == 3 {
+            /// State for collapsed
+            characterState = 2
+            backgroundState = character?.locationEquipment == .jungleJumble ? 4 : 5
+        } else {
+            
+            /// State for out of working hours
+            let prefs = charService?.getPreferences()
+            let startWorkingHour = prefs?.startWorkingHour ?? .now
+            let endWorkingHour = prefs?.endWorkingHour ?? .now
+            
+            if Date.now >= startWorkingHour && Date.now <= endWorkingHour && progress == 4 {
+                characterState = 3
+                backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
+            } else {
+                /// State for default walk
+                characterState = 0
+                backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
+            }
+        }
+        
+        animationMain?.setInput("WalkingStyle", value: characterState)
+        animationMain?.setInput("Background", value: backgroundState)
     }
     
 //    func checkInRange(){
@@ -143,7 +174,7 @@ extension HomeVC {
 //                print("start : \(start)")
 //                print("date : \(date)")
 //                print("end : \(end)")
-//                
+//
 //                if date > start && date < end {
 //                    showCharSakit()
 //                } else {
