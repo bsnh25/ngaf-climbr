@@ -42,7 +42,7 @@ class StretchingVC: NSViewController {
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
     
-    var setOfMovements: [Movement]      = Movement.setOfMovements.randomElement() ?? []
+    var setOfMovements: [Movement]      = Movement.setOfMovements[3]
     var completedMovement: [Movement]   = []
     
     var bags: Set<AnyCancellable> = []
