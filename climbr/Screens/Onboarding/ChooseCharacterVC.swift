@@ -8,7 +8,7 @@
 import Cocoa
 import Swinject
 
-protocol ChooseCaraterDelegate {
+protocol ChooseCaraterDelegate: AnyObject {
     func selectedGender(gender : Gender)
     func characterDidUpdate()
 }

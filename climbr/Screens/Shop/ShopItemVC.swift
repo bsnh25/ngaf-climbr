@@ -21,7 +21,7 @@ class ShopItemVC: NSViewController {
     let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     let buyButton = BuyButtonView()
-    var delegate: ChooseCaraterDelegate?
+    weak var delegate: ChooseCaraterDelegate?
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
