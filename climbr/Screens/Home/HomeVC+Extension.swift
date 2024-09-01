@@ -83,6 +83,7 @@ extension HomeVC {
         progressStretch.doubleValue = progress
         progressText.setText("\(Int(progress)) / 4 sessions")
 //        arrNotif.popLast()
+        character = charService?.getCharacterData()
         updatePoint()
     }
     
