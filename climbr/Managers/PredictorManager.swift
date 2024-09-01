@@ -8,7 +8,7 @@
 import Foundation
 import Vision
 
-typealias stretchClassifier = ModelFixV2
+typealias stretchClassifier = ModelFixV4
 
 protocol PredictorDelegate: AnyObject {
     func predictor(didFindNewRecognizedPoints points: [CGPoint])
@@ -72,13 +72,19 @@ class PredictorManager: PredictorService {
     }
     
     private func detectUpperBody() -> Bool {
-        (detectedJoints.contains(.rightShoulder) || detectedJoints.contains(.leftShoulder)) &&
-        (detectedJoints.contains(.rightEye) || detectedJoints.contains(.leftEye)) &&
-        (detectedJoints.contains(.leftEar) || detectedJoints.contains(.rightEar)) &&
-        (detectedJoints.contains(.rightElbow) || detectedJoints.contains(.leftElbow)) &&
-        detectedJoints.contains(.neck) || detectedJoints.contains(.nose) ||
-        detectedJoints.contains(.leftWrist) || detectedJoints.contains(.rightWrist)
-    }
+            /// ARMS
+            (detectedJoints.contains(.rightShoulder) || detectedJoints.contains(.leftShoulder)) &&
+            (detectedJoints.contains(.rightElbow) || detectedJoints.contains(.leftElbow)) &&
+            
+            /// HEAD
+            (detectedJoints.contains(.rightEye) || detectedJoints.contains(.leftEye)) &&
+            detectedJoints.contains(.neck) || detectedJoints.contains(.nose) ||
+            detectedJoints.contains(.leftWrist) || detectedJoints.contains(.rightWrist) ||
+            (detectedJoints.contains(.leftEar) || detectedJoints.contains(.rightEar)) &&
+        
+            /// Back
+            detectedJoints.contains(.root)
+        }
     
     private func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
         let numAvailableFrames = observations.count

@@ -55,7 +55,12 @@ class ShopItemVC: NSViewController {
     var selectedItem : EquipmentModel?
     
 //    var simpleVM = RiveViewModel(fileName: "climbr")
-    var animationShop : RiveViewModel?
+    var animationShop : RiveViewModel? = {
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
+        anima.fit = .fill
+        let riveView = anima.createRiveView()
+        return anima
+    }()
     
     let backButton = CLImageButton(
         imageName: "arrowshape.backward",
@@ -78,18 +83,8 @@ class ShopItemVC: NSViewController {
         super.viewDidLoad()
         view.wantsLayer = true
         
-//        animationShop.setInput(<#T##inputName: String##String#>, value: <#T##Bool#>)
-        
-        
         collectionViewContainer.collectionDelegate = self
-//        collectionViewContainer.updateItems(items: headItems)
-//        collectionViewContainer.updateCurrentItem(head: currentHead, hand: currentHand, back: currentBack, location: currentLocation)
-        
-//        buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((characterService?.getCharacterData()!.point)!))
-//        buyButton.isHidden = currentHeadModel.isUnlocked
         buyButton.delegate = self
-        
-//        view.layer?.backgroundColor = NSColor.blue.cgColor
         setupAnimationView()
         
         setupSidebar()
@@ -100,7 +95,6 @@ class ShopItemVC: NSViewController {
         setupBackButton()
         
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
-//            updateGridItemsWithSelectedItem()
             highlightButton(firstButton)
         }
     }
@@ -118,31 +112,32 @@ class ShopItemVC: NSViewController {
             points.setText("\(character.point)")
             /// Select first init to current head equipment
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
+            
+            /// Configure rive artboard
+            do {
+                try animationShop?.configureModel(artboardName: character.gender == .male ? "ShopscreenMale" : "ShopscreenFemale")
+            } catch {
+                print(error.localizedDescription)
+            }
+            
             /// Update character equipment
             updateCharacterEquipment()
         }
     }
     
     func setupAnimationView(){
-        if characterService?.getCharacterData()?.gender == .male {
-            animationShop = RiveViewModel(fileName: "climbr", artboardName: "ShopscreenMale")
-        }else{
-            animationShop = RiveViewModel(fileName: "climbr", artboardName: "ShopscreenFemale")
+        if let riveView = animationShop?.createRiveView() {
+            view.addSubview(riveView)
+            
+            riveView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                riveView.topAnchor.constraint(equalTo: view.topAnchor),
+                riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
         }
-        
-        let riveView = animationShop!.createRiveView()
-        animationShop!.fit = .fill
-        view.addSubview(riveView)
-//        riveView.frame = view.bounds
-        
-        riveView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            riveView.topAnchor.constraint(equalTo: view.topAnchor),
-            riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
     }
     
     func setupBuyButton(){

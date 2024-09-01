@@ -42,7 +42,7 @@ class StretchingVC: NSViewController {
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
     
-    var setOfMovements: [Movement]      = Movement.setOfMovements.randomElement() ?? []
+    var setOfMovements: [Movement]      = Movement.setOfMovements[3]
     var completedMovement: [Movement]   = []
     
     var bags: Set<AnyCancellable> = []
@@ -76,7 +76,19 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         view.wantsLayer = true
+
+    }
+  
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        cameraService?.stopSession()
         
+        stopTimer()
+        bags.removeAll()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
         cameraService?.startSession()
         configureCameraPreview()
         configureMovementView()
@@ -88,15 +100,6 @@ class StretchingVC: NSViewController {
         
         updateMovementData()
         updateMovementState()
-
-    }
-  
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        cameraService?.stopSession()
-        
-        stopTimer()
-        bags.removeAll()
     }
     
     private func configureInstructionView() {

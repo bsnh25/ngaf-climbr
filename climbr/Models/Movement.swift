@@ -67,6 +67,20 @@ struct Movement {
             Movement(name: .LowerBackSpinLeft, type: .back, preview: .thumbnailLowerBackSpinLeft, thumbnail: .thumbnailLowerBackSpinLeft, rewardPoint: 5),
             Movement(name: .LowerBackSpinRight, type: .back, preview: .thumbnailLowerBackSpinRight, thumbnail: .thumbnailLowerBackSpinRight, rewardPoint: 5),
         ],
+        
+        [
+            /// Neck Movement
+            Movement(name: .NeckDeepRight, type: .neck, preview: .thumbnailNeckDeepRight, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
+            Movement(name: .NeckDeepLeft, type: .neck, preview: .thumbnailNeckDeepLeft, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
+            
+            /// Arm Movement
+            Movement(name: .FrontShoulderStaticRight, type: .arm, preview: .thumbnailFrontShoulderStaticRight, thumbnail: .thumbnailFrontShoulderStaticRight, rewardPoint: 5),
+            Movement(name: .FrontShoulderStaticLeft, type: .arm, preview: .thumbnailFrontShoulderStaticLeft, thumbnail: .thumbnailFrontShoulderStaticLeft, rewardPoint: 5),
+            
+            /// Back Movement
+            Movement(name: .LowerBackSpinRight, type: .back, preview: .thumbnailLowerBackSpinRight, thumbnail: .thumbnailLowerBackSpinRight, rewardPoint: 5),
+            Movement(name: .LowerBackSpinLeft, type: .back, preview: .thumbnailLowerBackSpinLeft, thumbnail: .thumbnailLowerBackSpinLeft, rewardPoint: 5),
+        ],
     ]
 }
 
