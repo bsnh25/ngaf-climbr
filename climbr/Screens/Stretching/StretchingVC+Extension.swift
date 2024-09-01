@@ -283,7 +283,7 @@ extension StretchingVC {
 extension StretchingVC : PredictorDelegate {
     func predictor(didLabelAction action: String, with confidence: Double) {
         for name in ExerciseName.allCases {
-            if name.rawValue == action && confidence > 0.5 {
+            if name.rawValue == action && confidence > 0.65 {
                 if exerciseName != name {
                     self.exerciseName = name
                     print("\(name) and the confidence is \(confidence)")
