@@ -43,6 +43,9 @@ extension TutorialVC {
     @objc
     func actionInterest(){
         print("Hitted Action Interest")
+        let height: CGFloat = 150
+        let width: CGFloat = 450
+        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
         skipTutorialButton.isHidden = true
         skipTutorialButton.title = "Let's Go!"
         let firstAttr: [NSAttributedString.Key: Any] = [
@@ -67,10 +70,6 @@ extension TutorialVC {
         firstText.append(endText)
         
         tutorialLabel.attributedStringValue = firstText
-        
-        let height: CGFloat = 150
-        let width: CGFloat = 450
-        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
     }
     
     func selectorButton(){

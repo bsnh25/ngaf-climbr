@@ -51,63 +51,67 @@ extension StretchingVC {
     func updateMovementState() {
         
         $showTutorial.sink { value in
-            if !value {
-                self.instructionView.hide()
-            } else {
-                self.instructionView.unhide()
-            }
-        }
-        .store(in: &bags)
-        
-        $exerciseName.sink { [weak self] name in
-            guard let self else { return }
-            
-            /// Get current movement data
-            guard let movement = self.setOfMovements[safe: self.currentIndex] else {
-                return
-            }
-            
-            guard !self.showTutorial else {
-                self.movementStateView.hide()
-                self.pauseTimer()
-                return
-            }
-            
-            /// Return true if the name equals to current movement
-            let positionState   = name == movement.name
-            
-            DispatchQueue.main.async {
+                    DispatchQueue.main.async {
+                        if !value {
+                            self.instructionView.hide()
+                        } else {
+                            self.instructionView.unhide()
+                        }
+                    }
+                }
+                .store(in: &bags)
                 
-                /// Make sure to unhide the movement state view
-                self.movementStateView.unhide()
-                
-                if !positionState {
-                    /// Pause the timer if movement incorrect
-                    self.pauseTimer()
+                $exerciseName.sink { [weak self] name in
+                    guard let self else { return }
                     
-                    /// Set label, foreground, and background color based on each state
-                    var label: String = "Please move according to the guidance"
-                    
-                    if name == .Still || name == .Negative {
-                        label = "Please move according to the guidance"
-                        self.movementStateView.setForegroundColor(.black)
-                        self.movementStateView.setBackgroundColor(.white)
-                    } else {
-                        label = "Position Incorrect"
-                        self.movementStateView.setForegroundColor(.black)
-                        self.movementStateView.setBackgroundColor(.systemRed)
-                        
-                        self.playSfx("incorrect")
+                    /// Get current movement data
+                    guard let movement = self.setOfMovements[safe: self.currentIndex] else {
+                        return
                     }
                     
-                    self.movementStateView.setLabel(label)
-                } else {
-                    self.playSfx("correct")
-                    self.startExerciseSession(duration: movement.duration)
-//                    self.movementStateView.hide()
-                }
-            }
-        }.store(in: &bags)
+                    guard !self.showTutorial else {
+                        DispatchQueue.main.async {
+                            self.movementStateView.hide()
+                        }
+                        self.pauseTimer()
+                        return
+                    }
+                    
+                    /// Return true if the name equals to current movement
+                    let positionState   = name == movement.name
+                    
+                    DispatchQueue.main.async {
+                        
+                        /// Make sure to unhide the movement state view
+                        self.movementStateView.unhide()
+                        
+                        if !positionState {
+                            /// Pause the timer if movement incorrect
+                            self.pauseTimer()
+                            
+                            /// Set label, foreground, and background color based on each state
+                            var label: String = "Please move according to the guidance"
+                            
+                            if name == .Still || name == .Negative {
+                                label = "Please move according to the guidance"
+                                self.movementStateView.setForegroundColor(.black)
+                                self.movementStateView.setBackgroundColor(.white)
+                            } else {
+                                label = "Position Incorrect"
+                                self.movementStateView.setForegroundColor(.black)
+                                self.movementStateView.setBackgroundColor(.systemRed)
+                                
+                                self.playSfx("incorrect")
+                            }
+                            
+                            self.movementStateView.setLabel(label)
+                        } else {
+                            self.playSfx("correct")
+                            self.startExerciseSession(duration: movement.duration)
+        //                    self.movementStateView.hide()
+                        }
+                    }
+                }.store(in: &bags)
         
         $remainingTime.sink { [weak self] time in
             guard let self else { return }
@@ -279,7 +283,7 @@ extension StretchingVC {
 extension StretchingVC : PredictorDelegate {
     func predictor(didLabelAction action: String, with confidence: Double) {
         for name in ExerciseName.allCases {
-            if name.rawValue == action && confidence > 0.5 {
+            if name.rawValue == action && confidence > 0.65 {
                 if exerciseName != name {
                     self.exerciseName = name
                     print("\(name) and the confidence is \(confidence)")

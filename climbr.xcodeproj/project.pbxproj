@@ -51,7 +51,7 @@
 		8ABB12942C67D36100616C57 /* UserPreferenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */; };
 		8ABB12992C68940400616C57 /* CLDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12982C68940400616C57 /* CLDatePicker.swift */; };
 		8ABB12AC2C6AEE8200616C57 /* ChooseCharacterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */; };
-		AB1C0B762C76E98F006B2FA8 /* climbr.riv in Resources */ = {isa = PBXBuildFile; fileRef = AB1C0B752C76E98F006B2FA8 /* climbr.riv */; };
+		8AE395942C841AFA00A9106C /* ModelFixV4.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8AE395932C841AFA00A9106C /* ModelFixV4.mlmodel */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -75,6 +75,7 @@
 		ABAFFC252C7230F8004C729A /* ShopItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFFC242C7230F8004C729A /* ShopItemVC.swift */; };
 		ABAFFC272C74FB71004C729A /* ShopItemVC+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFFC262C74FB71004C729A /* ShopItemVC+Extensions.swift */; };
 		ABAFFC292C74FBFA004C729A /* CollectionContainerView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFFC282C74FBFA004C729A /* CollectionContainerView+Extensions.swift */; };
+		ABDE237D2C8487A1008822AB /* climbr.riv in Resources */ = {isa = PBXBuildFile; fileRef = ABDE237C2C8487A1008822AB /* climbr.riv */; };
 		E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701F0A52C6A7B980069A2DC /* SplashVC.swift */; };
 		E71007BA2C71A9F00059DBA1 /* PredictorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71007B92C71A9F00059DBA1 /* PredictorService.swift */; };
 		E71007BD2C71D9150059DBA1 /* SubtractedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71007BC2C71D9150059DBA1 /* SubtractedView.swift */; };
@@ -172,7 +173,7 @@
 		8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferenceVC.swift; sourceTree = "<group>"; };
 		8ABB12982C68940400616C57 /* CLDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLDatePicker.swift; sourceTree = "<group>"; };
 		8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterVC.swift; sourceTree = "<group>"; };
-		AB1C0B752C76E98F006B2FA8 /* climbr.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr.riv; sourceTree = "<group>"; };
+		8AE395932C841AFA00A9106C /* ModelFixV4.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV4.mlmodel; sourceTree = "<group>"; };
 		AB9A78712C64BB2B00028B36 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		AB9A78732C64BB3800028B36 /* EquipmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentService.swift; sourceTree = "<group>"; };
 		AB9A78752C64BB4500028B36 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -193,6 +194,7 @@
 		ABAFFC242C7230F8004C729A /* ShopItemVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopItemVC.swift; sourceTree = "<group>"; };
 		ABAFFC262C74FB71004C729A /* ShopItemVC+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShopItemVC+Extensions.swift"; sourceTree = "<group>"; };
 		ABAFFC282C74FBFA004C729A /* CollectionContainerView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionContainerView+Extensions.swift"; sourceTree = "<group>"; };
+		ABDE237C2C8487A1008822AB /* climbr.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr.riv; sourceTree = "<group>"; };
 		E701F0A52C6A7B980069A2DC /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		E71007B92C71A9F00059DBA1 /* PredictorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictorService.swift; sourceTree = "<group>"; };
 		E71007BC2C71D9150059DBA1 /* SubtractedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtractedView.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		8ABB12332C649D9A00616C57 /* VisionModel */ = {
 			isa = PBXGroup;
 			children = (
+				8AE395932C841AFA00A9106C /* ModelFixV4.mlmodel */,
 				8AB71C722C6CA79900635C85 /* ModelFixV2.mlmodel */,
 			);
 			path = VisionModel;
@@ -360,7 +363,7 @@
 		AB1C0B662C76636F006B2FA8 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
-				AB1C0B752C76E98F006B2FA8 /* climbr.riv */,
+				ABDE237C2C8487A1008822AB /* climbr.riv */,
 			);
 			path = Rive;
 			sourceTree = "<group>";
@@ -751,9 +754,9 @@
 				03E7B4612C75EF71008D12F5 /* upperBackStretch-Up.mp4 in Resources */,
 				03E7B4712C75EF71008D12F5 /* tricepStatic-Right.mp4 in Resources */,
 				03E7B4652C75EF71008D12F5 /* crossBodyShoulder-Left.mp4 in Resources */,
+				ABDE237D2C8487A1008822AB /* climbr.riv in Resources */,
 				03E7B4702C75EF71008D12F5 /* frontShoulderStatic-Left.mp4 in Resources */,
 				E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */,
-				AB1C0B762C76E98F006B2FA8 /* climbr.riv in Resources */,
 				8AB71C702C6BAEB500635C85 /* incorrect.mp3 in Resources */,
 				8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */,
 				03E7B46F2C75EF71008D12F5 /* upperBackStretch-Front.mp4 in Resources */,
@@ -805,6 +808,7 @@
 				03CD09BC2C6DDFB600BEEE8B /* ProgressService.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
 				E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */,
+				8AE395942C841AFA00A9106C /* ModelFixV4.mlmodel in Sources */,
 				E74C3AF12C684C6500631D6F /* StretchingResultVC+Extension.swift in Sources */,
 				8ABB12AC2C6AEE8200616C57 /* ChooseCharacterVC.swift in Sources */,
 				E7FDDB242C64363200DE2A7A /* DateExtension.swift in Sources */,
@@ -994,7 +998,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -1028,7 +1032,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = L62ZSF9D69;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
