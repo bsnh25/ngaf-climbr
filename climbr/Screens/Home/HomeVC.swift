@@ -146,11 +146,6 @@ class HomeVC: NSViewController {
             return
         }
         
-        $progressValue.sink { progress in
-            
-            self.progressText.stringValue = "\(Int(progress)) / 4 sessions"
-            
-        }.store(in: &bagss)
     }
     
     private func previewAnimaConfig(){
