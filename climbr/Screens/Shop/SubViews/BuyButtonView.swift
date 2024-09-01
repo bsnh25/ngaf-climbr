@@ -18,7 +18,7 @@ class BuyButtonView: NSView {
     
     var item : EquipmentItem?
     
-    var delegate: BuyButtonDelegate?
+    weak var delegate: BuyButtonDelegate?
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)

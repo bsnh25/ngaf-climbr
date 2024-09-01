@@ -7,7 +7,7 @@
 
 import Cocoa
 
-protocol CollectionContainerProtocol {
+protocol CollectionContainerProtocol: AnyObject {
     func itemSelectedChangedWithType(to data: EquipmentModel)
 }
 
@@ -18,7 +18,7 @@ class CollectionContainerView: NSView {
     var equipmentCollections: [EquipmentModel] = []
     
     
-    var collectionDelegate: CollectionContainerProtocol?
+   weak var collectionDelegate: CollectionContainerProtocol?
     
     override init(frame frameRect: NSRect) {
         
