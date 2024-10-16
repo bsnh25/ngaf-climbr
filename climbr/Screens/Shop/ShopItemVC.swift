@@ -25,7 +25,7 @@ class ShopItemVC: NSViewController {
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
-        ("headphones", "Headgear"),
+        ("hat.cap", "Headgear"),
         ("backpack", "Backpack"),
         ("figure.hiking", "Hiking stick"),
         ("map", "Location")
