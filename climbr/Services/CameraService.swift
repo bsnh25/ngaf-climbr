@@ -10,7 +10,7 @@ import AVFoundation
 
 protocol CameraService {
     var previewLayer: AVCaptureVideoPreviewLayer! { get }
-    
+  var bufferSize: CGSize { get }
     func startSession()
     func stopSession()
     func setSampleBufferDelegate(delegate: AVCaptureVideoDataOutputSampleBufferDelegate)
