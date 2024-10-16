@@ -13,10 +13,12 @@ import Swinject
 class UserPreferenceVC: NSViewController {
     
     let bgContainer = NSView()
+    let warnContainer = NSView()
     let pathImage = NSImageView(image: .onboardingmountain)
     let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
     let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
     let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
+    let warnLabel = CLTextLabelV2(sizeOfFont: 16, weightOfFont: .light, contentLabel: "􀇾 Work hour should be more than 2 (two) hours")
     let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
     let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
     let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
@@ -92,6 +94,39 @@ class UserPreferenceVC: NSViewController {
             bgContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bgContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bgContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    func configureWarning(){
+        configureWarnContainer()
+        configureWarnLabel()
+    }
+    
+    func configureWarnContainer(){
+        view.addSubview(warnContainer)
+        
+        warnContainer.wantsLayer = true
+        warnContainer.layer?.backgroundColor = NSColor.red.cgColor.copy(alpha: 0.9)
+        warnContainer.layer?.cornerRadius = 10
+        warnContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            warnContainer.topAnchor.constraint(equalTo: workHoursLabel.topAnchor, constant: 43),
+            warnContainer.leadingAnchor.constraint(equalTo: stopWorkHour.trailingAnchor, constant: 12),
+            warnContainer.widthAnchor.constraint(equalToConstant: 360),
+            warnContainer.heightAnchor.constraint(equalToConstant: 36)
+        ])
+        
+    }
+    
+    func configureWarnLabel(){
+        warnContainer.addSubview(warnLabel)
+        warnLabel.translatesAutoresizingMaskIntoConstraints = false
+        warnLabel.textColor = .white
+        
+        NSLayoutConstraint.activate([
+            warnLabel.centerXAnchor.constraint(equalTo: warnContainer.centerXAnchor),
+            warnLabel.centerYAnchor.constraint(equalTo: warnContainer.centerYAnchor)
         ])
     }
     
@@ -173,7 +208,7 @@ class UserPreferenceVC: NSViewController {
         startWorkHour.wantsLayer = true
         
         let calendar = Calendar.current
-        var components = calendar.dateComponents([.year, .month, .day], from: Date())
+        var components = calendar.dateComponents([.hour, .minute], from: Date())
         components.hour = 8
         components.minute = 0
         
@@ -184,7 +219,7 @@ class UserPreferenceVC: NSViewController {
         startWorkHour.datePickerElements = [.hourMinute]
       
         // Set the minimum date (01:00)
-        var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        var minComponents = calendar.dateComponents([.hour, .minute], from: Date())
         minComponents.hour = 1
         minComponents.minute = 0
         if let minDate = calendar.date(from: minComponents) {
@@ -192,7 +227,7 @@ class UserPreferenceVC: NSViewController {
         }
         
         // Set the maximum date (21:00)
-        var maxComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        var maxComponents = calendar.dateComponents([.hour, .minute], from: Date())
         maxComponents.hour = 21
         maxComponents.minute = 0
         if let maxDate = calendar.date(from: maxComponents) {
@@ -230,14 +265,15 @@ class UserPreferenceVC: NSViewController {
       
         let calendar1 = Calendar.current
         
-        var minStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
+        
+        var minStopComponents = calendar1.dateComponents([.hour, .minute], from: Date())
         minStopComponents.hour = 3
         minStopComponents.minute = 0
         if let minStopDate = calendar1.date(from: minStopComponents) {
             stopWorkHour.minDate = minStopDate
         }
         
-        var maxStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
+        var maxStopComponents = calendar1.dateComponents([.hour, .minute], from: Date())
         maxStopComponents.hour = 23
         maxStopComponents.minute = 0
         if let maxStopDate = calendar1.date(from: maxStopComponents) {

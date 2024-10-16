@@ -42,7 +42,7 @@ class SettingVC: NSViewController {
     let subTitleA = CLTextLabelV2(
         sizeOfFont: 17,
         weightOfFont: .bold,
-        contentLabel: "Your work hours in a 24hr format"
+        contentLabel: "Your work hours"
     )
     let subTitleB = CLTextLabelV2(
         sizeOfFont: 17,
@@ -116,6 +116,8 @@ class SettingVC: NSViewController {
         foregroundColorText: .white,
         fontText: NSFont.systemFont(ofSize: 13, weight: .regular)
     )
+    let warnContainer = NSView()
+    let warnLabel = CLTextLabelV2(sizeOfFont: 14, weightOfFont: .light, contentLabel: "􀇾 Can’t be less than 2 (two) hours")
     
     var lastStartValue: Date!
     var lastStopValue: Date!
@@ -186,7 +188,7 @@ class SettingVC: NSViewController {
         startTime.datePickerElements = [.hourMinute]
         let calendar = Calendar.current
         // Set the minimum date (01:00)
-        var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        var minComponents = calendar.dateComponents([.hour, .minute], from: Date())
         minComponents.hour = 1
         minComponents.minute = 0
         if let minDate = calendar.date(from: minComponents) {
@@ -194,7 +196,7 @@ class SettingVC: NSViewController {
         }
         
         // Set the maximum date (21:00)
-        var maxComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        var maxComponents = calendar.dateComponents([.hour, .minute], from: Date())
         maxComponents.hour = 21
         maxComponents.minute = 0
         if let maxDate = calendar.date(from: maxComponents) {
@@ -210,14 +212,14 @@ class SettingVC: NSViewController {
         }
         lastStopValue = endTime.dateValue
         endTime.datePickerElements = [.hourMinute]
-        var minStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        var minStopComponents = calendar.dateComponents([.hour, .minute], from: Date())
         minStopComponents.hour = 3
         minStopComponents.minute = 0
         if let minStopDate = calendar.date(from: minStopComponents) {
             endTime.minDate = minStopDate
         }
         
-        var maxStopComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        var maxStopComponents = calendar.dateComponents([.hour, .minute], from: Date())
         maxStopComponents.hour = 23
         maxStopComponents.minute = 0
         
@@ -363,6 +365,38 @@ class SettingVC: NSViewController {
         }
     }
     
+    func configureWarning(){
+        configureWarnContainer()
+        configureWarnLabel()
+    }
+    
+    
+    func configureWarnContainer(){
+        view.addSubview(warnContainer)
+        
+        warnContainer.wantsLayer = true
+        warnContainer.layer?.backgroundColor = NSColor.red.cgColor.copy(alpha: 0.9)
+        warnContainer.layer?.cornerRadius = 10
+        warnContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        warnContainer.snp.makeConstraints{warnContainer in
+            warnContainer.top.equalTo(settingText.snp.bottom).offset(27)
+            warnContainer.leading.equalTo(subTitleA.snp.trailing).offset(9)
+            warnContainer.width.equalTo(235)
+            warnContainer.height.equalTo(28)
+        }
+    }
+    
+    func configureWarnLabel(){
+        warnContainer.addSubview(warnLabel)
+        warnLabel.translatesAutoresizingMaskIntoConstraints = false
+        warnLabel.textColor = .white
+        
+        warnLabel.snp.makeConstraints{warnLabel in
+            warnLabel.centerX.equalTo(warnContainer.snp.centerX)
+            warnLabel.centerY.equalTo(warnContainer.snp.centerY)
+        }
+    }
 }
 
 //#Preview(traits: .defaultLayout, body: {
