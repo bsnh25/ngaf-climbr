@@ -199,5 +199,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
         
         completionHandler()
+        
+        if let vc = Container.shared.resolve(StretchingVC.self) {
+            mainWindow?.contentViewController?.push(to: vc)
+            print("go to stretching session")
+        }
     }
 }
