@@ -79,6 +79,7 @@ extension SettingVC {
         ///get start working hour and end working hour
         guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
             print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
+            configureWarning()
             return
         }
         let updateData = UserPreferenceModel(id: UUID(), endWorkingHour: endTime.dateValue, launchAtLogin: isChecked, reminderInterval: processSaveReminder(), startWorkingHour: startTime.dateValue)
