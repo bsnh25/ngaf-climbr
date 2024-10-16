@@ -37,6 +37,7 @@ extension StretchingResultVC {
         durations /= 60
         
         guard durations > 0 else {
+            self.dummyCharacter.image = char?.gender == .male ? .boyNoCoin : .girlNoCoin
             greetingLabel.setText("Same time, here?")
             rewardPointLabel.setText("\(char?.name ?? "Character") is too tired to find coins.")
             stretchingDurationLabel.setText("You haven’t reduce your sedentary time.")
