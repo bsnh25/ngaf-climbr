@@ -9,6 +9,55 @@ import AppKit
 import Combine
 import AVFoundation
 
+class BoundingBoxView: NSView {
+    
+  // Define a CALayer for the bounding box
+      var boundingBoxLayer: CAShapeLayer!
+      
+      override init(frame frameRect: NSRect) {
+          super.init(frame: frameRect)
+          setupBoundingBox()
+      }
+      
+      required init?(coder: NSCoder) {
+          super.init(coder: coder)
+          setupBoundingBox()
+      }
+      
+      func setupBoundingBox() {
+          // Enable layer-backed view
+          self.wantsLayer = true
+          
+          // Create a new shape layer
+          boundingBoxLayer = CAShapeLayer()
+          
+          // Set the bounding box frame and path (for example, a rectangle)
+          let boundingBoxRect = NSRect(x: 50, y: 50, width: 200, height: 150)
+          let boundingBoxPath = CGPath(rect: boundingBoxRect, transform: nil)
+          
+          boundingBoxLayer.path = boundingBoxPath
+          boundingBoxLayer.strokeColor = NSColor.red.cgColor  // Stroke color
+          boundingBoxLayer.lineWidth = 2.0                    // Line width
+          boundingBoxLayer.fillColor = NSColor.clear.cgColor  // No fill color
+          
+          // Add the bounding box layer to the view's layer
+          self.layer?.addSublayer(boundingBoxLayer)
+      }
+      
+      // Optionally, update the bounding box dynamically
+      func updateBoundingBox(newRect: NSRect) {
+          let newPath = CGPath(rect: newRect, transform: nil)
+          boundingBoxLayer.path = newPath
+      }
+  
+  func updateRect(_ rect: NSRect, color: NSColor? = nil) {
+//    boundingBox = rect
+    let newPath = CGPath(rect: rect, transform: nil)
+            boundingBoxLayer.path = newPath
+    self.layer?.borderColor = (color ?? .red).cgColor
+  }
+}
+
 class StretchingVC: NSViewController {
     let cameraPreview           = CameraPreviewView()
     let movementInfoView        = NSView()
@@ -32,6 +81,9 @@ class StretchingVC: NSViewController {
     let positionStateView       = NSView()
     let positionStateLabel      = CLLabel(fontSize: 16, fontWeight: .bold)
     let movementStateView       = MovementStateView()
+    lazy var boundingBoxView = {
+        BoundingBoxView(frame: self.view.bounds)
+    }()
     
     var pointsLayer             = CAShapeLayer()
     let padding: CGFloat        = 24
@@ -93,6 +145,7 @@ class StretchingVC: NSViewController {
         configureCameraPreview()
         configureMovementView()
         predictor?.delegate = self
+      predictor?.bufferSize = cameraService?.bufferSize ?? .zero
         cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
@@ -100,6 +153,18 @@ class StretchingVC: NSViewController {
         
         updateMovementData()
         updateMovementState()
+        
+//        configureBoundingBox()
+    }
+  
+    private func configureBoundingBox() {
+      view.addSubview(boundingBoxView)
+      
+      boundingBoxView.updateRect(NSRect(x: 0, y: 0, width: 500, height: 700), color: .green)
+      let bbxview = BoundingBoxView(frame: view.bounds)
+//      (650.1316112326951, 6.118433317856216, 607.105257765242, 774.8684337060697)
+      bbxview.updateRect(NSRect(x: 252, y: 0, width: 504, height: 450), color: .green)
+      view.addSubview(bbxview)
     }
     
     private func configureInstructionView() {

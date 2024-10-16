@@ -281,20 +281,24 @@ extension StretchingVC {
 }
 
 extension StretchingVC : PredictorDelegate {
+    func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {
+        print(boundingBox)
+        DispatchQueue.main.async {
+//            self.boundingBoxView.updateRect(boundingBox, color: .yellow)
+            if value {
+                self.showTutorial = false
+            }
+        }
+    }
+  
     func predictor(didLabelAction action: String, with confidence: Double) {
         for name in ExerciseName.allCases {
             if name.rawValue == action && confidence > 0.65 {
                 if exerciseName != name {
                     self.exerciseName = name
-                    print("\(name) and the confidence is \(confidence)")
+//                    print("\(name) and the confidence is \(confidence)")
                 }
             }
-        }
-    }
-    
-    func predictor(didDetectUpperBody value: Bool, with joints: [VNHumanBodyPoseObservation.JointName]) {
-        if value {
-            self.showTutorial = false
         }
     }
     
@@ -327,5 +331,6 @@ extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
             connection.isVideoMirrored = true
         }
         self.predictor?.estimation(sampleBuffer: sampleBuffer)
+        self.predictor?.detectHumanUpperBody(sampleBuffer: sampleBuffer)
     }
 }
