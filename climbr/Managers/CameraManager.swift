@@ -10,6 +10,7 @@ import AppKit
 
 class CameraManager: NSObject, CameraService {
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var bufferSize: CGSize = .zero
     var captureSession: AVCaptureSession!
     var cameraDevice: AVCaptureDevice!
     var videoOutput: AVCaptureVideoDataOutput
@@ -55,6 +56,16 @@ class CameraManager: NSObject, CameraService {
             captureSession.addOutput(videoOutput)
         }
         
+        do {
+            try device.lockForConfiguration()
+            let dimensions = CMVideoFormatDescriptionGetDimensions(device.activeFormat.formatDescription)
+            
+            bufferSize.width = CGFloat(dimensions.width)
+            bufferSize.height = CGFloat(dimensions.height)
+        } catch {
+            print("Error camera: ", error.localizedDescription)
+        }
+
         setupPreviewLayer()
     }
     
