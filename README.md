@@ -20,7 +20,7 @@ Only available on macOS version 14.0+
 | Name    | Role |
 | -------- | ------- |
 | Bayu Septyan Nur Hidayat  | App Developer    |
-| Fatakhillah Khaqo | App Developer     |
 | Ivan Nur Ilham Syah    | App Developer    |
 | I Gusti Ngurah Surya Ardika Dinata Putra | App Developer |
-| Chintya Tio Anggarani Siahaan | UI/UX Designer |
+| Katarina Kanti Moksamarga | UI/UX Designer |
+| Fitra Muhammad Fauzi | UI/UX Designer |
