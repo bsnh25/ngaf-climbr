@@ -65,9 +65,7 @@ class CurrentMovementView: NSStackView {
     }
     
     @objc private func loopVideo(notification: Notification) {
-        print("URL: end video ")
         if let playerItem = notification.object as? AVPlayerItem {
-            print("URL: player item ")
             playerItem.seek(to: .zero, completionHandler: nil)
         }
     }
