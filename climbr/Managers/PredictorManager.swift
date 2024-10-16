@@ -13,16 +13,21 @@ typealias stretchClassifier = ModelFixV4
 protocol PredictorDelegate: AnyObject {
     func predictor(didFindNewRecognizedPoints points: [CGPoint])
     func predictor(didLabelAction action: String, with confidence: Double)
-    func predictor(didDetectUpperBody value: Bool, with joints: [VNHumanBodyPoseObservation.JointName])
+    func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect)
 }
 
 class PredictorManager: PredictorService {
+    var bufferSize: CGSize = .zero {
+        didSet {
+            print("BUFF: ", bufferSize)
+        }
+    }
     
     weak var delegate : PredictorDelegate?
     
     let predictionWindowSize = 30
-    var detectedJoints: [VNHumanBodyPoseObservation.JointName] = []
     var posesWindow : [VNHumanBodyPoseObservation] = []
+    var didDetectUpperBody: Bool = false
     
     init(){
         posesWindow.reserveCapacity(predictionWindowSize)
@@ -63,28 +68,11 @@ class PredictorManager: PredictorService {
         let label = predictions.label
         let confident = predictions.labelProbabilities[label] ?? 0
         
-        if detectUpperBody() {
+        if didDetectUpperBody {
             delegate?.predictor(didLabelAction: label, with: confident)
         }
         
-        delegate?.predictor(didDetectUpperBody: detectUpperBody(), with: detectedJoints)
-        
     }
-    
-    private func detectUpperBody() -> Bool {
-            /// ARMS
-            (detectedJoints.contains(.rightShoulder) || detectedJoints.contains(.leftShoulder)) &&
-            (detectedJoints.contains(.rightElbow) || detectedJoints.contains(.leftElbow)) &&
-            
-            /// HEAD
-            (detectedJoints.contains(.rightEye) || detectedJoints.contains(.leftEye)) &&
-            detectedJoints.contains(.neck) || detectedJoints.contains(.nose) ||
-            detectedJoints.contains(.leftWrist) || detectedJoints.contains(.rightWrist) ||
-            (detectedJoints.contains(.leftEar) || detectedJoints.contains(.rightEar)) &&
-        
-            /// Back
-            detectedJoints.contains(.root)
-        }
     
     private func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
         let numAvailableFrames = observations.count
@@ -131,32 +119,64 @@ class PredictorManager: PredictorService {
     
     private func processObservation(_ observation: VNHumanBodyPoseObservation){
         
-        self.detectedJoints = observation.availableJointNames.compactMap { joint in
-            do {
-                let point = try observation.recognizedPoint(joint)
-                
-                if point.confidence > 0.5 {
-                    return joint
-                }
-                
-                return nil
-            } catch {
-                print(error.localizedDescription)
-                return nil
-            }
-        }
-        
         do{
             let recognizedPoints = try observation.recognizedPoints(forGroupKey: .all)
             
             let displayedPoints = recognizedPoints.map{
                 CGPoint(x: $0.value.x, y: 1-$0.value.y)
-//                print("x: \($0.value.x), y: \(1-$0.value.y) ")
             }
             
             delegate?.predictor(didFindNewRecognizedPoints: displayedPoints)
         }catch{
             print("error finding recognized points")
         }
+      
     }
+  
+  func detectHumanUpperBody(sampleBuffer : CMSampleBuffer){
+    print("detectHumanUpperBody")
+    let requestHandler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .up)
+    
+    let request = VNDetectHumanRectanglesRequest(completionHandler: upperBodyHandler)
+    
+    request.revision = VNDetectHumanRectanglesRequestRevision2
+    request.upperBodyOnly = true
+     
+    // x: 252, y: 0, w: 504, h: 450
+    // CGRect(x: 0.28, y: 0, width: 0.56, height: 0.417)
+    // TODO: change RoI to dynamic value
+    request.regionOfInterest = CGRect(x: 0.28, y: 0, width: 0.56, height: 0.417)
+//    request.regionOfInterest = VNNormalizedRectForImageRect(
+//      CGRect(x: 250, y: 0, width: 504, height: 450),
+//      Int(bufferSize.width),
+//      Int(bufferSize.height)
+//    )
+    
+    do{
+        try requestHandler.perform([request])
+    }catch{
+        print("Unable to perform the request, with error \(error)")
+    }
+  }
+  
+  private func upperBodyHandler(request: VNRequest, error: Error?){
+    print("upperBodyHandler")
+    if let error {
+      print(error)
+      return
+    }
+    guard let observations = request.results as? [VNHumanObservation] else { return }
+    
+    if let result = observations.first {
+      let objectBounds = VNImageRectForNormalizedRect(result.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
+      
+      didDetectUpperBody = result.confidence > 0.7
+      
+      delegate?.predictor(didDetectUpperBody: didDetectUpperBody, boundingBox: objectBounds)
+      
+      print("View BB: \(objectBounds) - confidence: \(result.confidence)")
+      print("ROI BB: \(result.boundingBox) - confidence: \(result.confidence)")
+    }
+  }
+  
 }
