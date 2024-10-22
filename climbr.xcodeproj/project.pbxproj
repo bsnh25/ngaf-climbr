@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,8 @@
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034C71692C664D210040AD4F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71682C664D210040AD4F /* SettingVC.swift */; };
 		034C716B2C6736040040AD4F /* CLTextLabelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C716A2C6736040040AD4F /* CLTextLabelV2.swift */; };
+		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
+		034EADE12CC786BF006C0C9C /* climbrHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034EADCD2CC78493006C0C9C /* climbrHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		036AA9FE2C6D0A2000956F7C /* SettingVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */; };
 		03889CBA2C64688A004BC8C8 /* UserPreferences+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */; };
 		03889CBB2C64688A004BC8C8 /* UserPreferences+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */; };
@@ -116,12 +118,27 @@
 		E7FDDB292C64378C00DE2A7A /* ExcerciseGuidanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		034EADE02CC7867A006C0C9C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				034EADE12CC786BF006C0C9C /* climbrHelper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		030DA2462C70884E001F5953 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		030DA2482C70C4AF001F5953 /* TutorialVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TutorialVC+Extension.swift"; sourceTree = "<group>"; };
 		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
 		034C71682C664D210040AD4F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		034C716A2C6736040040AD4F /* CLTextLabelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextLabelV2.swift; sourceTree = "<group>"; };
+		034EADCD2CC78493006C0C9C /* climbrHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbrHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		034EADDE2CC78654006C0C9C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		0367F5AE2C720A5300938747 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0367F5AF2C720A5300938747 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingVC+Extension.swift"; sourceTree = "<group>"; };
@@ -237,12 +254,34 @@
 		E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseGuidanceService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		034EADDD2CC78573006C0C9C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 034EADCC2CC78493006C0C9C /* climbrHelper */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		034EADCE2CC78493006C0C9C /* climbrHelper */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (034EADDD2CC78573006C0C9C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = climbrHelper; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		034EADCA2CC78493006C0C9C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E7FDDAD02C64301B00DE2A7A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */,
+				034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */,
 				034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */,
 				E71F6E642C6B8B3B001BCFEB /* Swinject in Frameworks */,
 			);
@@ -387,6 +426,7 @@
 		E71F6E622C6B8B3B001BCFEB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				034EADDE2CC78654006C0C9C /* ServiceManagement.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -455,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				E7FDDAD52C64301B00DE2A7A /* climbr */,
+				034EADCE2CC78493006C0C9C /* climbrHelper */,
 				E7FDDAD42C64301B00DE2A7A /* Products */,
 				E76E63032C675AAD001906A9 /* Recovered References */,
 				E71F6E622C6B8B3B001BCFEB /* Frameworks */,
@@ -465,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				E7FDDAD32C64301B00DE2A7A /* climbr.app */,
+				034EADCD2CC78493006C0C9C /* climbrHelper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -682,6 +724,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		034EADCC2CC78493006C0C9C /* climbrHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 034EADDB2CC78495006C0C9C /* Build configuration list for PBXNativeTarget "climbrHelper" */;
+			buildPhases = (
+				034EADC92CC78493006C0C9C /* Sources */,
+				034EADCA2CC78493006C0C9C /* Frameworks */,
+				034EADCB2CC78493006C0C9C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				034EADCE2CC78493006C0C9C /* climbrHelper */,
+			);
+			name = climbrHelper;
+			packageProductDependencies = (
+			);
+			productName = climbrHelper;
+			productReference = 034EADCD2CC78493006C0C9C /* climbrHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E7FDDAD22C64301B00DE2A7A /* climbr */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E7FDDAE22C64301F00DE2A7A /* Build configuration list for PBXNativeTarget "climbr" */;
@@ -689,6 +753,7 @@
 				E7FDDACF2C64301B00DE2A7A /* Sources */,
 				E7FDDAD02C64301B00DE2A7A /* Frameworks */,
 				E7FDDAD12C64301B00DE2A7A /* Resources */,
+				034EADE02CC7867A006C0C9C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -711,9 +776,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					034EADCC2CC78493006C0C9C = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					E7FDDAD22C64301B00DE2A7A = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -738,11 +806,19 @@
 			projectRoot = "";
 			targets = (
 				E7FDDAD22C64301B00DE2A7A /* climbr */,
+				034EADCC2CC78493006C0C9C /* climbrHelper */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		034EADCB2CC78493006C0C9C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E7FDDAD12C64301B00DE2A7A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -780,6 +856,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		034EADC92CC78493006C0C9C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E7FDDACF2C64301B00DE2A7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -867,6 +950,72 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		034EADD92CC78495006C0C9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = climbrHelper/climbrHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F44CLK4937;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = climbrHelper/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = NO;
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr.helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		034EADDA2CC78495006C0C9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = climbrHelper/climbrHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F44CLK4937;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = climbrHelper/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = NO;
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr.helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		E7FDDAE02C64301F00DE2A7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1058,6 +1207,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		034EADDB2CC78495006C0C9C /* Build configuration list for PBXNativeTarget "climbrHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				034EADD92CC78495006C0C9C /* Debug */,
+				034EADDA2CC78495006C0C9C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E7FDDACE2C64301B00DE2A7A /* Build configuration list for PBXProject "climbr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
