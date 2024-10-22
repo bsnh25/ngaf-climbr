@@ -9,16 +9,34 @@ import AppKit
 import Swinject
 import UserNotifications
 import RiveRuntime
+import ServiceManagement
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
-
+    
+    /// services section
+    let audio = Container.shared.resolve(AudioService.self)
+    let charService = Container.shared.resolve(CharacterService.self)
+    
+    var userPreference: UserPreferences?
     var mainWindow: MainWindow?
     var statusBar: NSStatusBar!
     var statusBarItem: NSStatusItem!
-    let audio = Container.shared.resolve(AudioService.self)
     var quitMenu: NSMenu!
-
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        // Load user preferences (Anda dapat mengganti ini dengan cara Anda menyimpan/memuat preferensi)
+        loadUserPreference()
+        
+        // Cek jika launchAtLogin bernilai true
+        if let preferences = userPreference {
+            if preferences.launchAtLogin {
+                enableHelperAppLaunchAtLogin(true)
+            } else {
+                enableHelperAppLaunchAtLogin(false)
+            }
+        }
+        
         RenderContextManager.shared().defaultRenderer = .riveRenderer
         mainWindow = MainWindow()
         
@@ -35,18 +53,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         quitMenu.addItem(quitMenuItem)
         
         ///create menu
-//        let mainMenu = NSMenu()
-//        NSApp.menu = mainMenu
-//        let appMenuItem = NSMenuItem()
-//        mainMenu.addItem(appMenuItem)
-//        let appMenu = NSMenu(title: "App")
-//        appMenuItem.submenu = appMenu
-//        let quitMenuItem = NSMenuItem(
-//            title: "Quit \(ProcessInfo.processInfo.processName)",
-//            action: #selector(quitApp(sender:)),
-//            keyEquivalent: "q"
-//        )
-//        appMenu.addItem(quitMenuItem)
+        //        let mainMenu = NSMenu()
+        //        NSApp.menu = mainMenu
+        //        let appMenuItem = NSMenuItem()
+        //        mainMenu.addItem(appMenuItem)
+        //        let appMenu = NSMenu(title: "App")
+        //        appMenuItem.submenu = appMenu
+        //        let quitMenuItem = NSMenuItem(
+        //            title: "Quit \(ProcessInfo.processInfo.processName)",
+        //            action: #selector(quitApp(sender:)),
+        //            keyEquivalent: "q"
+        //        )
+        //        appMenu.addItem(quitMenuItem)
         
         /// Get app main menu, the replace the submenu with quit menu
         if let mainMenu = NSApplication.shared.mainMenu {
@@ -59,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         
         mainWindow?.delegate = self
-
+        
         /// Create status bar instance
         statusBar       = NSStatusBar()
         /// Create status item with dynamic size (depends on its content)
@@ -72,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let image       = NSImage.stretchingIcon
             image.size      = CGSize(width: 16, height: 16)
             button.image    = image
-            
+            button.appearsDisabled = false
             /// Set the action button to run openApp function
             button.action   = #selector(openApp)
             button.target   = self
@@ -80,23 +98,66 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         NSApp.appearance = NSAppearance(named: .aqua)
         
-
         UNUserNotificationCenter.current().delegate = self
-
+        
         mainWindow?.makeKeyAndOrderFront(nil)
     }
     
-
+    func loadUserPreference(){
+        userPreference = charService?.getPreferences()
+    }
+    
+    func enableHelperAppLaunchAtLogin(_ enabled: Bool) {
+        if #available(macOS 13.0, *) {
+            // Menggunakan SMAppService untuk macOS 13.0 dan yang lebih baru
+            let helperAppIdentifier = "com.hkbp.climbr.helper"
+            let loginItem = SMAppService.loginItem(identifier: helperAppIdentifier)
+            
+            if enabled {
+                do {
+                    try loginItem.register()
+                    print("Helper App registered successfully.")
+                } catch {
+                    print("Failed to register Helper App: \(error.localizedDescription)")
+                }
+            } else {
+                do {
+                    try loginItem.unregister()
+                    print("Helper App unregistered.")
+                } catch {
+                    print("Failed to register Helper App: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            // Fallback untuk macOS yang lebih lama
+            let mainAppIdentifier = "com.hkbp.climbr"
+            let runningApps = NSWorkspace.shared.runningApplications
+            let isRunning = runningApps.contains(where: { $0.bundleIdentifier == mainAppIdentifier })
+            
+            if !isRunning {
+                let path = Bundle.main.bundlePath as NSString
+                var components = path.pathComponents
+                components.removeLast(3)
+                components.append("MacOS")
+                components.append("climbr")
+                let newPath = NSString.path(withComponents: components)
+                
+                NSWorkspace.shared.openApplication(at: URL(fileURLWithPath: newPath), configuration: NSWorkspace.OpenConfiguration())
+            }
+            NSApp.terminate(nil)
+        }
+    }
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         audio?.stopBackground()
         print("Application will terminate")
     }
-
+    
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
-
+    
     @objc private func openApp() {
         
         if let event = NSApplication.shared.currentEvent {
@@ -127,12 +188,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc private func quitApp(sender: Any?) {
         NSApplication.shared.terminate(sender)
     }
-//
-//    func applicationDidResignActive(_ notification: Notification) {
-//        audio?.stopBackground()
-//        print("Application resigned active")
-//    }
-
+    //
+    //    func applicationDidResignActive(_ notification: Notification) {
+    //        audio?.stopBackground()
+    //        print("Application resigned active")
+    //    }
+    
     func windowWillClose(_ notification: Notification) {
         NSApp.hide(nil) // Menyembunyikan aplikasi saat jendela ditutup
         if let audio = audio {
@@ -145,14 +206,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NSApplication.shared.setActivationPolicy(.accessory)
     }
     
-//    func applicationWillUpdate(_ notification: Notification) {
-//        ///audio setup
-//        if let audio = audio {
-//            audio.playBackgroundMusic(fileName: "summer")
-//        } else {
-//            print("AudioService not resolved.")
-//        }
-//    }
+    //    func applicationWillUpdate(_ notification: Notification) {
+    //        ///audio setup
+    //        if let audio = audio {
+    //            audio.playBackgroundMusic(fileName: "summer")
+    //        } else {
+    //            print("AudioService not resolved.")
+    //        }
+    //    }
     
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
