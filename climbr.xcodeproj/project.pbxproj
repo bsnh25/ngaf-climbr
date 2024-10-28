@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		030DA2472C70884E001F5953 /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030DA2462C70884E001F5953 /* TutorialVC.swift */; };
+		0310BDA22CCF8A1900DBB99C /* OverlayServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BDA12CCF8A1500DBB99C /* OverlayServices.swift */; };
+		0310BDA42CCF8AE000DBB99C /* overlay_notification-2.riv in Resources */ = {isa = PBXBuildFile; fileRef = 0310BDA32CCF8AE000DBB99C /* overlay_notification-2.riv */; };
 		034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C715F2C64BFC50040AD4F /* CLImageButton.swift */; };
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034C71692C664D210040AD4F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C71682C664D210040AD4F /* SettingVC.swift */; };
@@ -134,6 +136,8 @@
 /* Begin PBXFileReference section */
 		030DA2462C70884E001F5953 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		030DA2482C70C4AF001F5953 /* TutorialVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TutorialVC+Extension.swift"; sourceTree = "<group>"; };
+		0310BDA12CCF8A1500DBB99C /* OverlayServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayServices.swift; sourceTree = "<group>"; };
+		0310BDA32CCF8AE000DBB99C /* overlay_notification-2.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = "overlay_notification-2.riv"; sourceTree = "<group>"; };
 		034C715F2C64BFC50040AD4F /* CLImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageButton.swift; sourceTree = "<group>"; };
 		034C71682C664D210040AD4F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		034C716A2C6736040040AD4F /* CLTextLabelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextLabelV2.swift; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0310BD862CCF888100DBB99C /* Overlay */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Overlay; sourceTree = "<group>"; };
 		034EADCE2CC78493006C0C9C /* climbrHelper */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (034EADDD2CC78573006C0C9C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = climbrHelper; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -402,6 +407,7 @@
 		AB1C0B662C76636F006B2FA8 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
+				0310BDA32CCF8AE000DBB99C /* overlay_notification-2.riv */,
 				ABDE237C2C8487A1008822AB /* climbr.riv */,
 			);
 			path = Rive;
@@ -554,6 +560,7 @@
 		E7FDDAED2C6433EA00DE2A7A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				0310BD862CCF888100DBB99C /* Overlay */,
 				030DA2452C708836001F5953 /* Tutorial */,
 				E701F0A42C6A7B850069A2DC /* Splash */,
 				8ABB12922C67D1AA00616C57 /* Onboarding */,
@@ -602,6 +609,7 @@
 		E7FDDAF12C64341400DE2A7A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0310BDA12CCF8A1500DBB99C /* OverlayServices.swift */,
 				E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */,
 				AB9A78712C64BB2B00028B36 /* UserService.swift */,
 				AB9A78732C64BB3800028B36 /* EquipmentService.swift */,
@@ -759,6 +767,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				0310BD862CCF888100DBB99C /* Overlay */,
+			);
 			name = climbr;
 			packageProductDependencies = (
 				E7FDDB262C64370E00DE2A7A /* RiveRuntime */,
@@ -835,6 +846,7 @@
 				E71F6E6E2C6E4BDF001BCFEB /* countdown.mp3 in Resources */,
 				8AB71C702C6BAEB500635C85 /* incorrect.mp3 in Resources */,
 				8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */,
+				0310BDA42CCF8AE000DBB99C /* overlay_notification-2.riv in Resources */,
 				03E7B46F2C75EF71008D12F5 /* upperBackStretch-Front.mp4 in Resources */,
 				03E7B46A2C75EF71008D12F5 /* crossBodyShoulder-Right.mp4 in Resources */,
 				03E7B4602C75EF71008D12F5 /* lowerBackSpin-Right.mp4 in Resources */,
@@ -888,6 +900,7 @@
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */,
 				8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */,
+				0310BDA22CCF8A1900DBB99C /* OverlayServices.swift in Sources */,
 				03CD09BC2C6DDFB600BEEE8B /* ProgressService.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
 				E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */,

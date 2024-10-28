@@ -11,6 +11,7 @@ import UserNotifications
 class NotificationManager: NotificationService {
     
     static let shared = NotificationManager()
+    var overlayWindow: OverlayWindow?
     
     let notificationCenter = UNUserNotificationCenter.current()
     
@@ -48,11 +49,19 @@ class NotificationManager: NotificationService {
             notificationCenter.add(request){ error in
                 if let error = error {
                     print("Error scheduling notification: \(error)")
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.showOverlay()
+                    }
                 }
             }
             
         }
     }
     
-    
+    /// Triggerd Overlay base on notification
+    private func showOverlay() {
+            overlayWindow = OverlayWindow()
+            overlayWindow?.show()
+    }
 }
