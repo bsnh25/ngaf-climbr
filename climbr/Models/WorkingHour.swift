@@ -7,13 +7,10 @@
 
 import Foundation
 
-enum Day: String, Codable{
-    case monday, tuesday, wednesday, thursday, friday, saturday, sunday
-}
 
 struct WorkingHour{
     var isEnabled: Bool
     var startHour: Date
     var endHour: Date
-    var day: Day
+    var day: Int
 }
