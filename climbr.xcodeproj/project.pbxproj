@@ -62,6 +62,7 @@
 		90A9A2CF2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
 		90A9A2D02CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
 		90A9A2D12CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
+		90E5EE882CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -205,6 +206,7 @@
 		90571EB42CCF8D3D00AD536D /* StreakManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakManager.swift; sourceTree = "<group>"; };
 		90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuBar+Extension.swift"; sourceTree = "<group>"; };
 		AB9A78712C64BB2B00028B36 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		AB9A78732C64BB3800028B36 /* EquipmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentService.swift; sourceTree = "<group>"; };
 		AB9A78752C64BB4500028B36 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -413,6 +415,14 @@
 			path = DatePicker;
 			sourceTree = "<group>";
 		};
+		90E5EE862CCF984900E1E943 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		AB1C0B662C76636F006B2FA8 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,6 +555,7 @@
 		E7FDDAEB2C6433B900DE2A7A /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				90E5EE862CCF984900E1E943 /* Extensions */,
 				E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */,
 				E7FDDAE92C6430F700DE2A7A /* MainWindow.swift */,
 				E7FDDAD82C64301B00DE2A7A /* MainVC.swift */,
@@ -912,6 +923,7 @@
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */,
 				8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */,
+				90E5EE882CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift in Sources */,
 				03CD09BC2C6DDFB600BEEE8B /* ProgressService.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
 				E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */,
