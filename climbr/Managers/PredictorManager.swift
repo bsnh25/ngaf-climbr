@@ -8,7 +8,7 @@
 import Foundation
 import Vision
 
-typealias stretchClassifier = ModelFixV4
+typealias stretchClassifier = ModelFixV5
 
 protocol PredictorDelegate: AnyObject {
     func predictor(didFindNewRecognizedPoints points: [CGPoint])
@@ -68,10 +68,7 @@ class PredictorManager: PredictorService {
         let label = predictions.label
         let confident = predictions.labelProbabilities[label] ?? 0
         
-        if didDetectUpperBody {
             delegate?.predictor(didLabelAction: label, with: confident)
-        }
-        
     }
     
     private func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation])->MLMultiArray?{
