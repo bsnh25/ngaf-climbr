@@ -15,63 +15,16 @@ class UserManager : CharacterService {
         self.container = controller?.container.viewContext
     }
     
-    func getPreferences() -> UserPreferences? {
-        guard let container = container else {return nil}
+    func getPreferences() {
         
-        let request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
-        
-        do {
-            return try container.fetch(request).first
-        } catch {
-            print("Error fetching user preference entries: \(error.localizedDescription)")
-            return nil
-        }
     }
     
     func savePreferences(data: UserPreferenceModel) {
-        guard let container = container else {return }
-        
-        let newUserPreference = UserPreferences(context: container)
-        
-        newUserPreference.id = data.id
-        newUserPreference.endWorkingHour = data.endWorkingHour
-        newUserPreference.launchAtLogin = data.launchAtLogin
-        newUserPreference.reminderInterval = data.reminderInterval
-        newUserPreference.startWorkingHour = data.startWorkingHour
-        newUserPreference.endWorkingHour = data.endWorkingHour
-        
-        
-        do {
-            try container.save()
-            print("saved")
-        } catch {
-            print("Failed to save context: \(error)")
-        }
-        
+        UserDefaults.setValue(data, forKey: UserDefaultsKey.kUserPreference)
     }
     
     func updatePreferences(data: UserPreferenceModel) {
-        guard let container = container else { return }
-        
-        let request: NSFetchRequest<UserPreferences> = UserPreferences.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            if let fetchResult = try container.fetch(request).first {
-                fetchResult.startWorkingHour = data.startWorkingHour
-                fetchResult.endWorkingHour = data.endWorkingHour
-                fetchResult.reminderInterval = data.reminderInterval
-                fetchResult.launchAtLogin = data.launchAtLogin
-                
-                // Save the context after updating
-                try container.save()
-                print("Preferences updated successfully.")
-            } else {
-                print("No preferences found to update.")
-            }
-        } catch {
-            print("Error fetching or updating user preferences: \(error.localizedDescription)")
-        }
+        UserDefaults.setValue(data, forKey: UserDefaultsKey.kUserPreference)
     }
 
     

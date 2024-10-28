@@ -41,7 +41,7 @@ extension UserPreferenceVC{
         print("Reminder at \(processSavePreference())")
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
         ///get checkbox value
-        let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+        let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
         
         charService?.savePreferences(data: userPreferenceData)
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}

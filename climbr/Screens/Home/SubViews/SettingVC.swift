@@ -119,6 +119,7 @@ class SettingVC: NSViewController {
     let warnContainer = NSView()
     let warnLabel = CLTextLabelV2(sizeOfFont: 14, weightOfFont: .light, contentLabel: "􀇾 Can’t be less than 2 (two) hours")
     
+    var workingHours: [WorkingHour] = []
     var lastStartValue: Date!
     var lastStopValue: Date!
     var isChecked: Bool = false
