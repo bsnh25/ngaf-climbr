@@ -40,6 +40,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     mainWindow = MainWindow()
     
+    if let vc                  = Container.shared.resolve(MainVC.self) {
+      mainWindow?.addViewController(vc)
+    }
+    
     createStatusBar()
     createAppMenuBar()
     createWindowsMenuBar()
