@@ -46,10 +46,11 @@
 		03E7B4712C75EF71008D12F5 /* tricepStatic-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 03E7B45F2C75EF71008D12F5 /* tricepStatic-Right.mp4 */; };
 		8A19622D2C6AF79000F7064B /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A19622C2C6AF79000F7064B /* CLTextField.swift */; };
 		8A1962302C6B030B00F7064B /* CLGradientContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A19622F2C6B030B00F7064B /* CLGradientContainer.swift */; };
+		8A3E76632CCA5627009FA052 /* ModelFixV5.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A3E76622CCA5627009FA052 /* ModelFixV5.mlmodel */; };
+		8A954C7C2CCF8AF900C75C27 /* WorkingHour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A954C7B2CCF8AF900C75C27 /* WorkingHour.swift */; };
 		8AB71C6E2C6BAEB500635C85 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71C692C6BAEB500635C85 /* correct.mp3 */; };
 		8AB71C6F2C6BAEB500635C85 /* next-move.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71C6A2C6BAEB500635C85 /* next-move.mp3 */; };
 		8AB71C702C6BAEB500635C85 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71C6B2C6BAEB500635C85 /* incorrect.mp3 */; };
-		8AB71C732C6CA79900635C85 /* ModelFixV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8AB71C722C6CA79900635C85 /* ModelFixV2.mlmodel */; };
 		8AB71C752C6FB7E600635C85 /* UserPreference+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB71C742C6FB7E600635C85 /* UserPreference+Extension.swift */; };
 		8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */; };
 		8ABB12942C67D36100616C57 /* UserPreferenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */; };
@@ -181,10 +182,11 @@
 		03E7B45F2C75EF71008D12F5 /* tricepStatic-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "tricepStatic-Right.mp4"; sourceTree = "<group>"; };
 		8A19622C2C6AF79000F7064B /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
 		8A19622F2C6B030B00F7064B /* CLGradientContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLGradientContainer.swift; sourceTree = "<group>"; };
+		8A3E76622CCA5627009FA052 /* ModelFixV5.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV5.mlmodel; sourceTree = "<group>"; };
+		8A954C7B2CCF8AF900C75C27 /* WorkingHour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingHour.swift; sourceTree = "<group>"; };
 		8AB71C692C6BAEB500635C85 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		8AB71C6A2C6BAEB500635C85 /* next-move.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "next-move.mp3"; sourceTree = "<group>"; };
 		8AB71C6B2C6BAEB500635C85 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
-		8AB71C722C6CA79900635C85 /* ModelFixV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV2.mlmodel; sourceTree = "<group>"; };
 		8AB71C742C6FB7E600635C85 /* UserPreference+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserPreference+Extension.swift"; sourceTree = "<group>"; };
 		8ABB12782C6539F200616C57 /* CLTextButtonV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextButtonV2.swift; sourceTree = "<group>"; };
 		8ABB127F2C66074C00616C57 /* ModelFixV1+Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Singleton.swift"; sourceTree = "<group>"; };
@@ -380,8 +382,8 @@
 		8ABB12332C649D9A00616C57 /* VisionModel */ = {
 			isa = PBXGroup;
 			children = (
+				8A3E76622CCA5627009FA052 /* ModelFixV5.mlmodel */,
 				8AE395932C841AFA00A9106C /* ModelFixV4.mlmodel */,
-				8AB71C722C6CA79900635C85 /* ModelFixV2.mlmodel */,
 			);
 			path = VisionModel;
 			sourceTree = "<group>";
@@ -578,6 +580,7 @@
 				E7FDDB112C64353000DE2A7A /* Equipment.swift */,
 				E7FDDB132C64354300DE2A7A /* UserPreference.swift */,
 				E7FDDB152C64355000DE2A7A /* Movement.swift */,
+				8A954C7B2CCF8AF900C75C27 /* WorkingHour.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -915,6 +918,7 @@
 				E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
 				034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */,
+				8A954C7C2CCF8AF900C75C27 /* WorkingHour.swift in Sources */,
 				03E796CB2C6C70DD003C6121 /* HomeVC+Extension.swift in Sources */,
 				E71007BA2C71A9F00059DBA1 /* PredictorService.swift in Sources */,
 				AB9A787A2C64C9E600028B36 /* AudioManager.swift in Sources */,
@@ -924,7 +928,6 @@
 				E7ABBA442C660AAF007A702F /* NSViewControllerExtension.swift in Sources */,
 				8AB71C752C6FB7E600635C85 /* UserPreference+Extension.swift in Sources */,
 				AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */,
-				8AB71C732C6CA79900635C85 /* ModelFixV2.mlmodel in Sources */,
 				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */,
 				AB9A78B42C67D81200028B36 /* PredictorManager.swift in Sources */,
@@ -934,6 +937,7 @@
 				AB9A78822C64CA1400028B36 /* CameraManager.swift in Sources */,
 				03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */,
 				AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */,
+				8A3E76632CCA5627009FA052 /* ModelFixV5.mlmodel in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
@@ -972,7 +976,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = P5G5Z7L546;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbrHelper/Info.plist;
@@ -1005,7 +1009,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = P5G5Z7L546;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbrHelper/Info.plist;
@@ -1158,9 +1162,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = P5G5Z7L546;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -1175,7 +1179,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1192,9 +1196,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F44CLK4937;
+				DEVELOPMENT_TEAM = P5G5Z7L546;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -1209,7 +1213,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
