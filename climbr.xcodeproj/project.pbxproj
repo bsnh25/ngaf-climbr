@@ -55,6 +55,13 @@
 		8ABB12992C68940400616C57 /* CLDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12982C68940400616C57 /* CLDatePicker.swift */; };
 		8ABB12AC2C6AEE8200616C57 /* ChooseCharacterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */; };
 		8AE395942C841AFA00A9106C /* ModelFixV4.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8AE395932C841AFA00A9106C /* ModelFixV4.mlmodel */; };
+		90571EB12CCF8D0000AD536D /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB02CCF8D0000AD536D /* Streak.swift */; };
+		90571EB32CCF8D2C00AD536D /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB22CCF8D2C00AD536D /* StreakService.swift */; };
+		90571EB52CCF8D3D00AD536D /* StreakManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB42CCF8D3D00AD536D /* StreakManager.swift */; };
+		90A9A2CE2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
+		90A9A2CF2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
+		90A9A2D02CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
+		90A9A2D12CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -193,6 +200,11 @@
 		8ABB12982C68940400616C57 /* CLDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLDatePicker.swift; sourceTree = "<group>"; };
 		8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterVC.swift; sourceTree = "<group>"; };
 		8AE395932C841AFA00A9106C /* ModelFixV4.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV4.mlmodel; sourceTree = "<group>"; };
+		90571EB02CCF8D0000AD536D /* Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streak.swift; sourceTree = "<group>"; };
+		90571EB22CCF8D2C00AD536D /* StreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakService.swift; sourceTree = "<group>"; };
+		90571EB42CCF8D3D00AD536D /* StreakManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakManager.swift; sourceTree = "<group>"; };
+		90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AB9A78712C64BB2B00028B36 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		AB9A78732C64BB3800028B36 /* EquipmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentService.swift; sourceTree = "<group>"; };
 		AB9A78752C64BB4500028B36 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -573,6 +585,7 @@
 				E7FDDB112C64353000DE2A7A /* Equipment.swift */,
 				E7FDDB132C64354300DE2A7A /* UserPreference.swift */,
 				E7FDDB152C64355000DE2A7A /* Movement.swift */,
+				90571EB02CCF8D0000AD536D /* Streak.swift */,
 				8A954C7B2CCF8AF900C75C27 /* WorkingHour.swift */,
 			);
 			path = Models;
@@ -591,6 +604,7 @@
 		E7FDDAF02C64340B00DE2A7A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				90571EB42CCF8D3D00AD536D /* StreakManager.swift */,
 				AB9A78792C64C9E600028B36 /* AudioManager.swift */,
 				AB9A787B2C64C9EF00028B36 /* UserManager.swift */,
 				AB9A787D2C64C9FA00028B36 /* EquipmentManager.swift */,
@@ -605,6 +619,7 @@
 		E7FDDAF12C64341400DE2A7A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				90571EB22CCF8D2C00AD536D /* StreakService.swift */,
 				E7FDDB282C64378C00DE2A7A /* ExcerciseGuidanceService.swift */,
 				AB9A78712C64BB2B00028B36 /* UserService.swift */,
 				AB9A78732C64BB3800028B36 /* EquipmentService.swift */,
@@ -620,6 +635,8 @@
 		E7FDDAF22C64341F00DE2A7A /* LocalDataSources */ = {
 			isa = PBXGroup;
 			children = (
+				90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */,
+				90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */,
 				03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */,
 				03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
 				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
@@ -863,6 +880,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A9A2CE2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */,
+				90A9A2CF2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +889,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A9A2D02CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */,
+				90A9A2D12CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */,
 				ABAFFC232C723025004C729A /* TutorialVC+Extension.swift in Sources */,
 				ABAFFC272C74FB71004C729A /* ShopItemVC+Extensions.swift in Sources */,
 				ABAFFC212C72301F004C729A /* Equipment+CoreDataClass.swift in Sources */,
@@ -904,6 +925,7 @@
 				AB9A78BF2C6B39CE00028B36 /* CameraService.swift in Sources */,
 				E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
+				90571EB32CCF8D2C00AD536D /* StreakService.swift in Sources */,
 				034C71602C64BFC50040AD4F /* CLImageButton.swift in Sources */,
 				8A954C7C2CCF8AF900C75C27 /* WorkingHour.swift in Sources */,
 				03E796CB2C6C70DD003C6121 /* HomeVC+Extension.swift in Sources */,
@@ -917,6 +939,7 @@
 				AB9A78802C64CA0900028B36 /* NotificationManager.swift in Sources */,
 				E7826F472C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld in Sources */,
 				E7ABBA4F2C674960007A702F /* CLSFSymbol.swift in Sources */,
+				90571EB12CCF8D0000AD536D /* Streak.swift in Sources */,
 				AB9A78B42C67D81200028B36 /* PredictorManager.swift in Sources */,
 				AB9A79082C6C952600028B36 /* TypeButtonView.swift in Sources */,
 				AB9A79002C6C7BD300028B36 /* CollectionContainerView.swift in Sources */,
@@ -926,6 +949,7 @@
 				AB9A78782C64BB4F00028B36 /* AudioService.swift in Sources */,
 				8A3E76632CCA5627009FA052 /* ModelFixV5.mlmodel in Sources */,
 				E7FDDB122C64353000DE2A7A /* Equipment.swift in Sources */,
+				90571EB52CCF8D3D00AD536D /* StreakManager.swift in Sources */,
 				E7FDDAEA2C6430F700DE2A7A /* MainWindow.swift in Sources */,
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
@@ -960,10 +984,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbrHelper/climbrHelper.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbrHelper/Info.plist;
@@ -981,6 +1005,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -993,10 +1018,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbrHelper/climbrHelper.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbrHelper/Info.plist;
@@ -1014,6 +1039,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1146,12 +1172,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbr/climbr.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -1169,6 +1195,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1180,12 +1207,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbr/climbr.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -1203,6 +1230,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hkbp.climbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
