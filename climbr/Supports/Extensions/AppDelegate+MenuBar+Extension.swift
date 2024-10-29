@@ -55,6 +55,7 @@ extension AppDelegate {
     }
   }
   
+  
   internal func createAppMenuBar() {
     let mainMenu = NSApplication.shared.mainMenu
     
@@ -88,23 +89,24 @@ extension AppDelegate {
     appMenu.addItem(NSMenuItem.separator())
     
     // Hide Items
-    let hideClimbrItem = NSMenuItem(
+    hideClimbrItem = NSMenuItem(
       title: "Hide \(ProcessInfo.processInfo.processName)",
       action: #selector(hideApp),
       keyEquivalent: ""
     )
+    hideClimbrItem.isEnabled = false
     appMenu.addItem(hideClimbrItem)
     
-    let hideOthersItem = NSMenuItem(
+    hideOthersItem = NSMenuItem(
       title: "Hide Others",
       action: #selector(hideOthers),
       keyEquivalent: ""
     )
     appMenu.addItem(hideOthersItem)
     
-    let showAllItem = NSMenuItem(
+    showAllItem = NSMenuItem(
       title: "Show All",
-      action: #selector(showAll),
+      action: nil,
       keyEquivalent: ""
     )
     appMenu.addItem(showAllItem)
@@ -189,22 +191,25 @@ extension AppDelegate {
     return window?.isVisible ?? true
   }
   
-  @objc private func hideApp(sender: Any?) {
+  @objc internal func hideApp(sender: Any?) {
     NSApplication.shared.hide(sender)
   }
   
-  @objc private func hideOthers(sender: Any?) {
+  @objc internal func hideOthers(sender: Any?) {
     let process = ProcessInfo.processInfo.processIdentifier
     for app in NSWorkspace.shared.runningApplications where app.processIdentifier != process {
       app.hide()
     }
+    
+    isHideOthers.toggle()
   }
   
-  @objc private func showAll(sender: Any?) {
-    
+  @objc internal func showAll(sender: Any?) {
     for app in NSWorkspace.shared.runningApplications {
       app.unhide()
     }
+    
+    isHideOthers.toggle()
   }
   
   @objc private func quitApp(sender: Any?) {

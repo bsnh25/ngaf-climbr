@@ -25,6 +25,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   var statusBarPopOver: NSPopover?
   var quitMenu: NSMenu!
   
+  var hideClimbrItem: NSMenuItem!
+  var hideOthersItem: NSMenuItem!
+  var showAllItem: NSMenuItem!
+  var isHideOthers: Bool = false {
+    didSet {
+      hideOthersItem.action = isHideOthers ? nil : #selector(hideOthers)
+      hideClimbrItem.action = isHideOthers ? nil : #selector(hideApp)
+      showAllItem.action = !isHideOthers ? nil : #selector(showAll)
+    }
+  }
+  
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     
     // Load user preferences (Anda dapat mengganti ini dengan cara Anda menyimpan/memuat preferensi)
