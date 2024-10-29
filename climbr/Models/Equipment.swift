@@ -50,7 +50,7 @@ enum EquipmentType: String {
          location = "location"
 }
 
-enum EquipmentItem: String, CaseIterable, Identifiable {
+enum EquipmentItem: String, CaseIterable, Identifiable, Codable {
     var id: EquipmentItem {
         self
     }

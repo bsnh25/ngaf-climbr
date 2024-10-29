@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CharacterModel {
+struct CharacterModel: Codable {
     var id: UUID = UUID()
     var name: String
     var gender: Gender
@@ -18,6 +18,6 @@ struct CharacterModel {
     var locationEquipment: EquipmentItem = .jungleJumble
 }
 
-enum Gender: String{
+enum Gender: String, Codable{
     case male = "male" , female = "female"
 }
