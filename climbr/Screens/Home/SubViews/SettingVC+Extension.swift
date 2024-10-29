@@ -82,7 +82,7 @@ extension SettingVC {
             configureWarning()
             return
         }
-        let updateData = UserPreferenceModel(id: UUID(), endWorkingHour: endTime.dateValue, launchAtLogin: isChecked, reminderInterval: processSaveReminder(), startWorkingHour: startTime.dateValue)
+        let updateData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSaveReminder(), workingHours: workingHours)
         print("Reminder at \(processSaveReminder())")
         print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
         print("\(startTime.dateValue)")
