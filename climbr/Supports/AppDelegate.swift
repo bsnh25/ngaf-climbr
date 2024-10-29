@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   
   var userPreference: UserPreferences?
   var mainWindow: MainWindow?
+  var statusBarWindow: NSWindow!
   var statusBar: NSStatusBar?
   var statusBarItem: NSStatusItem?
   var statusBarPopOver: NSPopover?
@@ -171,9 +172,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     completionHandler()
     
+    openStrechingPage()
+  }
+  
+  func openStrechingPage() {
     if let vc = Container.shared.resolve(StretchingVC.self) {
       mainWindow?.contentViewController?.push(to: vc)
       print("go to stretching session")
+      mainWindow?.orderFrontRegardless()
+      
     }
   }
 }

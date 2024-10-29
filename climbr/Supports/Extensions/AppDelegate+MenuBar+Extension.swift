@@ -26,11 +26,20 @@ extension AppDelegate {
     
     statusBarPopOver = NSPopover()
     // Set the popover size
-    statusBarPopOver?.contentSize = NSSize(width: 300, height: 300)
+    statusBarPopOver?.contentSize = NSSize(width: 305, height: 212)
     // Set the popover behavior to close automatically if user click outside
     statusBarPopOver?.behavior = .transient
+    // Set Appearance
+    statusBarPopOver?.appearance = NSAppearance(named: .vibrantLight)
     // Set the UIViewController of popover
     
+    let menuBarVC = MenuBarVC {
+      self.openStrechingPage()
+    } onQuitApp: {
+      self.quitApp(sender: nil)
+    }
+
+    statusBarPopOver?.contentViewController = menuBarVC
     
   }
   
