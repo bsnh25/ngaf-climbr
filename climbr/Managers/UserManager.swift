@@ -50,7 +50,8 @@ class UserManager : CharacterService {
     func getCharacterData() -> CharacterModel? {
         let decoder = JSONDecoder()
         do{
-            let decodedData = try decoder.decode(CharacterModel.self, from: UserDefaults.standard.data(forKey: UserDefaultsKey.kUserCharacter)!)
+            guard let coba = UserDefaults.standard.data(forKey: UserDefaultsKey.kUserCharacter) else { return nil }
+            let decodedData = try decoder.decode(CharacterModel.self, from: coba)
             return CharacterModel(name: decodedData.name,
                                   gender: decodedData.gender,
                                   point: decodedData.point,
@@ -73,14 +74,14 @@ class UserManager : CharacterService {
         decodedData.handEquipment = data.handEquipment
         decodedData.locationEquipment = data.locationEquipment
         
-        UserDefaults.standard.setValue(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
+        UserDefaults.standard.set(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
     }
     
     func saveCharacterData(data: CharacterModel) {
             let encoder = JSONEncoder()
             do {
                 let jsonData = try encoder.encode(data)
-                UserDefaults.setValue(jsonData, forKey: UserDefaultsKey.kUserCharacter)
+                UserDefaults.standard.set(jsonData, forKey: UserDefaultsKey.kUserCharacter)
             }catch {
                 print("Failed to decode user's character: \(error)")
             }
@@ -92,7 +93,7 @@ class UserManager : CharacterService {
         
         decodedData.point += Int64(points)
         
-        UserDefaults.standard.setValue(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
+        UserDefaults.standard.set(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
     }
 
 }
