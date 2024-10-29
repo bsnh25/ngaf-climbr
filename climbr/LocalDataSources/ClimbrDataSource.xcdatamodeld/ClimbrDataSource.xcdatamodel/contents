@@ -16,4 +16,16 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String" customClassName="[PainType]"/>
     </entity>
+    <entity name="StreakEntity" representedClassName="StreakEntity" syncable="YES">
+        <attribute name="collectedEquipmentId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="completedSession" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="UserPreferences" representedClassName="UserPreferences" syncable="YES">
+        <attribute name="endWorkingHour" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="launchAtLogin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="reminderInterval" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startWorkingHour" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
 </model>
