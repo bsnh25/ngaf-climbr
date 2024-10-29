@@ -15,8 +15,15 @@ class UserManager : CharacterService {
         self.container = controller?.container.viewContext
     }
     
-    func getPreferences() {
-        
+    func getPreferences() -> UserPreferenceModel? {
+        guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.kUserPreference) else { return nil }
+            let decoder = JSONDecoder()
+            do {
+                return try decoder.decode(UserPreferenceModel.self, from: data)  // Decode back to the struct
+            } catch {
+                print("Failed to decode user preferences: \(error)")
+                return nil
+            }
     }
     
     func savePreferences(data: UserPreferenceModel) {
@@ -41,84 +48,51 @@ class UserManager : CharacterService {
 
     
     func getCharacterData() -> CharacterModel? {
-        guard let container = container else {return nil}
-        let request: NSFetchRequest<Character> = Character.fetchRequest()
-        
-        do {
-            guard let charArr = try container.fetch(request).first else {return nil}
-            return CharacterModel(
-                name: charArr.name!,
-                gender: Gender(rawValue: charArr.gender!)!,
-                point: charArr.point,
-                headEquipment: EquipmentItem(rawValue: charArr.headEquipment!)!,
-                handEquipment: EquipmentItem(rawValue: charArr.handEquipment!)!,
-                backEquipment: EquipmentItem(rawValue: charArr.backEquipment!)!,
-                locationEquipment: EquipmentItem(rawValue: charArr.locationEquipment!)!
-            )
-        } catch {
-            print("Error fetching user preference entries: \(error.localizedDescription)")
+        let decoder = JSONDecoder()
+        do{
+            let decodedData = try decoder.decode(CharacterModel.self, from: UserDefaults.standard.data(forKey: UserDefaultsKey.kUserCharacter)!)
+            return CharacterModel(name: decodedData.name,
+                                  gender: decodedData.gender,
+                                  point: decodedData.point,
+                                  headEquipment: decodedData.headEquipment,
+                                  handEquipment: decodedData.handEquipment,
+                                  backEquipment: decodedData.backEquipment,
+                                  locationEquipment: decodedData.handEquipment)
+        } catch{
+            print("Failed to decode user character: \(error)")
             return nil
         }
+        
     }
     
     func updateCharacter(with data: CharacterModel) {
-        guard let container = container else { return }
+        var decodedData: CharacterModel = getCharacterData()!
         
-        let request: NSFetchRequest<Character> = Character.fetchRequest()
-        let predicate: NSPredicate = NSPredicate(format: "name == %@", data.name)
-        request.predicate = predicate
+        decodedData.headEquipment = data.headEquipment
+        decodedData.backEquipment = data.backEquipment
+        decodedData.handEquipment = data.handEquipment
+        decodedData.locationEquipment = data.locationEquipment
         
-        do {
-            if let response = try container.fetch(request).first {
-                response.headEquipment = data.headEquipment.rawValue
-                response.backEquipment = data.backEquipment.rawValue
-                response.handEquipment = data.handEquipment.rawValue
-                response.locationEquipment = data.locationEquipment.rawValue
-                try container.save()
-            }
-        } catch {
-            print("Error fetching user preference entries: \(error.localizedDescription)")
-        }
+        UserDefaults.standard.setValue(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
     }
     
     func saveCharacterData(data: CharacterModel) {
-            guard let container = container else { return }
-            
-            let newUserData = Character(context: container)
-            
-            newUserData.id = data.id
-            newUserData.name = data.name
-            newUserData.point = data.point
-            newUserData.gender = data.gender.rawValue
-            newUserData.headEquipment = data.headEquipment.rawValue
-            newUserData.handEquipment = data.handEquipment.rawValue
-            newUserData.backEquipment = data.backEquipment.rawValue
-            newUserData.locationEquipment = data.locationEquipment.rawValue
-            
+            let encoder = JSONEncoder()
             do {
-                try container.save()
-                print("saved")
-            } catch {
-                print("Failed to save context: \(error)")
+                let jsonData = try encoder.encode(data)
+                UserDefaults.setValue(jsonData, forKey: UserDefaultsKey.kUserCharacter)
+            }catch {
+                print("Failed to decode user's character: \(error)")
             }
-            
         }
     
     
     func updatePoint(character: CharacterModel, points: Int) {
-        guard let container = container else {return}
-        let request: NSFetchRequest<Character> = Character.fetchRequest()
-        let predicate: NSPredicate = NSPredicate(format: "name == %@", character.name)
-        request.predicate = predicate
+        var decodedData: CharacterModel = getCharacterData()!
         
-        do {
-            if let response = try container.fetch(request).first {
-                response.point += Int64(points)
-                try container.save()
-            }
-        } catch {
-            print("Err while save")
-        }
+        decodedData.point += Int64(points)
+        
+        UserDefaults.standard.setValue(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
     }
 
 }
