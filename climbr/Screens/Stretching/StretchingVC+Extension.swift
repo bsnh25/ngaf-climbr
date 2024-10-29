@@ -233,9 +233,8 @@ extension StretchingVC {
         }
         
         self.completedMovement.append(movement)
-        
         self.playSfx("next-move")
-
+        self.updateProgress(movementsPassed: completedMovement)
         let canSkip = skip()
         
         guard canSkip else {
@@ -278,7 +277,57 @@ extension StretchingVC {
         
         audioService.playSFX(fileName: file)
     }
+
+    func updateProgress(movementsPassed: [Movement]) {
+        
+        if movementsPassed.count > 0 {
+            let neckMovements = movementsPassed.count { $0.type == .neck}
+            let armMovements = movementsPassed.count { $0.type == .arm }
+            let backMovements = movementsPassed.count { $0.type == .back }
+            
+            if neckMovements >= 1 {
+                isNeckPassed = true
+            } else {
+                isNeckPassed = false
+            }
+            
+            if armMovements >= 1 {
+                isArmPassed = true
+            } else {
+                isArmPassed = false
+            }
+            
+            if backMovements >= 1 {
+                isBodyPassed = true
+            } else {
+                isBodyPassed = false
+            }
+            
+        } else {
+            print("Movement Passed is empty")
+        }
+        
+    }
+    
+    func randomizeMovement(movements: [Movement]) -> [Movement] {
+        var randomMovement: [Movement] = []
+        
+        let neckMovements = movements.filter { $0.type == .neck }
+        let armMovements = movements.filter { $0.type == .arm }
+        let backMovements = movements.filter { $0.type == .back }
+        
+        let randomizedNeck = neckMovements.shuffled()
+        let randomizedArm = armMovements.shuffled()
+        let randomizedBack = backMovements.shuffled()
+        
+        randomMovement.append(contentsOf: randomizedNeck)
+        randomMovement.append(contentsOf: randomizedArm)
+        randomMovement.append(contentsOf: randomizedBack)
+        
+        return randomMovement
+    }
 }
+
 
 extension StretchingVC : PredictorDelegate {
     func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {

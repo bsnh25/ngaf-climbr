@@ -94,7 +94,10 @@ class StretchingVC: NSViewController {
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
     
-    var setOfMovements: [Movement]      = Movement.setOfMovements[3]
+    lazy var setOfMovements: [Movement]      = {
+        var coba = Movement.randomMovements
+        return self.randomizeMovement(movements: coba)
+    }()
     var completedMovement: [Movement]   = []
     
     var bags: Set<AnyCancellable> = []
@@ -105,6 +108,11 @@ class StretchingVC: NSViewController {
     var isTimerRunning: Bool = false
     var isTimerPaused: Bool = false
     @Published var showTutorial: Bool = true
+    
+    /// mark as progress stretch
+    var isArmPassed : Bool?
+    var isNeckPassed : Bool?
+    var isBodyPassed : Bool?
     
     /// Dependencies
     var audioService: AudioService?
