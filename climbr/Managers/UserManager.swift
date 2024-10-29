@@ -20,11 +20,23 @@ class UserManager : CharacterService {
     }
     
     func savePreferences(data: UserPreferenceModel) {
-        UserDefaults.setValue(data, forKey: UserDefaultsKey.kUserPreference)
+        let encoder = JSONEncoder()
+            do {
+                let data = try encoder.encode(data)  // Convert to Data
+                UserDefaults.standard.set(data, forKey: UserDefaultsKey.kUserPreference)
+            } catch {
+                print("Failed to encode user preferences: \(error)")
+            }
     }
     
     func updatePreferences(data: UserPreferenceModel) {
-        UserDefaults.setValue(data, forKey: UserDefaultsKey.kUserPreference)
+        let encoder = JSONEncoder()
+            do {
+                let data = try encoder.encode(data)  // Convert to Data
+                UserDefaults.standard.set(data, forKey: UserDefaultsKey.kUserPreference)
+            } catch {
+                print("Failed to encode user preferences: \(error)")
+            }
     }
 
     

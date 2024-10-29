@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserPreferenceModel {
+struct UserPreferenceModel: Codable {
     var id: UUID
     var launchAtLogin: Bool
     var reminderInterval: Int64
