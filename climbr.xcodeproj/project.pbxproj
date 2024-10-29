@@ -56,12 +56,12 @@
 		90571EB12CCF8D0000AD536D /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB02CCF8D0000AD536D /* Streak.swift */; };
 		90571EB32CCF8D2C00AD536D /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB22CCF8D2C00AD536D /* StreakService.swift */; };
 		90571EB52CCF8D3D00AD536D /* StreakManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB42CCF8D3D00AD536D /* StreakManager.swift */; };
+		9079CE922CD0EDCD0074FEC5 /* MenuBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E5EE8A2CCFB06A00E1E943 /* MenuBarVC.swift */; };
 		90A9A2CE2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
 		90A9A2CF2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
 		90A9A2D02CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
 		90A9A2D12CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
 		90E5EE882CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */; };
-		90E5EE8B2CCFB06A00E1E943 /* MenuBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E5EE8A2CCFB06A00E1E943 /* MenuBarVC.swift */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -651,8 +651,6 @@
 			children = (
 				90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */,
 				90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */,
-				03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */,
-				03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
 				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
 				03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */,
 				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
@@ -963,6 +961,7 @@
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
+				9079CE922CD0EDCD0074FEC5 /* MenuBarVC.swift in Sources */,
 				E7ABBA492C673F4B007A702F /* Divider.swift in Sources */,
 				E71F6E712C6E5346001BCFEB /* CLBlurEffectView.swift in Sources */,
 				ABAFFC252C7230F8004C729A /* ShopItemVC.swift in Sources */,

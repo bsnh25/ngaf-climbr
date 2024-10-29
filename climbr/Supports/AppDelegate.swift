@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let audio = Container.shared.resolve(AudioService.self)
   let charService = Container.shared.resolve(CharacterService.self)
   
-  var userPreference: UserPreferences?
+  var userPreference: UserPreferenceModel?
   var mainWindow: MainWindow?
   var statusBarWindow: NSWindow!
   var statusBar: NSStatusBar?
