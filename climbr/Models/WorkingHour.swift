@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct WorkingHour{
+struct WorkingHour: Codable{
     var isEnabled: Bool
     var startHour: Date
     var endHour: Date
