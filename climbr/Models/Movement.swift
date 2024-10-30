@@ -20,56 +20,6 @@ struct Movement {
         /// Set 1
         [
             /// Neck Movement
-            Movement(name: .NeckDeepLeft, type: .neck, preview: .thumbnailNeckDeepLeft, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
-            Movement(name: .NeckDeepRight, type: .neck, preview: .thumbnailNeckDeepRight, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
-            Movement(name: .NeckExtensionBack, type: .neck, preview: .thumbnailNeckExtensionBack, thumbnail: .thumbnailNeckExtensionBack, rewardPoint: 5),
-            Movement(name: .NeckExtensionFront, type: .neck, preview: .thumbnailNeckExtensionFront, thumbnail: .thumbnailNeckExtensionFront, rewardPoint: 5),
-            
-            /// Arm Movement
-            Movement(name: .CrossBodyShoulderLeft, type: .arm, preview: .thumbnailCrossBodyShoudlerLeft, thumbnail: .thumbnailCrossBodyShoudlerLeft, rewardPoint: 5),
-            Movement(name: .CrossBodyShoulderRight, type: .arm, preview: .thumbnailCrossBodyShoudlerRight, thumbnail: .thumbnailCrossBodyShoudlerRight, rewardPoint: 5),
-            
-            /// Back Movement
-            Movement(name: .UpperBackStretchLeft, type: .back, preview: .thumbnailUpperBackStretchLeft, thumbnail: .thumbnailUpperBackStretchLeft, rewardPoint: 5),
-            Movement(name: .UpperBackStretchRight, type: .back, preview: .thumbnailUpperBackStretchRight, thumbnail: .thumbnailUpperBackStretchRight, rewardPoint: 5),
-        ],
-        
-        /// Set 2
-        [
-            /// Neck Movement
-            Movement(name: .NeckRotationLeft, type: .neck, preview: .thumbnailNeckRotationLeft, thumbnail: .thumbnailNeckRotationLeft, rewardPoint: 5),
-            Movement(name: .NeckRotationRight, type: .neck, preview: .thumbnailNeckRotationRight, thumbnail: .thumbnailNeckRotationRight, rewardPoint: 5),
-            Movement(name: .NeckExtensionBack, type: .neck, preview: .thumbnailNeckExtensionBack, thumbnail: .thumbnailNeckExtensionBack, rewardPoint: 5),
-            Movement(name: .NeckExtensionFront, type: .neck, preview: .thumbnailNeckExtensionFront, thumbnail: .thumbnailNeckExtensionFront, rewardPoint: 5),
-            
-            /// Arm Movement
-            Movement(name: .FrontShoulderStaticLeft, type: .arm, preview: .thumbnailFrontShoulderStaticLeft, thumbnail: .thumbnailFrontShoulderStaticLeft, rewardPoint: 5),
-            Movement(name: .FrontShoulderStaticRight, type: .arm, preview: .thumbnailFrontShoulderStaticRight, thumbnail: .thumbnailFrontShoulderStaticRight, rewardPoint: 5),
-            
-            /// Back Movement
-            Movement(name: .UpperBackStretchUp, type: .back, preview: .thumbnailUpperBackStretchUp, thumbnail: .thumbnailUpperBackStretchUp, rewardPoint: 5),
-            Movement(name: .UpperBackStretchFront, type: .back, preview: .thumbnailUpperBackStretchFront, thumbnail: .thumbnailUpperBackStretchFront, rewardPoint: 5),
-        ],
-        
-        /// Set 3
-        [
-            /// Neck Movement
-            Movement(name: .NeckDeepLeft, type: .neck, preview: .thumbnailNeckDeepLeft, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
-            Movement(name: .NeckDeepRight, type: .neck, preview: .thumbnailNeckDeepRight, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
-            Movement(name: .NeckRotationLeft, type: .neck, preview: .thumbnailNeckRotationLeft, thumbnail: .thumbnailNeckRotationLeft, rewardPoint: 5),
-            Movement(name: .NeckRotationRight, type: .neck, preview: .thumbnailNeckRotationRight, thumbnail: .thumbnailNeckRotationRight, rewardPoint: 5),
-            
-            /// Arm Movement
-            Movement(name: .TricepStaticLeft, type: .arm, preview: .thumbnailTricepStaticLeft, thumbnail: .thumbnailTricepStaticLeft, rewardPoint: 5),
-            Movement(name: .TricepStaticRight, type: .arm, preview: .thumbnailTricepStaticRight, thumbnail: .thumbnailTricepStaticRight, rewardPoint: 5),
-            
-            /// Back Movement
-            Movement(name: .LowerBackSpinLeft, type: .back, preview: .thumbnailLowerBackSpinLeft, thumbnail: .thumbnailLowerBackSpinLeft, rewardPoint: 5),
-            Movement(name: .LowerBackSpinRight, type: .back, preview: .thumbnailLowerBackSpinRight, thumbnail: .thumbnailLowerBackSpinRight, rewardPoint: 5),
-        ],
-        
-        [
-            /// Neck Movement
             Movement(name: .NeckDeepRight, type: .neck, preview: .thumbnailNeckDeepRight, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
             Movement(name: .NeckDeepLeft, type: .neck, preview: .thumbnailNeckDeepLeft, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
             
@@ -82,6 +32,12 @@ struct Movement {
             Movement(name: .LowerBackSpinLeft, type: .back, preview: .thumbnailLowerBackSpinLeft, thumbnail: .thumbnailLowerBackSpinLeft, rewardPoint: 5),
         ],
     ]
+    
+    static var randomMovements: [Movement] {
+        let coba = setOfMovements.randomElement() ?? []
+        return coba
+    }
+    
 }
 
 enum ExerciseType {
@@ -131,3 +87,54 @@ enum ExerciseVideo: String {
     case thumbnailUpperBackStretchRight = "upperBackStretch-Right"
     case thumbnailUpperBackStretchUp = "upperBackStretch-Up"
 }
+
+//
+//[
+//    /// Neck Movement
+//    Movement(name: .NeckDeepLeft, type: .neck, preview: .thumbnailNeckDeepLeft, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
+//    Movement(name: .NeckDeepRight, type: .neck, preview: .thumbnailNeckDeepRight, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
+//    Movement(name: .NeckExtensionBack, type: .neck, preview: .thumbnailNeckExtensionBack, thumbnail: .thumbnailNeckExtensionBack, rewardPoint: 5),
+//    Movement(name: .NeckExtensionFront, type: .neck, preview: .thumbnailNeckExtensionFront, thumbnail: .thumbnailNeckExtensionFront, rewardPoint: 5),
+//    
+//    /// Arm Movement
+//    Movement(name: .CrossBodyShoulderLeft, type: .arm, preview: .thumbnailCrossBodyShoudlerLeft, thumbnail: .thumbnailCrossBodyShoudlerLeft, rewardPoint: 5),
+//    Movement(name: .CrossBodyShoulderRight, type: .arm, preview: .thumbnailCrossBodyShoudlerRight, thumbnail: .thumbnailCrossBodyShoudlerRight, rewardPoint: 5),
+//    
+//    /// Back Movement
+//    Movement(name: .UpperBackStretchLeft, type: .back, preview: .thumbnailUpperBackStretchLeft, thumbnail: .thumbnailUpperBackStretchLeft, rewardPoint: 5),
+//    Movement(name: .UpperBackStretchRight, type: .back, preview: .thumbnailUpperBackStretchRight, thumbnail: .thumbnailUpperBackStretchRight, rewardPoint: 5),
+//],
+//
+///// Set 2
+//[
+//    /// Neck Movement
+//    Movement(name: .NeckRotationLeft, type: .neck, preview: .thumbnailNeckRotationLeft, thumbnail: .thumbnailNeckRotationLeft, rewardPoint: 5),
+//    Movement(name: .NeckRotationRight, type: .neck, preview: .thumbnailNeckRotationRight, thumbnail: .thumbnailNeckRotationRight, rewardPoint: 5),
+//    Movement(name: .NeckExtensionBack, type: .neck, preview: .thumbnailNeckExtensionBack, thumbnail: .thumbnailNeckExtensionBack, rewardPoint: 5),
+//    Movement(name: .NeckExtensionFront, type: .neck, preview: .thumbnailNeckExtensionFront, thumbnail: .thumbnailNeckExtensionFront, rewardPoint: 5),
+//    
+//    /// Arm Movement
+//    Movement(name: .FrontShoulderStaticLeft, type: .arm, preview: .thumbnailFrontShoulderStaticLeft, thumbnail: .thumbnailFrontShoulderStaticLeft, rewardPoint: 5),
+//    Movement(name: .FrontShoulderStaticRight, type: .arm, preview: .thumbnailFrontShoulderStaticRight, thumbnail: .thumbnailFrontShoulderStaticRight, rewardPoint: 5),
+//    
+//    /// Back Movement
+//    Movement(name: .UpperBackStretchUp, type: .back, preview: .thumbnailUpperBackStretchUp, thumbnail: .thumbnailUpperBackStretchUp, rewardPoint: 5),
+//    Movement(name: .UpperBackStretchFront, type: .back, preview: .thumbnailUpperBackStretchFront, thumbnail: .thumbnailUpperBackStretchFront, rewardPoint: 5),
+//],
+//
+///// Set 3
+//[
+//    /// Neck Movement
+//    Movement(name: .NeckDeepLeft, type: .neck, preview: .thumbnailNeckDeepLeft, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
+//    Movement(name: .NeckDeepRight, type: .neck, preview: .thumbnailNeckDeepRight, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
+//    Movement(name: .NeckRotationLeft, type: .neck, preview: .thumbnailNeckRotationLeft, thumbnail: .thumbnailNeckRotationLeft, rewardPoint: 5),
+//    Movement(name: .NeckRotationRight, type: .neck, preview: .thumbnailNeckRotationRight, thumbnail: .thumbnailNeckRotationRight, rewardPoint: 5),
+//    
+//    /// Arm Movement
+//    Movement(name: .TricepStaticLeft, type: .arm, preview: .thumbnailTricepStaticLeft, thumbnail: .thumbnailTricepStaticLeft, rewardPoint: 5),
+//    Movement(name: .TricepStaticRight, type: .arm, preview: .thumbnailTricepStaticRight, thumbnail: .thumbnailTricepStaticRight, rewardPoint: 5),
+//    
+//    /// Back Movement
+//    Movement(name: .LowerBackSpinLeft, type: .back, preview: .thumbnailLowerBackSpinLeft, thumbnail: .thumbnailLowerBackSpinLeft, rewardPoint: 5),
+//    Movement(name: .LowerBackSpinRight, type: .back, preview: .thumbnailLowerBackSpinRight, thumbnail: .thumbnailLowerBackSpinRight, rewardPoint: 5),
+//],
