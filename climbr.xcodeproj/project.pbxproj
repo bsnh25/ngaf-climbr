@@ -56,10 +56,12 @@
 		90571EB12CCF8D0000AD536D /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB02CCF8D0000AD536D /* Streak.swift */; };
 		90571EB32CCF8D2C00AD536D /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB22CCF8D2C00AD536D /* StreakService.swift */; };
 		90571EB52CCF8D3D00AD536D /* StreakManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90571EB42CCF8D3D00AD536D /* StreakManager.swift */; };
+		9079CE922CD0EDCD0074FEC5 /* MenuBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E5EE8A2CCFB06A00E1E943 /* MenuBarVC.swift */; };
 		90A9A2CE2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
 		90A9A2CF2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
 		90A9A2D02CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */; };
 		90A9A2D12CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */; };
+		90E5EE882CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */; };
 		AB9A78722C64BB2B00028B36 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78712C64BB2B00028B36 /* UserService.swift */; };
 		AB9A78742C64BB3800028B36 /* EquipmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78732C64BB3800028B36 /* EquipmentService.swift */; };
 		AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A78752C64BB4500028B36 /* NotificationService.swift */; };
@@ -199,6 +201,8 @@
 		90571EB42CCF8D3D00AD536D /* StreakManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakManager.swift; sourceTree = "<group>"; };
 		90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuBar+Extension.swift"; sourceTree = "<group>"; };
+		90E5EE8A2CCFB06A00E1E943 /* MenuBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarVC.swift; sourceTree = "<group>"; };
 		AB9A78712C64BB2B00028B36 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		AB9A78732C64BB3800028B36 /* EquipmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentService.swift; sourceTree = "<group>"; };
 		AB9A78752C64BB4500028B36 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -405,6 +409,22 @@
 			path = DatePicker;
 			sourceTree = "<group>";
 		};
+		90E5EE862CCF984900E1E943 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				90E5EE872CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		90E5EE892CCFB04500E1E943 /* MenuBarApp */ = {
+			isa = PBXGroup;
+			children = (
+				90E5EE8A2CCFB06A00E1E943 /* MenuBarVC.swift */,
+			);
+			path = MenuBarApp;
+			sourceTree = "<group>";
+		};
 		AB1C0B662C76636F006B2FA8 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +557,7 @@
 		E7FDDAEB2C6433B900DE2A7A /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				90E5EE862CCF984900E1E943 /* Extensions */,
 				E7FDDAD62C64301B00DE2A7A /* AppDelegate.swift */,
 				E7FDDAE92C6430F700DE2A7A /* MainWindow.swift */,
 				E7FDDAD82C64301B00DE2A7A /* MainVC.swift */,
@@ -560,6 +581,7 @@
 		E7FDDAED2C6433EA00DE2A7A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				90E5EE892CCFB04500E1E943 /* MenuBarApp */,
 				030DA2452C708836001F5953 /* Tutorial */,
 				E701F0A42C6A7B850069A2DC /* Splash */,
 				8ABB12922C67D1AA00616C57 /* Onboarding */,
@@ -629,8 +651,6 @@
 			children = (
 				90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */,
 				90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */,
-				03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */,
-				03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
 				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
 				03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */,
 				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
@@ -900,6 +920,7 @@
 				E7FDDB102C64352000DE2A7A /* Character.swift in Sources */,
 				E7ABBA422C660A31007A702F /* CurrentMovementView.swift in Sources */,
 				8ABB12792C6539F200616C57 /* CLTextButtonV2.swift in Sources */,
+				90E5EE882CCF985700E1E943 /* AppDelegate+MenuBar+Extension.swift in Sources */,
 				03CD09BC2C6DDFB600BEEE8B /* ProgressService.swift in Sources */,
 				AB9A78762C64BB4500028B36 /* NotificationService.swift in Sources */,
 				E71F6E662C6B8E16001BCFEB /* SwinjectExtension.swift in Sources */,
@@ -940,6 +961,7 @@
 				E7FDDB162C64355000DE2A7A /* Movement.swift in Sources */,
 				E7FDDAD92C64301B00DE2A7A /* MainVC.swift in Sources */,
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
+				9079CE922CD0EDCD0074FEC5 /* MenuBarVC.swift in Sources */,
 				E7ABBA492C673F4B007A702F /* Divider.swift in Sources */,
 				E71F6E712C6E5346001BCFEB /* CLBlurEffectView.swift in Sources */,
 				ABAFFC252C7230F8004C729A /* ShopItemVC.swift in Sources */,

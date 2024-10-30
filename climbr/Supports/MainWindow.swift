@@ -9,12 +9,15 @@ import Cocoa
 import Swinject
 
 class MainWindow: NSWindow {
+  
+    let screenFrame = NSRect(x: 0, y: 0, width: 1200, height: 840)
+  
     init() {
         /// Init the main window with following parameters:
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 1200, height: 840),
+            contentRect: screenFrame,
             styleMask: [
-                .titled, .closable, .miniaturizable, .fullSizeContentView
+              .titled, .closable, .miniaturizable, .resizable, .borderless, .fullSizeContentView
             ],
             backing: .buffered,
             defer: false
@@ -22,12 +25,15 @@ class MainWindow: NSWindow {
         
         /// Set the title bar to transparent
         titlebarAppearsTransparent = true
+      
+        minSize = NSSize(width: screenFrame.width, height: screenFrame.height)
         
         /// Set the window to center axis by default
         center()
-        if let vc                  = Container.shared.resolve(MainVC.self) {
-            contentView             = vc.view
-            contentViewController   = vc
-        }
+    }
+  
+    func addViewController(_ vc: NSViewController) {
+      contentView             = vc.view
+      contentViewController   = vc
     }
 }
