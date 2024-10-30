@@ -28,11 +28,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   var hideClimbrItem: NSMenuItem!
   var hideOthersItem: NSMenuItem!
   var showAllItem: NSMenuItem!
+  var minimizeItem: NSMenuItem!
+  
   var isHideOthers: Bool = false {
     didSet {
       hideOthersItem.action = isHideOthers ? nil : #selector(hideOthers)
       hideClimbrItem.action = isHideOthers ? nil : #selector(hideApp)
       showAllItem.action = !isHideOthers ? nil : #selector(showAll)
+    }
+  }
+  
+  var isMinimized: Bool = false {
+    didSet {
+      minimizeItem.action = isMinimized ? nil : #selector(minimizeApp)
     }
   }
   
@@ -58,7 +66,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     createStatusBar()
     createAppMenuBar()
-    createWindowsMenuBar()
+    createWindowMenuBar()
     
     NSApplication.shared.setActivationPolicy(.regular)
     
@@ -114,6 +122,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       }
       NSApp.terminate(nil)
     }
+  }
+  
+  func windowDidDeminiaturize(_ notification: Notification) {
+    isMinimized = false
+  }
+  
+  func windowWillMiniaturize(_ notification: Notification) {
+    isMinimized = true
   }
   
   func applicationWillTerminate(_ aNotification: Notification) {

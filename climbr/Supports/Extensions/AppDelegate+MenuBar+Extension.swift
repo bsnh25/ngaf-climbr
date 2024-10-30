@@ -126,25 +126,25 @@ extension AppDelegate {
     }
   }
   
-  internal func createWindowsMenuBar() {
+  internal func createWindowMenuBar() {
     let mainMenu = NSApplication.shared.mainMenu
     
     guard let mainMenu else { return }
     
-    let windowsMenu = NSMenu()
-    let windowsMenuItem = NSMenuItem(
-      title: "Windows",
+    let windowMenu = NSMenu()
+    let windowMenuItem = NSMenuItem(
+      title: "Window",
       action: nil,
       keyEquivalent: ""
     )
     
     // Minimze Item
-    let minimizeItem = NSMenuItem(
+    minimizeItem = NSMenuItem(
       title: "Minimize",
       action: #selector(minimizeApp),
-      keyEquivalent: ""
+      keyEquivalent: "m"
     )
-    windowsMenu.addItem(minimizeItem)
+    windowMenu.addItem(minimizeItem)
     
     // Zoom Item
     let zoomItem = NSMenuItem(
@@ -152,15 +152,15 @@ extension AppDelegate {
       action: #selector(zoomApp),
       keyEquivalent: ""
     )
-    windowsMenu.addItem(zoomItem)
+    windowMenu.addItem(zoomItem)
     
     // Fill Item
-    let fillItem = NSMenuItem(
-      title: "Fill",
-      action: nil,
-      keyEquivalent: ""
-    )
-    windowsMenu.addItem(fillItem)
+//    let fillItem = NSMenuItem(
+//      title: "Fill",
+//      action: nil,
+//      keyEquivalent: ""
+//    )
+//    windowMenu.addItem(fillItem)
     
     // Center Item
     let centerItem = NSMenuItem(
@@ -168,9 +168,9 @@ extension AppDelegate {
       action: #selector(centerApp),
       keyEquivalent: ""
     )
-    windowsMenu.addItem(centerItem)
+    windowMenu.addItem(centerItem)
     
-    windowsMenu.addItem(NSMenuItem.separator())
+    windowMenu.addItem(NSMenuItem.separator())
     
     // FullScreen Item
     let fullScreenitem = NSMenuItem(
@@ -178,10 +178,10 @@ extension AppDelegate {
       action: #selector(fullScreenApp),
       keyEquivalent: ""
     )
-    windowsMenu.addItem(fullScreenitem)
+    windowMenu.addItem(fullScreenitem)
     
-    mainMenu.addItem(windowsMenuItem)
-    mainMenu.setSubmenu(windowsMenu, for: windowsMenuItem)
+    mainMenu.addItem(windowMenuItem)
+    mainMenu.setSubmenu(windowMenu, for: windowMenuItem)
     
   }
   
@@ -216,7 +216,7 @@ extension AppDelegate {
     NSApplication.shared.terminate(sender)
   }
   
-  @objc private func minimizeApp(sender: Any?) {
+  @objc func minimizeApp(sender: Any?) {
     mainWindow?.miniaturize(sender)
   }
   
