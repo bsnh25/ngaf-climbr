@@ -98,6 +98,7 @@ extension HomeVC {
     
     func updatePoint(){
         points.setText(String(character?.point ?? 0))
+        points.setAccessibilityValue("\(character?.point ?? 0) coins")
     }
     
     func observeNotif(){
