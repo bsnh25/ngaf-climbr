@@ -6,13 +6,19 @@
 //
 
 import AppKit
+import SnapKit
 
 class StretchingResultVC: NSViewController {
     
+    let neckProgress            = ProgressUserView(valueProgress: "0/2", typeStretch: "Neck")
+    let armProgress             = ProgressUserView(valueProgress: "0/2", typeStretch: "Shoulder")
+    let backProgress            = ProgressUserView(valueProgress: "0/2", typeStretch: "Lower Back")
+    let cointEarning            = ProgressUserView(valueProgress: "🪙 50", typeStretch: "Coins")
     let greetingLabel           = CLLabel(fontSize: 36, fontWeight: .heavy)
     let stretchingDurationLabel = CLLabel(fontSize: 28, fontWeight: .bold)
     let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
     let resultStack             = NSStackView()
+    let progressStack             = NSStackView()
     
     let affirmationTexts: [String]  = [
         "Wow! That’s a power move!",
@@ -70,6 +76,7 @@ class StretchingResultVC: NSViewController {
         
         self.calculatePoints()
         self.calculateDurations()
+        self.calculateProgress()
     }
     
     override func viewWillAppear() {
@@ -82,17 +89,28 @@ class StretchingResultVC: NSViewController {
     }
     
     private func configureResultUI() {
+        /// old:  greeting, subgreeting, charView, rewardPoint
+        /// new: greeting, charView, progressView
+//        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
         
-        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
+        let views = [greetingLabel, characterView, progressStack]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         resultStack.setViews(views, in: .center)
         resultStack.orientation     = .vertical
-        resultStack.spacing         = 24
+        resultStack.spacing         = 42
         
         resultStack.translatesAutoresizingMaskIntoConstraints = false
         
+        let viewsProgress = [neckProgress, armProgress, backProgress, cointEarning]
+        progressStack.setViews(viewsProgress, in: .center)
+        progressStack.orientation = .horizontal
+        progressStack.spacing = 28
+                
         view.addSubview(resultStack)
+        
+        ///coint setup
+        cointEarning.updateColor(.gray)
         
         /// Label
         greetingLabel.setText("Great Job!")
@@ -140,7 +158,7 @@ class StretchingResultVC: NSViewController {
         mainMenuButton.translatesAutoresizingMaskIntoConstraints            = false
         stack.translatesAutoresizingMaskIntoConstraints                     = false
         stack.orientation           = .horizontal
-        stack.spacing               = 10
+        stack.spacing               = 32
         stack.distribution    = .fillEqually
         
         resultStack.addArrangedSubview(stack)

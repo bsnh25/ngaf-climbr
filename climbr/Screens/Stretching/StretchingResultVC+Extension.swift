@@ -19,6 +19,7 @@ extension StretchingResultVC {
         if points > 0 {
             label = "While resting, \(char?.name ?? "Character") found \(points) coins!"
             updateProgress()
+            cointEarning.valueLabel.setText("🪙 \(points)")
         }
         
         rewardPointLabel.setText(label)
@@ -49,6 +50,52 @@ extension StretchingResultVC {
         }
         
         stretchingDurationLabel.setText("\(awardsText) \(String(format: "%.f", durations)) minutes")
+    }
+    
+    func calculateProgress() {
+        var armTotal: Int = 0
+        var neckTotal: Int = 0
+        var backTotal: Int = 0
+        
+        movementList.forEach { movement in
+            if movement.type == .arm && armTotal < 2 {
+                armTotal += 1
+            }
+            if movement.type == .neck && neckTotal < 2 {
+                neckTotal += 1
+            }
+            if movement.type == .back && backTotal < 2{
+                backTotal += 1
+            }
+        }
+        
+        armProgress.valueLabel.setText("\(armTotal)/2")
+        neckProgress.valueLabel.setText("\(neckTotal)/2")
+        backProgress.valueLabel.setText("\(backTotal)/2")
+        
+        if armTotal == 2 {
+            armProgress.updateColor(.kResultTwo)
+        } else if armTotal == 1 {
+            armProgress.updateColor(.kResultOne)
+        } else {
+            armProgress.updateColor(.red)
+        }
+        
+        if neckTotal == 2 {
+            neckProgress.updateColor(.kResultTwo)
+        } else if neckTotal == 1 {
+            neckProgress.updateColor(.kResultOne)
+        } else {
+            neckProgress.updateColor(.red)
+        }
+        
+        if backTotal == 2 {
+            backProgress.updateColor(.kResultTwo)
+        } else if backTotal == 1 {
+            backProgress.updateColor(.kResultOne)
+        } else {
+            backProgress.updateColor(.red)
+        }
     }
     
     func getUserData() {

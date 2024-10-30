@@ -15,6 +15,7 @@
 		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
 		034EADE12CC786BF006C0C9C /* climbrHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034EADCD2CC78493006C0C9C /* climbrHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		036AA9FE2C6D0A2000956F7C /* SettingVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */; };
+		036DFC962CD2166800C9FF5E /* ProgressUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036DFC952CD2166800C9FF5E /* ProgressUserView.swift */; };
 		038E84D22C74FACD00677B31 /* summer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 038E84D12C74FACD00677B31 /* summer.mp3 */; };
 		038E84D42C74FAD300677B31 /* night.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 038E84D32C74FAD300677B31 /* night.mp3 */; };
 		038E84D62C74FADC00677B31 /* snow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 038E84D52C74FADC00677B31 /* snow.mp3 */; };
@@ -146,6 +147,7 @@
 		0367F5AE2C720A5300938747 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0367F5AF2C720A5300938747 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		036AA9FD2C6D0A2000956F7C /* SettingVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingVC+Extension.swift"; sourceTree = "<group>"; };
+		036DFC952CD2166800C9FF5E /* ProgressUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressUserView.swift; sourceTree = "<group>"; };
 		03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		038E84D12C74FACD00677B31 /* summer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = summer.mp3; sourceTree = "<group>"; };
@@ -629,8 +631,6 @@
 			children = (
 				90A9A2CC2CCF8CA50007120C /* StreakEntity+CoreDataClass.swift */,
 				90A9A2CD2CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift */,
-				03889CB02C646889004BC8C8 /* UserPreferences+CoreDataClass.swift */,
-				03889CB12C646889004BC8C8 /* UserPreferences+CoreDataProperties.swift */,
 				03889CB62C646889004BC8C8 /* Equipment+CoreDataClass.swift */,
 				03889CB72C646889004BC8C8 /* Equipment+CoreDataProperties.swift */,
 				E7826F452C647ADB0052EDD9 /* ClimbrDataSource.xcdatamodeld */,
@@ -689,6 +689,7 @@
 				E74C3AF22C6865B600631D6F /* EndSessionAlertVC.swift */,
 				E757EDB12C6A173F00F0F84D /* MovementStateView.swift */,
 				E7A73DEB2C6F4042008319EF /* ExerciseInstructionView.swift */,
+				036DFC952CD2166800C9FF5E /* ProgressUserView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -911,6 +912,7 @@
 				036AA9FE2C6D0A2000956F7C /* SettingVC+Extension.swift in Sources */,
 				E71007BD2C71D9150059DBA1 /* SubtractedView.swift in Sources */,
 				AB9A78BF2C6B39CE00028B36 /* CameraService.swift in Sources */,
+				036DFC962CD2166800C9FF5E /* ProgressUserView.swift in Sources */,
 				E757EDB22C6A173F00F0F84D /* MovementStateView.swift in Sources */,
 				E7FDDB032C64349D00DE2A7A /* HomeVC.swift in Sources */,
 				90571EB32CCF8D2C00AD536D /* StreakService.swift in Sources */,
