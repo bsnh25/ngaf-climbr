@@ -22,6 +22,7 @@ extension StretchingVC {
             
             self.currentMovementView.updateData(movement)
             self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
+            self.playSfx(movement.name.rawValue)
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
@@ -101,12 +102,15 @@ extension StretchingVC {
                                 self.movementStateView.setForegroundColor(.black)
                                 self.movementStateView.setBackgroundColor(.systemRed)
                                 
-                                self.playSfx("incorrect")
+//                                self.playSfx("incorrect")
                             }
                             
                             self.movementStateView.setLabel(label)
+                          
+                            self.playSfx(label)
                         } else {
-                            self.playSfx("correct")
+//                            self.playSfx("correct")
+                            self.playSfx("Position Correct")
                             self.startExerciseSession(duration: movement.duration)
         //                    self.movementStateView.hide()
                         }
@@ -130,9 +134,16 @@ extension StretchingVC {
                 
                 return
             }
-            
-            if time <= 5 {
-                self.playSfx("countdown")
+          
+            switch time {
+            case 14:
+              self.playSfx("15 seconds countdown started")
+            case 10:
+              self.playSfx("\(Int(time)) seconds left")
+            case 1...5:
+              self.playSfx(String(Int(time)))
+            default:
+              break
             }
             
             self.movementStateView.setLabel("\(Int(time)) seconds left")
@@ -275,7 +286,8 @@ extension StretchingVC {
     func playSfx(_ file: String) {
         guard let audioService else { return }
         
-        audioService.playSFX(fileName: file)
+//        audioService.playSFX(fileName: file)
+        audioService.speech(file)
     }
 
     func updateProgress(movementsPassed: [Movement]) {
