@@ -22,6 +22,9 @@ extension StretchingVC {
             
             self.currentMovementView.updateData(movement)
             self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
+            self.currentMovementView.updateData(movement)
+            self.currentMovementView.setAccessibilityTitle("current movement is \(movement.name.rawValue)")
+          
             self.speech(movement.name.rawValue)
             
             /// Disable skip button and remove next movement view
@@ -44,6 +47,7 @@ extension StretchingVC {
             }
             
             self.nextMovementView.updateData(movement)
+            self.nextMovementView.setAccessibilityTitle("next movement is \(movement.name.rawValue)")
             
         }
         .store(in: &bags)
@@ -225,6 +229,8 @@ extension StretchingVC {
     }
     
     @objc func skip() -> Bool {
+        audioService?.stopSpeech(at: .word)
+        
         guard let _ = setOfMovements[safe: currentIndex+1] else {
             return false
         }
@@ -252,12 +258,16 @@ extension StretchingVC {
         }
       
         self.updateProgress(movementsPassed: completedMovement)
-        let canSkip = skip()
         
-        guard canSkip else {
+        guard let _ = setOfMovements[safe: currentIndex+1] else {
             finishSession()
             return
         }
+        
+        currentIndex += 1
+        nextIndex     = currentIndex+1
+        stopTimer()
+        movementStateView.hide()
     }
     
     func finishSession() {
@@ -291,7 +301,6 @@ extension StretchingVC {
     
     func speech(_ file: String) {
         guard let audioService else { return }
-
         audioService.speech(file)
     }
 
