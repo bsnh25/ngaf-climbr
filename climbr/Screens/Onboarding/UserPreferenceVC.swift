@@ -9,7 +9,6 @@ import Cocoa
 import Swinject
 import SnapKit
 
-
 class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   
   private lazy var workHoursStack: NSStackView = NSStackView()
