@@ -18,7 +18,6 @@ extension StretchingResultVC {
         
         if points > 0 {
             label = "While resting, \(char?.name ?? "Character") found \(points) coins!"
-            updateProgress()
             cointEarning.valueLabel.setText("🪙 \(points)")
         }
         
@@ -73,29 +72,64 @@ extension StretchingResultVC {
         neckProgress.valueLabel.setText("\(neckTotal)/2")
         backProgress.valueLabel.setText("\(backTotal)/2")
         
+        /// jangan lupa update greeting message
         if armTotal == 2 {
             armProgress.updateColor(.kResultTwo)
         } else if armTotal == 1 {
             armProgress.updateColor(.kResultOne)
-        } else {
+        } else if armTotal == 0 {
             armProgress.updateColor(.red)
+            greetingLabel.setText("You missed your \(armProgress.typeLabel.stringValue) movement! Let’s try to finish the whole sequence next time")
         }
         
         if neckTotal == 2 {
             neckProgress.updateColor(.kResultTwo)
         } else if neckTotal == 1 {
             neckProgress.updateColor(.kResultOne)
-        } else {
+        } else if neckTotal == 0 {
             neckProgress.updateColor(.red)
+            greetingLabel.setText("You missed your \(neckProgress.typeLabel.stringValue) movement! Let’s try to finish the whole sequence next time")
         }
         
         if backTotal == 2 {
             backProgress.updateColor(.kResultTwo)
         } else if backTotal == 1 {
             backProgress.updateColor(.kResultOne)
-        } else {
+        } else if backTotal == 0{
             backProgress.updateColor(.red)
+            greetingLabel.setText("You missed your \(backProgress.typeLabel.stringValue) movement! Let’s try to finish the whole sequence next time")
         }
+        
+        /// check progress left
+        var progress: Int = 0
+        
+        if armTotal == 2 && neckTotal == 2 && backTotal == 2 {
+            DispatchQueue.main.async {
+                self.updateProgress()
+                progress = Int(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))
+                self.greetingLabel.setText("\(progress < 4 ? "You did a great stretching session! Only \(progress) more to go to hit your daily goal!" : "Fantastic! You hit your daily goal! Keep your streak going!")")
+            }
+            armProgress.updateColor(.kResultTwo)
+            neckProgress.updateColor(.kResultTwo)
+            backProgress.updateColor(.kResultTwo)
+            
+        } else if (armTotal ==  1 || neckTotal ==  1 || backTotal == 1) && (armTotal > 0 && neckTotal > 0 && backTotal > 0) {
+            DispatchQueue.main.async {
+                self.updateProgress()
+                progress = Int(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))
+                self.greetingLabel.setText("\(progress < 4 ? "You almost missed your streak! Let’s try to finish the whole sequence next time" : "Great! You hit your daily goal! Don't forget to finish the whole sequence next time")")
+            }
+            
+        } else if armTotal == 0 && neckTotal == 0 && backTotal == 0 {
+            armProgress.updateColor(.red)
+            neckProgress.updateColor(.red)
+            backProgress.updateColor(.red)
+            greetingLabel.setText("You didn't do any stretching! So you didn't get any coins")
+            
+        } else if (armTotal == 0 && neckTotal == 0) || (armTotal == 0 && backTotal == 0) || (neckTotal == 0 && backTotal == 0){
+            greetingLabel.setText("You missed two type of movements! Let’s try to finish the whole sequence next time")
+        }
+        
     }
     
     func getUserData() {

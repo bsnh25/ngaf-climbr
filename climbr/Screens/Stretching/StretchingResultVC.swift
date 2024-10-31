@@ -98,7 +98,11 @@ class StretchingResultVC: NSViewController {
         
         resultStack.setViews(views, in: .center)
         resultStack.orientation     = .vertical
-        resultStack.spacing         = 42
+        resultStack.spacing         = 24
+        resultStack.distribution    = .fillEqually
+        resultStack.wantsLayer = true
+        resultStack.layer?.borderColor = .black
+        resultStack.layer?.borderWidth = 1
         
         resultStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -115,6 +119,7 @@ class StretchingResultVC: NSViewController {
         /// Label
         greetingLabel.setText("Great Job!")
         greetingLabel.setTextColor(.white)
+        greetingLabel.alignment = .center
         
         stretchingDurationLabel.setText("\(awardsText) 0 minutes")
         stretchingDurationLabel.setTextColor(.white)
@@ -127,11 +132,18 @@ class StretchingResultVC: NSViewController {
         
         /// Button
         configureButton()
+
+        resultStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(view.bounds.height / 10)
+            make.bottom.equalToSuperview().inset(view.bounds.height / 10)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            resultStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resultStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        greetingLabel.snp.makeConstraints { make in
+            make.width.equalTo(811)
+            make.top.equalTo(resultStack.snp.top).inset(104)
+        }
     }
     
     private func configureCharacter() {
