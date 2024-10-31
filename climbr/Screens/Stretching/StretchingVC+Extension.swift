@@ -22,7 +22,7 @@ extension StretchingVC {
             
             self.currentMovementView.updateData(movement)
             self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
-            self.playSfx(movement.name.rawValue)
+            self.speech(movement.name.rawValue)
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
@@ -102,15 +102,15 @@ extension StretchingVC {
                                 self.movementStateView.setForegroundColor(.black)
                                 self.movementStateView.setBackgroundColor(.systemRed)
                                 
-//                                self.playSfx("incorrect")
+//                                self.speech("incorrect")
                             }
                             
                             self.movementStateView.setLabel(label)
                           
-                            self.playSfx(label)
+                            self.speech(label)
                         } else {
-//                            self.playSfx("correct")
-                            self.playSfx("Position Correct")
+//                            self.speech("correct")
+                            self.speech("Position Correct")
                             self.startExerciseSession(duration: movement.duration)
         //                    self.movementStateView.hide()
                         }
@@ -136,12 +136,12 @@ extension StretchingVC {
             }
           
             switch time {
-            case 14:
-              self.playSfx("15 seconds countdown started")
-            case 10:
-              self.playSfx("\(Int(time)) seconds left")
+            case 13:
+              self.speech("15 seconds countdown started")
+            case 8:
+              self.speech("\(Int(time)) seconds left")
             case 1...5:
-              self.playSfx(String(Int(time)))
+              self.speech(String(Int(time)))
             default:
               break
             }
@@ -244,7 +244,13 @@ extension StretchingVC {
         }
         
         self.completedMovement.append(movement)
-        self.playSfx("next-move")
+      
+        if currentIndex == setOfMovements.count - 1 {
+          self.speech("completed session")
+        } else {
+          self.speech("next move")
+        }
+      
         self.updateProgress(movementsPassed: completedMovement)
         let canSkip = skip()
         
@@ -283,10 +289,9 @@ extension StretchingVC {
         }
     }
     
-    func playSfx(_ file: String) {
+    func speech(_ file: String) {
         guard let audioService else { return }
-        
-//        audioService.playSFX(fileName: file)
+
         audioService.speech(file)
     }
 
@@ -364,24 +369,6 @@ extension StretchingVC : PredictorDelegate {
     }
     
     func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
-//        guard let previewLayer = cameraService?.previewLayer else { return }
-//        
-//        let convertedPoints = points.map{
-//            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
-//        }
-//        
-//        let combinePath = CGMutablePath()
-//        
-//        for point in convertedPoints {
-//            let doPath = NSBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
-//            combinePath.addPath(doPath.cgPath)
-//        }
-//        
-//        pointsLayer.path = combinePath
-//        
-//        DispatchQueue.main.async{
-//            self.pointsLayer.didChangeValue(for: \.path)
-//        }
     }
     
 }

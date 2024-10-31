@@ -145,7 +145,6 @@ class StretchingVC: NSViewController {
         
         stopTimer()
         bags.removeAll()
-        audioService?.stopSpeech()
     }
     
     override func viewDidAppear() {
@@ -154,7 +153,7 @@ class StretchingVC: NSViewController {
         configureCameraPreview()
         configureMovementView()
         predictor?.delegate = self
-      predictor?.bufferSize = cameraService?.bufferSize ?? .zero
+        predictor?.bufferSize = cameraService?.bufferSize ?? .zero
         cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
