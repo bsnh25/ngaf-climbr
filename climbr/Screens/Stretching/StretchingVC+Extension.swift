@@ -25,7 +25,9 @@ extension StretchingVC {
             self.currentMovementView.updateData(movement)
             self.currentMovementView.setAccessibilityTitle("current movement is \(movement.name.rawValue)")
           
-            self.speech(movement.name.rawValue)
+            if !showTutorial {
+              self.speech(movement.name.rawValue)
+            }
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
@@ -56,9 +58,13 @@ extension StretchingVC {
     func updateMovementState() {
         
         $showTutorial.sink { value in
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                      guard let self else { return }
                         if !value {
                             self.instructionView.hide()
+                          if let movement = self.setOfMovements[safe: self.currentIndex] {
+                            self.speech(movement.name.rawValue)
+                          }
                         } else {
                             self.instructionView.unhide()
                         }
@@ -299,9 +305,9 @@ extension StretchingVC {
         }
     }
     
-    func speech(_ file: String) {
+    func speech(_ text: String) {
         guard let audioService else { return }
-        audioService.speech(file)
+      audioService.speech(text)
     }
 
     func updateProgress(movementsPassed: [Movement]) {
@@ -358,9 +364,10 @@ extension StretchingVC {
 extension StretchingVC : PredictorDelegate {
     func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {
         print(boundingBox)
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+          guard let self else { return }
 //            self.boundingBoxView.updateRect(boundingBox, color: .yellow)
-            if value {
+          if value && self.showTutorial {
                 self.showTutorial = false
             }
         }
