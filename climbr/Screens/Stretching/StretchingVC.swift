@@ -145,7 +145,6 @@ class StretchingVC: NSViewController {
         
         stopTimer()
         bags.removeAll()
-        audioService?.stopSpeech()
     }
     
     override func viewDidAppear() {
@@ -154,7 +153,7 @@ class StretchingVC: NSViewController {
         configureCameraPreview()
         configureMovementView()
         predictor?.delegate = self
-      predictor?.bufferSize = cameraService?.bufferSize ?? .zero
+        predictor?.bufferSize = cameraService?.bufferSize ?? .zero
         cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
@@ -251,6 +250,8 @@ class StretchingVC: NSViewController {
         movementStack.translatesAutoresizingMaskIntoConstraints = false
         
         movementInfoView.addSubview(movementStack)
+        currentMovementView.setAccessibilityElement(true)
+        nextMovementView.setAccessibilityElement(true)
         
         NSLayoutConstraint.activate([
             movementStack.topAnchor.constraint(equalTo: movementInfoView.safeAreaLayoutGuide.topAnchor, constant: padding),
@@ -288,11 +289,19 @@ class StretchingVC: NSViewController {
         /// Configure target button
         skipButton.target = self
         skipButton.action = #selector(skip)
+        skipButton.setAccessibilityElement(true)
+        skipButton.setAccessibilityTitle("Skip Movement")
+        skipButton.setAccessibilityLabel("Skips the current movement and moves to the next one in the sequence")
+        skipButton.setAccessibilityRole(.button)
         
         finishButton.target = self
         finishButton.action = #selector(showEndSessionAlert)
         finishButton.hasDestructiveAction = true
         finishButton.exitFullScreenMode()
+        finishButton.setAccessibilityElement(true)
+        finishButton.setAccessibilityTitle("Finish Early")
+        finishButton.setAccessibilityLabel("Ends the current session immediately without completing the remaining activities")
+        finishButton.setAccessibilityRole(.button)
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),

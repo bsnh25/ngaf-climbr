@@ -178,6 +178,7 @@ class HomeVC: NSViewController {
         //MARK: Settings Button Action
         settingButton.action = #selector(actionSetting)
         settingButton.target = self
+        settingButton.setAccessibilityElement(true)
         settingButton.setAccessibilityTitle("Settings")
         settingButton.setAccessibilityLabel("Adjust your preferences, manage work hours and launch at login")
         settingButton.setAccessibilityRole(.button)
@@ -185,6 +186,7 @@ class HomeVC: NSViewController {
         //MARK: Audio Button Action
         audioButton.action = #selector(actionAudio)
         audioButton.target = self
+        audioButton.setAccessibilityElement(true)
         audioButton.setAccessibilityTitle("Background Music")
         audioButton.setAccessibilityLabel("Mute or unmute the background music")
         audioButton.setAccessibilityRole(.button)
@@ -192,9 +194,10 @@ class HomeVC: NSViewController {
         //MARK: Store Button Action
         storeButton.action = #selector(actionStore)
         storeButton.target = self
-        audioButton.setAccessibilityTitle("Shop")
-        audioButton.setAccessibilityLabel("Discovers unique climbing gears, customize your character")
-        audioButton.setAccessibilityRole(.button)
+        storeButton.setAccessibilityElement(true)
+        storeButton.setAccessibilityTitle("Shop")
+        storeButton.setAccessibilityLabel("Discovers unique climbing gears, customize your character")
+        storeButton.setAccessibilityRole(.button)
         
         let vPadding = 40
         let hPadding = 10
@@ -293,6 +296,10 @@ class HomeVC: NSViewController {
         
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
+        startStretchButton.setAccessibilityElement(true)
+        startStretchButton.setAccessibilityTitle("Start Session")
+        startStretchButton.setAccessibilityLabel("Opens a guided stretching page")
+        startStretchButton.setAccessibilityRole(.button)
         
         stackConfig()
     }
