@@ -398,6 +398,7 @@
 		8ABB12922C67D1AA00616C57 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				8AF185232CD0EDD9000FBC30 /* SubViews */,
 				8ABB12932C67D36100616C57 /* UserPreferenceVC.swift */,
 				8ABB12AB2C6AEE8200616C57 /* ChooseCharacterVC.swift */,
 				8AB71C742C6FB7E600635C85 /* UserPreference+Extension.swift */,
@@ -908,6 +909,7 @@
 				90A9A2D02CCF8CA50007120C /* StreakEntity+CoreDataClass.swift in Sources */,
 				90A9A2D12CCF8CA50007120C /* StreakEntity+CoreDataProperties.swift in Sources */,
 				ABAFFC232C723025004C729A /* TutorialVC+Extension.swift in Sources */,
+				8AF1852A2CD23469000FBC30 /* DaysButtonStackView.swift in Sources */,
 				ABAFFC272C74FB71004C729A /* ShopItemVC+Extensions.swift in Sources */,
 				ABAFFC212C72301F004C729A /* Equipment+CoreDataClass.swift in Sources */,
 				ABAFFC222C72301F004C729A /* Equipment+CoreDataProperties.swift in Sources */,
@@ -971,6 +973,7 @@
 				E7FDDB012C64349400DE2A7A /* StretchingVC.swift in Sources */,
 				9079CE922CD0EDCD0074FEC5 /* MenuBarVC.swift in Sources */,
 				E7ABBA492C673F4B007A702F /* Divider.swift in Sources */,
+				8AF185272CD1438D000FBC30 /* DayTimePreferenceView.swift in Sources */,
 				E71F6E712C6E5346001BCFEB /* CLBlurEffectView.swift in Sources */,
 				ABAFFC252C7230F8004C729A /* ShopItemVC.swift in Sources */,
 				03CD09BE2C6DE1B200BEEE8B /* ProgressManager.swift in Sources */,

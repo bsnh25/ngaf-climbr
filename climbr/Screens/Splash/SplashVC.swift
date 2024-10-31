@@ -83,7 +83,7 @@ class SplashVC: NSViewController {
             context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                     
                     self.mountainImageCenterYConstraint.animator().constant = 0
-                    self.appLogoCenterYConstraint.animator().constant = -115
+                    self.appLogoCenterXConstraint.animator().constant = -334
                     
                     self.view.animator().layoutSubtreeIfNeeded()
                 }
@@ -96,7 +96,7 @@ class SplashVC: NSViewController {
             context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                     
                     self.mountainImageCenterYConstraint.animator().constant = 0
-                    self.appLogoCenterYConstraint.animator().constant = -115
+                    self.appLogoCenterXConstraint.animator().constant = -334
                     
                     self.view.animator().layoutSubtreeIfNeeded()
                 }

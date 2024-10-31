@@ -32,7 +32,7 @@ extension UserPreferenceVC{
         
         guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
             print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
-            configureWarning()
+//            configureWarning()
             return
         }
         print("Start Work Hour : \(startWorkHour.dateValue)")
@@ -101,6 +101,25 @@ extension UserPreferenceVC{
             isChecked = false
         }
     }
+    
+    @objc
+    func actionDifferentWorkHour() {
+        isDifferentChecked = true
+        
+        if differentWorkHoursCheckbox.state == .on {
+            daysButtonStack.unlockButton()
+        } else{
+            daysButtonStack.lockButton()
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     @objc func startWorkHourChanged(_ sender: NSDatePicker) {
         let calendar = Calendar.current
