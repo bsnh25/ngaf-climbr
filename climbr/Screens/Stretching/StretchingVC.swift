@@ -145,6 +145,7 @@ class StretchingVC: NSViewController {
         
         stopTimer()
         bags.removeAll()
+        audioService?.stopSpeech()
     }
     
     override func viewDidAppear() {
