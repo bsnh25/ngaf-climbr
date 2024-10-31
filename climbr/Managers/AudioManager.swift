@@ -137,9 +137,9 @@ class AudioManager: AudioService {
       speechSynthesizer.speak(utterance)
     }
   
-  func stopSpeech() {
+  func stopSpeech(at boundary: AVSpeechBoundary = .immediate) {
     guard speechSynthesizer.isSpeaking else { return }
     
-    speechSynthesizer.stopSpeaking(at: .immediate)
+    speechSynthesizer.stopSpeaking(at: boundary)
   }
 }
