@@ -111,6 +111,7 @@ class CurrentMovementView: NSStackView {
     private func configureMovementLabel() {
         
         movementLabel.setText("Movement Title")
+        stretchLabel.setAccessibilityElement(true)
         
         NSLayoutConstraint.activate([
             stretchLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -146,6 +147,7 @@ class CurrentMovementView: NSStackView {
     func getIndexMovement(current: Int, maxIndex: Int){
         let showIndex = current + 1
         stretchLabel.setText("\(showIndex) / \(maxIndex)")
+        stretchLabel.setAccessibilityTitle("You are currently in movement \(showIndex) of \(maxIndex)")
     }
     
 }
