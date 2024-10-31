@@ -19,6 +19,7 @@
 		038E84D22C74FACD00677B31 /* summer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 038E84D12C74FACD00677B31 /* summer.mp3 */; };
 		038E84D42C74FAD300677B31 /* night.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 038E84D32C74FAD300677B31 /* night.mp3 */; };
 		038E84D62C74FADC00677B31 /* snow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 038E84D52C74FADC00677B31 /* snow.mp3 */; };
+		03C57AB82CD361E500A8D245 /* ProgressStretchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C57AB72CD361E500A8D245 /* ProgressStretchVC.swift */; };
 		03CD09BC2C6DDFB600BEEE8B /* ProgressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD09BB2C6DDFB600BEEE8B /* ProgressService.swift */; };
 		03CD09BE2C6DE1B200BEEE8B /* ProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */; };
 		03E796C92C6C6BB0003C6121 /* CLPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E796C82C6C6BB0003C6121 /* CLPickerButton.swift */; };
@@ -155,6 +156,7 @@
 		038E84D12C74FACD00677B31 /* summer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = summer.mp3; sourceTree = "<group>"; };
 		038E84D32C74FAD300677B31 /* night.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = night.mp3; sourceTree = "<group>"; };
 		038E84D52C74FADC00677B31 /* snow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = snow.mp3; sourceTree = "<group>"; };
+		03C57AB72CD361E500A8D245 /* ProgressStretchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStretchVC.swift; sourceTree = "<group>"; };
 		03CD09BB2C6DDFB600BEEE8B /* ProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressService.swift; sourceTree = "<group>"; };
 		03CD09BD2C6DE1B200BEEE8B /* ProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressManager.swift; sourceTree = "<group>"; };
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -712,6 +714,7 @@
 				E757EDB12C6A173F00F0F84D /* MovementStateView.swift */,
 				E7A73DEB2C6F4042008319EF /* ExerciseInstructionView.swift */,
 				036DFC952CD2166800C9FF5E /* ProgressUserView.swift */,
+				03C57AB72CD361E500A8D245 /* ProgressStretchVC.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				E71F6E6C2C6E314C001BCFEB /* UserDefaultsKey.swift in Sources */,
 				E76E63202C6792D0001906A9 /* CollectionExtension.swift in Sources */,
 				E701F0A62C6A7B980069A2DC /* SplashVC.swift in Sources */,
+				03C57AB82CD361E500A8D245 /* ProgressStretchVC.swift in Sources */,
 				E74C3AEF2C684C5400631D6F /* StretchingResultVC.swift in Sources */,
 				8ABB12942C67D36100616C57 /* UserPreferenceVC.swift in Sources */,
 				8ABB12992C68940400616C57 /* CLDatePicker.swift in Sources */,

@@ -20,8 +20,9 @@ extension StretchingVC {
                 return
             }
             
-            self.currentMovementView.updateData(movement)
-            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
+//            self.currentMovementView.updateData(movement)
+            self.progressSideView.updateStretch(movement, self.statusProgress)
+//            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
             self.playSfx(movement.name.rawValue)
             
             /// Disable skip button and remove next movement view
@@ -29,8 +30,8 @@ extension StretchingVC {
             if index == self.setOfMovements.count - 1 {
                 self.skipButton.isEnabled = false
                 
-                self.movementStack.removeView(self.movementDivider)
-                self.movementStack.removeView(self.nextMovementView)
+//                self.movementStack.removeView(self.movementDivider)
+//                self.movementStack.removeView(self.nextMovementView)
             }
         }
         .store(in: &bags)
@@ -43,7 +44,7 @@ extension StretchingVC {
                 return
             }
             
-            self.nextMovementView.updateData(movement)
+            self.progressSideView.updateStretch(movement, self.statusProgress)
             
         }
         .store(in: &bags)
@@ -149,7 +150,7 @@ extension StretchingVC {
             self.movementStateView.setLabel("\(Int(time)) seconds left")
             self.movementStateView.setForegroundColor(.black)
             self.movementStateView.setBackgroundColor(.white)
-            self.currentMovementView.setDuration(time)
+//            self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)
     }
