@@ -125,7 +125,8 @@ class ProgressStretchVC: NSView {
     }
     
     func currentMovementCheck(_ currentMovement: Movement, _ status: ProgressStretchCondition){
-
+        
+        print("current status sebelum : \(status) ==== dari movement : \(currentMovement.type)")
         guard let neckFirstMovement = neckMovement.first else { return }
         guard let armFirstMovement = armMovement.first else { return }
         guard let backFirstMovement = backMovement.first else { return }
@@ -164,14 +165,16 @@ class ProgressStretchVC: NSView {
                 return
             case .halfDone:
                 neckStretchView.loadDataSubView(currentMovement, status)
-                if currentMovement.name == neckMovement.last?.name {
-                    neckStretchView.hideView()
-                    armStretchView.unHideView()
-                    backStretchView.hideView()
-                } else {
-                    armStretchView.hideView()
-                    backStretchView.hideView()
-                }
+                armStretchView.hideView()
+                backStretchView.hideView()
+//                if currentMovement.name == neckMovement.last?.name {
+//                    neckStretchView.hideView()
+//                    armStretchView.unHideView()
+//                    backStretchView.hideView()
+//                } else {
+//                    armStretchView.hideView()
+//                    backStretchView.hideView()
+//                }
                 return
             case .skipped:
                 neckStretchView.loadDataSubView(currentMovement, status)
@@ -202,6 +205,14 @@ class ProgressStretchVC: NSView {
                 armStretchView.loadDataSubView(currentMovement, status)
                 neckStretchView.hideView()
                 backStretchView.hideView()
+//                if currentMovement.name == armMovement.last?.name {
+////                    neckStretchView.hideView()
+//                    backStretchView.unHideView()
+//                    armStretchView.hideView()
+//                } else {
+//                    neckStretchView.hideView()
+//                    backStretchView.hideView()
+//                }
                 return
             case .skipped:
                 armStretchView.loadDataSubView(currentMovement, status)
@@ -229,17 +240,18 @@ class ProgressStretchVC: NSView {
                 return
             case .halfDone:
                 backStretchView.loadDataSubView(currentMovement, status)
-                neckStretchView.hideView()
-                armStretchView.hideView()
+//                neckStretchView.hideView()
+//                armStretchView.hideView()
                 return
             case .skipped:
-                backStretchView.loadDataSubView(currentMovement, status)
                 backStretchView.unHideView()
-                armStretchView.hideView()
+                backStretchView.loadDataSubView(currentMovement, status)
+//                backStretchView.unHideView()
+//                armStretchView.hideView()
                 return
             }
         }
-
+        print("current status sesudah : \(status) ==== dari movement : \(currentMovement.type)")
     }
     
 }

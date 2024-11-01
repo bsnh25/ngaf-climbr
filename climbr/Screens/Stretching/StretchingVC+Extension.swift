@@ -22,9 +22,7 @@ extension StretchingVC {
             
 //            self.currentMovementView.updateData(movement)
 //            self.progressSideView.updateStretch(movement, self.statusProgress)
-            if statusProgress == .inProgress {
-                self.progressSideView.currentMovementCheck(movement, self.statusProgress)
-            }
+            self.progressSideView.currentMovementCheck(movement, self.statusProgress)
 //            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
             self.playSfx(movement.name.rawValue)
             
@@ -243,11 +241,26 @@ extension StretchingVC {
             return false
         }
         
-        if (currentMovement.name == neckMovements.first?.name || currentMovement.name == armMovements.first?.name || currentMovement.name == backMovements.first?.name) && (statusProgress == .inProgress || statusProgress == .halfDone) {
+        if (currentMovement.name == neckMovements.first?.name || currentMovement.name == armMovements.first?.name || currentMovement.name == backMovements.first?.name) && (statusProgress == .inProgress) {
+//            statusProgress = .inProgress
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+            statusProgress = .inProgress
         } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .inProgress {
             statusProgress = .skipped
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+            statusProgress = .inProgress
+        } else if (currentMovement.name == neckMovements.first?.name || currentMovement.name == armMovements.first?.name || currentMovement.name == backMovements.first?.name) && (statusProgress == .halfDone) {
+//            statusProgress = .halfDone
+            self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+            statusProgress = .halfDone
+        } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .halfDone {
+//            statusProgress = .halfDone
+            self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+            statusProgress = .inProgress
+        } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .done {
+//            statusProgress = .done
+            self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+            statusProgress = .inProgress
         }
         
         guard let nextMovement = setOfMovements[safe: currentIndex+1] else {
@@ -272,11 +285,9 @@ extension StretchingVC {
             statusProgress = .halfDone
         } else if (movement.type == .neck || movement.type == .arm || movement.type == .back) && statusProgress == .halfDone {
             statusProgress = .done
-            self.progressSideView.currentMovementCheck(movement, statusProgress)
-            statusProgress = .inProgress
         }
-        print("current status for movement \(movementStateView) is : \(statusProgress)")
-        self.progressSideView.currentMovementCheck(movement, statusProgress)
+//        print("current status for movement \(movementStateView) is : \(statusProgress)")
+//        self.progressSideView.currentMovementCheck(movement, statusProgress)
         print("current status for movement \(movementStateView) is : \(statusProgress)")
         self.completedMovement.append(movement)
         self.playSfx("next-move")
