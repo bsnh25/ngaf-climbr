@@ -43,8 +43,6 @@ class DaysButtonStackView: NSStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
     private func configure() {
         spacing = 20
         alignment = .leading
@@ -95,7 +93,9 @@ class DaysButtonStackView: NSStackView {
             item.isSelected = false
         }
         
-        
+        monday.isSelected = true
+        monday.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        monday.foregroundColorText = .white
     }
     
     func lockButton() {
@@ -107,102 +107,126 @@ class DaysButtonStackView: NSStackView {
         }
     }
     
-    @objc func mondayAction() {
-        if monday.isSelected{
-            monday.isSelected = false
-            monday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            monday.foregroundColorText = .black
-            daysButtonDelegate?.didMondayTap(monday.isSelected)
-        } else {
-            monday.isSelected = true
-            monday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            monday.foregroundColorText = .white
-            daysButtonDelegate?.didMondayTap(monday.isSelected)
-        }
+  @objc func mondayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didMondayTap(monday.isSelected)
+        
+          return
+      }
+      
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didMondayTap(monday.isSelected)
+        
     }
     
     
-    @objc func tuesdayAction() {
-        if tuesday.isSelected{
-            tuesday.isSelected = false
-            tuesday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            tuesday.foregroundColorText = .black
-            daysButtonDelegate?.didTuesdayTap(tuesday.isSelected)
-        } else {
-            tuesday.isSelected = true
-            tuesday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            tuesday.foregroundColorText = .white
-            daysButtonDelegate?.didTuesdayTap(tuesday.isSelected)
-        }
+  @objc func tuesdayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didTuesdayTap(tuesday.isSelected)
+        
+          return
+      }
+    
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didTuesdayTap(tuesday.isSelected)
     }
     
-    @objc func wednesdayAction() {
-        if wednesday.isSelected{
-            wednesday.isSelected = false
-            wednesday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            wednesday.foregroundColorText = .black
-            daysButtonDelegate?.didWednesdayTap(wednesday.isSelected)
-        } else {
-            wednesday.isSelected = true
-            wednesday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            wednesday.foregroundColorText = .white
-            daysButtonDelegate?.didWednesdayTap(wednesday.isSelected)
-        }
+  @objc func wednesdayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didWednesdayTap(wednesday.isSelected)
+        
+          return
+      }
+    
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didWednesdayTap(wednesday.isSelected)
     }
     
-    @objc func thursdayAction() {
-        if thursday.isSelected{
-            thursday.isSelected = false
-            thursday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            thursday.foregroundColorText = .black
-            daysButtonDelegate?.didThursdayTap(thursday.isSelected)
-        } else {
-            thursday.isSelected = true
-            thursday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            thursday.foregroundColorText = .white
-            daysButtonDelegate?.didThursdayTap(thursday.isSelected)
-        }
+  @objc func thursdayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didThursdayTap(thursday.isSelected)
+        
+          return
+      }
+    
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didThursdayTap(thursday.isSelected)
+          
     }
     
-    @objc func fridayAction() {
-        if friday.isSelected{
-            friday.isSelected = false
-            friday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            friday.foregroundColorText = .black
-            daysButtonDelegate?.didFridayTap(friday.isSelected)
-        } else {
-            friday.isSelected = true
-            friday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            friday.foregroundColorText = .white
-            daysButtonDelegate?.didFridayTap(friday.isSelected)
-        }
+  @objc func fridayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didFridayTap(friday.isSelected)
+      
+          return
+      }
+    
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didFridayTap(friday.isSelected)
+
     }
     
-    @objc func saturdayAction() {
-        if saturday.isSelected{
-            saturday.isSelected = false
-            saturday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            saturday.foregroundColorText = .black
-            daysButtonDelegate?.didSaturdayTap(saturday.isSelected)
-        } else {
-            saturday.isSelected = true
-            saturday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            saturday.foregroundColorText = .white
-            daysButtonDelegate?.didSaturdayTap(saturday.isSelected)
-        }
+  @objc func saturdayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didSaturdayTap(saturday.isSelected)
+          
+          return
+      }
+    
+        
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didSaturdayTap(saturday.isSelected)
+       
     }
     
-    @objc func sundayAction() {
-        if sunday.isSelected{
-            sunday.isSelected = false
-            sunday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-            sunday.foregroundColorText = .black
-            daysButtonDelegate?.didSundayTap(sunday.isSelected)
-        } else {
-            sunday.isSelected = true
-            sunday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-            sunday.foregroundColorText = .white
-            daysButtonDelegate?.didSundayTap(sunday.isSelected)
-        }
+  @objc func sundayAction(_ sender: CLPickerButton) {
+    guard hasMinimumADayActive() && sender.isSelected else {
+          sender.isSelected = true
+          sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+          sender.foregroundColorText = .white
+          daysButtonDelegate?.didSundayTap(sunday.isSelected)
+            
+          return
+      }
+    
+      
+      sender.isSelected = false
+      sender.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+      sender.foregroundColorText = .black
+      daysButtonDelegate?.didSundayTap(sunday.isSelected)
+    }
+  
+    private func hasMinimumADayActive() -> Bool {
+      daysButtonStack.filter { $0.isSelected == true }.count > 1
     }
 }

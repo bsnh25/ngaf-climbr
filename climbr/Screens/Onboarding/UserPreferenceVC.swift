@@ -290,7 +290,8 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
         for item in preferenceStack{
             item.wantsLayer = true
             item.translatesAutoresizingMaskIntoConstraints = false
-            item.isHidden = true
+            item.isHidden = item.dayName.stringValue != "Monday"
+            
             
             item.snp.makeConstraints{item in
                 item.height.equalTo(38.3)
