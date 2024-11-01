@@ -286,6 +286,7 @@ class StretchingVC: NSViewController {
 
 //        movementInfoView.layer?.borderWidth = 1
 //        movementInfoView.layer?.borderColor = NSColor.red.cgColor
+        progressSideView.setAccessibilityElement(true)
         
         movementInfoView.translatesAutoresizingMaskIntoConstraints = false
         progressSideView.translatesAutoresizingMaskIntoConstraints = false

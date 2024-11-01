@@ -418,6 +418,19 @@ class SubProgressStretchView: NSView {
         playVideo(movement.preview.rawValue)
         detailMovementLabel.setText(movement.name.rawValue)
         imageProgressView.image = NSImage(named: "\(status.statusImage)")
+        
+        typeStretchLabel.setAccessibilityElement(true)
+        detailMovementLabel.setAccessibilityElement(true)
+        imageProgressView.setAccessibilityElement(true)
+        typeStretchLabel.setAccessibilityTitle("\(movement.type.exerciseString)")
+        typeStretchLabel.setAccessibilityLabel("your in \(movement.type.exerciseString) exercise section")
+        
+        detailMovementLabel.setAccessibilityTitle("\(movement.name.rawValue)")
+        detailMovementLabel.setAccessibilityLabel("your detail exercise is \(movement.name.rawValue)")
+        
+        imageProgressView.setAccessibilityTitle("\(movement.name.rawValue) preview video")
+        detailMovementLabel.setAccessibilityLabel("\(movement.name.rawValue) video guidence")
+
     }
     
     func updateData(_ data: Movement) {
@@ -428,7 +441,8 @@ class SubProgressStretchView: NSView {
     func hideView(){
         movementDivider.removeFromSuperview()
         videoView.removeFromSuperview()
-        
+//        movementStackView.removeView(detailMovementLabel)
+//        movementStackView.distribution = .equalCentering
 //        videoView.wantsLayer = true
 //        videoView.layer?.borderColor = NSColor.black.cgColor
 //        videoView.layer?.borderWidth = 2
@@ -454,8 +468,10 @@ class SubProgressStretchView: NSView {
         
         addSubview(movementDivider)
         addSubview(videoView)
+//        movementStackView.addArrangedSubview(detailMovementLabel)
+//        movementStackView.distribution = .fillEqually
         outterStackConfig()
-        
+//        movementStacConfig()
     }
     
     

@@ -20,19 +20,24 @@ extension StretchingVC {
                 return
             }
             
-//            self.currentMovementView.updateData(movement)
-//            self.progressSideView.updateStretch(movement, self.statusProgress)
+            //            self.currentMovementView.updateData(movement)
+            //            self.progressSideView.updateStretch(movement, self.statusProgress)
             self.progressSideView.currentMovementCheck(movement, self.statusProgress)
-//            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
-            self.playSfx(movement.name.rawValue)
+            //            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
+            self.speech(movement.name.rawValue)
+            self.progressSideView.setAccessibilityTitle("current movement is \(movement.name.rawValue)") // mark
+            
+            if !showTutorial {
+                self.speech(movement.name.rawValue)
+            }
             
             /// Disable skip button and remove next movement view
             /// if next index equals to items last index
             if index == self.setOfMovements.count - 1 {
                 self.skipButton.isEnabled = false
                 
-//                self.movementStack.removeView(self.movementDivider)
-//                self.movementStack.removeView(self.nextMovementView)
+                //                self.movementStack.removeView(self.movementDivider)
+                //                self.movementStack.removeView(self.nextMovementView)
             }
         }
         .store(in: &bags)
@@ -44,81 +49,86 @@ extension StretchingVC {
             guard let movement = self.setOfMovements[safe: index] else {
                 return
             }
-//            self.progressSideView.currentMovementCheck(movement, self.statusProgress)
-//            self.progressSideView.updateStretch(movement, self.statusProgress)
+            //            self.nextMovementView.updateData(movement)
+            //            self.nextMovementView.setAccessibilityTitle("next movement is \(movement.name.rawValue)")
+            //            self.progressSideView.currentMovementCheck(movement, self.statusProgress)
+            //            self.progressSideView.updateStretch(movement, self.statusProgress)
             
         }
         .store(in: &bags)
     }
-    .store(in: &bags)
     
     func updateMovementState() {
         
         $showTutorial.sink { value in
-                    DispatchQueue.main.async {
-                        if !value {
-                            self.instructionView.hide()
-                        } else {
-                            self.instructionView.unhide()
-                        }
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                if !value {
+                    self.instructionView.hide()
+                    if let movement = self.setOfMovements[safe: self.currentIndex] {
+                        self.speech(movement.name.rawValue)
                     }
+                } else {
+                    self.instructionView.unhide()
                 }
-                .store(in: &bags)
+            }
+        }
+        .store(in: &bags)
+        
+        $exerciseName.sink { [weak self] name in
+            guard let self else { return }
+            
+            /// Get current movement data
+            guard let movement = self.setOfMovements[safe: self.currentIndex] else {
+                return
+            }
+            
+            guard !self.showTutorial else {
+                DispatchQueue.main.async {
+                    self.movementStateView.hide()
+                }
+                self.pauseTimer()
+                return
+            }
+            
+            /// Return true if the name equals to current movement
+            let positionState   = name == movement.name
+            
+            DispatchQueue.main.async {
                 
-                $exerciseName.sink { [weak self] name in
-                    guard let self else { return }
+                /// Make sure to unhide the movement state view
+                self.movementStateView.unhide()
+                
+                if !positionState {
+                    /// Pause the timer if movement incorrect
+                    self.pauseTimer()
                     
-                    /// Get current movement data
-                    guard let movement = self.setOfMovements[safe: self.currentIndex] else {
-                        return
-                    }
+                    /// Set label, foreground, and background color based on each state
+                    var label: String = "Please move according to the guidance"
                     
-                    guard !self.showTutorial else {
-                        DispatchQueue.main.async {
-                            self.movementStateView.hide()
-                        }
-                        self.pauseTimer()
-                        return
-                    }
-                    
-                    /// Return true if the name equals to current movement
-                    let positionState   = name == movement.name
-                    
-                    DispatchQueue.main.async {
+                    if name == .Still || name == .Negative {
+                        label = "Please move according to the guidance"
+                        self.movementStateView.setForegroundColor(.black)
+                        self.movementStateView.setBackgroundColor(.white)
+                    } else {
+                        label = "Position Incorrect"
+                        self.movementStateView.setForegroundColor(.black)
+                        self.movementStateView.setBackgroundColor(.systemRed)
                         
-                        /// Make sure to unhide the movement state view
-                        self.movementStateView.unhide()
-                        
-                        if !positionState {
-                            /// Pause the timer if movement incorrect
-                            self.pauseTimer()
-                            
-                            /// Set label, foreground, and background color based on each state
-                            var label: String = "Please move according to the guidance"
-                            
-                            if name == .Still || name == .Negative {
-                                label = "Please move according to the guidance"
-                                self.movementStateView.setForegroundColor(.black)
-                                self.movementStateView.setBackgroundColor(.white)
-                            } else {
-                                label = "Position Incorrect"
-                                self.movementStateView.setForegroundColor(.black)
-                                self.movementStateView.setBackgroundColor(.systemRed)
-                                
-//                                self.playSfx("incorrect")
-                            }
-                            
-                            self.movementStateView.setLabel(label)
-                          
-                            self.playSfx(label)
-                        } else {
-//                            self.playSfx("correct")
-                            self.playSfx("Position Correct")
-                            self.startExerciseSession(duration: movement.duration)
-        //                    self.movementStateView.hide()
-                        }
+                        //                                self.playSfx("incorrect")
                     }
-                }.store(in: &bags)
+                    
+                    self.movementStateView.setLabel(label)
+                    
+                    self.speech(label)
+                } else {
+                    //                            self.playSfx("correct")
+                    self.speech("Position Correct")
+                    self.startExerciseSession(duration: movement.duration)
+                    //                    self.movementStateView.hide()
+                }
+            }
+        }.store(in: &bags)
         
         $remainingTime.sink { [weak self] time in
             guard let self else { return }
@@ -131,33 +141,28 @@ extension StretchingVC {
             ///
             /// Assume that if remaining time is zero, it means the movement has done
             guard time > 0 else {
-//                self.movementStateView.hide()
+                //                self.movementStateView.hide()
                 
                 self.next()
                 
                 return
             }
-          
+            
             switch time {
-            case 14:
-              self.playSfx("15 seconds countdown started")
-            case 10:
-              self.playSfx("\(Int(time)) seconds left")
+            case 13:
+                self.speech("15 seconds countdown started")
+            case 8:
+                self.speech("\(Int(time)) seconds left")
             case 1...5:
-              self.playSfx(String(Int(time)))
+                self.speech(String(Int(time)))
             default:
-              break
+                break
             }
             
             self.movementStateView.setLabel("\(Int(time)) seconds left")
             self.movementStateView.setForegroundColor(.black)
             self.movementStateView.setBackgroundColor(.white)
-//            if self.statusProgress == .inProgress {
-//                self.statusProgress = .halfDone
-//            } else if self.statusProgress == .halfDone {
-//                self.statusProgress = .done
-//            }
-//            self.currentMovementView.setDuration(time)
+            //            self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)
     }
@@ -233,6 +238,7 @@ extension StretchingVC {
     }
     
     @objc func skip() -> Bool {
+        audioService?.stopSpeech(at: .word)
         
         let neckMovements = setOfMovements.filter { $0.type == .neck }
         let armMovements = setOfMovements.filter { $0.type == .arm }
@@ -243,7 +249,7 @@ extension StretchingVC {
         }
         
         if (currentMovement.name == neckMovements.first?.name || currentMovement.name == armMovements.first?.name || currentMovement.name == backMovements.first?.name) && (statusProgress == .inProgress) {
-//            statusProgress = .inProgress
+            //            statusProgress = .inProgress
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
             statusProgress = .inProgress
         } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .inProgress {
@@ -251,15 +257,15 @@ extension StretchingVC {
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
             statusProgress = .inProgress
         } else if (currentMovement.name == neckMovements.first?.name || currentMovement.name == armMovements.first?.name || currentMovement.name == backMovements.first?.name) && (statusProgress == .halfDone) {
-//            statusProgress = .halfDone
+            //            statusProgress = .halfDone
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
             statusProgress = .halfDone
         } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .halfDone {
-//            statusProgress = .halfDone
+            //            statusProgress = .halfDone
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
             statusProgress = .inProgress
         } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .done {
-//            statusProgress = .done
+            //            statusProgress = .done
             self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
             statusProgress = .inProgress
         }
@@ -267,7 +273,7 @@ extension StretchingVC {
         guard let nextMovement = setOfMovements[safe: currentIndex+1] else {
             return false
         }
-    
+        
         currentIndex += 1
         nextIndex     = currentIndex+1
         stopTimer()
@@ -287,11 +293,11 @@ extension StretchingVC {
         } else if (movement.type == .neck || movement.type == .arm || movement.type == .back) && statusProgress == .halfDone {
             statusProgress = .done
         }
-//        print("current status for movement \(movementStateView) is : \(statusProgress)")
-//        self.progressSideView.currentMovementCheck(movement, statusProgress)
+        //        print("current status for movement \(movementStateView) is : \(statusProgress)")
+        //        self.progressSideView.currentMovementCheck(movement, statusProgress)
         print("current status for movement \(movementStateView) is : \(statusProgress)")
         self.completedMovement.append(movement)
-        self.playSfx("next-move")
+        self.speech("next-move")
         self.updateProgress(movementsPassed: completedMovement)
         let canSkip = skip()
         
@@ -330,13 +336,11 @@ extension StretchingVC {
         }
     }
     
-    func playSfx(_ file: String) {
+    func speech(_ text: String) {
         guard let audioService else { return }
-        
-//        audioService.playSFX(fileName: file)
-        audioService.speech(file)
+        audioService.speech(text)
     }
-
+    
     func updateProgress(movementsPassed: [Movement]) {
         
         if movementsPassed.count > 0 {
@@ -362,289 +366,65 @@ extension StretchingVC {
                 isBodyPassed = false
             }
             
-            //                                self.speech("incorrect")
-          }
-          
-          self.movementStateView.setLabel(label)
-          
-          self.speech(label)
         } else {
-          //                            self.speech("correct")
-          self.speech("Position Correct")
-          self.startExerciseSession(duration: movement.duration)
-          //                    self.movementStateView.hide()
+            print("Movement Passed is empty")
         }
-      }
-    }.store(in: &bags)
+    }
     
-    $remainingTime.sink { [weak self] time in
-      guard let self else { return }
-      
-      /// Cancel code execution below if timer not running and timer is paused
-      guard self.isTimerRunning, !self.isTimerPaused else { return }
-      
-      /// If remaining time equals to zero, then hide the movement state view and
-      /// next to the next movement
-      ///
-      /// Assume that if remaining time is zero, it means the movement has done
-      guard time > 0 else {
-        //                self.movementStateView.hide()
+    func randomizeMovement(movements: [Movement]) -> [Movement] {
+        var randomMovement: [Movement] = []
         
-        self.next()
+        let neckMovements = movements.filter { $0.type == .neck }
+        let armMovements = movements.filter { $0.type == .arm }
+        let backMovements = movements.filter { $0.type == .back }
         
-        return
-      }
-      
-      switch time {
-      case 13:
-        self.speech("15 seconds countdown started")
-      case 8:
-        self.speech("\(Int(time)) seconds left")
-      case 1...5:
-        self.speech(String(Int(time)))
-      default:
-        break
-      }
-      
-      self.movementStateView.setLabel("\(Int(time)) seconds left")
-      self.movementStateView.setForegroundColor(.black)
-      self.movementStateView.setBackgroundColor(.white)
-      self.currentMovementView.setDuration(time)
+        let randomizedNeck = neckMovements.shuffled()
+        let randomizedArm = armMovements.shuffled()
+        let randomizedBack = backMovements.shuffled()
+        
+        randomMovement.append(contentsOf: randomizedNeck)
+        randomMovement.append(contentsOf: randomizedArm)
+        randomMovement.append(contentsOf: randomizedBack)
+        
+        return randomMovement
     }
-    .store(in: &bags)
-  }
-  
-  /// Excercise session
-  func startExerciseSession(duration: TimeInterval) {
-    /// If movement is correct, run the timer based on previous state (start or resume)
-    if self.isTimerPaused {
-      self.resumeTimer()
-    } else {
-      self.startTimer(duration: duration)
-    }
-  }
-  
-  /// Timer countdown
-  func startTimer(duration: TimeInterval?) {
-    guard !isTimerRunning, !isTimerPaused else { return }
-    
-    /// If duration exist, it means the app will start timer based on duration.
-    /// Otherwise, app will start timer based on previous duration (resume)
-    if let duration {
-      remainingTime   = duration
-      timerInterval   = duration
-    }
-    
-    timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-    
-    isTimerRunning  = true
-  }
-  
-  @objc private func updateTimer() {
-    /// If remaining time equals to zero, then stop timer
-    guard remainingTime > 0 else {
-      stopTimer()
-      return
-    }
-    
-    /// Decrease remaining time by 1
-    remainingTime -= 1
-    
-    print("Remaining Time: ", remainingTime)
-  }
-  
-  func stopTimer() {
-    /// Make sure the timer is running
-    guard isTimerRunning else { return }
-    
-    /// Set the timer running and paused to false (reset), then invalidate the timer
-    isTimerRunning  = false
-    isTimerPaused   = false
-    timer?.invalidate()
-  }
-  
-  func pauseTimer() {
-    /// Make sure the timer is running
-    guard isTimerRunning else { return }
-    
-    /// Invalidate the timer, then set timer pause state to true and timer running to false
-    timer?.invalidate()
-    isTimerPaused  = true
-    isTimerRunning = false
-  }
-  
-  func resumeTimer() {
-    /// Make sure the timer paused and timer not runnning
-    guard isTimerPaused, !isTimerRunning else { return }
-    
-    /// Set the timer pause to false
-    isTimerPaused   = false
-    
-    /// The start the timer again
-    startTimer(duration: nil)
-  }
-  
-  @objc func skip() -> Bool {
-    audioService?.stopSpeech(at: .word)
-    
-    guard let _ = setOfMovements[safe: currentIndex+1] else {
-      return false
-    }
-    
-    currentIndex += 1
-    nextIndex     = currentIndex+1
-    stopTimer()
-    movementStateView.hide()
-    
-    return true
-  }
-  
-  func next() {
-    /// Make sure movement index is not out of range
-    guard let movement = setOfMovements[safe: currentIndex] else {
-      return
-    }
-    
-    self.completedMovement.append(movement)
-    
-    if currentIndex == setOfMovements.count - 1 {
-      self.speech("completed session")
-    } else {
-      self.speech("next move")
-    }
-    
-    self.updateProgress(movementsPassed: completedMovement)
-    
-    guard let _ = setOfMovements[safe: currentIndex+1] else {
-      finishSession()
-      return
-    }
-    
-    currentIndex += 1
-    nextIndex     = currentIndex+1
-    stopTimer()
-    movementStateView.hide()
-  }
-  
-  func finishSession() {
-    self.cameraService?.stopSession()
-    
-    if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
-      stretchingResult.movementList = self.completedMovement
-      self.replace(with: stretchingResult)
-    }
-  }
-  
-  @objc func showEndSessionAlert() {
-    let alert                   = NSAlert()
-    alert.messageText           = "Leaving So Soon?"
-    alert.informativeText       = "Finishing the session early will reduce the amount of reward you will receive"
-    alert.alertStyle            = .informational
-    alert.icon                  = NSImage.appLogo
-    alert.addButton(withTitle: "Stay")
-    alert.addButton(withTitle: "End Session")
-    
-    if #available(macOS 11.0,*) {
-      alert.buttons.last?.hasDestructiveAction = true
-    }
-    
-    let result = alert.runModal()
-    
-    if result == .alertSecondButtonReturn {
-      finishSession()
-    }
-  }
-  
-  func speech(_ text: String) {
-    guard let audioService else { return }
-    audioService.speech(text)
-  }
-  
-  func updateProgress(movementsPassed: [Movement]) {
-    
-    if movementsPassed.count > 0 {
-      let neckMovements = movementsPassed.count { $0.type == .neck}
-      let armMovements = movementsPassed.count { $0.type == .arm }
-      let backMovements = movementsPassed.count { $0.type == .back }
-      
-      if neckMovements >= 1 {
-        isNeckPassed = true
-      } else {
-        isNeckPassed = false
-      }
-      
-      if armMovements >= 1 {
-        isArmPassed = true
-      } else {
-        isArmPassed = false
-      }
-      
-      if backMovements >= 1 {
-        isBodyPassed = true
-      } else {
-        isBodyPassed = false
-      }
-      
-    } else {
-      print("Movement Passed is empty")
-    }
-    
-  }
-  
-  func randomizeMovement(movements: [Movement]) -> [Movement] {
-    var randomMovement: [Movement] = []
-    
-    let neckMovements = movements.filter { $0.type == .neck }
-    let armMovements = movements.filter { $0.type == .arm }
-    let backMovements = movements.filter { $0.type == .back }
-    
-    let randomizedNeck = neckMovements.shuffled()
-    let randomizedArm = armMovements.shuffled()
-    let randomizedBack = backMovements.shuffled()
-    
-    randomMovement.append(contentsOf: randomizedNeck)
-    randomMovement.append(contentsOf: randomizedArm)
-    randomMovement.append(contentsOf: randomizedBack)
-    
-    return randomMovement
-  }
 }
 
 
 extension StretchingVC : PredictorDelegate {
-  func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {
-    print(boundingBox)
-    DispatchQueue.main.async { [weak self] in
-      guard let self else { return }
-      //            self.boundingBoxView.updateRect(boundingBox, color: .yellow)
-      if value && self.showTutorial {
-        self.showTutorial = false
-      }
-    }
-  }
-  
-  func predictor(didLabelAction action: String, with confidence: Double) {
-    for name in ExerciseName.allCases {
-      if name.rawValue == action && confidence > 0.65 {
-        if exerciseName != name {
-          self.exerciseName = name
-          //                    print("\(name) and the confidence is \(confidence)")
+    func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {
+        print(boundingBox)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            //            self.boundingBoxView.updateRect(boundingBox, color: .yellow)
+            if value && self.showTutorial {
+                self.showTutorial = false
+            }
         }
-      }
     }
-  }
-  
-  func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
-  }
-  
+    
+    func predictor(didLabelAction action: String, with confidence: Double) {
+        for name in ExerciseName.allCases {
+            if name.rawValue == action && confidence > 0.65 {
+                if exerciseName != name {
+                    self.exerciseName = name
+                    //                    print("\(name) and the confidence is \(confidence)")
+                }
+            }
+        }
+    }
+    
+    func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
+    }
+    
 }
 
 extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
-  func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-    if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
-      connection.isVideoMirrored = true
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+            connection.isVideoMirrored = true
+        }
+        self.predictor?.estimation(sampleBuffer: sampleBuffer)
+        self.predictor?.detectHumanUpperBody(sampleBuffer: sampleBuffer)
     }
-    self.predictor?.estimation(sampleBuffer: sampleBuffer)
-    self.predictor?.detectHumanUpperBody(sampleBuffer: sampleBuffer)
-  }
 }
