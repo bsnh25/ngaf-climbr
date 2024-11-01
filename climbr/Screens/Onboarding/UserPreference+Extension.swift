@@ -30,16 +30,16 @@ extension UserPreferenceVC{
     @objc
     func actNextButton(){
         
-        guard processSavePreference() != 0, stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue) >= 7200 else {
+        guard processSavePreference() != 0, samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue) >= 7200 else {
             print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
 //            configureWarning()
             return
         }
-        print("Start Work Hour : \(startWorkHour.dateValue)")
-        print("End Work Hour : \(stopWorkHour.dateValue)")
+        print("Start Work Hour : \(samePreference.startWorkPicker.dateValue)")
+        print("End Work Hour : \(samePreference.endWorkPicker.dateValue)")
         
         print("Reminder at \(processSavePreference())")
-        print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
+        print("diff time : \(samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue))")
         ///get checkbox value
         let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
         
@@ -56,8 +56,8 @@ extension UserPreferenceVC{
     func action30min(){
         resetButtonColors()
         button1.isSelected = true
-        button1.layer?.backgroundColor = .white
-        button1.foregroundColorText = .black
+        button1.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        button1.foregroundColorText = .white
         nextButton.isEnabled = true
         print("\(button1.title) choose")
     }
@@ -66,8 +66,8 @@ extension UserPreferenceVC{
     func action60min(){
         resetButtonColors()
         button2.isSelected = true
-        button2.layer?.backgroundColor = .white
-        button2.foregroundColorText = .black
+        button2.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        button2.foregroundColorText = .white
         nextButton.isEnabled = true
         print("\(button2.title) choose")
     }
@@ -76,8 +76,8 @@ extension UserPreferenceVC{
     func action90min(){
         resetButtonColors()
         button3.isSelected = true
-        button3.layer?.backgroundColor = .white
-        button3.foregroundColorText = .black
+        button3.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        button3.foregroundColorText = .white
         nextButton.isEnabled = true
         print("\(button3.title) choose")
     }
@@ -86,8 +86,8 @@ extension UserPreferenceVC{
     func action120min(){
         resetButtonColors()
         button4.isSelected = true
-        button4.layer?.backgroundColor = .white
-        button4.foregroundColorText = .black
+        button4.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        button4.foregroundColorText = .white
         nextButton.isEnabled = true
         print("\(button4.title) choose")
     }
@@ -105,11 +105,35 @@ extension UserPreferenceVC{
     @objc
     func actionDifferentWorkHour() {
         isDifferentChecked = true
+        removeSamePreference()
         
         if differentWorkHoursCheckbox.state == .on {
             daysButtonStack.unlockButton()
+            showDaysPreferences()
+            removeUnderDaysPreference()
+            configureReminderLabel(anchorObject: preferenceStackView)
+            configureText1Line2()
+            configureButton1()
+            configureButton2()
+            configureButton3()
+            configureButton4()
+            configureText2Line2()
+            configureCheckBox()
+            configureNextButton()
         } else{
             daysButtonStack.lockButton()
+            removeDaysPreferences()
+            configureSamePreference()
+            removeUnderDaysPreference()
+            configureReminderLabel(anchorObject: samePreference)
+            configureText1Line2()
+            configureButton1()
+            configureButton2()
+            configureButton3()
+            configureButton4()
+            configureText2Line2()
+            configureCheckBox()
+            configureNextButton()
         }
     }
     
@@ -205,4 +229,64 @@ extension UserPreferenceVC{
             // No special case detected
             return false
         }
+}
+
+extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
+    func didMondayTap(_ monday: Bool) {
+        if monday {
+            preferenceStack[0].isHidden = false
+        }else {
+            preferenceStack[0].isHidden = true
+        }
+    }
+    
+    func didTuesdayTap(_ tuesday: Bool) {
+        if tuesday {
+            preferenceStack[1].isHidden = false
+        }else {
+            preferenceStack[1].isHidden = true
+        }
+    }
+    
+    func didWednesdayTap(_ wednesday: Bool) {
+        if wednesday {
+            preferenceStack[2].isHidden = false
+        }else {
+            preferenceStack[2].isHidden = true
+        }
+    }
+    
+    func didThursdayTap(_ thursday: Bool) {
+        if thursday {
+            preferenceStack[3].isHidden = false
+        } else {
+            preferenceStack[3].isHidden = true
+        }
+    }
+    
+    func didFridayTap(_ friday: Bool) {
+        if friday {
+            preferenceStack[4].isHidden = false
+        }else {
+            preferenceStack[4].isHidden = true
+        }
+    }
+    
+    func didSaturdayTap(_ saturday: Bool) {
+        if saturday {
+            preferenceStack[5].isHidden = false
+        }else {
+            preferenceStack[5].isHidden = true
+        }
+    }
+    
+    func didSundayTap(_ sunday: Bool) {
+        if sunday {
+            preferenceStack[6].isHidden = false
+        }else {
+            preferenceStack[6].isHidden = true
+        }
+    }
+    
+    
 }

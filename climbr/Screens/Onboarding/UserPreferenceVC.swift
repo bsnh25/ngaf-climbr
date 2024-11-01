@@ -10,46 +10,52 @@ import Swinject
 import SnapKit
 
 
-class UserPreferenceVC: NSViewController {
+class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     let bgContainer = NSView()
     let warnContainer = NSView()
     let boxContainer = NSView()
     let pathImage = NSImageView(image: .onboardingmountain)
     let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
-    let samePreference = DayTimePreferenceView(dayName: "Work Hours", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let mondayPreference = DayTimePreferenceView(dayName: "Monday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let thursdayPreference = DayTimePreferenceView(dayName: "Thursday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let fridayPreference = DayTimePreferenceView(dayName: "Friday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let saturdayPreference = DayTimePreferenceView(dayName: "Saturday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
-    let sundayPreference = DayTimePreferenceView(dayName: "Sunday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20)))
+    let preferenceStackView = NSStackView()
+    var preferenceStack: [DayTimePreferenceView] = []
+    let samePreference = DayTimePreferenceView(dayName: "Work Hours", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 84.167)
+    let mondayPreference = DayTimePreferenceView(dayName: "Monday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 115)
+    let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 113)
+    let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 85)
+    let thursdayPreference = DayTimePreferenceView(dayName: "Thursday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 104)
+    let fridayPreference = DayTimePreferenceView(dayName: "Friday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 131)
+    let saturdayPreference = DayTimePreferenceView(dayName: "Saturday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 107)
+    let sundayPreference = DayTimePreferenceView(dayName: "Sunday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 120)
     let textUrWorkDay = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your Work Day:")
     let daysButtonStack = DaysButtonStackView()
     let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
+    let reminderLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+    let text1Line2 = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Every")
+    let text2Line2 = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Minutes")
     var isDifferentChecked: Bool = false
+    let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    
     
     
     let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
-    let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
     let warnLabel = CLTextLabelV2(sizeOfFont: 16, weightOfFont: .light, contentLabel: "􀇾 Work hour should be more than 2 (two) hours")
     let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
     let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
     let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
-    let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
-    let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
+    
     let startWorkHour = CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
     let stopWorkHour = CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
     
     
     
     
-    let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    
+    
     
     var workingHours: [WorkingHour] = []
     var lastStartValue: Date!
@@ -64,6 +70,7 @@ class UserPreferenceVC: NSViewController {
         super.init(nibName: nil, bundle: nil)
         self.charService = charService
         self.notifService = notifService
+        
     }
     
     required init?(coder: NSCoder) {
@@ -80,6 +87,7 @@ class UserPreferenceVC: NSViewController {
         super.viewDidAppear()
         UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
         UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
+        daysButtonStack.daysButtonDelegate = self
         notifService?.askUserPermission()
     }
     
@@ -93,6 +101,16 @@ class UserPreferenceVC: NSViewController {
         configureDaysButtonStackView()
         configureDifferentWorkHours()
         configureSamePreference()
+        configureReminderLabel(anchorObject: samePreference)
+        configureText1Line2()
+        configureButton1()
+        configureButton2()
+        configureButton3()
+        configureButton4()
+        configureText2Line2()
+        configureCheckBox()
+        configureNextButton()
+        
     }
     
     func configureBgContainer(){
@@ -159,7 +177,6 @@ class UserPreferenceVC: NSViewController {
         view.addSubview(appLogoImage)
         appLogoImage.translatesAutoresizingMaskIntoConstraints = false
         
-        let padding = CGFloat(-1 * (view.bounds.height * 0.23))
         let width = CGFloat(1 * (view.frame.width * 0.475))
         print("width adalah: \(width)")
         
@@ -242,8 +259,199 @@ class UserPreferenceVC: NSViewController {
         samePreference.snp.makeConstraints{ same in
             same.top.equalTo(differentWorkHoursCheckbox.snp.bottom).offset(30)
             same.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+            same.height.equalTo(38.3)
         }
     }
+    
+    func removeSamePreference(){
+        samePreference.removeFromSuperview()
+    }
+    
+    func addTappedDays(dayPreference day: DayTimePreferenceView){
+        preferenceStack.append(day)
+        print("ini stack Days: \(preferenceStack)")
+    }
+    
+    func removeTappedDays(dayPreference day: DayTimePreferenceView){
+        preferenceStack.removeAll(where: { $0 === day })
+    }
+    
+    
+    func showDaysPreferences(){
+        preferenceStack = [mondayPreference, tuesdayPreference, wednesdayPreference, thursdayPreference, fridayPreference, saturdayPreference, sundayPreference]
+        
+        preferenceStackView.spacing = 15
+        preferenceStackView.alignment = .leading
+        preferenceStackView.clipsToBounds = false
+        
+        preferenceStackView.setViews(preferenceStack, in: .top)
+        preferenceStackView.orientation = .vertical
+        
+        for item in preferenceStack{
+            item.wantsLayer = true
+            item.translatesAutoresizingMaskIntoConstraints = false
+            item.isHidden = true
+            
+            item.snp.makeConstraints{item in
+                item.height.equalTo(38.3)
+            }
+        }
+        
+        view.addSubview(preferenceStackView)
+        preferenceStackView.translatesAutoresizingMaskIntoConstraints = false
+        preferenceStackView.snp.makeConstraints{stack in
+            stack.top.equalTo(differentWorkHoursCheckbox.snp.bottom).offset(30)
+            stack.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+        }
+    }
+    
+    func configureReminderLabel(anchorObject view: NSView){
+        view.addSubview(reminderLabel)
+        reminderLabel.translatesAutoresizingMaskIntoConstraints = false
+        reminderLabel.textColor = .black
+        
+        reminderLabel.snp.makeConstraints{ reminder in
+            reminder.top.equalTo(view.snp.bottom).offset(32.525)
+            reminder.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+        }
+    }
+    
+    func configureText1Line2(){
+        view.addSubview(text1Line2)
+        text1Line2.translatesAutoresizingMaskIntoConstraints = false
+        text1Line2.textColor = .black
+        
+        text1Line2.snp.makeConstraints{every in
+            every.top.equalTo(reminderLabel.snp.bottom).offset(10)
+            every.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+        }
+    }
+    
+    func configureButton1(){
+        view.addSubview(button1)
+        button1.target = self
+        button1.action = #selector(action30min)
+        
+        button1.snp.makeConstraints{button in
+            button.top.equalTo(reminderLabel.snp.bottom).offset(8.34)
+            button.leading.equalTo(text1Line2.snp.trailing).offset(13.3)
+            button.width.equalTo(37.5)
+            button.height.equalTo(25)
+        }
+    }
+    
+    func configureButton2(){
+        view.addSubview(button2)
+        button2.target = self
+        button2.action = #selector(action60min)
+        
+        button2.snp.makeConstraints{button in
+            button.top.equalTo(reminderLabel.snp.bottom).offset(8.34)
+            button.leading.equalTo(button1.snp.trailing).offset(15.834)
+            button.width.equalTo(37.5)
+            button.height.equalTo(25)
+        }
+    }
+    
+    func configureButton3(){
+        view.addSubview(button3)
+        button3.target = self
+        button3.action = #selector(action90min)
+        
+        button3.snp.makeConstraints{button in
+            button.top.equalTo(reminderLabel.snp.bottom).offset(8.34)
+            button.leading.equalTo(button2.snp.trailing).offset(15.834)
+            button.width.equalTo(37.5)
+            button.height.equalTo(25)
+        }
+    }
+    
+    func configureButton4(){
+        view.addSubview(button4)
+        button4.target = self
+        button4.action = #selector(action120min)
+        
+        button4.snp.makeConstraints{button in
+            button.top.equalTo(reminderLabel.snp.bottom).offset(8.34)
+            button.leading.equalTo(button3.snp.trailing).offset(15.834)
+            button.width.equalTo(37.5)
+            button.height.equalTo(25)
+        }
+    }
+    
+    func configureText2Line2(){
+        view.addSubview(text2Line2)
+        text2Line2.translatesAutoresizingMaskIntoConstraints = false
+        text2Line2.textColor = .black
+        
+        text2Line2.snp.makeConstraints{button in
+            button.top.equalTo(reminderLabel.snp.bottom).offset(8.34)
+            button.leading.equalTo(button4.snp.trailing).offset(13.3)
+        }
+    }
+    
+    func removeDaysPreferences(){
+        preferenceStackView.removeFromSuperview()
+    }
+    
+    func removeUnderDaysPreference(){
+        reminderLabel.removeFromSuperview()
+        text1Line2.removeFromSuperview()
+        button1.removeFromSuperview()
+        button2.removeFromSuperview()
+        button3.removeFromSuperview()
+        button4.removeFromSuperview()
+        text2Line2.removeFromSuperview()
+        checkboxButton.removeFromSuperview()
+    }
+    
+    func configureCheckBox(){
+        view.addSubview(checkboxButton)
+        checkboxButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 18.34, weight: .bold),
+            .foregroundColor: NSColor.black
+        ]
+        
+        // Apply the attributed title
+        checkboxButton.attributedTitle = NSAttributedString(string: checkboxButton.title, attributes: attributes)
+        
+        // Set the content tint color (optional, depending on what you want to achieve)
+        checkboxButton.contentTintColor = .blue
+        if isChecked{
+            checkboxButton.state = .on
+        } else {
+            checkboxButton.state = .off
+        }
+        checkboxButton.target = self
+        checkboxButton.action = #selector(actionCheckbox)
+        
+        checkboxButton.snp.makeConstraints{ check in
+            check.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+            check.top.equalTo(button1.snp.bottom).offset(23.34)
+        }
+        
+    }
+    
+    func configureNextButton(){
+        view.addSubview(nextButton)
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.isEnabled = false
+        nextButton.target = self
+        nextButton.action = #selector(actNextButton)
+        
+        nextButton.snp.makeConstraints {next in
+            next.trailing.equalTo(boxContainer.snp.trailing).offset(-33.4)
+            next.top.equalTo(checkboxButton.snp.bottom).offset(15)
+            next.width.equalTo(88.34)
+            next.height.equalTo(42.5)
+        }
+    }
+    
+    
+    
+    
     
     
     
@@ -259,32 +467,6 @@ class UserPreferenceVC: NSViewController {
         ])
     }
     
-    func configureReminderLabel(){
-        view.addSubview(reminderLabel)
-        reminderLabel.translatesAutoresizingMaskIntoConstraints = false
-        reminderLabel.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            reminderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
-            reminderLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 484),
-            
-        ])
-    }
-    
-    func configureNextButton(){
-        view.addSubview(nextButton)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.isEnabled = false
-        nextButton.target = self
-        nextButton.action = #selector(actNextButton)
-        
-        NSLayoutConstraint.activate([
-            nextButton.widthAnchor.constraint(equalToConstant: 143),
-            nextButton.heightAnchor.constraint(equalToConstant: 60),
-            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 720)
-        ])
-    }
     
     func configureTextLine1(){
         view.addSubview(text1Line1)
@@ -388,121 +570,20 @@ class UserPreferenceVC: NSViewController {
         updateStopWorkHour()
     }
     
-    func configureText1Line2(){
-        view.addSubview(text1Line2)
-        text1Line2.translatesAutoresizingMaskIntoConstraints = false
-        text1Line2.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            text1Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            text1Line2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382)
-        ])
-    }
     
-    func configureButton1(){
-        view.addSubview(button1)
-        button1.target = self
-        button1.action = #selector(action30min)
-        
-        NSLayoutConstraint.activate([
-            button1.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button1.leadingAnchor.constraint(equalTo: text1Line2.trailingAnchor, constant: 25),
-            button1.widthAnchor.constraint(equalToConstant: 47),
-            button1.heightAnchor.constraint(equalToConstant: 36)
-        ])
-    }
     
-    func configureButton2(){
-        view.addSubview(button2)
-        button2.target = self
-        button2.action = #selector(action60min)
-        
-        NSLayoutConstraint.activate([
-            button2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button2.leadingAnchor.constraint(equalTo: button1.trailingAnchor, constant: 25),
-            button2.widthAnchor.constraint(equalToConstant: 47),
-            button2.heightAnchor.constraint(equalToConstant: 36)
-        ])
-    }
-    
-    func configureButton3(){
-        view.addSubview(button3)
-        button3.target = self
-        button3.action = #selector(action90min)
-        
-        NSLayoutConstraint.activate([
-            button3.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button3.leadingAnchor.constraint(equalTo: button2.trailingAnchor, constant: 25),
-            button3.widthAnchor.constraint(equalToConstant: 47),
-            button3.heightAnchor.constraint(equalToConstant: 36)
-        ])
-    }
-    
-    func configureButton4(){
-        view.addSubview(button4)
-        button4.target = self
-        button4.action = #selector(action120min)
-        
-        NSLayoutConstraint.activate([
-            button4.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button4.leadingAnchor.constraint(equalTo: button3.trailingAnchor, constant: 25),
-            button4.widthAnchor.constraint(equalToConstant: 47),
-            button4.heightAnchor.constraint(equalToConstant: 36)
-        ])
-    }
-    
-    func configureText2Line2(){
-        view.addSubview(text2Line2)
-        text2Line2.translatesAutoresizingMaskIntoConstraints = false
-        text2Line2.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            text2Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            text2Line2.leadingAnchor.constraint(equalTo: button4.trailingAnchor, constant: 25)
-            
-        ])
-    }
-    
-    func configureCheckBox(){
-        view.addSubview(checkboxButton)
-        checkboxButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 22, weight: .bold),
-            .foregroundColor: NSColor.cContainerHome
-        ]
-        
-        // Apply the attributed title
-        checkboxButton.attributedTitle = NSAttributedString(string: checkboxButton.title, attributes: attributes)
-        
-        // Set the content tint color (optional, depending on what you want to achieve)
-        checkboxButton.contentTintColor = .white
-        if isChecked{
-            checkboxButton.state = .on
-        } else {
-            checkboxButton.state = .off
-        }
-        checkboxButton.target = self
-        checkboxButton.action = #selector(actionCheckbox)
-        
-        NSLayoutConstraint.activate([
-            checkboxButton.topAnchor.constraint(equalTo: text1Line2.bottomAnchor, constant: 55),
-            checkboxButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382)
-        ])
-        
-    }
     
     func resetButtonColors() {
         // Reset all buttons to gray
-        button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        button3.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        button4.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
+        button1.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+        button2.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+        button3.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+        button4.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
         
-        button1.foregroundColorText = .white
-        button2.foregroundColorText = .white
-        button3.foregroundColorText = .white
-        button4.foregroundColorText = .white
+        button1.foregroundColorText = .black
+        button2.foregroundColorText = .black
+        button3.foregroundColorText = .black
+        button4.foregroundColorText = .black
         
         button1.isSelected = false
         button2.isSelected = false

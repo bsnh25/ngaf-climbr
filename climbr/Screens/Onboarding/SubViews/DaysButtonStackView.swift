@@ -8,7 +8,19 @@
 import AppKit
 import SnapKit
 
+protocol DaysButtonToUserPreferenceDelegate: AnyObject {
+    func didMondayTap(_ monday: Bool)
+    func didTuesdayTap(_ tuesday: Bool)
+    func didWednesdayTap(_ wednesday: Bool)
+    func didThursdayTap(_ thursday: Bool)
+    func didFridayTap(_ friday: Bool)
+    func didSaturdayTap(_ saturday: Bool)
+    func didSundayTap(_ sunday: Bool)
+}
+
 class DaysButtonStackView: NSStackView {
+    
+    weak var daysButtonDelegate: DaysButtonToUserPreferenceDelegate?
     let monday = CLPickerButton(title: "M", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let tuesday = CLPickerButton(title: "T", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let wednesday = CLPickerButton(title: "W", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
@@ -100,10 +112,12 @@ class DaysButtonStackView: NSStackView {
             monday.isSelected = false
             monday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             monday.foregroundColorText = .black
+            daysButtonDelegate?.didMondayTap(monday.isSelected)
         } else {
             monday.isSelected = true
             monday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             monday.foregroundColorText = .white
+            daysButtonDelegate?.didMondayTap(monday.isSelected)
         }
     }
     
@@ -113,10 +127,12 @@ class DaysButtonStackView: NSStackView {
             tuesday.isSelected = false
             tuesday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             tuesday.foregroundColorText = .black
+            daysButtonDelegate?.didTuesdayTap(tuesday.isSelected)
         } else {
             tuesday.isSelected = true
             tuesday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             tuesday.foregroundColorText = .white
+            daysButtonDelegate?.didTuesdayTap(tuesday.isSelected)
         }
     }
     
@@ -125,10 +141,12 @@ class DaysButtonStackView: NSStackView {
             wednesday.isSelected = false
             wednesday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             wednesday.foregroundColorText = .black
+            daysButtonDelegate?.didWednesdayTap(wednesday.isSelected)
         } else {
             wednesday.isSelected = true
             wednesday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             wednesday.foregroundColorText = .white
+            daysButtonDelegate?.didWednesdayTap(wednesday.isSelected)
         }
     }
     
@@ -137,10 +155,12 @@ class DaysButtonStackView: NSStackView {
             thursday.isSelected = false
             thursday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             thursday.foregroundColorText = .black
+            daysButtonDelegate?.didThursdayTap(thursday.isSelected)
         } else {
             thursday.isSelected = true
             thursday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             thursday.foregroundColorText = .white
+            daysButtonDelegate?.didThursdayTap(thursday.isSelected)
         }
     }
     
@@ -149,10 +169,12 @@ class DaysButtonStackView: NSStackView {
             friday.isSelected = false
             friday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             friday.foregroundColorText = .black
+            daysButtonDelegate?.didFridayTap(friday.isSelected)
         } else {
             friday.isSelected = true
             friday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             friday.foregroundColorText = .white
+            daysButtonDelegate?.didFridayTap(friday.isSelected)
         }
     }
     
@@ -161,10 +183,12 @@ class DaysButtonStackView: NSStackView {
             saturday.isSelected = false
             saturday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             saturday.foregroundColorText = .black
+            daysButtonDelegate?.didSaturdayTap(saturday.isSelected)
         } else {
             saturday.isSelected = true
             saturday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             saturday.foregroundColorText = .white
+            daysButtonDelegate?.didSaturdayTap(saturday.isSelected)
         }
     }
     
@@ -173,10 +197,12 @@ class DaysButtonStackView: NSStackView {
             sunday.isSelected = false
             sunday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
             sunday.foregroundColorText = .black
+            daysButtonDelegate?.didSundayTap(sunday.isSelected)
         } else {
             sunday.isSelected = true
             sunday.layer?.backgroundColor = NSColor.cNewButton.cgColor
             sunday.foregroundColorText = .white
+            daysButtonDelegate?.didSundayTap(sunday.isSelected)
         }
     }
 }
