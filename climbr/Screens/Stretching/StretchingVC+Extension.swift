@@ -21,7 +21,10 @@ extension StretchingVC {
             }
             
 //            self.currentMovementView.updateData(movement)
-            self.progressSideView.updateStretch(movement, self.statusProgress)
+//            self.progressSideView.updateStretch(movement, self.statusProgress)
+            if statusProgress == .inProgress {
+                self.progressSideView.currentMovementCheck(movement, self.statusProgress)
+            }
 //            self.currentMovementView.getIndexMovement(current: index, maxIndex: self.setOfMovements.count)
             self.playSfx(movement.name.rawValue)
             
@@ -43,8 +46,8 @@ extension StretchingVC {
             guard let movement = self.setOfMovements[safe: index] else {
                 return
             }
-            
-            self.progressSideView.updateStretch(movement, self.statusProgress)
+//            self.progressSideView.currentMovementCheck(movement, self.statusProgress)
+//            self.progressSideView.updateStretch(movement, self.statusProgress)
             
         }
         .store(in: &bags)
@@ -150,6 +153,11 @@ extension StretchingVC {
             self.movementStateView.setLabel("\(Int(time)) seconds left")
             self.movementStateView.setForegroundColor(.black)
             self.movementStateView.setBackgroundColor(.white)
+//            if self.statusProgress == .inProgress {
+//                self.statusProgress = .halfDone
+//            } else if self.statusProgress == .halfDone {
+//                self.statusProgress = .done
+//            }
 //            self.currentMovementView.setDuration(time)
         }
         .store(in: &bags)
@@ -226,10 +234,26 @@ extension StretchingVC {
     }
     
     @objc func skip() -> Bool {
-        guard let _ = setOfMovements[safe: currentIndex+1] else {
+        
+        let neckMovements = setOfMovements.filter { $0.type == .neck }
+        let armMovements = setOfMovements.filter { $0.type == .arm }
+        let backMovements = setOfMovements.filter { $0.type == .back }
+        
+        guard let currentMovement = setOfMovements[safe: currentIndex] else {
             return false
         }
         
+        if (currentMovement.name == neckMovements.first?.name || currentMovement.name == armMovements.first?.name || currentMovement.name == backMovements.first?.name) && (statusProgress == .inProgress || statusProgress == .halfDone) {
+            self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+        } else if (currentMovement.name == neckMovements.last?.name || currentMovement.name == armMovements.last?.name || currentMovement.name == backMovements.last?.name) && statusProgress == .inProgress {
+            statusProgress = .skipped
+            self.progressSideView.currentMovementCheck(currentMovement, statusProgress)
+        }
+        
+        guard let nextMovement = setOfMovements[safe: currentIndex+1] else {
+            return false
+        }
+    
         currentIndex += 1
         nextIndex     = currentIndex+1
         stopTimer()
@@ -243,7 +267,17 @@ extension StretchingVC {
         guard let movement = setOfMovements[safe: currentIndex] else {
             return
         }
-        
+        print("current status for movement \(movementStateView) is : \(statusProgress)")
+        if (movement.type == .neck || movement.type == .arm || movement.type == .back) && statusProgress == .inProgress {
+            statusProgress = .halfDone
+        } else if (movement.type == .neck || movement.type == .arm || movement.type == .back) && statusProgress == .halfDone {
+            statusProgress = .done
+            self.progressSideView.currentMovementCheck(movement, statusProgress)
+            statusProgress = .inProgress
+        }
+        print("current status for movement \(movementStateView) is : \(statusProgress)")
+        self.progressSideView.currentMovementCheck(movement, statusProgress)
+        print("current status for movement \(movementStateView) is : \(statusProgress)")
         self.completedMovement.append(movement)
         self.playSfx("next-move")
         self.updateProgress(movementsPassed: completedMovement)

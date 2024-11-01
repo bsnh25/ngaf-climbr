@@ -100,7 +100,7 @@ class StretchingVC: NSViewController {
         return self.randomizeMovement(movements: coba)
     }()
     var completedMovement: [Movement]   = []
-    var statusProgress : ProgressStretchCondition = ProgressStretchCondition.toDo
+    var statusProgress : ProgressStretchCondition = ProgressStretchCondition.inProgress
     
     var bags: Set<AnyCancellable> = []
     

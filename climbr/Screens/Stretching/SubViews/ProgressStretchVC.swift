@@ -35,6 +35,10 @@ class ProgressStretchVC: NSView {
     var backStretchView: SubProgressStretchView = SubProgressStretchView()
     var stretchMovement : Movement?
     var statusProgress : ProgressStretchCondition = ProgressStretchCondition.toDo
+    var armMovement : [Movement] = []
+    var neckMovement : [Movement] = []
+    var backMovement : [Movement] = []
+    var isFirstLoaded: Bool = false
     
     var progressStack: NSStackView = {
         let stack = NSStackView()
@@ -58,6 +62,7 @@ class ProgressStretchVC: NSView {
         addSubview(progressStack)
         let views = [neckStretchView, armStretchView, backStretchView]
         progressStack.setViews(views, in: .leading)
+        
 //        progressStack.wantsLayer = true
 //        progressStack.layer?.borderColor = NSColor.red.cgColor
 //        progressStack.layer?.borderWidth = 2
@@ -101,19 +106,140 @@ class ProgressStretchVC: NSView {
     func loadMovement(_ movements: [Movement]) {
         movements.forEach { movement in
             if movement.type == .neck {
-                neckStretchView.updateData(movement)
+                neckMovement.append(movement)
             } else if movement.type == .arm {
-                armStretchView.updateData(movement)
+                armMovement.append(movement)
             } else if movement.type == .back {
-                backStretchView.updateData(movement)
+                backMovement.append(movement)
             }
-        }
+        } // done
+
+        isFirstLoaded = true
+//        self.currentMovementCheck(neckMovement.first!)
     }
     
     func updateStretch(_ movement: Movement, _ status: ProgressStretchCondition){
         neckStretchView.loadDataSubView(movement, status)
         armStretchView.loadDataSubView(movement, status)
         backStretchView.loadDataSubView(movement, status)
+    }
+    
+    func currentMovementCheck(_ currentMovement: Movement, _ status: ProgressStretchCondition){
+
+        guard let neckFirstMovement = neckMovement.first else { return }
+        guard let armFirstMovement = armMovement.first else { return }
+        guard let backFirstMovement = backMovement.first else { return }
+        
+        if isFirstLoaded {
+            neckStretchView.loadDataSubView(neckFirstMovement, .inProgress)
+            armStretchView.loadDataSubView(armFirstMovement, .toDo)
+            backStretchView.loadDataSubView(backFirstMovement, .toDo)
+            isFirstLoaded = false
+        }
+        
+//        if currentMovement.id == neckFirstMovement.id {
+//            neckStretchView.loadDataSubView(currentMovement, .inProgress)
+//        } else if currentMovement.id == armFirstMovement.id {
+//            armStretchView.loadDataSubView(currentMovement, .inProgress)
+//        } else if currentMovement.id == backFirstMovement.id {
+//            backStretchView.loadDataSubView(currentMovement, .inProgress)
+//        }
+        
+        if currentMovement.type == .neck {
+            switch status {
+            case .toDo:
+                armStretchView.hideView()
+                backStretchView.hideView()
+                return
+            case .done:
+                neckStretchView.loadDataSubView(currentMovement, status)
+                armStretchView.unHideView()
+                neckStretchView.hideView()
+                backStretchView.hideView()
+                return
+            case .inProgress:
+                neckStretchView.loadDataSubView(currentMovement, status)
+                armStretchView.hideView()
+                backStretchView.hideView()
+                return
+            case .halfDone:
+                neckStretchView.loadDataSubView(currentMovement, status)
+                if currentMovement.name == neckMovement.last?.name {
+                    neckStretchView.hideView()
+                    armStretchView.unHideView()
+                    backStretchView.hideView()
+                } else {
+                    armStretchView.hideView()
+                    backStretchView.hideView()
+                }
+                return
+            case .skipped:
+                neckStretchView.loadDataSubView(currentMovement, status)
+                armStretchView.unHideView()
+                neckStretchView.hideView()
+                return
+            }
+        } else if currentMovement.type == .arm {
+            switch status {
+            case .toDo:
+//                neckStretchView.hideView()
+                armStretchView.hideView()
+//                backStretchView.hideView()
+                return
+            case .done:
+                armStretchView.loadDataSubView(currentMovement, status)
+                armStretchView.hideView()
+//                neckStretchView.hideView()
+                backStretchView.unHideView()
+                return
+            case .inProgress:
+                armStretchView.unHideView()
+                armStretchView.loadDataSubView(currentMovement, status)
+                neckStretchView.hideView()
+                backStretchView.hideView()
+                return
+            case .halfDone:
+                armStretchView.loadDataSubView(currentMovement, status)
+                neckStretchView.hideView()
+                backStretchView.hideView()
+                return
+            case .skipped:
+                armStretchView.loadDataSubView(currentMovement, status)
+                backStretchView.unHideView()
+                armStretchView.hideView()
+                return
+            }
+        } else if currentMovement.type == .back {
+            switch status {
+            case .toDo:
+//                neckStretchView.hideView()
+                backStretchView.hideView()
+//                backStretchView.hideView()
+                return
+            case .done:
+                backStretchView.loadDataSubView(currentMovement, status)
+                backStretchView.hideView()
+//                neckStretchView.hideView()
+                return
+            case .inProgress:
+                backStretchView.unHideView()
+                backStretchView.loadDataSubView(currentMovement, status)
+                neckStretchView.hideView()
+                armStretchView.hideView()
+                return
+            case .halfDone:
+                backStretchView.loadDataSubView(currentMovement, status)
+                neckStretchView.hideView()
+                armStretchView.hideView()
+                return
+            case .skipped:
+                backStretchView.loadDataSubView(currentMovement, status)
+                backStretchView.unHideView()
+                armStretchView.hideView()
+                return
+            }
+        }
+
     }
     
 }
@@ -135,7 +261,7 @@ class SubProgressStretchView: NSView {
         devider.fillColor = .black
         return devider
     }()
-    var statusImage : ProgressStretchCondition = ProgressStretchCondition.toDo
+    var statusImage : ProgressStretchCondition = ProgressStretchCondition.inProgress
     
     /// stack section
     var movementStackView: NSStackView = {
@@ -195,7 +321,7 @@ class SubProgressStretchView: NSView {
 //        movementStackView.wantsLayer = true
 //        movementStackView.layer?.borderColor = NSColor.red.cgColor
 //        movementStackView.layer?.borderWidth = 2
-        
+//        
         progressStackView.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading)
             make.trailing.equalTo(self.snp.trailing)
@@ -242,14 +368,14 @@ class SubProgressStretchView: NSView {
         
     }
     
-    private func outterStackConfig(){
+    private func outterStackConfig() {
         
         videoView.layer?.cornerRadius = 8
         movementDivider.fillColor = .kDarkGray
         
-//        videoView.wantsLayer = true
-//        videoView.layer?.borderColor = NSColor.black.cgColor
-//        videoView.layer?.borderWidth = 2
+        videoView.wantsLayer = true
+        videoView.layer?.borderColor = NSColor.black.cgColor
+        videoView.layer?.borderWidth = 2
 //        
 //        movementDivider.wantsLayer = true
 //        movementDivider.layer?.borderColor = NSColor.black.cgColor
@@ -277,30 +403,47 @@ class SubProgressStretchView: NSView {
     
     func loadDataSubView(_ movement: Movement, _ status: ProgressStretchCondition) {
         typeStretchLabel.setText("\(movement.type.exerciseString)")
-        updateData(movement)
-        updateImageProgress(status)
-    }
-    
-    func updateImageProgress(_ status: ProgressStretchCondition) {
-        switch status {
-        case .toDo:
-            imageProgressView.image = NSImage(named: "\(status.statusImage)")
-        case .inProgress:
-            imageProgressView.image = NSImage(named: "\(status.statusImage)")
-        case .halfDone:
-            imageProgressView.image = NSImage(named: "\(status.statusImage)")
-        case .done:
-            imageProgressView.image = NSImage(named: "\(status.statusImage)")
-        case .skipped:
-            imageProgressView.image = NSImage(named: "\(status.statusImage)")
-        }
-        
-        print("Ini adalah status progress image: \(status.statusImage)")
+        playVideo(movement.preview.rawValue)
+        detailMovementLabel.setText(movement.name.rawValue)
+        imageProgressView.image = NSImage(named: "\(status.statusImage)")
     }
     
     func updateData(_ data: Movement) {
         playVideo(data.preview.rawValue)
         detailMovementLabel.setText(data.name.rawValue)
+    }
+    
+    func hideView(){
+        movementDivider.removeFromSuperview()
+        videoView.removeFromSuperview()
+        
+//        videoView.wantsLayer = true
+//        videoView.layer?.borderColor = NSColor.black.cgColor
+//        videoView.layer?.borderWidth = 2
+//        
+//        movementDivider.wantsLayer = true
+//        movementDivider.layer?.borderColor = NSColor.black.cgColor
+//        movementDivider.layer?.borderWidth = 2
+//        
+//        movementDivider.snp.makeConstraints { make in
+//            make.height.equalTo(0)
+//            make.width.equalTo(0)
+//        }
+//        
+//        videoView.snp.makeConstraints { make in
+//            make.width.equalTo(0)
+//            make.height.equalTo(0)
+//        }
+    }
+    
+    func unHideView(){
+//        movementDivider.isHidden = false
+//        videoView.isHidden = false
+        
+        addSubview(movementDivider)
+        addSubview(videoView)
+        outterStackConfig()
+        
     }
     
     
