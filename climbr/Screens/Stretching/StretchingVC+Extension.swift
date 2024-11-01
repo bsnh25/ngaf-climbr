@@ -50,6 +50,7 @@ extension StretchingVC {
         }
         .store(in: &bags)
     }
+    .store(in: &bags)
     
     func updateMovementState() {
         
@@ -361,83 +362,289 @@ extension StretchingVC {
                 isBodyPassed = false
             }
             
+            //                                self.speech("incorrect")
+          }
+          
+          self.movementStateView.setLabel(label)
+          
+          self.speech(label)
         } else {
-            print("Movement Passed is empty")
+          //                            self.speech("correct")
+          self.speech("Position Correct")
+          self.startExerciseSession(duration: movement.duration)
+          //                    self.movementStateView.hide()
         }
+      }
+    }.store(in: &bags)
+    
+    $remainingTime.sink { [weak self] time in
+      guard let self else { return }
+      
+      /// Cancel code execution below if timer not running and timer is paused
+      guard self.isTimerRunning, !self.isTimerPaused else { return }
+      
+      /// If remaining time equals to zero, then hide the movement state view and
+      /// next to the next movement
+      ///
+      /// Assume that if remaining time is zero, it means the movement has done
+      guard time > 0 else {
+        //                self.movementStateView.hide()
         
+        self.next()
+        
+        return
+      }
+      
+      switch time {
+      case 13:
+        self.speech("15 seconds countdown started")
+      case 8:
+        self.speech("\(Int(time)) seconds left")
+      case 1...5:
+        self.speech(String(Int(time)))
+      default:
+        break
+      }
+      
+      self.movementStateView.setLabel("\(Int(time)) seconds left")
+      self.movementStateView.setForegroundColor(.black)
+      self.movementStateView.setBackgroundColor(.white)
+      self.currentMovementView.setDuration(time)
+    }
+    .store(in: &bags)
+  }
+  
+  /// Excercise session
+  func startExerciseSession(duration: TimeInterval) {
+    /// If movement is correct, run the timer based on previous state (start or resume)
+    if self.isTimerPaused {
+      self.resumeTimer()
+    } else {
+      self.startTimer(duration: duration)
+    }
+  }
+  
+  /// Timer countdown
+  func startTimer(duration: TimeInterval?) {
+    guard !isTimerRunning, !isTimerPaused else { return }
+    
+    /// If duration exist, it means the app will start timer based on duration.
+    /// Otherwise, app will start timer based on previous duration (resume)
+    if let duration {
+      remainingTime   = duration
+      timerInterval   = duration
     }
     
-    func randomizeMovement(movements: [Movement]) -> [Movement] {
-        var randomMovement: [Movement] = []
-        
-        let neckMovements = movements.filter { $0.type == .neck }
-        let armMovements = movements.filter { $0.type == .arm }
-        let backMovements = movements.filter { $0.type == .back }
-        
-        let randomizedNeck = neckMovements.shuffled()
-        let randomizedArm = armMovements.shuffled()
-        let randomizedBack = backMovements.shuffled()
-        
-        randomMovement.append(contentsOf: randomizedNeck)
-        randomMovement.append(contentsOf: randomizedArm)
-        randomMovement.append(contentsOf: randomizedBack)
-        
-        return randomMovement
+    timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+    
+    isTimerRunning  = true
+  }
+  
+  @objc private func updateTimer() {
+    /// If remaining time equals to zero, then stop timer
+    guard remainingTime > 0 else {
+      stopTimer()
+      return
     }
+    
+    /// Decrease remaining time by 1
+    remainingTime -= 1
+    
+    print("Remaining Time: ", remainingTime)
+  }
+  
+  func stopTimer() {
+    /// Make sure the timer is running
+    guard isTimerRunning else { return }
+    
+    /// Set the timer running and paused to false (reset), then invalidate the timer
+    isTimerRunning  = false
+    isTimerPaused   = false
+    timer?.invalidate()
+  }
+  
+  func pauseTimer() {
+    /// Make sure the timer is running
+    guard isTimerRunning else { return }
+    
+    /// Invalidate the timer, then set timer pause state to true and timer running to false
+    timer?.invalidate()
+    isTimerPaused  = true
+    isTimerRunning = false
+  }
+  
+  func resumeTimer() {
+    /// Make sure the timer paused and timer not runnning
+    guard isTimerPaused, !isTimerRunning else { return }
+    
+    /// Set the timer pause to false
+    isTimerPaused   = false
+    
+    /// The start the timer again
+    startTimer(duration: nil)
+  }
+  
+  @objc func skip() -> Bool {
+    audioService?.stopSpeech(at: .word)
+    
+    guard let _ = setOfMovements[safe: currentIndex+1] else {
+      return false
+    }
+    
+    currentIndex += 1
+    nextIndex     = currentIndex+1
+    stopTimer()
+    movementStateView.hide()
+    
+    return true
+  }
+  
+  func next() {
+    /// Make sure movement index is not out of range
+    guard let movement = setOfMovements[safe: currentIndex] else {
+      return
+    }
+    
+    self.completedMovement.append(movement)
+    
+    if currentIndex == setOfMovements.count - 1 {
+      self.speech("completed session")
+    } else {
+      self.speech("next move")
+    }
+    
+    self.updateProgress(movementsPassed: completedMovement)
+    
+    guard let _ = setOfMovements[safe: currentIndex+1] else {
+      finishSession()
+      return
+    }
+    
+    currentIndex += 1
+    nextIndex     = currentIndex+1
+    stopTimer()
+    movementStateView.hide()
+  }
+  
+  func finishSession() {
+    self.cameraService?.stopSession()
+    
+    if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
+      stretchingResult.movementList = self.completedMovement
+      self.replace(with: stretchingResult)
+    }
+  }
+  
+  @objc func showEndSessionAlert() {
+    let alert                   = NSAlert()
+    alert.messageText           = "Leaving So Soon?"
+    alert.informativeText       = "Finishing the session early will reduce the amount of reward you will receive"
+    alert.alertStyle            = .informational
+    alert.icon                  = NSImage.appLogo
+    alert.addButton(withTitle: "Stay")
+    alert.addButton(withTitle: "End Session")
+    
+    if #available(macOS 11.0,*) {
+      alert.buttons.last?.hasDestructiveAction = true
+    }
+    
+    let result = alert.runModal()
+    
+    if result == .alertSecondButtonReturn {
+      finishSession()
+    }
+  }
+  
+  func speech(_ text: String) {
+    guard let audioService else { return }
+    audioService.speech(text)
+  }
+  
+  func updateProgress(movementsPassed: [Movement]) {
+    
+    if movementsPassed.count > 0 {
+      let neckMovements = movementsPassed.count { $0.type == .neck}
+      let armMovements = movementsPassed.count { $0.type == .arm }
+      let backMovements = movementsPassed.count { $0.type == .back }
+      
+      if neckMovements >= 1 {
+        isNeckPassed = true
+      } else {
+        isNeckPassed = false
+      }
+      
+      if armMovements >= 1 {
+        isArmPassed = true
+      } else {
+        isArmPassed = false
+      }
+      
+      if backMovements >= 1 {
+        isBodyPassed = true
+      } else {
+        isBodyPassed = false
+      }
+      
+    } else {
+      print("Movement Passed is empty")
+    }
+    
+  }
+  
+  func randomizeMovement(movements: [Movement]) -> [Movement] {
+    var randomMovement: [Movement] = []
+    
+    let neckMovements = movements.filter { $0.type == .neck }
+    let armMovements = movements.filter { $0.type == .arm }
+    let backMovements = movements.filter { $0.type == .back }
+    
+    let randomizedNeck = neckMovements.shuffled()
+    let randomizedArm = armMovements.shuffled()
+    let randomizedBack = backMovements.shuffled()
+    
+    randomMovement.append(contentsOf: randomizedNeck)
+    randomMovement.append(contentsOf: randomizedArm)
+    randomMovement.append(contentsOf: randomizedBack)
+    
+    return randomMovement
+  }
 }
 
 
 extension StretchingVC : PredictorDelegate {
-    func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {
-        print(boundingBox)
-        DispatchQueue.main.async {
-//            self.boundingBoxView.updateRect(boundingBox, color: .yellow)
-            if value {
-                self.showTutorial = false
-            }
-        }
+  func predictor(didDetectUpperBody value: Bool, boundingBox: NSRect) {
+    print(boundingBox)
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      //            self.boundingBoxView.updateRect(boundingBox, color: .yellow)
+      if value && self.showTutorial {
+        self.showTutorial = false
+      }
     }
+  }
   
-    func predictor(didLabelAction action: String, with confidence: Double) {
-        for name in ExerciseName.allCases {
-            if name.rawValue == action && confidence > 0.65 {
-                if exerciseName != name {
-                    self.exerciseName = name
-//                    print("\(name) and the confidence is \(confidence)")
-                }
-            }
+  func predictor(didLabelAction action: String, with confidence: Double) {
+    for name in ExerciseName.allCases {
+      if name.rawValue == action && confidence > 0.65 {
+        if exerciseName != name {
+          self.exerciseName = name
+          //                    print("\(name) and the confidence is \(confidence)")
         }
+      }
     }
-    
-    func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
-//        guard let previewLayer = cameraService?.previewLayer else { return }
-//        
-//        let convertedPoints = points.map{
-//            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
-//        }
-//        
-//        let combinePath = CGMutablePath()
-//        
-//        for point in convertedPoints {
-//            let doPath = NSBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
-//            combinePath.addPath(doPath.cgPath)
-//        }
-//        
-//        pointsLayer.path = combinePath
-//        
-//        DispatchQueue.main.async{
-//            self.pointsLayer.didChangeValue(for: \.path)
-//        }
-    }
-    
+  }
+  
+  func predictor(didFindNewRecognizedPoints points: [CGPoint]) {
+  }
+  
 }
 
 extension StretchingVC : AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
-            connection.isVideoMirrored = true
-        }
-        self.predictor?.estimation(sampleBuffer: sampleBuffer)
-        self.predictor?.detectHumanUpperBody(sampleBuffer: sampleBuffer)
+  func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    if connection.isVideoMirroringSupported && !connection.isVideoMirrored {
+      connection.isVideoMirrored = true
     }
+    self.predictor?.estimation(sampleBuffer: sampleBuffer)
+    self.predictor?.detectHumanUpperBody(sampleBuffer: sampleBuffer)
+  }
 }

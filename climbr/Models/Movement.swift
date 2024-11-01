@@ -31,6 +31,19 @@ struct Movement {
             Movement(name: .LowerBackSpinRight, type: .back, preview: .thumbnailLowerBackSpinRight, thumbnail: .thumbnailLowerBackSpinRight, rewardPoint: 5),
             Movement(name: .LowerBackSpinLeft, type: .back, preview: .thumbnailLowerBackSpinLeft, thumbnail: .thumbnailLowerBackSpinLeft, rewardPoint: 5),
         ],
+        [
+            /// Neck Movement
+            Movement(name: .NeckRotationLeft, type: .neck, preview: .thumbnailNeckRotationLeft, thumbnail: .thumbnailNeckDeepRight, rewardPoint: 5),
+            Movement(name: .NeckRotationRight, type: .neck, preview: .thumbnailNeckRotationRight, thumbnail: .thumbnailNeckDeepLeft, rewardPoint: 5),
+            
+            /// Arm Movement
+            Movement(name: .TricepStaticLeft, type: .arm, preview: .thumbnailTricepStaticLeft, thumbnail: .thumbnailTricepStaticLeft, rewardPoint: 5),
+            Movement(name: .TricepStaticRight, type: .arm, preview: .thumbnailTricepStaticRight, thumbnail: .thumbnailTricepStaticRight, rewardPoint: 5),
+            
+            /// Back Movement
+            Movement(name: .UpperBackStretchLeft, type: .back, preview: .thumbnailUpperBackStretchLeft, thumbnail: .thumbnailUpperBackStretchLeft, rewardPoint: 5),
+            Movement(name: .UpperBackStretchRight, type: .back, preview: .thumbnailUpperBackStretchRight, thumbnail: .thumbnailUpperBackStretchRight, rewardPoint: 5),
+        ],
     ]
     
     static var randomMovements: [Movement] {
