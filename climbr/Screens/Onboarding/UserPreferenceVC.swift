@@ -254,11 +254,10 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     func configureSamePreference(){
         view.addSubview(samePreference)
-        samePreference.translatesAutoresizingMaskIntoConstraints = false
         
         samePreference.snp.makeConstraints{ same in
             same.top.equalTo(differentWorkHoursCheckbox.snp.bottom).offset(30)
-            same.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+            same.leading.trailing.equalTo(boxContainer).inset(33.4)
             same.height.equalTo(38.3)
         }
     }
@@ -283,13 +282,14 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
         preferenceStackView.spacing = 15
         preferenceStackView.alignment = .leading
         preferenceStackView.clipsToBounds = false
+        preferenceStackView.wantsLayer = true
+        preferenceStackView.layer?.backgroundColor = NSColor.blue.cgColor
         
-        preferenceStackView.setViews(preferenceStack, in: .top)
+        preferenceStackView.setViews(preferenceStack, in: .leading)
         preferenceStackView.orientation = .vertical
+        preferenceStackView.distribution = .fillEqually
         
         for item in preferenceStack{
-            item.wantsLayer = true
-            item.translatesAutoresizingMaskIntoConstraints = false
             item.isHidden = item.dayName.stringValue != "Monday"
             
             
@@ -299,10 +299,9 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
         }
         
         view.addSubview(preferenceStackView)
-        preferenceStackView.translatesAutoresizingMaskIntoConstraints = false
         preferenceStackView.snp.makeConstraints{stack in
             stack.top.equalTo(differentWorkHoursCheckbox.snp.bottom).offset(30)
-            stack.leading.equalTo(boxContainer.snp.leading).offset(33.4)
+            stack.leading.trailing.equalTo(boxContainer).inset(33.4)
         }
     }
     

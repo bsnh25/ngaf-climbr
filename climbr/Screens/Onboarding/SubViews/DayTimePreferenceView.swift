@@ -11,9 +11,9 @@ import SnapKit
 
 
 
-class DayTimePreferenceView: NSView {
+class DayTimePreferenceView: NSStackView {
     
-    var divider: Divider = Divider()
+//    var divider: Divider = Divider()
     var dayName: CLTextLabelV2!
     var startWorkPicker: CLDatePicker!
     var toLabel: CLTextLabelV2 = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .regular, contentLabel: "to")
@@ -30,7 +30,7 @@ class DayTimePreferenceView: NSView {
     // Custom initializer
     init(dayName: String, startWorkPicker: CLDatePicker, endWorkPicker: CLDatePicker, gapTextAndPicker: CGFloat) {
             super.init(frame: .zero)
-        self.dayName = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .bold, contentLabel: dayName)
+            self.dayName = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .bold, contentLabel: dayName)
             self.startWorkPicker = startWorkPicker
             self.endWorkPicker = endWorkPicker
             self.gapTextAndPicker = gapTextAndPicker
@@ -41,33 +41,24 @@ class DayTimePreferenceView: NSView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-
+  
     func configure(){
-        setupNameLabel()
+        wantsLayer = true
+        layer?.backgroundColor = NSColor.red.cgColor
+        
+        let pickerStack = NSStackView(views: [startWorkPicker, toLabel, endWorkPicker])
+        pickerStack.spacing = 12
+        pickerStack.wantsLayer = true
+        pickerStack.layer?.backgroundColor = NSColor.green.cgColor
+        
+        setViews([dayName, NSView(), pickerStack], in: .center)
+        distribution = .equalSpacing
+      
         setupStartPicker()
-        setupToLabel()
         setupEndPicker()
-        setupDivider()
-    }
-    
-    
-    private func setupNameLabel(){
-        addSubview(dayName)
-        dayName.translatesAutoresizingMaskIntoConstraints = false
-        
-        dayName.snp.makeConstraints { dayName in
-            dayName.top.equalToSuperview()
-            dayName.leading.equalToSuperview()
-            dayName.trailing.equalToSuperview()
-        }
-        
     }
     
     private func setupStartPicker(){
-        addSubview(startWorkPicker)
-        startWorkPicker.translatesAutoresizingMaskIntoConstraints = false
         
         let calendar = Calendar.current
         var components = calendar.dateComponents([.hour, .minute], from: Date())
@@ -98,32 +89,10 @@ class DayTimePreferenceView: NSView {
         startWorkPicker.target = self
         startWorkPicker.action = #selector(startWorkHourChanged)
         
-        
-        startWorkPicker.snp.makeConstraints { startWorkPicker in
-            startWorkPicker.top.equalToSuperview()
-            startWorkPicker.leading.equalTo(dayName.snp.trailing).offset(gapTextAndPicker)
-            startWorkPicker.width.equalTo(58.3)
-            startWorkPicker.height.equalTo(28.3)
-        }
-        
         updateStopWorkHour()
     }
     
-    private func setupToLabel(){
-        addSubview(toLabel)
-        toLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        toLabel.snp.makeConstraints{toLabel in
-            toLabel.top.equalToSuperview()
-            toLabel.leading.equalTo(startWorkPicker.snp.trailing).offset(10)
-        }
-    }
-    
     private func setupEndPicker(){
-        addSubview(endWorkPicker)
-        endWorkPicker.translatesAutoresizingMaskIntoConstraints = false
-        
-
         
         lastStopValue = endWorkPicker.dateValue
         endWorkPicker.datePickerElements = [.hourMinute]
@@ -146,29 +115,7 @@ class DayTimePreferenceView: NSView {
         }
         endWorkPicker.target = self
         endWorkPicker.action = #selector(stopWorkHourChanged)
-        
-        
-        endWorkPicker.snp.makeConstraints{ endWorkPicker in
-            endWorkPicker.top.equalToSuperview()
-            endWorkPicker.leading.equalTo(toLabel.snp.trailing).offset(10)
-            endWorkPicker.width.equalTo(58.3)
-            endWorkPicker.height.equalTo(28.3)
-        }
-        
         updateStopWorkHour()
-    }
-    
-    
-    private func setupDivider(){
-        addSubview(divider)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        
-        divider.snp.makeConstraints{divider in
-            divider.bottom.equalTo(startWorkPicker.snp.top).offset(-15)
-            divider.leading.equalTo(dayName.snp.leading)
-            divider.trailing.equalTo(endWorkPicker.snp.trailing)
-        }
-        
     }
     
     @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
