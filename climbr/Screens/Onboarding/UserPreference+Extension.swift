@@ -104,12 +104,15 @@ extension UserPreferenceVC{
         if differentWorkHoursCheckbox.state == .on {
             daysButtonStack.unlockButton()
             
-          preferenceStackView.isHidden = false
+            preferenceStackView.isHidden = false
             workHourItemView.isHidden = true
+            preferenceStack[0].isHidden = false
         } else{
             daysButtonStack.lockButton()
             preferenceStackView.isHidden = true
             workHourItemView.isHidden = false
+          
+            preferenceStack.forEach { $0.isHidden = true }
         }
     }
     

@@ -36,12 +36,32 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   
   let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
   
-  let reminderLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+  let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
   
-  let reminder30MinutesButton = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-  let reminder60MinutesButton = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-  let reminder90MinutesButton = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-  let reminder120MinutesButton = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  let reminder30MinutesButton = CLPickerButton(
+    title: "30",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  let reminder60MinutesButton = CLPickerButton(
+    title: "60",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  let reminder90MinutesButton = CLPickerButton(
+    title: "90",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  let reminder120MinutesButton = CLPickerButton(
+    title: "120",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
   
   let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
   
@@ -88,67 +108,17 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     configureReminderStack()
     configureLaunchAtLoginCheckBox()
     configureNextButton()
+    daysButtonStack.daysButtonDelegate = self
   }
   
   override func viewDidAppear() {
     super.viewDidAppear()
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
-    daysButtonStack.daysButtonDelegate = self
     notifService?.askUserPermission()
   }
   
-  private func configureWorkHoursStack() {
-    boxContainer.addSubview(workHoursStack)
-    
-    
-    let workDayLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your Work Day:")
-    
-    workHoursStack.setViews([workDayLabel, daysButtonStack, differentWorkHoursCheckbox, workHourItemView, preferenceStackView], in: .center)
-    workHoursStack.spacing = 16
-    workHoursStack.alignment = .leading
-    workHoursStack.orientation = .vertical
-    
-    workHoursStack.snp.makeConstraints { make in
-      make.top.equalToSuperview().offset(20)
-      make.leading.trailing.equalToSuperview().inset(40)
-    }
-  }
   
-  private func configureReminderStack() {
-    boxContainer.addSubview(reminderStack)
-    
-    let buttons = [ reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton ]
-    
-    for button in buttons {
-      button.target = self
-      button.action = #selector(actionReminderHandler)
-      
-      button.snp.makeConstraints{button in
-        button.width.equalTo(37.5)
-        button.height.equalTo(25)
-      }
-    }
-    
-    
-    let everyLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Every")
-    let minutesLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Minutes")
-    
-    let componentStack: NSStackView = NSStackView(views: [ everyLabel, reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton, minutesLabel ])
-    componentStack.spacing = 16
-    componentStack.alignment = .leading
-    componentStack.orientation = .horizontal
-    
-    reminderStack.setViews([reminderLabel, componentStack], in: .center)
-    reminderStack.spacing = 16
-    reminderStack.alignment = .leading
-    reminderStack.orientation = .vertical
-    
-    reminderStack.snp.makeConstraints { make in
-      make.top.equalTo(workHoursStack.snp.bottom).offset(28)
-      make.leading.trailing.equalTo(workHoursStack)
-    }
-  }
   
   func configureBgContainer(){
     view.addSubview(bgContainer)
@@ -236,7 +206,60 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     boxContainer.snp.makeConstraints{ box in
       box.trailing.equalToSuperview()
       box.width.equalTo(439)
-      box.height.equalToSuperview()
+      box.top.height.equalToSuperview()
+    }
+  }
+  
+  private func configureWorkHoursStack() {
+    boxContainer.addSubview(workHoursStack)
+    
+    
+    let workDayLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your Work Day:")
+    
+    workHoursStack.setViews([workDayLabel, daysButtonStack, differentWorkHoursCheckbox, workHourItemView, preferenceStackView], in: .center)
+    workHoursStack.spacing = 16
+    workHoursStack.alignment = .leading
+    workHoursStack.orientation = .vertical
+    
+    workHoursStack.snp.makeConstraints { make in
+      make.top.equalToSuperview().offset(20)
+      make.leading.trailing.equalToSuperview().inset(40)
+    }
+  }
+  
+  private func configureReminderStack() {
+    boxContainer.addSubview(reminderStack)
+    
+    let buttons = [ reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton ]
+    
+    for button in buttons {
+      button.target = self
+      button.action = #selector(actionReminderHandler)
+      button.layer?.cornerRadius = 6
+      
+      button.snp.makeConstraints{button in
+        button.width.equalTo(44)
+        button.height.equalTo(30)
+      }
+    }
+    
+    
+    let everyLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
+    let minutesLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Minutes")
+    
+    let componentStack: NSStackView = NSStackView(views: [ everyLabel, reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton, minutesLabel ])
+    componentStack.spacing = 16
+    componentStack.alignment = .leading
+    componentStack.orientation = .horizontal
+    
+    reminderStack.setViews([reminderLabel, componentStack], in: .center)
+    reminderStack.spacing = 16
+    reminderStack.alignment = .leading
+    reminderStack.orientation = .vertical
+    
+    reminderStack.snp.makeConstraints { make in
+      make.top.equalTo(workHoursStack.snp.bottom).offset(28)
+      make.leading.trailing.equalTo(workHoursStack)
     }
   }
   
@@ -360,7 +383,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     view.addSubview(launchAtLoginChecBox)
     
     let attributes: [NSAttributedString.Key: Any] = [
-      .font: NSFont.systemFont(ofSize: 18.34, weight: .bold),
+      .font: NSFont.systemFont(ofSize: 22, weight: .bold),
       .foregroundColor: NSColor.black
     ]
     
