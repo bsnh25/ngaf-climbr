@@ -7,6 +7,15 @@
 
 import Foundation
 
+enum Weekday: Int, CaseIterable {
+  case monday
+  case tuesday
+  case wednesday
+  case thursday
+  case friday
+  case saturday
+  case sunday
+}
 
 struct WorkingHour: Codable{
     var isEnabled: Bool
