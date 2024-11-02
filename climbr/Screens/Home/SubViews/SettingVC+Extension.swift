@@ -82,7 +82,11 @@ extension SettingVC {
             configureWarning()
             return
         }
-        let updateData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSaveReminder(), workingHours: workingHours)
+        let updateData = UserPreferenceModel(
+          launchAtLogin: isChecked,
+          reminderInterval: processSaveReminder(),
+          workingHours: workingHours
+        )
         print("Reminder at \(processSaveReminder())")
         print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
         print("\(startTime.dateValue)")
@@ -98,7 +102,7 @@ extension SettingVC {
         self.dismiss(self)
     }
     
-    func processSaveReminder() -> Int64{
+    func processSaveReminder() -> Int{
         
         if min30.isSelected {
             return 30
