@@ -22,34 +22,35 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
   let preferenceStackView = NSStackView()
   var preferenceStack: [NSView] = []
-  let samePreference = DayTimePreferenceView(dayName: "Work Hours", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 84.167)
-  let mondayPreference = DayTimePreferenceView(dayName: "Monday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 115)
-  let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 113)
-  let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 85)
-  let thursdayPreference = DayTimePreferenceView(dayName: "Thursday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 104)
-  let fridayPreference = DayTimePreferenceView(dayName: "Friday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 131)
-  let saturdayPreference = DayTimePreferenceView(dayName: "Saturday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 107)
-  let sundayPreference = DayTimePreferenceView(dayName: "Sunday", startWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), endWorkPicker: CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 18.3)), gapTextAndPicker: 120)
-  let textUrWorkDay = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your Work Day:")
-  let daysButtonStack = DaysButtonStackView()
-  let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
-  let reminderLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
-  let text1Line2 = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Every")
-  let text2Line2 = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Minutes")
   
-  let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-  let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-  let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-  let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
+  let mondayPreference = DayTimePreferenceView(dayName: "Monday")
+  let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
+  let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
+  let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
+  let fridayPreference = DayTimePreferenceView(dayName: "Friday")
+  let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
+  let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
+  
+  let daysButtonStack = DaysButtonStackView()
+  
+  let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
+  
+  let reminderLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+  
+  let reminder30MinutesButton = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  let reminder60MinutesButton = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  let reminder90MinutesButton = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  let reminder120MinutesButton = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  
   let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
   
   
   
-  let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
-  let warnLabel = CLTextLabelV2(sizeOfFont: 16, weightOfFont: .light, contentLabel: "􀇾 Work hour should be more than 2 (two) hours")
+//  let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
+//  let warnLabel = CLTextLabelV2(sizeOfFont: 16, weightOfFont: .light, contentLabel: "􀇾 Work hour should be more than 2 (two) hours")
+  
   let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
-  let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
-  let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
   
   var workingHours: [WorkingHour] = []
   var lastStartValue: Date!
@@ -80,7 +81,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     configureAppLogo()
     configureBoxContainer()
     configureDifferentWorkHours()
-    configureSamePreference()
+    configureWorkHourItemView()
     configureDifferentWorkHoursStackView()
     configureWorkHoursStack()
     configureReminderStack()
@@ -98,7 +99,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   
   private func configureWorkHoursStack() {
     boxContainer.addSubview(workHoursStack)
-    workHoursStack.setViews([textUrWorkDay, daysButtonStack, differentWorkHoursCheckbox, samePreference, preferenceStackView], in: .center)
+    
+    
+    let workDayLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your Work Day:")
+    
+    workHoursStack.setViews([workDayLabel, daysButtonStack, differentWorkHoursCheckbox, workHourItemView, preferenceStackView], in: .center)
     workHoursStack.spacing = 16
     workHoursStack.alignment = .leading
     workHoursStack.orientation = .vertical
@@ -112,11 +117,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   private func configureReminderStack() {
     boxContainer.addSubview(reminderStack)
     
-    let buttons = [ button1, button2, button3, button4 ]
+    let buttons = [ reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton ]
     
     for button in buttons {
       button.target = self
-      button.action = #selector(action30min)
+      button.action = #selector(actionReminderHandler)
       
       button.snp.makeConstraints{button in
         button.width.equalTo(37.5)
@@ -124,7 +129,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       }
     }
     
-    let componentStack: NSStackView = NSStackView(views: [ text1Line1, button1, button2, button3, button4, text1Line2 ])
+    
+    let everyLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Every")
+    let minutesLabel = CLTextLabelV2(sizeOfFont: 18.3, weightOfFont: .regular, contentLabel: "Minutes")
+    
+    let componentStack: NSStackView = NSStackView(views: [ everyLabel, reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton, minutesLabel ])
     componentStack.spacing = 16
     componentStack.alignment = .leading
     componentStack.orientation = .horizontal
@@ -161,26 +170,26 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   
   //    func configureWarnContainer(){
   //        view.addSubview(warnContainer)
-  //        
+  //
   //        warnContainer.wantsLayer = true
   //        warnContainer.layer?.backgroundColor = NSColor.red.cgColor.copy(alpha: 0.9)
   //        warnContainer.layer?.cornerRadius = 10
   //        warnContainer.translatesAutoresizingMaskIntoConstraints = false
-  //        
+  //
   //        NSLayoutConstraint.activate([
   //            warnContainer.topAnchor.constraint(equalTo: workHoursLabel.topAnchor, constant: 43),
   //            warnContainer.leadingAnchor.constraint(equalTo: stopWorkHour.trailingAnchor, constant: 12),
   //            warnContainer.widthAnchor.constraint(equalToConstant: 360),
   //            warnContainer.heightAnchor.constraint(equalToConstant: 36)
   //        ])
-  //        
+  //
   //    }
   
   //    func configureWarnLabel(){
   //        warnContainer.addSubview(warnLabel)
   //        warnLabel.translatesAutoresizingMaskIntoConstraints = false
   //        warnLabel.textColor = .white
-  //        
+  //
   //        NSLayoutConstraint.activate([
   //            warnLabel.centerXAnchor.constraint(equalTo: warnContainer.centerXAnchor),
   //            warnLabel.centerYAnchor.constraint(equalTo: warnContainer.centerYAnchor)
@@ -248,8 +257,8 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
   }
   
-  func configureSamePreference(){
-    samePreference.onValueChanged = { start, end in
+  func configureWorkHourItemView(){
+    workHourItemView.onValueChanged = { start, end in
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
@@ -389,34 +398,22 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     }
   }
   
-  
-  func configureTextLine1(){
-    view.addSubview(text1Line1)
-    text1Line1.translatesAutoresizingMaskIntoConstraints = false
-    text1Line1.textColor = .white
-    
-    NSLayoutConstraint.activate([
-      text1Line1.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
-      text1Line1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382)
-    ])
-  }
-  
   func resetButtonColors() {
     // Reset all buttons to gray
-    button1.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-    button2.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-    button3.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-    button4.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder30MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder60MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder90MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder120MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
     
-    button1.foregroundColorText = .black
-    button2.foregroundColorText = .black
-    button3.foregroundColorText = .black
-    button4.foregroundColorText = .black
+    reminder30MinutesButton.foregroundColorText = .black
+    reminder60MinutesButton.foregroundColorText = .black
+    reminder90MinutesButton.foregroundColorText = .black
+    reminder120MinutesButton.foregroundColorText = .black
     
-    button1.isSelected = false
-    button2.isSelected = false
-    button3.isSelected = false
-    button4.isSelected = false
+    reminder30MinutesButton.isSelected = false
+    reminder60MinutesButton.isSelected = false
+    reminder90MinutesButton.isSelected = false
+    reminder120MinutesButton.isSelected = false
   }
 }
 
