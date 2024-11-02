@@ -21,13 +21,48 @@ protocol DaysButtonToUserPreferenceDelegate: AnyObject {
 class DaysButtonStackView: NSStackView {
     
     weak var daysButtonDelegate: DaysButtonToUserPreferenceDelegate?
-    let monday = CLPickerButton(title: "M", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let tuesday = CLPickerButton(title: "T", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let wednesday = CLPickerButton(title: "W", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let thursday = CLPickerButton(title: "T", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let friday = CLPickerButton(title: "F", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let saturday = CLPickerButton(title: "S", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let sunday = CLPickerButton(title: "S", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+  let monday = CLPickerButton(
+    title: "M",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
+  let tuesday = CLPickerButton(
+    title: "T",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
+  let wednesday = CLPickerButton(
+    title: "W",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
+  let thursday = CLPickerButton(
+    title: "T",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
+  let friday = CLPickerButton(
+    title: "F",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
+  let saturday = CLPickerButton(
+    title: "S",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
+  let sunday = CLPickerButton(
+    title: "S",
+    backgroundColor: .white,
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 20)
+  )
     
     var daysButtonStack: [CLPickerButton] = []
     
@@ -50,21 +85,19 @@ class DaysButtonStackView: NSStackView {
         
       setViews(daysButtonStack, in: .leading)
         orientation = .horizontal
+      distribution = .fillProportionally
         
         for item in daysButtonStack {
             item.wantsLayer = true
             item.layer?.backgroundColor = .white
+          item.layer?.cornerRadius = 4
             item.foregroundColorText = .black
             item.isSelected = false
-            item.translatesAutoresizingMaskIntoConstraints = false
             
             item.isEnabled = false
-            
-            
-            
             item.snp.makeConstraints{item in
-                item.width.equalTo(25.84)
-                item.height.equalTo(30)
+                item.width.equalTo(32)
+                item.height.equalTo(36)
             }
         }
         
