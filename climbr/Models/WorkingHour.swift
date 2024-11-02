@@ -18,7 +18,6 @@ enum Weekday: Int, CaseIterable {
 }
 
 struct WorkingHour: Codable{
-    var isEnabled: Bool
     var startHour: Date
     var endHour: Date
     var day: Int
