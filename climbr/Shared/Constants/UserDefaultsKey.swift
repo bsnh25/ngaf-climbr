@@ -14,4 +14,6 @@ struct UserDefaultsKey {
     static let kSFXVolume           = "kSFXVolume"
     static let kProgressSession     = "kProgressSession"
     static let kNotificationCount   = "kNotificationCount"
+    static let kUserPreference      = "kUserPreference"
+    static let kUserCharacter       = "kUserCharacter"
 }

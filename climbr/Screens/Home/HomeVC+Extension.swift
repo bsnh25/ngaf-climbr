@@ -98,6 +98,7 @@ extension HomeVC {
     
     func updatePoint(){
         points.setText(String(character?.point ?? 0))
+        points.setAccessibilityValue("\(character?.point ?? 0) coins")
     }
     
     func observeNotif(){
@@ -145,17 +146,17 @@ extension HomeVC {
             
             /// State for out of working hours
             let prefs = charService?.getPreferences()
-            let startWorkingHour = prefs?.startWorkingHour ?? .now
-            let endWorkingHour = prefs?.endWorkingHour ?? .now
+//            let startWorkingHour = prefs?.startWorkingHour ?? .now
+//            let endWorkingHour = prefs?.endWorkingHour ?? .now
             
-            if Date.now >= startWorkingHour && Date.now <= endWorkingHour && progress == 4 {
-                characterState = 3
-                backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
-            } else {
-                /// State for default walk
-                characterState = 0
-                backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
-            }
+//            if Date.now >= startWorkingHour && Date.now <= endWorkingHour && progress == 4 {
+//                characterState = 3
+//                backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
+//            } else {
+//                /// State for default walk
+//                characterState = 0
+//                backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
+//            }
         }
         
         animationMain?.setInput("WalkingStyle", value: characterState)

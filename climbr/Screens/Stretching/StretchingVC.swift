@@ -94,7 +94,10 @@ class StretchingVC: NSViewController {
     @Published var currentIndex: Int               = 0
     @Published var nextIndex: Int                  = 1
     
-    var setOfMovements: [Movement]      = Movement.setOfMovements[3]
+    lazy var setOfMovements: [Movement]      = {
+        var coba = Movement.randomMovements
+        return self.randomizeMovement(movements: coba)
+    }()
     var completedMovement: [Movement]   = []
     
     var bags: Set<AnyCancellable> = []
@@ -105,6 +108,11 @@ class StretchingVC: NSViewController {
     var isTimerRunning: Bool = false
     var isTimerPaused: Bool = false
     @Published var showTutorial: Bool = true
+    
+    /// mark as progress stretch
+    var isArmPassed : Bool?
+    var isNeckPassed : Bool?
+    var isBodyPassed : Bool?
     
     /// Dependencies
     var audioService: AudioService?
@@ -145,7 +153,7 @@ class StretchingVC: NSViewController {
         configureCameraPreview()
         configureMovementView()
         predictor?.delegate = self
-      predictor?.bufferSize = cameraService?.bufferSize ?? .zero
+        predictor?.bufferSize = cameraService?.bufferSize ?? .zero
         cameraService?.setSampleBufferDelegate(delegate: self)
         configureButton()
         configurePositionStateLabel()
@@ -242,6 +250,8 @@ class StretchingVC: NSViewController {
         movementStack.translatesAutoresizingMaskIntoConstraints = false
         
         movementInfoView.addSubview(movementStack)
+        currentMovementView.setAccessibilityElement(true)
+        nextMovementView.setAccessibilityElement(true)
         
         NSLayoutConstraint.activate([
             movementStack.topAnchor.constraint(equalTo: movementInfoView.safeAreaLayoutGuide.topAnchor, constant: padding),
@@ -279,11 +289,19 @@ class StretchingVC: NSViewController {
         /// Configure target button
         skipButton.target = self
         skipButton.action = #selector(skip)
+        skipButton.setAccessibilityElement(true)
+        skipButton.setAccessibilityTitle("Skip Movement")
+        skipButton.setAccessibilityLabel("Skips the current movement and moves to the next one in the sequence")
+        skipButton.setAccessibilityRole(.button)
         
         finishButton.target = self
         finishButton.action = #selector(showEndSessionAlert)
         finishButton.hasDestructiveAction = true
         finishButton.exitFullScreenMode()
+        finishButton.setAccessibilityElement(true)
+        finishButton.setAccessibilityTitle("Finish Early")
+        finishButton.setAccessibilityLabel("Ends the current session immediately without completing the remaining activities")
+        finishButton.setAccessibilityRole(.button)
         
         NSLayoutConstraint.activate([
             buttonStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),

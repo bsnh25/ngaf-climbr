@@ -113,7 +113,6 @@ class HomeVC: NSViewController {
         viewStretchConfig()
         dailyProgress()
         setupPointsLabel()
-
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -180,14 +179,26 @@ class HomeVC: NSViewController {
         //MARK: Settings Button Action
         settingButton.action = #selector(actionSetting)
         settingButton.target = self
+        settingButton.setAccessibilityElement(true)
+        settingButton.setAccessibilityTitle("Settings")
+        settingButton.setAccessibilityLabel("Adjust your preferences, manage work hours and launch at login")
+        settingButton.setAccessibilityRole(.button)
         
         //MARK: Audio Button Action
         audioButton.action = #selector(actionAudio)
         audioButton.target = self
+        audioButton.setAccessibilityElement(true)
+        audioButton.setAccessibilityTitle("Background Music")
+        audioButton.setAccessibilityLabel("Mute or unmute the background music")
+        audioButton.setAccessibilityRole(.button)
         
         //MARK: Store Button Action
         storeButton.action = #selector(actionStore)
         storeButton.target = self
+        storeButton.setAccessibilityElement(true)
+        storeButton.setAccessibilityTitle("Shop")
+        storeButton.setAccessibilityLabel("Discovers unique climbing gears, customize your character")
+        storeButton.setAccessibilityRole(.button)
         
         let vPadding = 40
         let hPadding = 10
@@ -286,6 +297,10 @@ class HomeVC: NSViewController {
         
         startStretchButton.action = #selector(actionStartSession)
         startStretchButton.target = self
+        startStretchButton.setAccessibilityElement(true)
+        startStretchButton.setAccessibilityTitle("Start Session")
+        startStretchButton.setAccessibilityLabel("Opens a guided stretching page")
+        startStretchButton.setAccessibilityRole(.button)
         
         stackConfig()
     }
@@ -309,6 +324,10 @@ class HomeVC: NSViewController {
         pointsView.layer?.backgroundColor = .white.copy(alpha: 0.7)
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+      
+        pointsView.setAccessibilityTitle("Coins")
+        pointsView.setAccessibilityLabel("View your balance")
+        pointsView.setAccessibilityRole(.button)
         
         view.addSubview(pointsView)
         
