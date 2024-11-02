@@ -13,7 +13,7 @@ import SnapKit
 
 class DayTimePreferenceView: NSStackView {
     
-//    var divider: Divider = Divider()
+    private lazy var calendar = Calendar.current
     var day: String!
     private var dayName: CLTextLabelV2!
     private var startWorkPicker: CLDatePicker!
@@ -21,11 +21,17 @@ class DayTimePreferenceView: NSStackView {
     private var endWorkPicker: CLDatePicker!
     private var gapTextAndPicker: CGFloat!
     private var switchButton: NSSwitch = NSSwitch()
-//    var lastStartValue: Date!
-//    var lastStopValue: Date!
   
-    var currentStartWorkHour: Date!
-    var currentEndWorkHour: Date!
+    lazy var currentStartWorkHour: Date = {
+      var components = calendar.dateComponents([.hour, .minute], from: Date())
+      components.hour = 8
+      components.minute = 0
+      
+      return calendar.date(from: components)!
+    }()
+    lazy var currentEndWorkHour: Date = {
+      currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
+    }()
   
     var onValueChanged: ((_ startHour: Date, _ endHour: Date) -> Void)?
     
@@ -59,23 +65,15 @@ class DayTimePreferenceView: NSStackView {
       
         setupStartPicker()
         setupEndPicker()
+      
+        onValueChanged?(currentStartWorkHour, currentEndWorkHour)
     }
     
     private func setupStartPicker(){
-        
-        let calendar = Calendar.current
-        var components = calendar.dateComponents([.hour, .minute], from: Date())
-        components.hour = 8
-        components.minute = 0
-        
-        if let date = calendar.date(from: components) {
-            startWorkPicker.dateValue = date
-            currentStartWorkHour = date
-        }
-//        lastStartValue = startWorkPicker.dateValue
+        startWorkPicker.dateValue = currentStartWorkHour
         startWorkPicker.datePickerElements = [.hourMinute]
       
-        // Set the minimum date (01:00)
+        // Set the minimum date (00:00)
         var minComponents = calendar.dateComponents([.hour, .minute], from: Date())
         minComponents.hour = 0
         minComponents.minute = 0
@@ -83,7 +81,7 @@ class DayTimePreferenceView: NSStackView {
             startWorkPicker.minDate = minDate
         }
         
-//         Set the maximum date (21:00)
+//         Set the maximum date (21:59)
         var maxComponents = calendar.dateComponents([.hour, .minute], from: Date())
         maxComponents.hour = 21
         maxComponents.minute = 59
@@ -92,56 +90,35 @@ class DayTimePreferenceView: NSStackView {
         }
         startWorkPicker.target = self
         startWorkPicker.action = #selector(startWorkHourChanged)
-        
-//        updateStopWorkHour()
     }
     
     private func setupEndPicker(){
-        
-//        lastStopValue = endWorkPicker.dateValue
         endWorkPicker.datePickerElements = [.hourMinute]
         
-        endWorkPicker.minDate = startWorkPicker.dateValue.addingTimeInterval(2 * 60 * 60)
-        endWorkPicker.dateValue = startWorkPicker.dateValue.addingTimeInterval(2 * 60 * 60)
+        endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
+        endWorkPicker.dateValue = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
         currentEndWorkHour = endWorkPicker.dateValue
         
-        var maxStopComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
+        var maxStopComponents = calendar.dateComponents([.hour, .minute], from: Date())
         maxStopComponents.hour = 23
         maxStopComponents.minute = 59
         
-        if let maxStopDate = Calendar.current.date(from: maxStopComponents) {
+        if let maxStopDate = calendar.date(from: maxStopComponents) {
             endWorkPicker.maxDate = maxStopDate
         }
       
         endWorkPicker.target = self
         endWorkPicker.action = #selector(stopWorkHourChanged)
-//        updateStopWorkHour()
     }
     
     @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
-//        let calendar = Calendar.current
-//        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
-        
-//        if handleSpecialCases(oldTime: lastStopValue, newTime: endWorkPicker.dateValue){
-//            endWorkPicker.dateValue = lastStopValue
-//            return
-//        }
-//        
-//        if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: endWorkPicker.dateValue) {
-//            updateStartWorkHour()
-//        }
-//        
-//        lastStopValue = endWorkPicker.dateValue
-      
-//      print("End Work Hours: ", sender.dateValue)
       currentEndWorkHour = sender.dateValue
       
-      onValueChanged?(startWorkPicker.dateValue, endWorkPicker.dateValue)
+      onValueChanged?(currentStartWorkHour, currentEndWorkHour)
     }
     
     
     @objc func startWorkHourChanged(_ sender: NSDatePicker) {
-        let calendar = Calendar.current
         let difference = calendar.dateComponents([.minute], from: sender.dateValue, to: currentEndWorkHour)
 //
         if difference.minute! < 120 {
@@ -149,98 +126,11 @@ class DayTimePreferenceView: NSStackView {
         }
       
       endWorkPicker.minDate = sender.dateValue.addingTimeInterval(2 * 60 * 60)
-//      print("Start Work Hours: ", sender.dateValue)
       currentStartWorkHour = sender.dateValue
+      
       currentEndWorkHour = endWorkPicker.dateValue
       
-      onValueChanged?(startWorkPicker.dateValue, endWorkPicker.dateValue)
+      onValueChanged?(currentStartWorkHour, currentEndWorkHour)
     }
     
-//    func updateStopWorkHour() {
-//        let calendar = Calendar.current
-//        let twoHours = DateComponents(hour: 2)
-//        if let stopDate = calendar.date(byAdding: twoHours, to: startWorkPicker.dateValue) {
-//            endWorkPicker.dateValue = stopDate
-////            lastStopValue = stopDate
-//        }
-//    }
-//    
-//    func updateStartWorkHour() {
-//        let calendar = Calendar.current
-//        let minusTwoHours = DateComponents(hour: -2)
-//        if let startDate = calendar.date(byAdding: minusTwoHours, to: endWorkPicker.dateValue) {
-//            startWorkPicker.dateValue = startDate
-////            lastStart7Value = startDate
-//        }
-//    }
-//    
-//    func isTimeIncreased(from oldTime: Date, to newTime: Date) -> Bool {
-//        let calendar = Calendar.current
-//        let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
-//        let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
-//        
-//        let oldMinutes = oldComponents.hour! * 60 + oldComponents.minute!
-//        let newMinutes = newComponents.hour! * 60 + newComponents.minute!
-//        
-//        let difference = (newMinutes - oldMinutes + 1440) % 1440
-//        
-//        return difference <= 720
-//    }
-//
-//    func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
-//        return !isTimeIncreased(from: oldTime, to: newTime)
-//    }
-//    
-//    func handleSpecialCases(oldTime: Date, newTime: Date) -> Bool {
-//            let calendar = Calendar.current
-//            let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
-//            let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
-//            
-//            let oldHour = oldComponents.hour!
-//            let newHour = newComponents.hour!
-//            
-//            // Special case: from 23:00-23:59 to 00:00-00:59 (next day)
-//            if oldHour == 23 && newHour == 3 {
-//                return true
-//            }
-//            
-//            // Special case: from 00:00-00:59 to 23:00-23:59 (same day)
-//            if oldHour == 3 && newHour == 23 {
-//                return false
-//            }
-//            
-//            // No special case detected
-//            return false
-//        }
-//    
-//    
-//    override func hitTest(_ point: NSPoint) -> NSView? {
-//            // Konversi titik dari superview ke koordinat view ini
-//            let myPoint = convert(point, from: superview)
-//            
-//            // Cek startWorkPicker terlebih dahulu
-//            if let startWorkPicker = startWorkPicker, startWorkPicker.frame.contains(myPoint) {
-//                let pickerPoint = convert(myPoint, to: startWorkPicker)
-//                if let hitView = startWorkPicker.hitTest(pickerPoint) {
-//                    return hitView
-//                }
-//            }
-//            
-//            // Cek endWorkPicker jika startWorkPicker tidak meng-handle event
-//            if let endWorkPicker = endWorkPicker, endWorkPicker.frame.contains(myPoint) {
-//                let pickerPoint = convert(myPoint, to: endWorkPicker)
-//                if let hitView = endWorkPicker.hitTest(pickerPoint) {
-//                    return hitView
-//                }
-//            }
-//            
-//            // Jika tidak ada yang terkena, kembalikan hitTest default
-//            return super.hitTest(point)
-//        }
-    
 }
-
-
-//#Preview(traits: .defaultLayout, body: {
-//    DayTimePreference?(NSCoder())
-//})
