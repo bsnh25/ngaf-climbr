@@ -14,17 +14,20 @@ import SnapKit
 class DayTimePreferenceView: NSStackView {
     
 //    var divider: Divider = Divider()
-    var dayName: CLTextLabelV2!
-    var startWorkPicker: CLDatePicker!
-    var toLabel: CLTextLabelV2 = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .regular, contentLabel: "to")
-    var endWorkPicker: CLDatePicker!
-    var gapTextAndPicker: CGFloat!
-    var switchButton: NSSwitch = NSSwitch()
+    var day: String!
+    private var dayName: CLTextLabelV2!
+    private var startWorkPicker: CLDatePicker!
+    private var toLabel: CLTextLabelV2 = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .regular, contentLabel: "to")
+    private var endWorkPicker: CLDatePicker!
+    private var gapTextAndPicker: CGFloat!
+    private var switchButton: NSSwitch = NSSwitch()
 //    var lastStartValue: Date!
 //    var lastStopValue: Date!
   
     var currentStartWorkHour: Date!
     var currentEndWorkHour: Date!
+  
+    var onValueChanged: ((_ startHour: Date, _ endHour: Date) -> Void)?
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -32,11 +35,12 @@ class DayTimePreferenceView: NSStackView {
     
     // Custom initializer
     init(dayName: String, startWorkPicker: CLDatePicker, endWorkPicker: CLDatePicker, gapTextAndPicker: CGFloat) {
-            super.init(frame: .zero)
-            self.dayName = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .bold, contentLabel: dayName)
-            self.startWorkPicker = startWorkPicker
-            self.endWorkPicker = endWorkPicker
-            self.gapTextAndPicker = gapTextAndPicker
+        super.init(frame: .zero)
+        self.dayName = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .bold, contentLabel: dayName)
+        self.startWorkPicker = startWorkPicker
+        self.endWorkPicker = endWorkPicker
+        self.gapTextAndPicker = gapTextAndPicker
+        day = dayName
         
         configure()
     }
@@ -79,13 +83,13 @@ class DayTimePreferenceView: NSStackView {
             startWorkPicker.minDate = minDate
         }
         
-        // Set the maximum date (21:00)
-//        var maxComponents = calendar.dateComponents([.hour, .minute], from: Date())
-//        maxComponents.hour = 21
-//        maxComponents.minute = 59
-//        if let maxDate = calendar.date(from: maxComponents) {
-//            startWorkPicker.maxDate = maxDate
-//        }
+//         Set the maximum date (21:00)
+        var maxComponents = calendar.dateComponents([.hour, .minute], from: Date())
+        maxComponents.hour = 21
+        maxComponents.minute = 59
+        if let maxDate = calendar.date(from: maxComponents) {
+            startWorkPicker.maxDate = maxDate
+        }
         startWorkPicker.target = self
         startWorkPicker.action = #selector(startWorkHourChanged)
         
@@ -97,16 +101,17 @@ class DayTimePreferenceView: NSStackView {
 //        lastStopValue = endWorkPicker.dateValue
         endWorkPicker.datePickerElements = [.hourMinute]
         
-        endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
-      currentEndWorkHour = endWorkPicker.minDate
+        endWorkPicker.minDate = startWorkPicker.dateValue.addingTimeInterval(2 * 60 * 60)
+        endWorkPicker.dateValue = startWorkPicker.dateValue.addingTimeInterval(2 * 60 * 60)
+        currentEndWorkHour = endWorkPicker.dateValue
         
-//        var maxStopComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
-//        maxStopComponents.hour = 23
-//        maxStopComponents.minute = 59
-//        
-//        if let maxStopDate = Calendar.current.date(from: maxStopComponents) {
-//            endWorkPicker.maxDate = maxStopDate
-//        }
+        var maxStopComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
+        maxStopComponents.hour = 23
+        maxStopComponents.minute = 59
+        
+        if let maxStopDate = Calendar.current.date(from: maxStopComponents) {
+            endWorkPicker.maxDate = maxStopDate
+        }
       
         endWorkPicker.target = self
         endWorkPicker.action = #selector(stopWorkHourChanged)
@@ -114,7 +119,7 @@ class DayTimePreferenceView: NSStackView {
     }
     
     @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
-        let calendar = Calendar.current
+//        let calendar = Calendar.current
 //        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
         
 //        if handleSpecialCases(oldTime: lastStopValue, newTime: endWorkPicker.dateValue){
@@ -128,24 +133,27 @@ class DayTimePreferenceView: NSStackView {
 //        
 //        lastStopValue = endWorkPicker.dateValue
       
-      print("End Work Hours: ", sender.dateValue)
+//      print("End Work Hours: ", sender.dateValue)
       currentEndWorkHour = sender.dateValue
+      
+      onValueChanged?(startWorkPicker.dateValue, endWorkPicker.dateValue)
     }
     
     
     @objc func startWorkHourChanged(_ sender: NSDatePicker) {
         let calendar = Calendar.current
-//        let difference = calendar.dateComponents([.minute], from: currentStartWorkHour, to: currentEndWorkHour)
-//        
-//        if difference.minute! < 120 {
-//          endWorkPicker.dateValue = sender.dateValue.addingTimeInterval(2 * 60 * 60)
-//        }
+        let difference = calendar.dateComponents([.minute], from: sender.dateValue, to: currentEndWorkHour)
+//
+        if difference.minute! < 120 {
+          endWorkPicker.dateValue = sender.dateValue.addingTimeInterval(2 * 60 * 60)
+        }
       
       endWorkPicker.minDate = sender.dateValue.addingTimeInterval(2 * 60 * 60)
-      endWorkPicker.dateValue = sender.dateValue.addingTimeInterval(2 * 60 * 60)
-      print("Start Work Hours: ", sender.dateValue)
+//      print("Start Work Hours: ", sender.dateValue)
       currentStartWorkHour = sender.dateValue
       currentEndWorkHour = endWorkPicker.dateValue
+      
+      onValueChanged?(startWorkPicker.dateValue, endWorkPicker.dateValue)
     }
     
 //    func updateStopWorkHour() {

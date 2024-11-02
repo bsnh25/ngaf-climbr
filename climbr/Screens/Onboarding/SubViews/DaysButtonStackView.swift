@@ -9,13 +9,13 @@ import AppKit
 import SnapKit
 
 protocol DaysButtonToUserPreferenceDelegate: AnyObject {
-    func didMondayTap(_ monday: Bool)
-    func didTuesdayTap(_ tuesday: Bool)
-    func didWednesdayTap(_ wednesday: Bool)
-    func didThursdayTap(_ thursday: Bool)
-    func didFridayTap(_ friday: Bool)
-    func didSaturdayTap(_ saturday: Bool)
-    func didSundayTap(_ sunday: Bool)
+    func didMondayTap(_ isSelected: Bool)
+    func didTuesdayTap(_ isSelected: Bool)
+    func didWednesdayTap(_ isSelected: Bool)
+    func didThursdayTap(_ isSelected: Bool)
+    func didFridayTap(_ isSelected: Bool)
+    func didSaturdayTap(_ isSelected: Bool)
+    func didSundayTap(_ isSelected: Bool)
 }
 
 class DaysButtonStackView: NSStackView {
