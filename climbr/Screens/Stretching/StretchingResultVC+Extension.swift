@@ -72,6 +72,21 @@ extension StretchingResultVC {
         neckProgress.valueLabel.setText("\(neckTotal)/2")
         backProgress.valueLabel.setText("\(backTotal)/2")
         
+//        armProgress.typeLabel.setAccessibilityTitle("Arm Progress Result")
+        armProgress.typeLabel.setAccessibilityTitle("Progress result section of exercise")
+        armProgress.valueLabel.setAccessibilityLabel("Your arm progress is \(armTotal) out of 2")
+        
+//        neckProgress.typeLabel.setAccessibilityTitle("Neck Progress Result")
+        neckProgress.typeLabel.setAccessibilityTitle("Progress result section of exercise")
+        neckProgress.valueLabel.setAccessibilityLabel("Your neck progress is \(neckTotal) out of 2")
+        
+//        backProgress.typeLabel.setAccessibilityTitle("Back Progress Result")
+        backProgress.typeLabel.setAccessibilityTitle("Progress result section of exercise")
+        backProgress.valueLabel.setAccessibilityLabel("Your back progress is \(backTotal) out of 2")
+        
+        cointEarning.typeLabel.setAccessibilityTitle("Coin Earning Result")
+        cointEarning.valueLabel.setAccessibilityLabel("Your coin earning is ")
+        
         /// jangan lupa update greeting message
         if armTotal == 2 {
             armProgress.updateColor(.kResultTwo)

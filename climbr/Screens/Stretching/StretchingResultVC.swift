@@ -121,6 +121,24 @@ class StretchingResultVC: NSViewController {
         greetingLabel.setTextColor(.white)
         greetingLabel.alignment = .center
         
+        greetingLabel.setAccessibilityElement(true)
+        neckProgress.setAccessibilityElement(true)
+        armProgress.setAccessibilityElement(true)
+        backProgress.setAccessibilityElement(true)
+        cointEarning.setAccessibilityElement(true)
+        
+        neckProgress.setAccessibilityTitle("Neck Progress Section")
+        neckProgress.setAccessibilityRole(.group)
+        
+        armProgress.setAccessibilityTitle("Arm Progress Section")
+        armProgress.setAccessibilityRole(.group)
+        
+        backProgress.setAccessibilityTitle("Back Progress Section")
+        backProgress.setAccessibilityRole(.group)
+        
+        cointEarning.setAccessibilityTitle("Coin Result Section")
+        cointEarning.setAccessibilityRole(.group)
+        
         stretchingDurationLabel.setText("\(awardsText) 0 minutes")
         stretchingDurationLabel.setTextColor(.white)
         
