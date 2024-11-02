@@ -16,9 +16,19 @@ class DayTimePreferenceView: NSStackView {
     private lazy var calendar = Calendar.current
     var day: String!
     private var dayName: CLTextLabelV2!
-    private var startWorkPicker: CLDatePicker!
+    private var startWorkPicker: CLDatePicker = CLDatePicker(
+      backgroundColor: .white.withAlphaComponent(0.5),
+      textColor: .black,
+      datePickerStyleElement: .hourMinute,
+      font: NSFont.systemFont(ofSize: 18.3)
+    )
     private var toLabel: CLTextLabelV2 = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .regular, contentLabel: "to")
-    private var endWorkPicker: CLDatePicker!
+    private var endWorkPicker: CLDatePicker = CLDatePicker(
+      backgroundColor: .white.withAlphaComponent(0.5),
+      textColor: .black,
+      datePickerStyleElement: .hourMinute,
+      font: NSFont.systemFont(ofSize: 18.3)
+    )
     private var gapTextAndPicker: CGFloat!
     private var switchButton: NSSwitch = NSSwitch()
   
@@ -40,12 +50,9 @@ class DayTimePreferenceView: NSStackView {
     }
     
     // Custom initializer
-    init(dayName: String, startWorkPicker: CLDatePicker, endWorkPicker: CLDatePicker, gapTextAndPicker: CGFloat) {
+    init(dayName: String) {
         super.init(frame: .zero)
         self.dayName = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .bold, contentLabel: dayName)
-        self.startWorkPicker = startWorkPicker
-        self.endWorkPicker = endWorkPicker
-        self.gapTextAndPicker = gapTextAndPicker
         day = dayName
         
         configure()
