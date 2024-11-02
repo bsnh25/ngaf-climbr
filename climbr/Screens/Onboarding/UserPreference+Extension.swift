@@ -30,16 +30,16 @@ extension UserPreferenceVC{
     @objc
     func actNextButton(){
         
-        guard processSavePreference() != 0, samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue) >= 7200 else {
-            print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
-//            configureWarning()
-            return
-        }
-        print("Start Work Hour : \(samePreference.startWorkPicker.dateValue)")
-        print("End Work Hour : \(samePreference.endWorkPicker.dateValue)")
-        
-        print("Reminder at \(processSavePreference())")
-        print("diff time : \(samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue))")
+//        guard processSavePreference() != 0, samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue) >= 7200 else {
+//            print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
+////            configureWarning()
+//            return
+//        }
+//        print("Start Work Hour : \(samePreference.startWorkPicker.dateValue)")
+//        print("End Work Hour : \(samePreference.endWorkPicker.dateValue)")
+//        
+//        print("Reminder at \(processSavePreference())")
+//        print("diff time : \(samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue))")
         ///get checkbox value
         let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
         
@@ -94,7 +94,7 @@ extension UserPreferenceVC{
     
     @objc
     func actionCheckbox() {
-        let buttonState = checkboxButton.state
+      let buttonState = launchAtLoginChecBox.state
         if buttonState == .on {
             isChecked = true
         } else {
@@ -103,190 +103,49 @@ extension UserPreferenceVC{
     }
     
     @objc
-    func actionDifferentWorkHour() {
-        isDifferentChecked = true
-        removeSamePreference()
+    func actionDifferentWorkHour(_ sender: NSButton) {
         
         if differentWorkHoursCheckbox.state == .on {
             daysButtonStack.unlockButton()
-            showDaysPreferences()
-            removeUnderDaysPreference()
-            configureReminderLabel(anchorObject: preferenceStackView)
-            configureText1Line2()
-            configureButton1()
-            configureButton2()
-            configureButton3()
-            configureButton4()
-            configureText2Line2()
-            configureCheckBox()
-            configureNextButton()
+            
+          preferenceStackView.isHidden = false
+            samePreference.isHidden = true
         } else{
             daysButtonStack.lockButton()
-            removeDaysPreferences()
-            configureSamePreference()
-            removeUnderDaysPreference()
-            configureReminderLabel(anchorObject: samePreference)
-            configureText1Line2()
-            configureButton1()
-            configureButton2()
-            configureButton3()
-            configureButton4()
-            configureText2Line2()
-            configureCheckBox()
-            configureNextButton()
+            preferenceStackView.isHidden = true
+            samePreference.isHidden = false
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    @objc func startWorkHourChanged(_ sender: NSDatePicker) {
-        let calendar = Calendar.current
-        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
-        
-        if difference.minute == 120 && isTimeIncreased(from: lastStartValue, to: startWorkHour.dateValue) {
-            // Start time increased and difference was 2 hours
-            updateStopWorkHour()
-        }
-        
-        lastStartValue = startWorkHour.dateValue
-    }
-    
-    @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
-        let calendar = Calendar.current
-        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
-        
-        if handleSpecialCases(oldTime: lastStopValue, newTime: stopWorkHour.dateValue){
-            stopWorkHour.dateValue = lastStopValue
-            return
-        }
-        
-        if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: stopWorkHour.dateValue) {
-            updateStartWorkHour()
-        }
-        
-        lastStopValue = stopWorkHour.dateValue
-    }
-    
-    func updateStopWorkHour() {
-        let calendar = Calendar.current
-        let twoHours = DateComponents(hour: 2)
-        if let stopDate = calendar.date(byAdding: twoHours, to: startWorkHour.dateValue) {
-            stopWorkHour.dateValue = stopDate
-            lastStopValue = stopDate
-        }
-    }
-    
-    func updateStartWorkHour() {
-        let calendar = Calendar.current
-        let minusTwoHours = DateComponents(hour: -2)
-        if let startDate = calendar.date(byAdding: minusTwoHours, to: stopWorkHour.dateValue) {
-            startWorkHour.dateValue = startDate
-            lastStartValue = startDate
-        }
-    }
-    
-    func isTimeIncreased(from oldTime: Date, to newTime: Date) -> Bool {
-        let calendar = Calendar.current
-        let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
-        let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
-        
-        let oldMinutes = oldComponents.hour! * 60 + oldComponents.minute!
-        let newMinutes = newComponents.hour! * 60 + newComponents.minute!
-        
-        let difference = (newMinutes - oldMinutes + 1440) % 1440
-        
-        return difference <= 720
-    }
-
-    func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
-        return !isTimeIncreased(from: oldTime, to: newTime)
-    }
-    
-    func handleSpecialCases(oldTime: Date, newTime: Date) -> Bool {
-            let calendar = Calendar.current
-            let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
-            let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
-            
-            let oldHour = oldComponents.hour!
-            let newHour = newComponents.hour!
-            
-            // Special case: from 23:00-23:59 to 00:00-00:59 (next day)
-            if oldHour == 23 && newHour == 3 {
-                return true
-            }
-            
-            // Special case: from 00:00-00:59 to 23:00-23:59 (same day)
-            if oldHour == 3 && newHour == 23 {
-                return false
-            }
-            
-            // No special case detected
-            return false
-        }
 }
 
 extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
-    func didMondayTap(_ monday: Bool) {
-        if monday {
-            preferenceStack[0].isHidden = false
-        }else {
-            preferenceStack[0].isHidden = true
-        }
+    func didMondayTap(_ isSelected: Bool) {
+      preferenceStack[0].isHidden = !isSelected
     }
     
-    func didTuesdayTap(_ tuesday: Bool) {
-        if tuesday {
-            preferenceStack[1].isHidden = false
-        }else {
-            preferenceStack[1].isHidden = true
-        }
+    func didTuesdayTap(_ isSelected: Bool) {
+      preferenceStack[1].isHidden = !isSelected
     }
     
-    func didWednesdayTap(_ wednesday: Bool) {
-        if wednesday {
-            preferenceStack[2].isHidden = false
-        }else {
-            preferenceStack[2].isHidden = true
-        }
+    func didWednesdayTap(_ isSelected: Bool) {
+      preferenceStack[2].isHidden = !isSelected
     }
     
-    func didThursdayTap(_ thursday: Bool) {
-        if thursday {
-            preferenceStack[3].isHidden = false
-        } else {
-            preferenceStack[3].isHidden = true
-        }
+    func didThursdayTap(_ isSelected: Bool) {
+      preferenceStack[3].isHidden = !isSelected
     }
     
-    func didFridayTap(_ friday: Bool) {
-        if friday {
-            preferenceStack[4].isHidden = false
-        }else {
-            preferenceStack[4].isHidden = true
-        }
+    func didFridayTap(_ isSelected: Bool) {
+      preferenceStack[4].isHidden = !isSelected
     }
     
-    func didSaturdayTap(_ saturday: Bool) {
-        if saturday {
-            preferenceStack[5].isHidden = false
-        }else {
-            preferenceStack[5].isHidden = true
-        }
+    func didSaturdayTap(_ isSelected: Bool) {
+      preferenceStack[5].isHidden = !isSelected
     }
     
-    func didSundayTap(_ sunday: Bool) {
-        if sunday {
-            preferenceStack[6].isHidden = false
-        }else {
-            preferenceStack[6].isHidden = true
-        }
+    func didSundayTap(_ isSelected: Bool) {
+      preferenceStack[6].isHidden = !isSelected
     }
-    
     
 }

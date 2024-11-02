@@ -48,8 +48,7 @@ class DaysButtonStackView: NSStackView {
         alignment = .leading
         clipsToBounds = true
         
-        
-        setViews(daysButtonStack, in: .center)
+      setViews(daysButtonStack, in: .leading)
         orientation = .horizontal
         
         for item in daysButtonStack {
