@@ -281,17 +281,13 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
         
         preferenceStackView.spacing = 15
         preferenceStackView.alignment = .leading
-        preferenceStackView.clipsToBounds = false
-        preferenceStackView.wantsLayer = true
-        preferenceStackView.layer?.backgroundColor = NSColor.blue.cgColor
         
-        preferenceStackView.setViews(preferenceStack, in: .leading)
+        preferenceStackView.setViews(preferenceStack, in: .center)
         preferenceStackView.orientation = .vertical
         preferenceStackView.distribution = .fillEqually
         
         for item in preferenceStack{
             item.isHidden = item.dayName.stringValue != "Monday"
-            
             
             item.snp.makeConstraints{item in
                 item.height.equalTo(38.3)
