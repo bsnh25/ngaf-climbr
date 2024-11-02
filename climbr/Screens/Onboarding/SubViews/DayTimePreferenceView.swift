@@ -43,6 +43,9 @@ class DayTimePreferenceView: NSStackView {
       currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
     }()
   
+    var initialStartValue: Date?
+    var initialEndValue: Date?
+  
     var onValueChanged: ((_ startHour: Date, _ endHour: Date) -> Void)?
     
     override init(frame frameRect: NSRect) {
@@ -77,7 +80,7 @@ class DayTimePreferenceView: NSStackView {
     }
     
     private func setupStartPicker(){
-        startWorkPicker.dateValue = currentStartWorkHour
+        startWorkPicker.dateValue = initialStartValue ?? currentStartWorkHour
         startWorkPicker.datePickerElements = [.hourMinute]
       
         // Set the minimum date (00:00)
@@ -103,7 +106,7 @@ class DayTimePreferenceView: NSStackView {
         endWorkPicker.datePickerElements = [.hourMinute]
         
         endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
-        endWorkPicker.dateValue = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
+        endWorkPicker.dateValue = (initialStartValue ?? currentStartWorkHour).addingTimeInterval(2 * 60 * 60)
         currentEndWorkHour = endWorkPicker.dateValue
         
         var maxStopComponents = calendar.dateComponents([.hour, .minute], from: Date())
@@ -138,6 +141,16 @@ class DayTimePreferenceView: NSStackView {
       currentEndWorkHour = endWorkPicker.dateValue
       
       onValueChanged?(currentStartWorkHour, currentEndWorkHour)
+    }
+  
+    func reset() {
+      if let date = initialStartValue {
+        startWorkPicker.dateValue = date
+      }
+      
+      if let date = initialEndValue {
+        endWorkPicker.dateValue = date
+      }
     }
     
 }
