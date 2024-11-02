@@ -9,11 +9,12 @@ import Foundation
 import CoreData
 
 class UserManager : CharacterService {
-    let container : NSManagedObjectContext?
+  
+  static let shared = UserManager()
+  
+  private init() {
     
-    init(controller: PersistenceController?){
-        self.container = controller?.container.viewContext
-    }
+  }
     
     func getPreferences() -> UserPreferenceModel? {
         guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.kUserPreference) else { return nil }
@@ -67,33 +68,36 @@ class UserManager : CharacterService {
     }
     
     func updateCharacter(with data: CharacterModel) {
-        var decodedData: CharacterModel = getCharacterData()!
+      do {
+        let encodedData = try JSONEncoder().encode(data)
         
-        decodedData.headEquipment = data.headEquipment
-        decodedData.backEquipment = data.backEquipment
-        decodedData.handEquipment = data.handEquipment
-        decodedData.locationEquipment = data.locationEquipment
-        
-        UserDefaults.standard.set(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
+        UserDefaults.standard.setValue(encodedData, forKey: UserDefaultsKey.kUserCharacter)
+      } catch {
+        print("Error: ", error.localizedDescription)
+      }
     }
     
     func saveCharacterData(data: CharacterModel) {
-            let encoder = JSONEncoder()
-            do {
-                let jsonData = try encoder.encode(data)
-                UserDefaults.standard.set(jsonData, forKey: UserDefaultsKey.kUserCharacter)
-            }catch {
-                print("Failed to decode user's character: \(error)")
-            }
+        let encoder = JSONEncoder()
+        do {
+            let jsonData = try encoder.encode(data)
+            UserDefaults.standard.set(jsonData, forKey: UserDefaultsKey.kUserCharacter)
+        }catch {
+            print("Failed to decode user's character: \(error)")
         }
+    }
     
     
     func updatePoint(character: CharacterModel, points: Int) {
         var decodedData: CharacterModel = getCharacterData()!
         
+      do {
         decodedData.point += Int64(points)
-        
-        UserDefaults.standard.set(try? JSONEncoder().encode(decodedData), forKey: UserDefaultsKey.kUserCharacter)
+        let encodedData = try JSONEncoder().encode(decodedData)
+        UserDefaults.standard.set(encodedData, forKey: UserDefaultsKey.kUserCharacter)
+      } catch {
+        print("Error: ", error.localizedDescription)
+      }
     }
 
 }
