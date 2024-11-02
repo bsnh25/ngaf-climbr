@@ -51,18 +51,7 @@ class StretchingResultVC: NSViewController {
     var movementList: [Movement] = []
     
     /// Dependencies
-    var charService: CharacterService?
-    
-    
-    init(charService: CharacterService?) {
-        super.init(nibName: nil, bundle: nil)
-        
-        self.charService = charService
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var charService: CharacterService = UserManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()

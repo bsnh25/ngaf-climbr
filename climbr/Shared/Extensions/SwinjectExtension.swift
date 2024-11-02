@@ -29,8 +29,7 @@ extension Container {
         }
         
         container.register(SplashVC.self) { resolver in
-            let char = resolver.resolve(CharacterService.self)
-            return SplashVC(charService: char)
+            return SplashVC()
         }
         
         container.register(UserPreferenceVC.self) { _ in
@@ -57,9 +56,7 @@ extension Container {
         }
         
         container.register(StretchingResultVC.self) { resolver in
-            let char     = resolver.resolve(CharacterService.self)
-            
-            return StretchingResultVC(charService: char)
+            return StretchingResultVC()
         }
         
         container.register(StretchingVC.self) { resolver in
