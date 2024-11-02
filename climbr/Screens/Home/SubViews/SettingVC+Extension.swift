@@ -77,25 +77,25 @@ extension SettingVC {
     func actionSave(){
         ///get reminder value
         ///get start working hour and end working hour
-        guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
-            print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
-            configureWarning()
-            return
-        }
-        let updateData = UserPreferenceModel(id: UUID(), endWorkingHour: endTime.dateValue, launchAtLogin: isChecked, reminderInterval: processSaveReminder(), startWorkingHour: startTime.dateValue)
-        print("Reminder at \(processSaveReminder())")
-        print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
-        print("\(startTime.dateValue)")
-        
-        print("\(endTime.dateValue)")
-        ///get checkbox value
-        
-        guard let char = charService else {return}
-        char.updatePreferences(data: updateData)
-        guard let notif = notifService else {return}
-        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: updateData)
-        
-        self.dismiss(self)
+//        guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
+//            print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
+//            configureWarning()
+//            return
+//        }
+//        let updateData = UserPreferenceModel(id: UUID(), endWorkingHour: endTime.dateValue, launchAtLogin: isChecked, reminderInterval: processSaveReminder(), startWorkingHour: startTime.dateValue)
+//        print("Reminder at \(processSaveReminder())")
+//        print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
+//        print("\(startTime.dateValue)")
+//        
+//        print("\(endTime.dateValue)")
+//        ///get checkbox value
+//        
+//        guard let char = charService else {return}
+//        char.updatePreferences(data: updateData)
+//        guard let notif = notifService else {return}
+//        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: updateData)
+//        
+//        self.dismiss(self)
     }
     
     func processSaveReminder() -> Int64{

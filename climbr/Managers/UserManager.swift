@@ -34,11 +34,11 @@ class UserManager : CharacterService {
         let newUserPreference = UserPreferences(context: container)
         
         newUserPreference.id = data.id
-        newUserPreference.endWorkingHour = data.endWorkingHour
-        newUserPreference.launchAtLogin = data.launchAtLogin
-        newUserPreference.reminderInterval = data.reminderInterval
-        newUserPreference.startWorkingHour = data.startWorkingHour
-        newUserPreference.endWorkingHour = data.endWorkingHour
+//        newUserPreference.endWorkingHour = data.endWorkingHour
+//        newUserPreference.launchAtLogin = data.launchAtLogin
+//        newUserPreference.reminderInterval = data.reminderInterval
+//        newUserPreference.startWorkingHour = data.startWorkingHour
+//        newUserPreference.endWorkingHour = data.endWorkingHour
         
         
         do {
@@ -58,8 +58,8 @@ class UserManager : CharacterService {
         
         do {
             if let fetchResult = try container.fetch(request).first {
-                fetchResult.startWorkingHour = data.startWorkingHour
-                fetchResult.endWorkingHour = data.endWorkingHour
+//                fetchResult.startWorkingHour = data.startWorkingHour
+//                fetchResult.endWorkingHour = data.endWorkingHour
                 fetchResult.reminderInterval = data.reminderInterval
                 fetchResult.launchAtLogin = data.launchAtLogin
                 

@@ -73,13 +73,14 @@ class HomeVC: NSViewController {
     }()
     
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
+    var notificationServ : NotificationService?
     
-    
-    init(audioService: AudioService?, charService: CharacterService?, equipmentService: EquipmentService?) {
+    init(audioService: AudioService?, charService: CharacterService?, equipmentService: EquipmentService?, notif: NotificationService? ) {
         super.init(nibName: nil, bundle: nil)
         self.audioService = audioService
         self.charService = charService
         self.equipmentService = equipmentService
+        self.notificationServ = notif
     }
     
     required init?(coder: NSCoder) {
@@ -145,7 +146,7 @@ class HomeVC: NSViewController {
             
             return
         }
-        
+        notificationServ?.showOverlay()
     }
     
     private func previewAnimaConfig(){

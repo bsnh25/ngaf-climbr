@@ -41,14 +41,14 @@ extension UserPreferenceVC{
         print("Reminder at \(processSavePreference())")
         print("diff time : \(stopWorkHour.dateValue.timeIntervalSince(startWorkHour.dateValue))")
         ///get checkbox value
-        let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
-        
-        charService?.savePreferences(data: userPreferenceData)
-        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-        replace(with: homeVc)
-        guard let notif = Container.shared.resolve(NotificationService.self) else {return}
-
-        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
+//        let userPreferenceData = UserPreferenceModel(id: UUID(), endWorkingHour: stopWorkHour.dateValue, launchAtLogin: isChecked, reminderInterval: processSavePreference(), startWorkingHour: startWorkHour.dateValue)
+//        
+//        charService?.savePreferences(data: userPreferenceData)
+//        guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+//        replace(with: homeVc)
+//        guard let notif = Container.shared.resolve(NotificationService.self) else {return}
+//
+//        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
 
     }
     

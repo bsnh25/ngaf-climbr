@@ -53,7 +53,8 @@ extension Container {
             let audio = resolver.resolve(AudioService.self)
             let char = resolver.resolve(CharacterService.self)
             let equipment = resolver.resolve(EquipmentService.self)
-            return HomeVC(audioService: audio, charService: char, equipmentService: equipment)
+            let notification = resolver.resolve(NotificationService.self)
+            return HomeVC(audioService: audio, charService: char, equipmentService: equipment, notif: notification)
         }
         
         container.register(SettingVC.self) { resolver in
