@@ -48,7 +48,7 @@ extension UserPreferenceVC{
         replace(with: homeVc)
         guard let notif = Container.shared.resolve(NotificationService.self) else {return}
 
-        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
+//        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData) //flag
 
     }
     

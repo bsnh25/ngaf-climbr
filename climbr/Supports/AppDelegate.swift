@@ -77,6 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     UNUserNotificationCenter.current().delegate = self
     
     mainWindow?.makeKeyAndOrderFront(nil)
+      
   }
   
   func loadUserPreference(){

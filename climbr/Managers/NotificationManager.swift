@@ -61,7 +61,8 @@ class NotificationManager: NotificationService {
     
     /// Triggerd Overlay base on notification
     func showOverlay() {
-            overlayWindow = OverlayWindow()
-            overlayWindow?.show()
+        overlayWindow = OverlayWindow()
+        overlayWindow?.addViewContoller(OverlayView())
+        overlayWindow?.show()
     }
 }
