@@ -30,26 +30,6 @@ extension UserPreferenceVC{
   @objc
   func actNextButton(){
     
-    //        guard processSavePreference() != 0, samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue) >= 7200 else {
-    //            print("Date must greater than 2 hour or reminder has \(processSavePreference()) value")
-    ////            configureWarning()
-    //            return
-    //        }
-    //        print("Start Work Hour : \(samePreference.startWorkPicker.dateValue)")
-    //        print("End Work Hour : \(samePreference.endWorkPicker.dateValue)")
-    //
-    //        print("Reminder at \(processSavePreference())")
-    //        print("diff time : \(samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue))")
-    ///get checkbox value
-    //        let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
-    
-    //        charService?.savePreferences(data: userPreferenceData)
-//    guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-//    replace(with: homeVc)
-//    guard let notif = Container.shared.resolve(NotificationService.self) else {return}
-    
-    //        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
-    
     print("Flexible Working Hours: ", isFlexibleWorkHour)
     
     let formatter = DateFormatter()
@@ -69,6 +49,18 @@ extension UserPreferenceVC{
     
     print("Reminder Interval: ", intervalReminder)
     print("Launch At Login: ", isLaunchAtLogin)
+    
+    let data = UserPreferenceModel(
+      launchAtLogin: isLaunchAtLogin,
+      isFlexibleWorkHour: isFlexibleWorkHour,
+      reminderInterval: intervalReminder,
+      workingHours: Array(workingHours)
+    )
+    
+    UserManager.shared.savePreferences(data: data)
+    
+    guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+    replace(with: homeVc)
     
   }
   
