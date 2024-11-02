@@ -21,7 +21,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   let pathImage = NSImageView(image: .onboardingmountain)
   let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
   let preferenceStackView = NSStackView()
-  var preferenceStack: [NSView] = []
+  var preferenceStack: [DayTimePreferenceView] = []
   
   let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
   let mondayPreference = DayTimePreferenceView(dayName: "Monday")
@@ -330,7 +330,8 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     for item in preferenceStack {
       if let item = item as? DayTimePreferenceView {
         item.isHidden = item.day != "Monday"
-        
+        item.initialStartValue = initialStartWorkHour
+        item.initialEndValue = initialEndWorkHour
         item.snp.makeConstraints{item in
           item.height.equalTo(38.3)
         }
@@ -344,9 +345,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Monday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.monday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
     tuesdayPreference.onValueChanged = { [weak self] start, end in
@@ -356,9 +360,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Tuesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.tuesday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
     wednesdayPreference.onValueChanged = { [weak self] start, end in
@@ -368,9 +375,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Wednesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.wednesday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
     thursdayPreference.onValueChanged = { [weak self] start, end in
@@ -380,9 +390,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Thursday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.thursday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
     fridayPreference.onValueChanged = { [weak self] start, end in
@@ -392,9 +405,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Friday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.friday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
     saturdayPreference.onValueChanged = { [weak self] start, end in
@@ -404,9 +420,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Saturday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.saturday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
     sundayPreference.onValueChanged = { [weak self] start, end in
@@ -416,9 +435,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       formatter.dateFormat = "HH:mm"
       print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
-      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.sunday.rawValue)
-      
-      self.workingHours.update(with: data)
+      if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
+        
+        workingHours.update(with: day)
+      }
     }
     
   }
