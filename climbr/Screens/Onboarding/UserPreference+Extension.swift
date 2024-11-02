@@ -58,6 +58,8 @@ extension UserPreferenceVC{
     )
     
     UserManager.shared.savePreferences(data: data)
+    print("isi data preference: \(data)")
+    notifService.startOverlayScheduler(userPreference: data)
     
     guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
     replace(with: homeVc)

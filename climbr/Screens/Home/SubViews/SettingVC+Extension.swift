@@ -97,7 +97,7 @@ extension SettingVC {
         
         charService.updatePreferences(data: updateData)
   
-        notifService.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: updateData)
+        notifService.startOverlayScheduler(userPreference: updateData)
         
         self.dismiss(self)
     }
