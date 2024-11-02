@@ -55,8 +55,9 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   var workingHours: [WorkingHour] = []
   var lastStartValue: Date!
   var lastStopValue: Date!
-  var isChecked: Bool = false
+  var isLaunchAtLogin: Bool = false
   var intervalReminder: Int64 = 0
+  
   var charService: CharacterService?
   var notifService: NotificationService?
   
@@ -368,11 +369,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     // Set the content tint color (optional, depending on what you want to achieve)
     launchAtLoginChecBox.contentTintColor = .blue
-    if isChecked{
-      launchAtLoginChecBox.state = .on
-    } else {
-      launchAtLoginChecBox.state = .off
-    }
+    launchAtLoginChecBox.state = .off
     launchAtLoginChecBox.target = self
     launchAtLoginChecBox.action = #selector(actionCheckbox)
     

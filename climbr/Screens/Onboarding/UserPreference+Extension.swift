@@ -10,22 +10,22 @@ import Swinject
 
 extension UserPreferenceVC{
     
-    func processSavePreference() -> Int64{
+//    func processSavePreference() -> Int64{
         
-        if button1.isSelected {
-            return 30
-        }else if button2.isSelected{
-            return 60
-        }else if button3.isSelected{
-            return 90
-        } else if button4.isSelected{
-            return 120
-        }else {
-            print("ERR: at user preference (reminder)")
-            return 0
-        }
+//        if button1.isSelected {
+//            return 30
+//        }else if button2.isSelected{
+//            return 60
+//        }else if button3.isSelected{
+//            return 90
+//        } else if button4.isSelected{
+//            return 120
+//        }else {
+//            print("ERR: at user preference (reminder)")
+//            return 0
+//        }
         
-    }
+//    }
     
     @objc
     func actNextButton(){
@@ -41,65 +41,61 @@ extension UserPreferenceVC{
 //        print("Reminder at \(processSavePreference())")
 //        print("diff time : \(samePreference.startWorkPicker.dateValue.timeIntervalSince(samePreference.endWorkPicker.dateValue))")
         ///get checkbox value
-        let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
+//        let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
         
-        charService?.savePreferences(data: userPreferenceData)
+//        charService?.savePreferences(data: userPreferenceData)
         guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
         replace(with: homeVc)
         guard let notif = Container.shared.resolve(NotificationService.self) else {return}
 
-        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
+//        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
 
     }
     
     @objc
-    func action30min(){
+  func actionReminderHandler(_ sender: CLPickerButton){
         resetButtonColors()
-        button1.isSelected = true
-        button1.layer?.backgroundColor = NSColor.cNewButton.cgColor
-        button1.foregroundColorText = .white
+        sender.isSelected = true
+        sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        sender.foregroundColorText = .white
         nextButton.isEnabled = true
-        print("\(button1.title) choose")
+        
+        print("\(sender.title) choose")
     }
     
-    @objc
-    func action60min(){
-        resetButtonColors()
-        button2.isSelected = true
-        button2.layer?.backgroundColor = NSColor.cNewButton.cgColor
-        button2.foregroundColorText = .white
-        nextButton.isEnabled = true
-        print("\(button2.title) choose")
-    }
+//    @objc
+//    func action60min(){
+//        resetButtonColors()
+//        button2.isSelected = true
+//        button2.layer?.backgroundColor = NSColor.cNewButton.cgColor
+//        button2.foregroundColorText = .white
+//        nextButton.isEnabled = true
+//        print("\(button2.title) choose")
+//    }
+//    
+//    @objc
+//    func action90min(){
+//        resetButtonColors()
+//        button3.isSelected = true
+//        button3.layer?.backgroundColor = NSColor.cNewButton.cgColor
+//        button3.foregroundColorText = .white
+//        nextButton.isEnabled = true
+//        print("\(button3.title) choose")
+//    }
+//    
+//    @objc
+//    func action120min(){
+//        resetButtonColors()
+//        button4.isSelected = true
+//        button4.layer?.backgroundColor = NSColor.cNewButton.cgColor
+//        button4.foregroundColorText = .white
+//        nextButton.isEnabled = true
+//        print("\(button4.title) choose")
+//    }
     
     @objc
-    func action90min(){
-        resetButtonColors()
-        button3.isSelected = true
-        button3.layer?.backgroundColor = NSColor.cNewButton.cgColor
-        button3.foregroundColorText = .white
-        nextButton.isEnabled = true
-        print("\(button3.title) choose")
-    }
-    
-    @objc
-    func action120min(){
-        resetButtonColors()
-        button4.isSelected = true
-        button4.layer?.backgroundColor = NSColor.cNewButton.cgColor
-        button4.foregroundColorText = .white
-        nextButton.isEnabled = true
-        print("\(button4.title) choose")
-    }
-    
-    @objc
-    func actionCheckbox() {
-      let buttonState = launchAtLoginChecBox.state
-        if buttonState == .on {
-            isChecked = true
-        } else {
-            isChecked = false
-        }
+  func actionCheckbox(sender: NSButton) {
+    isLaunchAtLogin = sender.state == .on
     }
     
     @objc
@@ -109,11 +105,11 @@ extension UserPreferenceVC{
             daysButtonStack.unlockButton()
             
           preferenceStackView.isHidden = false
-            samePreference.isHidden = true
+            workHourItemView.isHidden = true
         } else{
             daysButtonStack.lockButton()
             preferenceStackView.isHidden = true
-            samePreference.isHidden = false
+            workHourItemView.isHidden = false
         }
     }
     
