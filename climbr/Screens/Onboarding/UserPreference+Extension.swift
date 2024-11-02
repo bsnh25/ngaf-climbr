@@ -44,11 +44,31 @@ extension UserPreferenceVC{
     //        let userPreferenceData = UserPreferenceModel(id: UUID(), launchAtLogin: isChecked, reminderInterval: processSavePreference(), workingHours: workingHours)
     
     //        charService?.savePreferences(data: userPreferenceData)
-    guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
-    replace(with: homeVc)
-    guard let notif = Container.shared.resolve(NotificationService.self) else {return}
+//    guard let homeVc = Container.shared.resolve(HomeVC.self) else {return}
+//    replace(with: homeVc)
+//    guard let notif = Container.shared.resolve(NotificationService.self) else {return}
     
     //        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: userPreferenceData)
+    
+    print("Flexible Working Hours: ", isFlexibleWorkHour)
+    
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+    
+    if isFlexibleWorkHour {
+      for item in workingHours where item.isEnabled {
+        let day = Weekday(rawValue: item.day)!
+        print("\(day.fullName):", formatter.string(from: item.startHour), "to", formatter.string(from: item.endHour))
+      }
+    } else {
+      for item in workingHours {
+        let day = Weekday(rawValue: item.day)!
+        print("\(day.fullName): ", formatter.string(from: item.startHour), " to ", formatter.string(from: item.endHour))
+      }
+    }
+    
+    print("Reminder Interval: ", intervalReminder)
+    print("Launch At Login: ", isLaunchAtLogin)
     
   }
   
@@ -61,37 +81,9 @@ extension UserPreferenceVC{
     nextButton.isEnabled = true
     
     print("\(sender.title) choose")
+    
+    intervalReminder = Int(sender.title)!
   }
-  
-  //    @objc
-  //    func action60min(){
-  //        resetButtonColors()
-  //        button2.isSelected = true
-  //        button2.layer?.backgroundColor = NSColor.cNewButton.cgColor
-  //        button2.foregroundColorText = .white
-  //        nextButton.isEnabled = true
-  //        print("\(button2.title) choose")
-  //    }
-  //
-  //    @objc
-  //    func action90min(){
-  //        resetButtonColors()
-  //        button3.isSelected = true
-  //        button3.layer?.backgroundColor = NSColor.cNewButton.cgColor
-  //        button3.foregroundColorText = .white
-  //        nextButton.isEnabled = true
-  //        print("\(button3.title) choose")
-  //    }
-  //
-  //    @objc
-  //    func action120min(){
-  //        resetButtonColors()
-  //        button4.isSelected = true
-  //        button4.layer?.backgroundColor = NSColor.cNewButton.cgColor
-  //        button4.foregroundColorText = .white
-  //        nextButton.isEnabled = true
-  //        print("\(button4.title) choose")
-  //    }
   
   @objc
   func actionCheckbox(sender: NSButton) {
@@ -100,19 +92,32 @@ extension UserPreferenceVC{
   
   @objc
   func actionDifferentWorkHour(_ sender: NSButton) {
+    isFlexibleWorkHour = sender.state == .on
     
-    if differentWorkHoursCheckbox.state == .on {
+    if isFlexibleWorkHour {
       daysButtonStack.unlockButton()
       
       preferenceStackView.isHidden = false
       workHourItemView.isHidden = true
       preferenceStack[0].isHidden = false
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+        day.isEnabled = true
+        
+        workingHours.update(with: day)
+      }
     } else{
       daysButtonStack.lockButton()
       preferenceStackView.isHidden = true
       workHourItemView.isHidden = false
       
       preferenceStack.forEach { $0.isHidden = true }
+      
+      for item in workingHours {
+        var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+        
+        workingHours.update(with: data)
+      }
     }
   }
   
@@ -121,30 +126,72 @@ extension UserPreferenceVC{
 extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
   func didMondayTap(_ isSelected: Bool) {
     preferenceStack[0].isHidden = !isSelected
+    
+    if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
   func didTuesdayTap(_ isSelected: Bool) {
     preferenceStack[1].isHidden = !isSelected
+    
+    if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
   func didWednesdayTap(_ isSelected: Bool) {
     preferenceStack[2].isHidden = !isSelected
+    
+    if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
   func didThursdayTap(_ isSelected: Bool) {
     preferenceStack[3].isHidden = !isSelected
+    
+    if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
   func didFridayTap(_ isSelected: Bool) {
     preferenceStack[4].isHidden = !isSelected
+    #warning("reset time on unselected day")
+    if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
   func didSaturdayTap(_ isSelected: Bool) {
     preferenceStack[5].isHidden = !isSelected
+    
+    if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
   func didSundayTap(_ isSelected: Bool) {
     preferenceStack[6].isHidden = !isSelected
+    
+    if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+      day.isEnabled = isSelected
+      
+      workingHours.update(with: day)
+    }
   }
   
 }

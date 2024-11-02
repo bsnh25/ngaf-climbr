@@ -65,18 +65,35 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   
   let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
   
-  
-  
-//  let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
-//  let warnLabel = CLTextLabelV2(sizeOfFont: 16, weightOfFont: .light, contentLabel: "􀇾 Work hour should be more than 2 (two) hours")
-  
   let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
   
-  var workingHours: [WorkingHour] = []
-  var lastStartValue: Date!
-  var lastStopValue: Date!
+  lazy var initialStartWorkHour: Date = {
+    let calendar = Calendar.current
+    
+    var components = calendar.dateComponents([.hour, .minute], from: Date())
+    components.hour = 8
+    components.minute = 0
+    
+    return calendar.date(from: components)!
+  }()
+  
+  lazy var initialEndWorkHour: Date = {
+    initialStartWorkHour.addingTimeInterval(2 * 60 * 60)
+  }()
+  
+  lazy var workingHours: Set<WorkingHour> = [
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.wednesday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.thursday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.friday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
+  ]
+  
   var isLaunchAtLogin: Bool = false
-  var intervalReminder: Int64 = 0
+  var isFlexibleWorkHour: Bool = false
+  var intervalReminder: Int = 0
   
   var charService: CharacterService = UserManager.shared
   var notifService: NotificationService = NotificationManager.shared
@@ -104,8 +121,6 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
     notifService.askUserPermission()
   }
-  
-  
   
   func configureBgContainer(){
     view.addSubview(bgContainer)
@@ -274,6 +289,13 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Work Hours: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      for item in self.workingHours {
+        let data = WorkingHour(startHour: start, endHour: end, day: item.day)
+        
+        self.workingHours.update(with: data)
+      }
+      
     }
   }
   
@@ -315,53 +337,88 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       }
     }
     
-    mondayPreference.onValueChanged = { start, end in
+    mondayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Monday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.monday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
-    tuesdayPreference.onValueChanged = { start, end in
+    tuesdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Tuesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.tuesday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
-    wednesdayPreference.onValueChanged = { start, end in
+    wednesdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Wednesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.wednesday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
-    thursdayPreference.onValueChanged = { start, end in
+    thursdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Thursday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.thursday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
-    fridayPreference.onValueChanged = { start, end in
+    fridayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Friday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.friday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
-    saturdayPreference.onValueChanged = { start, end in
+    saturdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Saturday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.saturday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
-    sundayPreference.onValueChanged = { start, end in
+    sundayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
       
       let formatter = DateFormatter()
       formatter.dateFormat = "HH:mm"
       print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      let data = WorkingHour(startHour: start, endHour: end, day: Weekday.sunday.rawValue)
+      
+      self.workingHours.update(with: data)
     }
     
   }
