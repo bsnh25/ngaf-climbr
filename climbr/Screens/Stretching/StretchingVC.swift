@@ -63,9 +63,10 @@ class StretchingVC: NSViewController {
     let movementInfoView        = NSView()
     let instructionView         = ExerciseInstructionView()
     let movementStack           = NSStackView()
-    let currentMovementView     = CurrentMovementView()
-    let movementDivider         = Divider()
-    let nextMovementView        = NextMovementView()
+//    let currentMovementView     = CurrentMovementView()
+//    let movementDivider         = Divider()
+//    let nextMovementView        = NextMovementView()
+    let progressSideView        = ProgressStretchVC()
     let skipButton              = CLTextButtonV2(
         title: "Skip This Movement",
         backgroundColor: .white,
@@ -99,6 +100,7 @@ class StretchingVC: NSViewController {
         return self.randomizeMovement(movements: coba)
     }()
     var completedMovement: [Movement]   = []
+    var statusProgress : ProgressStretchCondition = ProgressStretchCondition.inProgress
     
     var bags: Set<AnyCancellable> = []
     
@@ -150,6 +152,8 @@ class StretchingVC: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         cameraService?.startSession()
+        progressSideView.loadMovement(self.setOfMovements)
+        print("LOG setMovement : \(setOfMovements)")
         configureCameraPreview()
         configureMovementView()
         predictor?.delegate = self
@@ -165,15 +169,15 @@ class StretchingVC: NSViewController {
 //        configureBoundingBox()
     }
   
-    private func configureBoundingBox() {
-      view.addSubview(boundingBoxView)
-      
-      boundingBoxView.updateRect(NSRect(x: 0, y: 0, width: 500, height: 700), color: .green)
-      let bbxview = BoundingBoxView(frame: view.bounds)
-//      (650.1316112326951, 6.118433317856216, 607.105257765242, 774.8684337060697)
-      bbxview.updateRect(NSRect(x: 252, y: 0, width: 504, height: 450), color: .green)
-      view.addSubview(bbxview)
-    }
+//    private func configureBoundingBox() {
+//      view.addSubview(boundingBoxView)
+//      
+//      boundingBoxView.updateRect(NSRect(x: 0, y: 0, width: 500, height: 700), color: .green)
+//      let bbxview = BoundingBoxView(frame: view.bounds)
+////      (650.1316112326951, 6.118433317856216, 607.105257765242, 774.8684337060697)
+//      bbxview.updateRect(NSRect(x: 252, y: 0, width: 504, height: 450), color: .green)
+//      view.addSubview(bbxview)
+//    }
     
     private func configureInstructionView() {
         view.addSubview(instructionView)
@@ -241,31 +245,63 @@ class StretchingVC: NSViewController {
         configureMovementStack()
     }
     
+//    private func configureMovementStack() {
+//        /// Arrange current movement view, divider, and next movement vertically
+////        movementStack.setViews([currentMovementView, movementDivider, nextMovementView], in: .leading)
+////        movementStack.setViews([progressSideView], in: .leading)
+//        movementStack.addArrangedSubview(progressSideView)
+//        movementStack.orientation       = .vertical
+//        movementStack.spacing           = 24
+//        movementStack.alignment         = .leading
+//        movementStack.translatesAutoresizingMaskIntoConstraints = false
+//        progressSideView.translatesAutoresizingMaskIntoConstraints = false
+//        movementInfoView.addSubview(movementStack)
+//        
+//        NSLayoutConstraint.activate([
+//            movementStack.topAnchor.constraint(equalTo: movementInfoView.safeAreaLayoutGuide.topAnchor, constant: padding),
+//            movementStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
+//            movementStack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+//            
+////            progressSideView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+////            progressSideView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
+//            
+////            currentMovementView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+////            currentMovementView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
+////            
+////            nextMovementView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+////            nextMovementView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
+////            
+////            movementDivider.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
+////            movementDivider.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
+//        ])
+//    }
+    
     private func configureMovementStack() {
-        /// Arrange current movement view, divider, and next movement vertically
-        movementStack.setViews([currentMovementView, movementDivider, nextMovementView], in: .leading)
-        movementStack.orientation       = .vertical
-        movementStack.spacing           = 24
-        movementStack.alignment         = .leading
-        movementStack.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(movementInfoView)
+        movementInfoView.addSubview(progressSideView)
+
+        // Set background color
+        movementInfoView.wantsLayer = true
+        movementInfoView.layer?.backgroundColor = NSColor.white.cgColor
+
+//        movementInfoView.layer?.borderWidth = 1
+//        movementInfoView.layer?.borderColor = NSColor.red.cgColor
+        progressSideView.setAccessibilityElement(true)
         
-        movementInfoView.addSubview(movementStack)
-        currentMovementView.setAccessibilityElement(true)
-        nextMovementView.setAccessibilityElement(true)
-        
+        movementInfoView.translatesAutoresizingMaskIntoConstraints = false
+        progressSideView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Layout constraints for `movementInfoView` and `progressSideView`
         NSLayoutConstraint.activate([
-            movementStack.topAnchor.constraint(equalTo: movementInfoView.safeAreaLayoutGuide.topAnchor, constant: padding),
-            movementStack.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
-            movementStack.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+            movementInfoView.topAnchor.constraint(equalTo: view.topAnchor),
+            movementInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            movementInfoView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            movementInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            currentMovementView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
-            currentMovementView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
-            
-            nextMovementView.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
-            nextMovementView.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
-            
-            movementDivider.leadingAnchor.constraint(equalTo: movementStack.leadingAnchor),
-            movementDivider.trailingAnchor.constraint(equalTo: movementStack.trailingAnchor),
+            progressSideView.topAnchor.constraint(equalTo: movementInfoView.topAnchor, constant: padding),
+            progressSideView.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
+            progressSideView.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+            progressSideView.bottomAnchor.constraint(equalTo: movementInfoView.bottomAnchor, constant: -padding)
         ])
     }
     

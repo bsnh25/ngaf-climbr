@@ -53,8 +53,19 @@ struct Movement {
     
 }
 
-enum ExerciseType {
+enum ExerciseType: CaseIterable {
     case neck, arm, back
+    
+    var exerciseString : String {
+        switch self {
+        case .neck:
+            return "Neck"
+        case .arm:
+            return "Shoulder"
+        case .back:
+            return "Lower Back"
+        }
+    }
 }
 
 enum ExerciseName: String, CaseIterable {
