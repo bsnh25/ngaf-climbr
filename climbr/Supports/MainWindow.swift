@@ -34,6 +34,7 @@ class MainWindow: NSWindow {
   
     func addViewController(_ vc: NSViewController) {
       contentView             = vc.view
+      vc.view.frame = screenFrame
       contentViewController   = vc
     }
 }

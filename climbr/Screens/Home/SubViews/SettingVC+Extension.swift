@@ -90,10 +90,10 @@ extension SettingVC {
         print("\(endTime.dateValue)")
         ///get checkbox value
         
-        guard let char = charService else {return}
-        char.updatePreferences(data: updateData)
-        guard let notif = notifService else {return}
-        notif.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: updateData)
+        
+        charService.updatePreferences(data: updateData)
+  
+        notifService.sendNotification(title: "🚨 Extreme muscle tightness detected!", body: "Initiate emergency stretch protocol or risk a workplace avalanche!", reminder: updateData)
         
         self.dismiss(self)
     }

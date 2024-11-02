@@ -83,7 +83,7 @@ extension HomeVC {
         progressStretch.doubleValue = progress
         progressText.setText("\(Int(progress)) / 4 sessions")
 //        arrNotif.popLast()
-        character = charService?.getCharacterData()
+        character = charService.getCharacterData()
         updatePoint()
     }
     
@@ -145,7 +145,7 @@ extension HomeVC {
         } else {
             
             /// State for out of working hours
-            let prefs = charService?.getPreferences()
+            let prefs = charService.getPreferences()
 //            let startWorkingHour = prefs?.startWorkingHour ?? .now
 //            let endWorkingHour = prefs?.endWorkingHour ?? .now
             
@@ -225,7 +225,7 @@ extension HomeVC : ChooseCaraterDelegate {
     }
     
     func characterDidUpdate() {
-        character = self.charService?.getCharacterData()
+        character = self.charService.getCharacterData()
         updatePoint()
         updateCharacter()
     }

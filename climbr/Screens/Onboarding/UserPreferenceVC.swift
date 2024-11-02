@@ -78,21 +78,8 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   var isLaunchAtLogin: Bool = false
   var intervalReminder: Int64 = 0
   
-  var charService: CharacterService?
-  var notifService: NotificationService?
-  
-  
-  init(charService: CharacterService?, notifService: NotificationService?) {
-    super.init(nibName: nil, bundle: nil)
-    self.charService = charService
-    self.notifService = notifService
-    
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
+  var charService: CharacterService = UserManager.shared
+  var notifService: NotificationService = NotificationManager.shared
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -115,7 +102,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     super.viewDidAppear()
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
-    notifService?.askUserPermission()
+    notifService.askUserPermission()
   }
   
   
