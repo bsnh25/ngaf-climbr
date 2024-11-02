@@ -12,7 +12,13 @@ class UserManager : CharacterService {
   
   static let shared = UserManager()
   
-  private init() {}
+  var character: CharacterModel!
+  var preferences: UserPreferenceModel!
+  
+  private init() {
+    character = getCharacterData()
+    preferences = getPreferences()
+  }
   
   func getPreferences() -> UserPreferenceModel? {
     guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.kUserPreference) else { return nil }
@@ -90,7 +96,7 @@ class UserManager : CharacterService {
     var decodedData: CharacterModel = getCharacterData()!
     
     do {
-      decodedData.point += Int64(points)
+      decodedData.point += points
       let encodedData = try JSONEncoder().encode(decodedData)
       UserDefaults.standard.set(encodedData, forKey: UserDefaultsKey.kUserCharacter)
     } catch {
