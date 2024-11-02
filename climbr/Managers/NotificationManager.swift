@@ -35,19 +35,22 @@ class NotificationManager: NotificationService {
             overlayTimer = nil
         }
         
-        private func checkWorkingHoursAndStartOverlay(userPreference: UserPreferenceModel) {
-            let calendar = Calendar.current
-            let now = Date()
-            
-            // Mendapatkan komponen hari dan waktu saat ini
-            let currentDay = calendar.component(.weekday, from: now) // 1 untuk Minggu, 2 untuk Senin, dst.
-            let currentHour = calendar.component(.hour, from: now)
-            let currentMinute = calendar.component(.minute, from: now)
-            
-            // Cari jadwal `workingHours` yang aktif untuk hari ini
+    private func checkWorkingHoursAndStartOverlay(userPreference: UserPreferenceModel) {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // Mendapatkan komponen hari dan waktu saat ini
+        let currentDay = calendar.component(.weekday, from: now)
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
+        
+    
+        if userPreference.isFlexibleWorkHour {
+           
             for workingHour in userPreference.workingHours {
+                // Periksa apakah jadwal aktif dan hari sesuai
                 guard workingHour.isEnabled && workingHour.day == currentDay else {
-                    continue // Lewati jika hari ini tidak sesuai atau tidak aktif
+                    continue // Lewati jika hari tidak cocok atau tidak aktif
                 }
                 
                 // Dapatkan komponen jam dan menit dari `startHour` dan `endHour`
@@ -63,7 +66,7 @@ class NotificationManager: NotificationService {
                 if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
                     (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
                     
-                    // Waktu saat ini sesuai, mulai `overlayTimer` jika belum aktif
+                    // Waktu sesuai, mulai `overlayTimer` jika belum aktif
                     if overlayTimer == nil {
                         startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 60))
                     }
@@ -71,10 +74,35 @@ class NotificationManager: NotificationService {
                 }
             }
             
-            // Jika tidak dalam waktu kerja, matikan overlayTimer jika aktif
-            overlayTimer?.invalidate()
-            overlayTimer = nil
+        } else {
+            for workingHour in userPreference.workingHours {
+                
+                let startComponents = calendar.dateComponents([.hour, .minute], from: workingHour.startHour)
+                let endComponents = calendar.dateComponents([.hour, .minute], from: workingHour.endHour)
+                
+                guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
+                      let endHour = endComponents.hour, let endMinute = endComponents.minute else {
+                    continue
+                }
+                
+              
+                if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
+                    (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
+                    
+                    
+                    if overlayTimer == nil {
+                        startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 60))
+                    }
+                    return
+                }
+            }
         }
+        
+        // Jika tidak dalam waktu kerja atau tidak memenuhi kriteria, matikan overlayTimer jika aktif
+        overlayTimer?.invalidate()
+        overlayTimer = nil
+    }
+
         
         private func startOverlayTimer(interval: TimeInterval) {
             // Timer untuk memanggil showOverlay sesuai `reminderInterval`
