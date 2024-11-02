@@ -125,9 +125,6 @@ class HomeVC: NSViewController {
             }
             .store(in: &bagss)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.notificationServ?.showOverlay()
-        }
     }
     
     override func viewDidAppear() {

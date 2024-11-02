@@ -50,7 +50,7 @@ class OverlayWindow: NSWindowController {
     func show() {
         guard let window else { return }
         let frame = NSScreen.main?.frame ?? .zero
-        let frameOverlay = CGRect(x: 0, y: 0, width: Int(frame.width * 0.5), height: Int(frame.height * 0.8))
+        let frameOverlay = CGRect(x: 510, y: 0, width: Int(frame.width * 0.67), height: Int(frame.height * 0.75))
         window.setFrame(frameOverlay, display: false)
         window.makeKeyAndOrderFront(nil)
         riveVm?.setInput("isIntro", value: true)

@@ -9,35 +9,124 @@ import Foundation
 import Cocoa
 import AppKit
 import RiveRuntime
+import SnapKit
 
 class OverlayView: NSViewController {
     let climbrVm = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
-    let btn = NSButton()
+    let boxContent = NSView()
+    let notifText = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Hey, aren't you tired? I'm feeling sore, can we rest and stretch first?")
+    let dismissBtn = CLTextButtonV2(title: "Stretch Now", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
+    let snoozeBtn = CLTextButtonV2(title: "Snooze (5 min)", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     var delegate: OverlayServices?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configure()
+    }
+    
+    
+    func configure(){
+        configureRiveView()
+        configureBoxContent()
+        configureButtonDismiss()
+        configureButtonSnooze()
+        configureTextNotif()
+    }
+    
+    
+    func configureRiveView(){
         let riveView = climbrVm.createRiveView()
         riveView.frame = view.bounds
         view.addSubview(riveView)
         
-        btn.title = "Dismiss Aku"
-        btn.target = self
-        btn.action = #selector(self.dismissVC)
-        riveView.addSubview(btn)
         
         riveView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.trailing.equalToSuperview().offset(250)
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
         }
         
-        btn.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
+    }
+    
+    func configureBoxContent(){
+        view.addSubview(boxContent)
+        
+        boxContent.wantsLayer = true
+        boxContent.layer?.backgroundColor = .init(gray: 0.8, alpha: 1)
+        boxContent.layer?.cornerRadius = 10
+        boxContent.translatesAutoresizingMaskIntoConstraints = false
+        
+        boxContent.snp.makeConstraints {box in
+            box.leading.equalToSuperview()
+            box.bottom.equalToSuperview().inset(181)
+            box.width.equalTo(471)
+            box.height.equalTo(185)
         }
     }
     
-    @objc private func dismissVC() {
+    
+    func configureButtonDismiss(){
+        boxContent.addSubview(dismissBtn)
+        
+        dismissBtn.translatesAutoresizingMaskIntoConstraints = false
+        dismissBtn.target = self
+        dismissBtn.action = #selector(stretchNow)
+        
+        dismissBtn.snp.makeConstraints {dismiss in
+            dismiss.leading.equalTo(boxContent.snp.leading).inset(73.5)
+            dismiss.bottom.equalTo(boxContent.snp.bottom).inset(22.5)
+            dismiss.width.equalTo(150)
+            dismiss.height.equalTo(38)
+        }
+        
+    }
+    
+    
+    func configureButtonSnooze(){
+        boxContent.addSubview(snoozeBtn)
+        
+        snoozeBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        snoozeBtn.target = self
+        snoozeBtn.action = #selector(snooze)
+        
+        snoozeBtn.snp.makeConstraints {snooze in
+            snooze.leading.equalTo(dismissBtn.snp.trailing).offset(24)
+            snooze.bottom.equalTo(boxContent.snp.bottom).inset(22.5)
+            snooze.width.equalTo(150)
+            snooze.height.equalTo(38)
+        }
+    }
+    
+    func configureTextNotif() {
+        boxContent.addSubview(notifText)
+        
+        notifText.translatesAutoresizingMaskIntoConstraints = false
+        
+        notifText.lineBreakMode = .byWordWrapping
+        notifText.usesSingleLineMode = false
+        notifText.cell?.wraps = true
+        notifText.cell?.isScrollable = false
+
+
+        notifText.wantsLayer = true
+        notifText.alignment = .center
+        
+        
+        notifText.snp.makeConstraints {notif in
+            notif.top.equalTo(boxContent.snp.top).inset(22.5)
+            notif.leading.equalTo(boxContent.snp.leading).offset(32)
+            notif.trailing.equalTo(boxContent.snp.trailing).offset(-32)
+        }
+    }
+    
+    @objc private func stretchNow() {
         delegate?.didOverlayDismissed()
     }
     
+    @objc private func snooze() {
+        delegate?.didOverlayDismissed()
+    }
 }
