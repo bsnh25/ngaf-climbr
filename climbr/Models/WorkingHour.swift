@@ -17,8 +17,16 @@ enum Weekday: Int, CaseIterable {
   case sunday
 }
 
-struct WorkingHour: Codable{
+struct WorkingHour: Codable, Hashable {
     var startHour: Date
     var endHour: Date
     var day: Int
+  
+  static func ==(lhs: WorkingHour, rhs: WorkingHour) -> Bool {
+    lhs.day == rhs.day
+  }
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(day)
+  }
 }
