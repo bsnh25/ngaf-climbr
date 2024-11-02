@@ -15,6 +15,7 @@ class GridItem: NSCollectionViewItem {
     let backgroundImageView: NSImageView = {
         let imageView = NSImageView()
         imageView.imageScaling = .scaleProportionallyUpOrDown
+        imageView.layer?.backgroundColor = NSColor.lightGray.cgColor.copy(alpha: 0.3)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -22,7 +23,7 @@ class GridItem: NSCollectionViewItem {
     let overlayView: NSView = {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.lightGray.cgColor.copy(alpha: 0.3)
+        view.layer?.backgroundColor = NSColor.darkGray.cgColor.copy(alpha: 0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -49,7 +50,7 @@ class GridItem: NSCollectionViewItem {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = .white
+        self.view.layer?.backgroundColor = NSColor.lightGray.withAlphaComponent(0.3).cgColor
         self.view.layer?.cornerRadius = 10
         
         lockIcon.setConfiguration(size: 24, weight: .bold)

@@ -148,8 +148,11 @@ class ShopItemVC: NSViewController {
         buyButton.isHidden = true
         
         NSLayoutConstraint.activate([
-            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 225),
-            buyButton.bottomAnchor.constraint(equalTo: contentStack.bottomAnchor)
+            buyButton.topAnchor.constraint(equalTo: collectionViewContainer.bottomAnchor, constant: 16),
+            buyButton.leadingAnchor.constraint(equalTo: collectionViewContainer.leadingAnchor),
+            buyButton.trailingAnchor.constraint(equalTo: collectionViewContainer.trailingAnchor),
+            buyButton.heightAnchor.constraint(equalToConstant: 50),
+//            buyButton.bottomAnchor.constraint(equalTo: contentStack.bottomAnchor)
         ])
     }
     
@@ -199,10 +202,11 @@ class ShopItemVC: NSViewController {
         
     func setupCollectionViewContainer() {
         collectionViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        collectionViewContainer.layer?.backgroundColor = .white
         
         NSLayoutConstraint.activate([
-            collectionViewContainer.widthAnchor.constraint(equalToConstant: 350),
-            collectionViewContainer.heightAnchor.constraint(equalToConstant: 700)
+            collectionViewContainer.widthAnchor.constraint(equalToConstant: 400),
+            collectionViewContainer.heightAnchor.constraint(equalToConstant: 400)
         ])
     }
     

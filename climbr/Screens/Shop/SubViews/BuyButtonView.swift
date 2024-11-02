@@ -47,15 +47,15 @@ class BuyButtonView: NSView {
         layer?.shadowRadius = 5
         layer?.shadowOpacity = 0.3
         setupItemButton()
-        setupItemLabel()
+//        setupItemLabel()
         
         let blur = CLBlurEffectView(frame: bounds)
         addSubview(blur, positioned: .below, relativeTo: nil)
         
-        NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: 300),
-            self.heightAnchor.constraint(equalToConstant: 150)
-        ])
+//        NSLayoutConstraint.activate([
+//            self.widthAnchor.constraint(equalToConstant: 300),
+//            self.heightAnchor.constraint(equalToConstant: 150)
+//        ])
     }
     
     func setupItemLabel(){
@@ -79,7 +79,7 @@ class BuyButtonView: NSView {
         itemButton.title = "harga item"
         
         itemButton.snp.makeConstraints { button in
-            button.leading.trailing.bottom.equalToSuperview().inset(20)
+            button.leading.trailing.bottom.equalToSuperview()
             button.height.equalTo(50)
         }
     }
