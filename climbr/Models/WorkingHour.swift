@@ -17,31 +17,29 @@ enum Weekday: Int, CaseIterable {
   case sunday
   
   var fullName: String {
-    let calendar = Calendar.current
-    
-    let formatter = DateFormatter()
-    formatter.dateFormat = "EEEE"
-    
-    var components = DateComponents()
-    components.weekday = self.rawValue
-    
-    let date = Calendar.current.date(from: components)!
-    
-    return formatter.string(from: date)
+    switch self {
+      
+    case .monday: "Monday"
+    case .tuesday: "Tuesday"
+    case .wednesday: "Wednesday"
+    case .thursday: "Thursday"
+    case .friday: "Friday"
+    case .saturday: "Saturday"
+    case .sunday: "Sunday"
+    }
   }
   
   var abbreviatedName: String {
-    let calendar = Calendar.current
-    
-    let formatter = DateFormatter()
-    formatter.dateFormat = "E"
-    
-    var components = DateComponents()
-    components.weekday = self.rawValue
-    
-    let date = Calendar.current.date(from: components)!
-    
-    return formatter.string(from: date)
+    switch self {
+      
+    case .monday: "Mon"
+    case .tuesday: "Tue"
+    case .wednesday: "Wed"
+    case .thursday: "Thu"
+    case .friday: "Fri"
+    case .saturday: "Sat"
+    case .sunday: "Sun"
+    }
   }
 }
 
