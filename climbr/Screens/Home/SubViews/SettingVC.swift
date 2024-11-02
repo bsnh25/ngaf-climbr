@@ -123,18 +123,8 @@ class SettingVC: NSViewController {
     var lastStartValue: Date!
     var lastStopValue: Date!
     var isChecked: Bool = false
-    var notifService: NotificationService?
-    var charService: CharacterService?
-    
-    init(notifService: NotificationService?, charService: CharacterService?) {
-        super.init(nibName: nil, bundle: nil)
-        self.notifService = notifService
-        self.charService = charService
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var notifService: NotificationService = NotificationManager.shared
+    var charService: CharacterService = UserManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,7 +151,7 @@ class SettingVC: NSViewController {
     }
     
     private func configureUI(){
-        let userPreferenceData = charService?.getPreferences()
+        let userPreferenceData = charService.getPreferences()
         view.addSubview(settingText)
         view.addSubview(subTitleA)
         view.addSubview(fromText)

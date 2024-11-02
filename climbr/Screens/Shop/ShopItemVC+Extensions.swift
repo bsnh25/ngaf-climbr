@@ -10,7 +10,7 @@ import Cocoa
 
 extension ShopItemVC {
     func updateCharacter(with data: EquipmentModel) {
-        guard let characterService, var character else { return }
+        guard var character else { return }
         print("update character")
         
         switch(data.type) {
@@ -100,7 +100,7 @@ extension ShopItemVC: BuyButtonDelegate {
         if character.point >= selectedItem.item.price {
             equipmentService?.purchaseEquipment(data: selectedItem.item)
             let point = selectedItem.item.price
-            characterService?.updatePoint(character: character, points: -point)
+            characterService.updatePoint(character: character, points: -point)
             
             updateData(with: selectedItem.type)
             
