@@ -20,7 +20,7 @@ class OverlayView: NSViewController {
     let snoozeBtn = CLTextButtonV2(title: "Snooze (5 min)", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     var delegate: OverlayNotifServices?
     let notifService = NotificationManager.shared
-    
+    var snoozeTimer: DispatchSourceTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,8 +147,14 @@ class OverlayView: NSViewController {
     @objc private func snooze() {
         delegate?.didOverlayDismissed()
         
-        Timer.scheduledTimer(withTimeInterval: 300, repeats: false) { [weak self] _ in
-            self?.notifService.showOverlay()
+        snoozeTimer?.cancel()
+        snoozeTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+        snoozeTimer?.schedule(deadline: .now() + 300)
+        snoozeTimer?.setEventHandler { [weak self] in
+            DispatchQueue.main.async {
+                self?.notifService.showOverlay()
+            }
         }
+        snoozeTimer?.resume()
     }
 }

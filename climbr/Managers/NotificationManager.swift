@@ -111,7 +111,9 @@ class NotificationManager: NotificationService {
         overlayTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         overlayTimer?.schedule(deadline: .now() + interval, repeating: interval)
         overlayTimer?.setEventHandler { [weak self] in
-            self?.showOverlay()
+            DispatchQueue.main.async {
+                self?.showOverlay()
+            }
         }
         overlayTimer?.resume()
     }
