@@ -101,6 +101,11 @@ class NotificationManager: NotificationService {
         // Jika tidak dalam waktu kerja atau tidak memenuhi kriteria, matikan overlayTimer jika aktif
         overlayTimer?.invalidate()
         overlayTimer = nil
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count = 0
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
     }
 
         
@@ -118,5 +123,11 @@ class NotificationManager: NotificationService {
         overlayWindow = OverlayWindow()
         overlayWindow?.addViewContoller(OverlayView())
         overlayWindow?.show()
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count += 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
     }
 }

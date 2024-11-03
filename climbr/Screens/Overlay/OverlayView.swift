@@ -26,6 +26,7 @@ class OverlayView: NSViewController {
     let dismissBtn = CLTextButtonV2(title: "Stretch Now", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let snoozeBtn = CLTextButtonV2(title: "Snooze (5 min)", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     var delegate: OverlayNotifServices?
+    let notifService = NotificationManager.shared
     
     
     override func viewDidLoad() {
@@ -132,9 +133,19 @@ class OverlayView: NSViewController {
     
     @objc private func stretchNow() {
         delegate?.didOverlayDismissed()
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count -= 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
     }
     
     @objc private func snooze() {
         delegate?.didOverlayDismissed()
+        
+        Timer.scheduledTimer(withTimeInterval: 300, repeats: false) { [weak self] _ in
+            self?.notifService.showOverlay()
+        }
     }
 }
