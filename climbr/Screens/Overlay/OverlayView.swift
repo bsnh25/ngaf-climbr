@@ -6,18 +6,11 @@
 //
 
 
-//
-//  OverlayView.swift
-//  climbr
-//
-//  Created by Bayu Septyan Nur Hidayat on 28/10/24.
-//
-
-import Foundation
 import Cocoa
 import AppKit
 import RiveRuntime
 import SnapKit
+import Swinject
 
 class OverlayView: NSViewController {
     let climbrVm = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
@@ -139,6 +132,16 @@ class OverlayView: NSViewController {
         count -= 1
         
         UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+        
+            if let appDelegate = NSApplication.shared.delegate as? AppDelegate,
+               let mainWindow = appDelegate.mainWindow {
+                
+                if let vc = Container.shared.resolve(StretchingVC.self) {
+                  mainWindow.contentViewController?.push(to: vc)
+                  print("go to stretching session")
+                  mainWindow.orderFrontRegardless()
+                }
+            }
     }
     
     @objc private func snooze() {
