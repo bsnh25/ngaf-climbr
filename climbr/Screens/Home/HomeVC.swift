@@ -71,7 +71,7 @@ class HomeVC: NSViewController {
     
     var riveView = RiveView()
     var audioService: AudioService?
-    var charService: CharacterService?
+    var charService: CharacterService = UserManager.shared
     var equipmentService: EquipmentService?
     var isSoundTapped: Bool = false
     var progressText = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .semibold, contentLabel: "")
@@ -89,10 +89,9 @@ class HomeVC: NSViewController {
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
     
-    init(audioService: AudioService?, charService: CharacterService?, equipmentService: EquipmentService?) {
+    init(audioService: AudioService?, equipmentService: EquipmentService?) {
         super.init(nibName: nil, bundle: nil)
         self.audioService = audioService
-        self.charService = charService
         self.equipmentService = equipmentService
     }
     
@@ -104,7 +103,7 @@ class HomeVC: NSViewController {
         super.viewWillAppear()
         print("viewWillAppear")
         reloadAnimation()
-        self.character = self.charService?.getCharacterData()
+        self.character = self.charService.getCharacterData()
         
         if let character {
             /// Configure rive artboard

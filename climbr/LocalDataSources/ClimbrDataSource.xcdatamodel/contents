@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A348" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Equipment" representedClassName="Equipment" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="String"/>
@@ -7,14 +7,6 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String" customClassName="[EquipmentType]"/>
-    </entity>
-    <entity name="Excercise" representedClassName="Excercise" syncable="YES">
-        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="preview" optional="YES" attributeType="String"/>
-        <attribute name="rewardPoint" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <attribute name="type" optional="YES" attributeType="String" customClassName="[PainType]"/>
     </entity>
     <entity name="StreakEntity" representedClassName="StreakEntity" syncable="YES">
         <attribute name="collectedEquipmentId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

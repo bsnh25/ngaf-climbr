@@ -8,8 +8,8 @@
 import Foundation
 
 struct UserPreferenceModel: Codable {
-    var id: UUID
-    var launchAtLogin: Bool
-    var reminderInterval: Int64
+    var launchAtLogin: Bool = false
+    var isFlexibleWorkHour: Bool = false
+    var reminderInterval: Int
     var workingHours: [WorkingHour]
 }

@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   
   /// services section
   let audio = Container.shared.resolve(AudioService.self)
-  let charService = Container.shared.resolve(CharacterService.self)
+  let charService: CharacterService = UserManager.shared
   
   var userPreference: UserPreferenceModel?
   var mainWindow: MainWindow?
@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   }
   
   func loadUserPreference(){
-    userPreference = charService?.getPreferences()
+    userPreference = charService.getPreferences()
   }
   
   func enableHelperAppLaunchAtLogin(_ enabled: Bool) {

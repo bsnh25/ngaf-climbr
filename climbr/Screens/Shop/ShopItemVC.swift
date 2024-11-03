@@ -11,7 +11,7 @@ import SnapKit
 import RiveRuntime
 
 class ShopItemVC: NSViewController {
-    var characterService : CharacterService?
+    var characterService : CharacterService = UserManager.shared
     var equipmentService : EquipmentService?
     
     let pointsLabel = NSTextField(labelWithString: "100")
@@ -69,9 +69,8 @@ class ShopItemVC: NSViewController {
         bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
     )
     
-    init(character: CharacterService?, equipment : EquipmentService?){
+    init(equipment : EquipmentService?){
         super.init(nibName: nil, bundle: nil)
-        self.characterService = character
         self.equipmentService = equipment
     }
     
@@ -110,7 +109,7 @@ class ShopItemVC: NSViewController {
     }
     
     func getCharacterData() {
-        self.character = characterService?.getCharacterData()
+        self.character = characterService.getCharacterData()
         
         if let character = self.character {
             /// Set current character's point

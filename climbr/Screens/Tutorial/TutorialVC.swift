@@ -32,23 +32,13 @@ class TutorialVC: NSViewController {
     var charLabel       = CLLabel(fontSize: 28, fontWeight: .bold)
     var tutorialLabel   = CLLabel(fontSize: 24, fontWeight: .bold)
     var bags: Set<AnyCancellable> = []
-    var charService: CharacterService?
+    var charService: CharacterService = UserManager.shared
     
     var firstTutorial: Bool = true {
         didSet {
             selectorButton()
         }
     }
-    
-    init(charService: CharacterService?){
-        super.init(nibName: nil, bundle: nil)
-        self.charService = charService
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

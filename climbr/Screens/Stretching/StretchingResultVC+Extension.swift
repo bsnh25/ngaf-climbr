@@ -24,8 +24,8 @@ extension StretchingResultVC {
         rewardPointLabel.setText(label)
         
         if let char {
-            charService?.updatePoint(character: char, points: points)
-            print("Ini point yang di dapat : \(String((charService?.getCharacterData()!.point)!))")
+            charService.updatePoint(character: char, points: points)
+            print("Ini point yang di dapat : \(String((charService.getCharacterData()!.point)))")
         }
     }
     
@@ -148,7 +148,7 @@ extension StretchingResultVC {
     }
     
     func getUserData() {
-        self.char = charService?.getCharacterData()
+        self.char = charService.getCharacterData()
         self.dummyCharacter.image = char?.gender == .male ? .maleCoin : .femaleCoin
     }
     
