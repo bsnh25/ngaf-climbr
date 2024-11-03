@@ -342,6 +342,7 @@ class ShopItemVC: NSViewController {
    
     func updateData(with type: EquipmentType = .head) {
         if let items = equipmentService?.getEquipments(equipmentType: type) {
+            print("Ini items dari update data: \(items)")
             collectionViewContainer.updateItems(items: items)
         }
     }
