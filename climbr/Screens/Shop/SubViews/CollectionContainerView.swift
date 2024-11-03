@@ -32,13 +32,14 @@ class CollectionContainerView: NSView {
         titleItems.alignment = .center
         
         let flowLayout = NSCollectionViewFlowLayout()
-        flowLayout.itemSize = NSSize(width: 112, height: 112)
+        flowLayout.itemSize = NSSize(width: 80, height: 80)
         flowLayout.sectionInset = NSEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
-//        flowLayout.minimumInteritemSpacing = 20
+        //        flowLayout.minimumInteritemSpacing = 20
         flowLayout.minimumLineSpacing = 20
         flowLayout.scrollDirection = .vertical
         
         collectionView = NSCollectionView()
+        collectionView.wantsLayer = true
         collectionView.collectionViewLayout = flowLayout
         collectionView.register(GridItem.self, forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"))
         
@@ -47,6 +48,8 @@ class CollectionContainerView: NSView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autohidesScrollers = true
+        scrollView.wantsLayer = true
+        scrollView.layer?.backgroundColor = .black
         
         verticalStack = NSStackView()
         verticalStack.orientation = .vertical
@@ -55,13 +58,13 @@ class CollectionContainerView: NSView {
         verticalStack.addArrangedSubview(scrollView)
         
         verticalStack.wantsLayer = true
-        verticalStack.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.72)
-            .cgColor
+        verticalStack.layer?.backgroundColor = .clear
+        //        verticalStack.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.72).cgColor
         super.init(frame: frameRect)
         setupCollectionView()
         
         self.wantsLayer = true
-        self.layer?.cornerRadius = 20
+        self.layer?.cornerRadius = 10
         self.layer?.masksToBounds = true
         
         setupConstraints()
@@ -75,7 +78,8 @@ class CollectionContainerView: NSView {
         collectionView.dataSource = self
         collectionView.delegate = self // If needed
         collectionView.wantsLayer = true
-        //        collectionView.backgroundColors = [.white.withAlphaComponent(0.72)]
+//        collectionView.backgroundColors = [.white.withAlphaComponent(0.72)]
+        collectionView.backgroundColors = [.clear]
         collectionView.isSelectable = true
         collectionView.allowsEmptySelection = false
         collectionView.allowsMultipleSelection = false

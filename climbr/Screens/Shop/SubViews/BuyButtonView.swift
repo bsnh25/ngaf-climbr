@@ -37,7 +37,7 @@ class BuyButtonView: NSView {
     func updateItemButtonPreview(item: EquipmentItem, price: Int, point: Int){
         self.item = item
         itemLabel.setText(item.name)
-        itemButton.title = "Get for \(price)"
+        itemButton.title = "Get for 􀀈 \(price)"
     }
     
     func setupUI(){

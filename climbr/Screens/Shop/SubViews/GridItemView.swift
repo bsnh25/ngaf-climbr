@@ -50,7 +50,7 @@ class GridItem: NSCollectionViewItem {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.lightGray.withAlphaComponent(0.3).cgColor
+        self.view.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.8).cgColor
         self.view.layer?.cornerRadius = 10
         
         lockIcon.setConfiguration(size: 24, weight: .bold)
