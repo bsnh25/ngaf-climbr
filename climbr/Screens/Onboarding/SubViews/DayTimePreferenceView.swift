@@ -33,7 +33,7 @@ class DayTimePreferenceView: NSStackView {
     private var switchButton: NSSwitch = NSSwitch()
   
     lazy var currentStartWorkHour: Date = {
-      var components = calendar.dateComponents([.hour, .minute], from: Date())
+        var components = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
       components.hour = 8
       components.minute = 0
       
@@ -84,7 +84,7 @@ class DayTimePreferenceView: NSStackView {
         startWorkPicker.datePickerElements = [.hourMinute]
       
         // Set the minimum date (00:00)
-        var minComponents = calendar.dateComponents([.hour, .minute], from: Date())
+        var minComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
         minComponents.hour = 0
         minComponents.minute = 0
         if let minDate = calendar.date(from: minComponents) {
@@ -92,7 +92,7 @@ class DayTimePreferenceView: NSStackView {
         }
         
 //         Set the maximum date (21:59)
-        var maxComponents = calendar.dateComponents([.hour, .minute], from: Date())
+        var maxComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
         maxComponents.hour = 21
         maxComponents.minute = 59
         if let maxDate = calendar.date(from: maxComponents) {
@@ -109,7 +109,7 @@ class DayTimePreferenceView: NSStackView {
         endWorkPicker.dateValue = (initialStartValue ?? currentStartWorkHour).addingTimeInterval(2 * 60 * 60)
         currentEndWorkHour = endWorkPicker.dateValue
         
-        var maxStopComponents = calendar.dateComponents([.hour, .minute], from: Date())
+        var maxStopComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
         maxStopComponents.hour = 23
         maxStopComponents.minute = 59
         

@@ -118,7 +118,6 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     super.viewDidAppear()
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
     UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
-    notifService.askUserPermission()
   }
   
   func configureBgContainer(){
