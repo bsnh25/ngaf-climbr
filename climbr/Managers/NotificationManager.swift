@@ -11,30 +11,27 @@ class NotificationManager: NotificationService {
     
     static let shared = NotificationManager()
     var overlayWindow: OverlayWindow?
-    private var checkTimer: Timer?
-    private var overlayTimer: Timer?
+    var checkTimer: DispatchSourceTimer?
+    var overlayTimer: DispatchSourceTimer?
     
     func startOverlayScheduler(userPreference: UserPreferenceModel) {
-            // Batalkan timer yang ada sebelumnya jika ada
-            checkTimer?.invalidate()
-            overlayTimer?.invalidate()
-            
-            // Timer utama: Cek setiap menit apakah sekarang berada dalam jam kerja
-            checkTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
-                self?.checkWorkingHoursAndStartOverlay(userPreference: userPreference)
-            }
-            
-            // Pastikan timer berjalan di main run loop
-            RunLoop.main.add(checkTimer!, forMode: .common)
-    }
+        stopOverlayScheduler()
         
-        func stopOverlayScheduler() {
-            checkTimer?.invalidate()
-            overlayTimer?.invalidate()
-            checkTimer = nil
-            overlayTimer = nil
+        checkTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+        checkTimer?.schedule(deadline: .now(), repeating: .seconds(60))
+        checkTimer?.setEventHandler { [weak self] in
+            self?.checkWorkingHoursAndStartOverlay(userPreference: userPreference)
         }
-        
+        checkTimer?.resume()
+    }
+    
+    func stopOverlayScheduler() {
+        checkTimer?.cancel()
+        overlayTimer?.cancel()
+        checkTimer = nil
+        overlayTimer = nil
+    }
+    
     private func checkWorkingHoursAndStartOverlay(userPreference: UserPreferenceModel) {
         let calendar = Calendar.current
         let now = Date()
@@ -44,9 +41,9 @@ class NotificationManager: NotificationService {
         let currentHour = calendar.component(.hour, from: now)
         let currentMinute = calendar.component(.minute, from: now)
         
-    
+        
         if userPreference.isFlexibleWorkHour {
-           
+            
             for workingHour in userPreference.workingHours {
                 // Periksa apakah jadwal aktif dan hari sesuai
                 guard workingHour.isEnabled && workingHour.day == currentDay else {
@@ -85,7 +82,7 @@ class NotificationManager: NotificationService {
                     continue
                 }
                 
-              
+                
                 if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
                     (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
                     
@@ -99,7 +96,7 @@ class NotificationManager: NotificationService {
         }
         
         // Jika tidak dalam waktu kerja atau tidak memenuhi kriteria, matikan overlayTimer jika aktif
-        overlayTimer?.invalidate()
+        overlayTimer?.cancel()
         overlayTimer = nil
         var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
         
@@ -107,16 +104,17 @@ class NotificationManager: NotificationService {
         
         UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
     }
-
-        
-        private func startOverlayTimer(interval: TimeInterval) {
-            // Timer untuk memanggil showOverlay sesuai `reminderInterval`
-            overlayTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-                self?.showOverlay()
-            }
-            
-            RunLoop.main.add(overlayTimer!, forMode: .common)
+    
+    
+    private func startOverlayTimer(interval: TimeInterval) {
+        overlayTimer?.cancel()
+        overlayTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+        overlayTimer?.schedule(deadline: .now() + interval, repeating: interval)
+        overlayTimer?.setEventHandler { [weak self] in
+            self?.showOverlay()
         }
+        overlayTimer?.resume()
+    }
     
     /// Triggerd Overlay base on notification
     func showOverlay() {
