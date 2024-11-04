@@ -222,6 +222,9 @@ class SettingVC: NSViewController {
                 differentWorkHoursCheckbox.state = .on
                 // Unlock the day buttons
                 daysButtonStack.unlockButton()
+                daysButtonStack.sunday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+                daysButtonStack.sunday.foregroundColorText = .black
+                daysButtonStack.sunday.isSelected = false
                 
                 // Show the preference stack view
                 workHourItemView.isHidden = true
@@ -343,7 +346,7 @@ class SettingVC: NSViewController {
         preferenceStackView.distribution = .fillEqually
         
         for item in preferenceStack {
-          item.isHidden = item.day != "Sunday"
+            item.isHidden = true
           item.initialStartValue = initialStartWorkHour
           item.initialEndValue = initialEndWorkHour
           item.snp.makeConstraints{item in

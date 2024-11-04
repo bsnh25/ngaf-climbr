@@ -24,7 +24,6 @@ extension SettingVC {
         if isFlexibleWorkHour {
           daysButtonStack.unlockButton()
           
-          
           workHourItemView.isHidden = true
           preferenceStackView.isHidden = false
           preferenceStack[0].isHidden = false
