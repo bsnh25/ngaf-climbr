@@ -14,6 +14,7 @@
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
 		8A6FF3292CD682C700E8E5EC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3282CD682C700E8E5EC /* OverlayView.swift */; };
 		8A6FF32B2CD682ED00E8E5EC /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF32A2CD682ED00E8E5EC /* OverlayWindow.swift */; };
+		8A6FF3532CD891A600E8E5EC /* ModelFixV8.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3522CD891A600E8E5EC /* ModelFixV8.mlmodel */; };
 		9095DFD02CD6683300280F13 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DFCC2CD6683300280F13 /* main.swift */; };
 		9095DFD12CD6683300280F13 /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DFCE2CD6683300280F13 /* MainWindow.swift */; };
 		9095DFD22CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DFC92CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift */; };
@@ -78,7 +79,6 @@
 		9095E08B2CD6684900280F13 /* HomeVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095E0452CD6684800280F13 /* HomeVC+Extension.swift */; };
 		9095E08C2CD6684900280F13 /* StretchingResultVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095E0652CD6684800280F13 /* StretchingResultVC+Extension.swift */; };
 		9095E08D2CD6684900280F13 /* TutorialVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095E06A2CD6684800280F13 /* TutorialVC+Extension.swift */; };
-		9095E08E2CD6684900280F13 /* ModelFixV7.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9095E03D2CD6684800280F13 /* ModelFixV7.mlmodel */; };
 		9095E08F2CD6684900280F13 /* StretchingVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095E0672CD6684800280F13 /* StretchingVC+Extension.swift */; };
 		9095E0902CD6684900280F13 /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095E0192CD6684800280F13 /* Streak.swift */; };
 		9095E0912CD6684900280F13 /* CollectionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095E0512CD6684800280F13 /* CollectionContainerView.swift */; };
@@ -156,6 +156,7 @@
 		8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNotifServices.swift; sourceTree = "<group>"; };
 		8A6FF3282CD682C700E8E5EC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		8A6FF32A2CD682ED00E8E5EC /* OverlayWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayWindow.swift; sourceTree = "<group>"; };
+		8A6FF3522CD891A600E8E5EC /* ModelFixV8.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV8.mlmodel; sourceTree = "<group>"; };
 		8ABB127F2C66074C00616C57 /* ModelFixV1+Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Singleton.swift"; sourceTree = "<group>"; };
 		8ABB12812C66099200616C57 /* ModelFixV1+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Label.swift"; sourceTree = "<group>"; };
 		8ABB12872C661B1000616C57 /* ModelFixV1+FrameRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+FrameRate.swift"; sourceTree = "<group>"; };
@@ -224,7 +225,6 @@
 		9095E0392CD6684800280F13 /* upperBackStretch-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "upperBackStretch-Right.mp4"; sourceTree = "<group>"; };
 		9095E03A2CD6684800280F13 /* upperBackStretch-Up.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "upperBackStretch-Up.mp4"; sourceTree = "<group>"; };
 		9095E03C2CD6684800280F13 /* ModelFixV5.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV5.mlmodel; sourceTree = "<group>"; };
-		9095E03D2CD6684800280F13 /* ModelFixV7.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV7.mlmodel; sourceTree = "<group>"; };
 		9095E03F2CD6684800280F13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9095E0412CD6684800280F13 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		9095E0422CD6684800280F13 /* SettingVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingVC+Extension.swift"; sourceTree = "<group>"; };
@@ -554,8 +554,8 @@
 		9095E03E2CD6684800280F13 /* VisionModel */ = {
 			isa = PBXGroup;
 			children = (
+				8A6FF3522CD891A600E8E5EC /* ModelFixV8.mlmodel */,
 				9095E03C2CD6684800280F13 /* ModelFixV5.mlmodel */,
-				9095E03D2CD6684800280F13 /* ModelFixV7.mlmodel */,
 			);
 			path = VisionModel;
 			sourceTree = "<group>";
@@ -963,13 +963,13 @@
 				9095E0102CD6683D00280F13 /* UserService.swift in Sources */,
 				9095E0112CD6683D00280F13 /* StreakService.swift in Sources */,
 				9095E0882CD6684900280F13 /* DaysButtonStackView.swift in Sources */,
+				8A6FF3532CD891A600E8E5EC /* ModelFixV8.mlmodel in Sources */,
 				9095E0892CD6684900280F13 /* CurrentMovementView.swift in Sources */,
 				9095E08A2CD6684900280F13 /* UserPreference+Extension.swift in Sources */,
 				9095E08B2CD6684900280F13 /* HomeVC+Extension.swift in Sources */,
 				9095E08C2CD6684900280F13 /* StretchingResultVC+Extension.swift in Sources */,
 				9095E08D2CD6684900280F13 /* TutorialVC+Extension.swift in Sources */,
 				8A6FF32B2CD682ED00E8E5EC /* OverlayWindow.swift in Sources */,
-				9095E08E2CD6684900280F13 /* ModelFixV7.mlmodel in Sources */,
 				9095E08F2CD6684900280F13 /* StretchingVC+Extension.swift in Sources */,
 				9095E0902CD6684900280F13 /* Streak.swift in Sources */,
 				9095E0912CD6684900280F13 /* CollectionContainerView.swift in Sources */,
