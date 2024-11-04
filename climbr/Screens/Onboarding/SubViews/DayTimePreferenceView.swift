@@ -9,21 +9,19 @@ import AppKit
 import SnapKit
 
 
-
-
 class DayTimePreferenceView: NSStackView {
     
     private lazy var calendar = Calendar.current
     var day: String!
     private var dayName: CLTextLabelV2!
-    private var startWorkPicker: CLDatePicker = CLDatePicker(
+    var startWorkPicker: CLDatePicker = CLDatePicker(
       backgroundColor: .white.withAlphaComponent(0.5),
       textColor: .black,
       datePickerStyleElement: .hourMinute,
       font: NSFont.systemFont(ofSize: 18.3)
     )
     private var toLabel: CLTextLabelV2 = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .regular, contentLabel: "to")
-    private var endWorkPicker: CLDatePicker = CLDatePicker(
+    var endWorkPicker: CLDatePicker = CLDatePicker(
       backgroundColor: .white.withAlphaComponent(0.5),
       textColor: .black,
       datePickerStyleElement: .hourMinute,
@@ -80,7 +78,7 @@ class DayTimePreferenceView: NSStackView {
         onValueChanged?(currentStartWorkHour, currentEndWorkHour)
     }
     
-    private func setupStartPicker(){
+    func setupStartPicker(){
         startWorkPicker.dateValue = initialStartValue ?? currentStartWorkHour
         startWorkPicker.datePickerElements = [.hourMinute]
       
@@ -103,7 +101,7 @@ class DayTimePreferenceView: NSStackView {
         startWorkPicker.action = #selector(startWorkHourChanged)
     }
     
-    private func setupEndPicker(){
+    func setupEndPicker(){
         endWorkPicker.datePickerElements = [.hourMinute]
         
         endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)

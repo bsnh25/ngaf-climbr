@@ -19,33 +19,33 @@ extension SettingVC {
     
     @objc
     func actionDifferentWorkHour(_ sender: NSButton) {
-      isFlexibleWorkHour = sender.state == .on
-      
-      if isFlexibleWorkHour {
-        daysButtonStack.unlockButton()
+        isFlexibleWorkHour = sender.state == .on
         
-        preferenceStackView.isHidden = false
-        workHourItemView.isHidden = true
-        preferenceStack[0].isHidden = false
-        
-        if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
-          day.isEnabled = true
+        if isFlexibleWorkHour {
+          daysButtonStack.unlockButton()
           
-          workingHours.update(with: day)
-        }
-      } else{
-        daysButtonStack.lockButton()
-        preferenceStackView.isHidden = true
-        workHourItemView.isHidden = false
-        
-        preferenceStack.forEach { $0.isHidden = true }
-        
-        for item in workingHours {
-          var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+          preferenceStackView.isHidden = false
+          workHourItemView.isHidden = true
+          preferenceStack[0].isHidden = false
           
-          workingHours.update(with: data)
+          if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+            day.isEnabled = true
+            
+            workingHours.update(with: day)
+          }
+        } else{
+          daysButtonStack.lockButton()
+          preferenceStackView.isHidden = true
+          workHourItemView.isHidden = false
+          
+          preferenceStack.forEach { $0.isHidden = true }
+          
+          for item in workingHours {
+            var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+            
+            workingHours.update(with: data)
+          }
         }
-      }
     }
     
     @objc
