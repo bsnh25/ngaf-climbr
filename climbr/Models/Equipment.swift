@@ -302,11 +302,11 @@ enum EquipmentItem: String, CaseIterable, Identifiable, Codable {
         case .snowySummit:
             "Snowy Summit"
         case .emptyHG:
-            ""
+            "Default Head"
         case .emptyBP:
-            ""
+            "Default Body"
         case .emptyS:
-            ""
+            "Default Stick"
         }
     }
 }
