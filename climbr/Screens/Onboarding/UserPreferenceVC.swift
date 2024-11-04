@@ -7,383 +7,516 @@
 
 import Cocoa
 import Swinject
+import SnapKit
 
-
-
-class UserPreferenceVC: NSViewController {
+class UserPreferenceVC: NSViewController, NSStackViewDelegate {
+  
+  private lazy var workHoursStack: NSStackView = NSStackView()
+  private lazy var reminderStack: NSStackView = NSStackView()
+  
+  let bgContainer = NSView()
+  let warnContainer = NSView()
+  let boxContainer = NSView()
+  let pathImage = NSImageView(image: .onboardingmountain)
+  let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
+  let preferenceStackView = NSStackView()
+  var preferenceStack: [DayTimePreferenceView] = []
+  
+  let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
+  let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
+  let mondayPreference = DayTimePreferenceView(dayName: "Monday")
+  let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
+  let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
+  let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
+  let fridayPreference = DayTimePreferenceView(dayName: "Friday")
+  let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
+  
+  
+  let daysButtonStack = DaysButtonStackView()
+  
+  let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
+  
+  let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+  
+  let reminder30MinutesButton = CLPickerButton(
+    title: "30",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  let reminder60MinutesButton = CLPickerButton(
+    title: "60",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  let reminder90MinutesButton = CLPickerButton(
+    title: "90",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  let reminder120MinutesButton = CLPickerButton(
+    title: "120",
+    backgroundColor: .white.withAlphaComponent(0.5),
+    foregroundColorText: .black,
+    fontText: .boldSystemFont(ofSize: 17)
+  )
+  
+  let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+  
+  let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
+  
+  lazy var initialStartWorkHour: Date = {
+    let calendar = Calendar.current
     
-    let bgContainer = NSView()
-    let pathImage = NSImageView(image: .onboardingmountain)
-    let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
-    let workHoursLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Type in your work hours in a 24hr format")
-    let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "When do you want to be reminded")
-    let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
-    let text1Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "From")
-    let text2Line1 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "To")
-    let text1Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Every")
-    let text2Line2 = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .regular, contentLabel: "Minutes")
-    let startWorkHour = CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
-    let stopWorkHour = CLDatePicker(backgroundColor: .white.withAlphaComponent(0.5), textColor: .black, datePickerStyleElement: .hourMinute, font: NSFont.systemFont(ofSize: 20))
-    let button1 = CLPickerButton(title: "30", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let button2 = CLPickerButton(title: "60", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let button3 = CLPickerButton(title: "90", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let button4 = CLPickerButton(title: "120", backgroundColor: .white.withAlphaComponent(0.5), foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
-    let checkboxButton = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
-    var lastStartValue: Date!
-    var lastStopValue: Date!
-    var isChecked: Bool = false
-    var intervalReminder: Int64 = 0
-    var charService: CharacterService?
-    var notifService: NotificationService?
+    var components = calendar.dateComponents([.hour, .minute], from: Date())
+    components.hour = 8
+    components.minute = 0
     
+    return calendar.date(from: components)!
+  }()
+  
+  lazy var initialEndWorkHour: Date = {
+    initialStartWorkHour.addingTimeInterval(2 * 60 * 60)
+  }()
+  
+  lazy var workingHours: Set<WorkingHour> = [
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.wednesday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.thursday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.friday.rawValue),
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
+  ]
+  
+  var isLaunchAtLogin: Bool = false
+  var isFlexibleWorkHour: Bool = false
+  var intervalReminder: Int = 0
+  
+  var charService: CharacterService = UserManager.shared
+  var notifService: NotificationService = NotificationManager.shared
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    init(charService: CharacterService?, notifService: NotificationService?) {
-        super.init(nibName: nil, bundle: nil)
-        self.charService = charService
-        self.notifService = notifService
+    configureBgContainer()
+    configureImagePath()
+    configureAppLogo()
+    configureBoxContainer()
+    configureDifferentWorkHours()
+    configureWorkHourItemView()
+    configureDifferentWorkHoursStackView()
+    configureWorkHoursStack()
+    configureReminderStack()
+    configureLaunchAtLoginCheckBox()
+    configureNextButton()
+    daysButtonStack.daysButtonDelegate = self
+  }
+  
+  override func viewDidAppear() {
+    super.viewDidAppear()
+    UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
+    UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
+  }
+  
+  func configureBgContainer(){
+    view.addSubview(bgContainer)
+    bgContainer.wantsLayer = true
+    bgContainer.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
+    bgContainer.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      bgContainer.topAnchor.constraint(equalTo: view.topAnchor),
+      bgContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      bgContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      bgContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    ])
+  }
+  
+  //    func configureWarning(){
+  //        configureWarnContainer()
+  //        configureWarnLabel()
+  //    }
+  
+  //    func configureWarnContainer(){
+  //        view.addSubview(warnContainer)
+  //
+  //        warnContainer.wantsLayer = true
+  //        warnContainer.layer?.backgroundColor = NSColor.red.cgColor.copy(alpha: 0.9)
+  //        warnContainer.layer?.cornerRadius = 10
+  //        warnContainer.translatesAutoresizingMaskIntoConstraints = false
+  //
+  //        NSLayoutConstraint.activate([
+  //            warnContainer.topAnchor.constraint(equalTo: workHoursLabel.topAnchor, constant: 43),
+  //            warnContainer.leadingAnchor.constraint(equalTo: stopWorkHour.trailingAnchor, constant: 12),
+  //            warnContainer.widthAnchor.constraint(equalToConstant: 360),
+  //            warnContainer.heightAnchor.constraint(equalToConstant: 36)
+  //        ])
+  //
+  //    }
+  
+  //    func configureWarnLabel(){
+  //        warnContainer.addSubview(warnLabel)
+  //        warnLabel.translatesAutoresizingMaskIntoConstraints = false
+  //        warnLabel.textColor = .white
+  //
+  //        NSLayoutConstraint.activate([
+  //            warnLabel.centerXAnchor.constraint(equalTo: warnContainer.centerXAnchor),
+  //            warnLabel.centerYAnchor.constraint(equalTo: warnContainer.centerYAnchor)
+  //        ])
+  //    }
+  
+  func configureImagePath(){
+    view.addSubview(pathImage)
+    pathImage.wantsLayer = true
+    pathImage.translatesAutoresizingMaskIntoConstraints = false
+    
+    let padding = CGFloat(-1 * (view.bounds.width * 0.15))
+    
+    NSLayoutConstraint.activate([
+      pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: padding),
+      pathImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+    ])
+  }
+  
+  func configureAppLogo(){
+    view.addSubview(appLogoImage)
+    appLogoImage.translatesAutoresizingMaskIntoConstraints = false
+    
+    let width = CGFloat(1 * (view.frame.width * 0.475))
+    print("width adalah: \(width)")
+    
+    NSLayoutConstraint.activate([
+      appLogoImage.widthAnchor.constraint(equalToConstant: width),
+      appLogoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 147),
+      appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+    ])
+    
+  }
+  
+  func configureBoxContainer(){
+    view.addSubview(boxContainer)
+    
+    boxContainer.wantsLayer = true
+    boxContainer.translatesAutoresizingMaskIntoConstraints = false
+    let blurEffect = CLBlurEffectView(frame: boxContainer.bounds)
+    boxContainer.addSubview(blurEffect, positioned: .below, relativeTo: nil)
+    
+    boxContainer.snp.makeConstraints{ box in
+      box.trailing.equalToSuperview()
+      box.width.equalTo(439)
+      box.top.height.equalToSuperview()
     }
+  }
+  
+  private func configureWorkHoursStack() {
+    boxContainer.addSubview(workHoursStack)
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    let workDayLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Your Work Day:")
+    
+    workHoursStack.setViews([workDayLabel, daysButtonStack, differentWorkHoursCheckbox, workHourItemView, preferenceStackView], in: .center)
+    workHoursStack.spacing = 16
+    workHoursStack.alignment = .leading
+    workHoursStack.orientation = .vertical
+    
+    workHourItemView.setAccessibilityElement(true)
+    workHourItemView.setAccessibilityTitle("Work Hours")
+    workHourItemView.setAccessibilityLabel("Set the start and end work hours")
+    
+    workHoursStack.snp.makeConstraints { make in
+      make.top.equalToSuperview().offset(20)
+      make.leading.trailing.equalToSuperview().inset(40)
     }
+  }
+  
+  private func configureReminderStack() {
+    boxContainer.addSubview(reminderStack)
     
+    let buttons = [ reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton ]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configure()
-    }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kProgressSession)
-        UserDefaults.standard.setValue(0, forKey: UserDefaultsKey.kNotificationCount)
-        notifService?.askUserPermission()
-    }
-    
-    
-    func configure(){
-        configureBgContainer()
-        configureImagePath()
-        configureAppLogo()
-        configureWorkHoursLabel()
-        configureReminderLabel()
-        configureNextButton()
-        configureTextLine1()
-        configureStartWorkHour()
-        configureText2Line1()
-        configureStopWorkHour()
-        configureText1Line2()
-        configureButton1()
-        configureButton2()
-        configureButton3()
-        configureButton4()
-        configureText2Line2()
-        configureCheckBox()
-    }
-    
-    func configureBgContainer(){
-        view.addSubview(bgContainer)
-        bgContainer.wantsLayer = true
-        bgContainer.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
-        bgContainer.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            bgContainer.topAnchor.constraint(equalTo: view.topAnchor),
-            bgContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bgContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bgContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
-    
-    func configureImagePath(){
-        view.addSubview(pathImage)
-        pathImage.wantsLayer = true
-        pathImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75),
-            pathImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
-    
-    func configureAppLogo(){
-        view.addSubview(appLogoImage)
-        appLogoImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            appLogoImage.widthAnchor.constraint(equalToConstant: 238),
-            appLogoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -115)
-        ])
-        
-    }
-    
-    func configureWorkHoursLabel(){
-        view.addSubview(workHoursLabel)
-        workHoursLabel.translatesAutoresizingMaskIntoConstraints = false
-        workHoursLabel.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            workHoursLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
-            workHoursLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 360),
-            
-        ])
-    }
-    
-    func configureReminderLabel(){
-        view.addSubview(reminderLabel)
-        reminderLabel.translatesAutoresizingMaskIntoConstraints = false
-        reminderLabel.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            reminderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382),
-            reminderLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 484),
-            
-        ])
-    }
-    
-    func configureNextButton(){
-        view.addSubview(nextButton)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.isEnabled = false
-        nextButton.target = self
-        nextButton.action = #selector(actNextButton)
-        
-        NSLayoutConstraint.activate([
-            nextButton.widthAnchor.constraint(equalToConstant: 143),
-            nextButton.heightAnchor.constraint(equalToConstant: 60),
-            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 720)
-        ])
-    }
-    
-    func configureTextLine1(){
-        view.addSubview(text1Line1)
-        text1Line1.translatesAutoresizingMaskIntoConstraints = false
-        text1Line1.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            text1Line1.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
-            text1Line1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382)
-        ])
-    }
-    
-    func configureStartWorkHour() {
-        view.addSubview(startWorkHour)
-        startWorkHour.wantsLayer = true
-        
-        let calendar = Calendar.current
-        var components = calendar.dateComponents([.year, .month, .day], from: Date())
-        components.hour = 8
-        components.minute = 0
-        
-        if let date = calendar.date(from: components) {
-            startWorkHour.dateValue = date
-        }
-        lastStartValue = startWorkHour.dateValue
-        startWorkHour.datePickerElements = [.hourMinute]
+    for button in buttons {
+      button.target = self
+      button.action = #selector(actionReminderHandler)
+      button.layer?.cornerRadius = 6
       
-        // Set the minimum date (01:00)
-        var minComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-        minComponents.hour = 1
-        minComponents.minute = 0
-        if let minDate = calendar.date(from: minComponents) {
-            startWorkHour.minDate = minDate
-        }
-        
-        // Set the maximum date (21:00)
-        var maxComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-        maxComponents.hour = 21
-        maxComponents.minute = 0
-        if let maxDate = calendar.date(from: maxComponents) {
-            startWorkHour.maxDate = maxDate
-        }
-        startWorkHour.target = self
-        startWorkHour.action = #selector(startWorkHourChanged)
-        
-        NSLayoutConstraint.activate([
-            startWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 15),
-            startWorkHour.leadingAnchor.constraint(equalTo: text1Line1.trailingAnchor, constant: 25),
-            startWorkHour.widthAnchor.constraint(equalToConstant: 65),
-            startWorkHour.heightAnchor.constraint(equalToConstant: 36)
-        ])
-        
-        updateStopWorkHour()
-    }
-    
-    func configureText2Line1(){
-        view.addSubview(text2Line1)
-        text2Line1.translatesAutoresizingMaskIntoConstraints = false
-        text2Line1.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            text2Line1.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 20),
-            text2Line1.leadingAnchor.constraint(equalTo: startWorkHour.trailingAnchor, constant: 25)
-        ])
-    }
-    
-    func configureStopWorkHour() {
-        view.addSubview(stopWorkHour)
-        stopWorkHour.wantsLayer = true
-        lastStopValue = stopWorkHour.dateValue
-        stopWorkHour.datePickerElements = [.hourMinute]
+      button.setAccessibilityElement(true)
+      button.setAccessibilityTitle("\(button.title) minutes")
+      button.setAccessibilityLabel("Set the reminder interval to \(button.title) minutes")
+      button.setAccessibilityRole(.button)
       
-        let calendar1 = Calendar.current
+      button.snp.makeConstraints{button in
+        button.width.equalTo(44)
+        button.height.equalTo(30)
+      }
+    }
+    
+    
+    let everyLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Every")
+    let minutesLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Minutes")
+    
+    let componentStack: NSStackView = NSStackView(views: [ everyLabel, reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton, minutesLabel ])
+    componentStack.spacing = 14
+    componentStack.alignment = .leading
+    componentStack.orientation = .horizontal
+    
+    reminderStack.setViews([reminderLabel, componentStack], in: .center)
+    reminderStack.spacing = 16
+    reminderStack.alignment = .leading
+    reminderStack.orientation = .vertical
+    
+    reminderStack.snp.makeConstraints { make in
+      make.top.equalTo(workHoursStack.snp.bottom).offset(28)
+        make.leading.equalTo(workHoursStack.snp.leading)
+        make.trailing.equalTo(workHoursStack.snp.trailing)
+    }
+  }
+  
+  
+  func configureDifferentWorkHours(){
+    
+    let attributes: [NSAttributedString.Key: Any] = [
+      .font: NSFont.systemFont(ofSize: 17, weight: .bold),
+      .foregroundColor: NSColor.black
+    ]
+    
+    // Apply the attributed title
+    differentWorkHoursCheckbox.attributedTitle = NSAttributedString(string: differentWorkHoursCheckbox.title, attributes: attributes)
+    
+    
+    // Set the content tint color (optional, depending on what you want to achieve)
+      differentWorkHoursCheckbox.contentTintColor = .blue
+    
+    differentWorkHoursCheckbox.target = self
+    differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
+    
+    differentWorkHoursCheckbox.setAccessibilityElement(true)
+    differentWorkHoursCheckbox.setAccessibilityTitle("Different Work Hours")
+    differentWorkHoursCheckbox.setAccessibilityLabel("Check this if you want to configure work hour independently")
+    differentWorkHoursCheckbox.setAccessibilityRole(.checkBox)
+  }
+  
+  func configureWorkHourItemView(){
+    workHourItemView.onValueChanged = { start, end in
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Work Hours: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      for item in self.workingHours {
+        let data = WorkingHour(startHour: start, endHour: end, day: item.day)
         
-        var minStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
-        minStopComponents.hour = 3
-        minStopComponents.minute = 0
-        if let minStopDate = calendar1.date(from: minStopComponents) {
-            stopWorkHour.minDate = minStopDate
+        self.workingHours.update(with: data)
+      }
+      
+    }
+  }
+  
+  func configureDifferentWorkHoursStackView(){
+    let divider = Divider()
+    preferenceStack = [
+        sundayPreference,
+//              Divider(),
+      mondayPreference,
+//              Divider(),
+      tuesdayPreference,
+//              Divider(),
+      wednesdayPreference,
+//              Divider(),
+      thursdayPreference,
+//              Divider(),
+      fridayPreference,
+//              Divider(),
+      saturdayPreference,
+    ]
+    
+    preferenceStackView.isHidden = true
+    preferenceStackView.spacing = 16
+    preferenceStackView.alignment = .leading
+    
+    preferenceStackView.setViews(preferenceStack, in: .center)
+    preferenceStackView.orientation = .vertical
+    preferenceStackView.distribution = .fillEqually
+    
+    for item in preferenceStack {
+      item.isHidden = item.day != "Sunday"
+      item.initialStartValue = initialStartWorkHour
+      item.initialEndValue = initialEndWorkHour
+      item.snp.makeConstraints{item in
+        item.height.equalTo(38.3)
+      }
+      
+    }
+      
+      sundayPreference.onValueChanged = { [weak self] start, end in
+        guard let self else { return }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+        
+        if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+          day.startHour = start
+          day.endHour = end
+          
+          workingHours.update(with: day)
         }
+      }
+    
+    mondayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Monday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
         
-        var maxStopComponents = calendar1.dateComponents([.year, .month, .day], from: Date())
-        maxStopComponents.hour = 23
-        maxStopComponents.minute = 0
-        if let maxStopDate = calendar1.date(from: maxStopComponents) {
-            stopWorkHour.maxDate = maxStopDate
-        }
-        stopWorkHour.target = self
-        stopWorkHour.action = #selector(stopWorkHourChanged)
-        
-        
-        
-        NSLayoutConstraint.activate([
-            stopWorkHour.topAnchor.constraint(equalTo: workHoursLabel.bottomAnchor, constant: 15),
-            stopWorkHour.leadingAnchor.constraint(equalTo: text2Line1.trailingAnchor, constant: 25),
-            stopWorkHour.widthAnchor.constraint(equalToConstant: 65),
-            stopWorkHour.heightAnchor.constraint(equalToConstant: 36)
-        ])
-        
-        updateStopWorkHour()
+        workingHours.update(with: day)
+      }
     }
     
-    func configureText1Line2(){
-        view.addSubview(text1Line2)
-        text1Line2.translatesAutoresizingMaskIntoConstraints = false
-        text1Line2.textColor = .white
+    tuesdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Tuesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
         
-        NSLayoutConstraint.activate([
-            text1Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            text1Line2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382)
-        ])
+        workingHours.update(with: day)
+      }
     }
     
-    func configureButton1(){
-        view.addSubview(button1)
-        button1.target = self
-        button1.action = #selector(action30min)
+    wednesdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Wednesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
         
-        NSLayoutConstraint.activate([
-            button1.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button1.leadingAnchor.constraint(equalTo: text1Line2.trailingAnchor, constant: 25),
-            button1.widthAnchor.constraint(equalToConstant: 47),
-            button1.heightAnchor.constraint(equalToConstant: 36)
-        ])
+        workingHours.update(with: day)
+      }
     }
     
-    func configureButton2(){
-        view.addSubview(button2)
-        button2.target = self
-        button2.action = #selector(action60min)
+    thursdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Thursday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
         
-        NSLayoutConstraint.activate([
-            button2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button2.leadingAnchor.constraint(equalTo: button1.trailingAnchor, constant: 25),
-            button2.widthAnchor.constraint(equalToConstant: 47),
-            button2.heightAnchor.constraint(equalToConstant: 36)
-        ])
+        workingHours.update(with: day)
+      }
     }
     
-    func configureButton3(){
-        view.addSubview(button3)
-        button3.target = self
-        button3.action = #selector(action90min)
+    fridayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Friday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
         
-        NSLayoutConstraint.activate([
-            button3.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button3.leadingAnchor.constraint(equalTo: button2.trailingAnchor, constant: 25),
-            button3.widthAnchor.constraint(equalToConstant: 47),
-            button3.heightAnchor.constraint(equalToConstant: 36)
-        ])
+        workingHours.update(with: day)
+      }
     }
     
-    func configureButton4(){
-        view.addSubview(button4)
-        button4.target = self
-        button4.action = #selector(action120min)
+    saturdayPreference.onValueChanged = { [weak self] start, end in
+      guard let self else { return }
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      print("Saturday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+        day.startHour = start
+        day.endHour = end
         
-        NSLayoutConstraint.activate([
-            button4.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            button4.leadingAnchor.constraint(equalTo: button3.trailingAnchor, constant: 25),
-            button4.widthAnchor.constraint(equalToConstant: 47),
-            button4.heightAnchor.constraint(equalToConstant: 36)
-        ])
+        workingHours.update(with: day)
+      }
     }
     
-    func configureText2Line2(){
-        view.addSubview(text2Line2)
-        text2Line2.translatesAutoresizingMaskIntoConstraints = false
-        text2Line2.textColor = .white
-        
-        NSLayoutConstraint.activate([
-            text2Line2.topAnchor.constraint(equalTo: reminderLabel.bottomAnchor, constant: 20),
-            text2Line2.leadingAnchor.constraint(equalTo: button4.trailingAnchor, constant: 25)
-            
-        ])
+    
+  }
+  
+  func configureLaunchAtLoginCheckBox(){
+    view.addSubview(launchAtLoginChecBox)
+    
+    let attributes: [NSAttributedString.Key: Any] = [
+      .font: NSFont.systemFont(ofSize: 17, weight: .bold),
+      .foregroundColor: NSColor.black
+    ]
+    
+    // Apply the attributed title
+    launchAtLoginChecBox.attributedTitle = NSAttributedString(string: launchAtLoginChecBox.title, attributes: attributes)
+    
+    // Set the content tint color (optional, depending on what you want to achieve)
+    launchAtLoginChecBox.contentTintColor = .blue
+    launchAtLoginChecBox.state = .off
+    launchAtLoginChecBox.target = self
+    launchAtLoginChecBox.action = #selector(actionCheckbox)
+    
+    launchAtLoginChecBox.setAccessibilityElement(true)
+    launchAtLoginChecBox.setAccessibilityTitle("Launch At StartUp")
+    launchAtLoginChecBox.setAccessibilityLabel("Check this if you want to launch Climbr automatically on startup")
+    launchAtLoginChecBox.setAccessibilityRole(.checkBox)
+    
+    launchAtLoginChecBox.snp.makeConstraints{ check in
+      check.leading.trailing.equalTo(reminderStack)
+      check.top.equalTo(reminderStack.snp.bottom).offset(28)
     }
     
-    func configureCheckBox(){
-        view.addSubview(checkboxButton)
-        checkboxButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 22, weight: .bold),
-            .foregroundColor: NSColor.cContainerHome
-        ]
-        
-        // Apply the attributed title
-        checkboxButton.attributedTitle = NSAttributedString(string: checkboxButton.title, attributes: attributes)
-        
-        // Set the content tint color (optional, depending on what you want to achieve)
-        checkboxButton.contentTintColor = .white
-        if isChecked{
-            checkboxButton.state = .on
-        } else {
-            checkboxButton.state = .off
-        }
-        checkboxButton.target = self
-        checkboxButton.action = #selector(actionCheckbox)
-        
-        NSLayoutConstraint.activate([
-            checkboxButton.topAnchor.constraint(equalTo: text1Line2.bottomAnchor, constant: 55),
-            checkboxButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 382)
-        ])
-        
-    }
+  }
+  
+  func configureNextButton(){
+    view.addSubview(nextButton)
+    nextButton.translatesAutoresizingMaskIntoConstraints = false
+    nextButton.isEnabled = false
+    nextButton.target = self
+    nextButton.action = #selector(actNextButton)
     
-    func resetButtonColors() {
-        // Reset all buttons to gray
-        button1.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        button2.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        button3.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        button4.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.5).cgColor
-        
-        button1.foregroundColorText = .white
-        button2.foregroundColorText = .white
-        button3.foregroundColorText = .white
-        button4.foregroundColorText = .white
-        
-        button1.isSelected = false
-        button2.isSelected = false
-        button3.isSelected = false
-        button4.isSelected = false
+    nextButton.snp.makeConstraints {next in
+      next.trailing.equalTo(launchAtLoginChecBox)
+      next.top.equalTo(launchAtLoginChecBox.snp.bottom).offset(28)
+      next.width.equalTo(88.34)
+      next.height.equalTo(42.5)
     }
+  }
+  
+  func resetButtonColors() {
+    // Reset all buttons to gray
+    reminder30MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder60MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder90MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    reminder120MinutesButton.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+    
+    reminder30MinutesButton.foregroundColorText = .black
+    reminder60MinutesButton.foregroundColorText = .black
+    reminder90MinutesButton.foregroundColorText = .black
+    reminder120MinutesButton.foregroundColorText = .black
+    
+    reminder30MinutesButton.isSelected = false
+    reminder60MinutesButton.isSelected = false
+    reminder90MinutesButton.isSelected = false
+    reminder120MinutesButton.isSelected = false
+  }
 }
-
-
-
-
-//#Preview(traits: .defaultLayout, body: {
-//    UserPreferenceVC()
-//})

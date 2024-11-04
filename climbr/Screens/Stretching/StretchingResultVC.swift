@@ -6,13 +6,19 @@
 //
 
 import AppKit
+import SnapKit
 
 class StretchingResultVC: NSViewController {
     
+    let neckProgress            = ProgressUserView(valueProgress: "0/2", typeStretch: "Neck")
+    let armProgress             = ProgressUserView(valueProgress: "0/2", typeStretch: "Shoulder")
+    let backProgress            = ProgressUserView(valueProgress: "0/2", typeStretch: "Lower Back")
+    let cointEarning            = ProgressUserView(valueProgress: "🪙 50", typeStretch: "Coins")
     let greetingLabel           = CLLabel(fontSize: 36, fontWeight: .heavy)
     let stretchingDurationLabel = CLLabel(fontSize: 28, fontWeight: .bold)
     let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
     let resultStack             = NSStackView()
+    let progressStack             = NSStackView()
     
     let affirmationTexts: [String]  = [
         "Wow! That’s a power move!",
@@ -45,18 +51,7 @@ class StretchingResultVC: NSViewController {
     var movementList: [Movement] = []
     
     /// Dependencies
-    var charService: CharacterService?
-    
-    
-    init(charService: CharacterService?) {
-        super.init(nibName: nil, bundle: nil)
-        
-        self.charService = charService
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var charService: CharacterService = UserManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +65,7 @@ class StretchingResultVC: NSViewController {
         
         self.calculatePoints()
         self.calculateDurations()
+        self.calculateProgress()
     }
     
     override func viewWillAppear() {
@@ -82,21 +78,55 @@ class StretchingResultVC: NSViewController {
     }
     
     private func configureResultUI() {
+        /// old:  greeting, subgreeting, charView, rewardPoint
+        /// new: greeting, charView, progressView
+//        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
         
-        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
+        let views = [greetingLabel, characterView, progressStack]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         resultStack.setViews(views, in: .center)
         resultStack.orientation     = .vertical
         resultStack.spacing         = 24
+        resultStack.distribution    = .fillEqually
+        resultStack.wantsLayer = true
+//        resultStack.layer?.borderColor = .black
+//        resultStack.layer?.borderWidth = 1
         
         resultStack.translatesAutoresizingMaskIntoConstraints = false
         
+        let viewsProgress = [neckProgress, armProgress, backProgress, cointEarning]
+        progressStack.setViews(viewsProgress, in: .center)
+        progressStack.orientation = .horizontal
+        progressStack.spacing = 28
+                
         view.addSubview(resultStack)
+        
+        ///coint setup
+        cointEarning.updateColor(.gray)
         
         /// Label
         greetingLabel.setText("Great Job!")
         greetingLabel.setTextColor(.white)
+        greetingLabel.alignment = .center
+        
+        greetingLabel.setAccessibilityElement(true)
+        neckProgress.setAccessibilityElement(true)
+        armProgress.setAccessibilityElement(true)
+        backProgress.setAccessibilityElement(true)
+        cointEarning.setAccessibilityElement(true)
+        
+        neckProgress.setAccessibilityTitle("Neck Progress Section")
+        neckProgress.setAccessibilityRole(.group)
+        
+        armProgress.setAccessibilityTitle("Arm Progress Section")
+        armProgress.setAccessibilityRole(.group)
+        
+        backProgress.setAccessibilityTitle("Back Progress Section")
+        backProgress.setAccessibilityRole(.group)
+        
+        cointEarning.setAccessibilityTitle("Coin Result Section")
+        cointEarning.setAccessibilityRole(.group)
         
         stretchingDurationLabel.setText("\(awardsText) 0 minutes")
         stretchingDurationLabel.setTextColor(.white)
@@ -109,11 +139,18 @@ class StretchingResultVC: NSViewController {
         
         /// Button
         configureButton()
+
+        resultStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(view.bounds.height / 10)
+            make.bottom.equalToSuperview().inset(view.bounds.height / 10)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            resultStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resultStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        greetingLabel.snp.makeConstraints { make in
+            make.width.equalTo(811)
+            make.top.equalTo(resultStack.snp.top).inset(104)
+        }
     }
     
     private func configureCharacter() {
@@ -140,7 +177,7 @@ class StretchingResultVC: NSViewController {
         mainMenuButton.translatesAutoresizingMaskIntoConstraints            = false
         stack.translatesAutoresizingMaskIntoConstraints                     = false
         stack.orientation           = .horizontal
-        stack.spacing               = 10
+        stack.spacing               = 32
         stack.distribution    = .fillEqually
         
         resultStack.addArrangedSubview(stack)

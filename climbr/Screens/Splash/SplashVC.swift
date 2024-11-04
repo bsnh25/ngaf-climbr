@@ -12,21 +12,12 @@ class SplashVC: NSViewController {
     
     let appLogoView = NSImageView(image: .appLogoWhite)
     let mountainImage = NSImageView(image: .onboardingmountain)
-    var charService: CharacterService?
+    var charService: CharacterService = UserManager.shared
     var mountainImageTopConstraint: NSLayoutConstraint!
     var mountainImageCenterYConstraint: NSLayoutConstraint!
     var mountainImageCenterXConstraint: NSLayoutConstraint!
     var appLogoCenterYConstraint: NSLayoutConstraint!
     var appLogoCenterXConstraint: NSLayoutConstraint!
-    
-    init(charService: CharacterService?){
-        super.init(nibName: nil, bundle: nil)
-        self.charService = charService
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +25,7 @@ class SplashVC: NSViewController {
         view.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
         configureMountainImage()
         configureAppLogo()
-        if self.charService?.getPreferences() == nil {
+        if self.charService.getPreferences() == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.animateTransition()
             }
@@ -83,7 +74,7 @@ class SplashVC: NSViewController {
             context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                     
                     self.mountainImageCenterYConstraint.animator().constant = 0
-                    self.appLogoCenterYConstraint.animator().constant = -115
+                    self.appLogoCenterXConstraint.animator().constant = -334
                     
                     self.view.animator().layoutSubtreeIfNeeded()
                 }
@@ -96,7 +87,7 @@ class SplashVC: NSViewController {
             context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                     
                     self.mountainImageCenterYConstraint.animator().constant = 0
-                    self.appLogoCenterYConstraint.animator().constant = -115
+                    self.appLogoCenterXConstraint.animator().constant = -334
                     
                     self.view.animator().layoutSubtreeIfNeeded()
                 }
@@ -105,7 +96,7 @@ class SplashVC: NSViewController {
     private func navigateToHome() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             /// After 3 seconds, replace this VC with HomeVC
-            if self.charService?.getPreferences() == nil {
+            if self.charService.getPreferences() == nil {
                 guard let onBoardVc = Container.shared.resolve(UserPreferenceVC.self) else {return}
                 self.replace(with: onBoardVc)
                 UserDefaults.standard.setValue(Date(), forKey: UserDefaultsKey.kDateNow)

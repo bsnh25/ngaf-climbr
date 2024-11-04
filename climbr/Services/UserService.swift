@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CharacterService {
-    func getPreferences() -> UserPreferences?
+    func getPreferences() -> UserPreferenceModel?
     func savePreferences(data: UserPreferenceModel)
     func updatePreferences(data: UserPreferenceModel)
     func getCharacterData() -> CharacterModel?

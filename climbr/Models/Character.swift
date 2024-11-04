@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct CharacterModel {
+struct CharacterModel: Codable {
     var id: UUID = UUID()
     var name: String
     var gender: Gender
-    var point: Int64
+    var point: Int
     var headEquipment: EquipmentItem = .emptyHG
     var handEquipment: EquipmentItem = .emptyS
     var backEquipment: EquipmentItem = .emptyBP
     var locationEquipment: EquipmentItem = .jungleJumble
 }
 
-enum Gender: String{
+enum Gender: String, Codable{
     case male = "male" , female = "female"
 }

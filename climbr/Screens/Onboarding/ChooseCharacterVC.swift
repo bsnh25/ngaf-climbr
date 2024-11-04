@@ -26,19 +26,9 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
     private var containerIsClicked: Bool = false
     
     var genderChar: Gender?
-    var charService: CharacterService?
+    var charService: CharacterService = UserManager.shared
     
     var genderDelegate: ChooseCaraterDelegate?
-    
-    init(charService: CharacterService?){
-        super.init(nibName: nil, bundle: nil)
-        self.charService = charService
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -204,8 +194,8 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
         
         print("gender pal user is : \(String(describing: gender))")
         
-        let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
-        charService?.saveCharacterData(data: userData)
+        let userData = CharacterModel(name: textField.stringValue, gender: gender, point:1000)
+        charService.saveCharacterData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
         
         pop()

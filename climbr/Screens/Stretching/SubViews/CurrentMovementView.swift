@@ -65,9 +65,7 @@ class CurrentMovementView: NSStackView {
     }
     
     @objc private func loopVideo(notification: Notification) {
-        print("URL: end video ")
         if let playerItem = notification.object as? AVPlayerItem {
-            print("URL: player item ")
             playerItem.seek(to: .zero, completionHandler: nil)
         }
     }
@@ -113,6 +111,7 @@ class CurrentMovementView: NSStackView {
     private func configureMovementLabel() {
         
         movementLabel.setText("Movement Title")
+        stretchLabel.setAccessibilityElement(true)
         
         NSLayoutConstraint.activate([
             stretchLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -148,6 +147,7 @@ class CurrentMovementView: NSStackView {
     func getIndexMovement(current: Int, maxIndex: Int){
         let showIndex = current + 1
         stretchLabel.setText("\(showIndex) / \(maxIndex)")
+        stretchLabel.setAccessibilityTitle("You are currently in movement \(showIndex) of \(maxIndex)")
     }
     
 }

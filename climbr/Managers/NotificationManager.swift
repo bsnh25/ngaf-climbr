@@ -6,53 +6,128 @@
 //
 
 import Foundation
-import UserNotifications
 
 class NotificationManager: NotificationService {
     
     static let shared = NotificationManager()
+    var overlayWindow: OverlayWindow?
+    var checkTimer: DispatchSourceTimer?
+    var overlayTimer: DispatchSourceTimer?
     
-    let notificationCenter = UNUserNotificationCenter.current()
-    
-    func askUserPermission() {
-        notificationCenter.requestAuthorization(options: [.alert,.badge,.sound]) { (success, err) in
-            (err == nil) ? print("success request \(success)") : print("Notification Err : \(String(describing: err?.localizedDescription))")
+    func startOverlayScheduler(userPreference: UserPreferenceModel) {
+        stopOverlayScheduler()
+        
+        checkTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+        checkTimer?.schedule(deadline: .now(), repeating: .seconds(60))
+        checkTimer?.setEventHandler { [weak self] in
+            self?.checkWorkingHoursAndStartOverlay(userPreference: userPreference)
         }
+        checkTimer?.resume()
     }
     
-    func sendNotification(title: String, body: String, reminder: UserPreferenceModel) {
-        notificationCenter.removeAllDeliveredNotifications()
-        notificationCenter.removeAllPendingNotificationRequests()
+    func stopOverlayScheduler() {
+        checkTimer?.cancel()
+        overlayTimer?.cancel()
+        checkTimer = nil
+        overlayTimer = nil
+    }
+    
+    private func checkWorkingHoursAndStartOverlay(userPreference: UserPreferenceModel) {
+        let calendar = Calendar.current
+        let now = Date()
         
-        //MARK: Setup Notification Messsage
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.sound = .default
-        content.badge = 1 as NSNumber
+        // Mendapatkan komponen hari dan waktu saat ini
+        let currentDay = calendar.component(.weekday, from: now)
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
         
         
-        //MARK: Logic Reminder
-
-        let start = stride(
-            from: reminder.startWorkingHour,
-            to: reminder.endWorkingHour,
-            by: Date.Stride(reminder.reminderInterval * 60)).filter { $0 > Date() }
-        
-        start.forEach { reminder in
-            let rangeTime = Calendar.current.dateComponents([.hour, .minute], from: reminder)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: rangeTime, repeats: true)
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-            print("reminder : \(reminder)")
-            print("request : \(request.trigger.debugDescription)")
-            notificationCenter.add(request){ error in
-                if let error = error {
-                    print("Error scheduling notification: \(error)")
+        if userPreference.isFlexibleWorkHour {
+            
+            for workingHour in userPreference.workingHours {
+                // Periksa apakah jadwal aktif dan hari sesuai
+                guard workingHour.isEnabled && workingHour.day == currentDay else {
+                    continue // Lewati jika hari tidak cocok atau tidak aktif
+                }
+                
+                // Dapatkan komponen jam dan menit dari `startHour` dan `endHour`
+                let startComponents = calendar.dateComponents([.hour, .minute], from: workingHour.startHour)
+                let endComponents = calendar.dateComponents([.hour, .minute], from: workingHour.endHour)
+                
+                guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
+                      let endHour = endComponents.hour, let endMinute = endComponents.minute else {
+                    continue
+                }
+                
+                // Periksa apakah waktu saat ini berada dalam rentang jam kerja
+                if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
+                    (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
+                    
+                    // Waktu sesuai, mulai `overlayTimer` jika belum aktif
+                    if overlayTimer == nil {
+                        startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 60))
+                    }
+                    return
                 }
             }
             
+        } else {
+            for workingHour in userPreference.workingHours {
+                
+                let startComponents = calendar.dateComponents([.hour, .minute], from: workingHour.startHour)
+                let endComponents = calendar.dateComponents([.hour, .minute], from: workingHour.endHour)
+                
+                guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
+                      let endHour = endComponents.hour, let endMinute = endComponents.minute else {
+                    continue
+                }
+                
+                
+                if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
+                    (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
+                    
+                    
+                    if overlayTimer == nil {
+                        startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 60))
+                    }
+                    return
+                }
+            }
         }
+        
+        // Jika tidak dalam waktu kerja atau tidak memenuhi kriteria, matikan overlayTimer jika aktif
+        overlayTimer?.cancel()
+        overlayTimer = nil
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count = 0
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
     }
     
     
+    private func startOverlayTimer(interval: TimeInterval) {
+        overlayTimer?.cancel()
+        overlayTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+        overlayTimer?.schedule(deadline: .now() + interval, repeating: interval)
+        overlayTimer?.setEventHandler { [weak self] in
+            DispatchQueue.main.async {
+                self?.showOverlay()
+            }
+        }
+        overlayTimer?.resume()
+    }
+    
+    /// Triggerd Overlay base on notification
+    func showOverlay() {
+        overlayWindow = OverlayWindow()
+        overlayWindow?.addViewContoller(OverlayView())
+        overlayWindow?.show()
+        
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        count += 1
+        
+        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+    }
 }

@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct UserPreferenceModel {
-    var id: UUID
-    var endWorkingHour: Date
-    var launchAtLogin: Bool
-    var reminderInterval: Int64
-    var startWorkingHour: Date
+struct UserPreferenceModel: Codable {
+    var launchAtLogin: Bool = false
+    var isFlexibleWorkHour: Bool = false
+    var reminderInterval: Int
+    var workingHours: [WorkingHour]
 }

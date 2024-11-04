@@ -107,7 +107,7 @@ extension TutorialVC {
         var height: CGFloat = 0
         var width: CGFloat = 0
         
-        getUser = charService?.getCharacterData()
+        getUser = charService.getCharacterData()
         charLabel.stringValue = "\(getUser?.name ?? "John Doe")"
         
         if getUser?.gender == .male {

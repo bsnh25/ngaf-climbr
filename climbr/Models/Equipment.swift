@@ -50,7 +50,7 @@ enum EquipmentType: String {
          location = "location"
 }
 
-enum EquipmentItem: String, CaseIterable, Identifiable {
+enum EquipmentItem: String, CaseIterable, Identifiable, Codable {
     var id: EquipmentItem {
         self
     }
@@ -302,11 +302,11 @@ enum EquipmentItem: String, CaseIterable, Identifiable {
         case .snowySummit:
             "Snowy Summit"
         case .emptyHG:
-            ""
+            "Default Head"
         case .emptyBP:
-            ""
+            "Default Body"
         case .emptyS:
-            ""
+            "Default Stick"
         }
     }
 }

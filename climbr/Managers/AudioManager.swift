@@ -15,6 +15,7 @@ class AudioManager: AudioService {
     private var backgroundPlayer: AVAudioPlayer?
     private var effectPlayer: AVAudioPlayer?
     private var deviceVolume: Float?
+    private let speechSynthesizer = AVSpeechSynthesizer()
     
     private init(){
         deviceVolume = getVolumeDevice()
@@ -127,4 +128,18 @@ class AudioManager: AudioService {
             print("Error playing effect sound: \(error.localizedDescription)")
         }
     }
+  
+    func speech(_ text: String) {
+      let utterance = AVSpeechUtterance(string: text)
+      utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+      utterance.volume = backgroundMusicVolume
+      
+      speechSynthesizer.speak(utterance)
+    }
+  
+  func stopSpeech(at boundary: AVSpeechBoundary = .immediate) {
+//    guard speechSynthesizer.isSpeaking else { return }
+    
+    speechSynthesizer.stopSpeaking(at: boundary)
+  }
 }
