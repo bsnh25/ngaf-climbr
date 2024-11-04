@@ -35,7 +35,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   
   let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
   
-  let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+  let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
   
   let reminder30MinutesButton = CLPickerButton(
     title: "30",
@@ -248,7 +248,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     let minutesLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Minutes")
     
     let componentStack: NSStackView = NSStackView(views: [ everyLabel, reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton, minutesLabel ])
-    componentStack.spacing = 16
+    componentStack.spacing = 14
     componentStack.alignment = .leading
     componentStack.orientation = .horizontal
     
@@ -259,7 +259,8 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     reminderStack.snp.makeConstraints { make in
       make.top.equalTo(workHoursStack.snp.bottom).offset(28)
-      make.leading.trailing.equalTo(workHoursStack)
+        make.leading.equalTo(workHoursStack.snp.leading)
+        make.trailing.equalTo(workHoursStack.snp.trailing)
     }
   }
   
@@ -267,7 +268,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   func configureDifferentWorkHours(){
     
     let attributes: [NSAttributedString.Key: Any] = [
-      .font: NSFont.systemFont(ofSize: 22, weight: .bold),
+      .font: NSFont.systemFont(ofSize: 17, weight: .bold),
       .foregroundColor: NSColor.black
     ]
     
@@ -300,21 +301,21 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   func configureDifferentWorkHoursStackView(){
     let divider = Divider()
     preferenceStack = [
-      //        Divider(),
+//              Divider(),
       mondayPreference,
-      //        Divider(),
+//              Divider(),
       tuesdayPreference,
-      //        Divider(),
+//              Divider(),
       wednesdayPreference,
-      //        Divider(),
+//              Divider(),
       thursdayPreference,
-      //        Divider(),
+//              Divider(),
       fridayPreference,
-      //        Divider(),
+//              Divider(),
       saturdayPreference,
-      //        Divider(),
+//              Divider(),
       sundayPreference,
-      //        Divider(),
+//              Divider(),
     ]
     
     preferenceStackView.isHidden = true
@@ -447,7 +448,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     view.addSubview(launchAtLoginChecBox)
     
     let attributes: [NSAttributedString.Key: Any] = [
-      .font: NSFont.systemFont(ofSize: 22, weight: .bold),
+      .font: NSFont.systemFont(ofSize: 17, weight: .bold),
       .foregroundColor: NSColor.black
     ]
     

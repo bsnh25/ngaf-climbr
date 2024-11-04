@@ -38,7 +38,7 @@ extension HomeVC {
     @objc
     func actionSetting(){
         guard let settingsVC = Container.shared.resolve(SettingVC.self) else {return}
-        settingsVC.preferredContentSize = CGSize(width: 412, height: 358)
+        settingsVC.preferredContentSize = CGSize(width: 863.34, height: 660.34)
         self.presentAsModalWindow(settingsVC)
     }
     

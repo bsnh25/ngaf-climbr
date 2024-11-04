@@ -55,7 +55,7 @@ class DayTimePreferenceView: NSStackView {
     // Custom initializer
     init(dayName: String) {
         super.init(frame: .zero)
-        self.dayName = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .bold, contentLabel: dayName)
+        self.dayName = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: dayName)
         day = dayName
         
         configure()
@@ -72,7 +72,8 @@ class DayTimePreferenceView: NSStackView {
         
         setViews([dayName, NSView(), pickerStack], in: .center)
         distribution = .equalSpacing
-      
+        
+        
         setupStartPicker()
         setupEndPicker()
       
