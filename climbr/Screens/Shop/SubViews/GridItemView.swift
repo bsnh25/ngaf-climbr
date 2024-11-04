@@ -7,7 +7,6 @@
 
 import Cocoa
 
-
 class GridItem: NSCollectionViewItem {
     
     let lockIcon = CLSFSymbol(symbolName: "lock.fill", description: "lock")
@@ -91,5 +90,8 @@ class GridItem: NSCollectionViewItem {
         data = equipmentModel
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
+//        overlayView.setAccessibilityLabel("\(equipmentModel.isUnlocked ? "Item is Unlocked" : "Item is Locked")")
+//        backgroundImageView.setAccessibilityLabel("\(equipmentModel.item.itemName) Equipment Picture")
+//        lockIcon.setAccessibilityLabel("\(equipmentModel.isUnlocked ? "Item is Unlocked" : "Item is Locked")")
     }
 }
