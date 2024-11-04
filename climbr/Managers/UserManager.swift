@@ -63,7 +63,7 @@ class UserManager : CharacterService {
                             headEquipment: decodedData.headEquipment,
                             handEquipment: decodedData.handEquipment,
                             backEquipment: decodedData.backEquipment,
-                            locationEquipment: decodedData.handEquipment)
+                            locationEquipment: decodedData.locationEquipment)
     } catch{
       print("Failed to decode user character: \(error)")
       return nil
