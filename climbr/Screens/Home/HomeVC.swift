@@ -13,26 +13,30 @@ import RiveRuntime
 
 class HomeVC: NSViewController {
     
-    let settingButton = CLImageButton(
-        imageName: "gear",
-        accesibilityName: "settings",
-        imgColor: .black.withAlphaComponent(0.5),
-        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
-    )
+//    let settingButton = CLImageButton(
+//        imageName: "gear",
+//        accesibilityName: "settings",
+//        imgColor: .black.withAlphaComponent(0.5),
+//        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+//    )
+    let settingButton = TypeButton(imageName: "gear", text: "Settings")
+    let audioButton = TypeButton(imageName: "speaker.wave.3", text: "Sounds Play")
+    let storeButton = TypeButton(imageName: "storefront", text: "Store")
+
     
-    let audioButton = CLImageButton(
-        imageName: "speaker.wave.3",
-        accesibilityName: "Music Play",
-        imgColor: .black.withAlphaComponent(0.5),
-        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
-    )
-    
-    let storeButton = CLImageButton(
-        imageName: "storefront",
-        accesibilityName: "store",
-        imgColor: .black.withAlphaComponent(0.5),
-        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
-    )
+//    let audioButton = CLImageButton(
+//        imageName: "speaker.wave.3",
+//        accesibilityName: "Music Play",
+//        imgColor: .black.withAlphaComponent(0.5),
+//        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+//    )
+//    
+//    let storeButton = CLImageButton(
+//        imageName: "storefront",
+//        accesibilityName: "store",
+//        imgColor: .black.withAlphaComponent(0.5),
+//        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+//    )
     
     let startStretchButton = CLTextButtonV2(
         title: "Start Session",
@@ -47,13 +51,23 @@ class HomeVC: NSViewController {
         contentLabel: "Today’s session goal"
     )
     let points  = CLLabel(
-        fontSize: 18.79,
+        fontSize: 22,
         fontWeight: .bold
     )
+    
+    let streak  = CLLabel(
+        fontSize: 22,
+        fontWeight: .bold
+    )
+    
     let containerView = NSView()
     let imageHome = NSImageView()
     let stack = NSStackView()
     let pointsView = NSStackView()
+    let streakView = NSStackView()
+    
+    let popover = NSPopover()
+    var isShowPopover: Bool = false
     
     var riveView = RiveView()
     var audioService: AudioService?
@@ -110,6 +124,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
+        setupStreakLabel()
         setupPointsLabel()
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
@@ -200,36 +215,37 @@ class HomeVC: NSViewController {
         
         let vPadding = 40
         let hPadding = 10
-        let widthBtn = 250
-        let heightBtn = 40
-        
-        stack.snp.makeConstraints { stack in
-            stack.leading.equalToSuperview().offset(20)
-            stack.top.equalToSuperview().offset(vPadding)
-            stack.width.equalTo(widthBtn)
-            stack.height.equalTo(heightBtn)
-        }
+//        let heightBtn = 40
         
         settingButton.snp.makeConstraints { setting in
             setting.leading.equalTo(stack.snp.leading)
             setting.top.equalTo(stack.snp.top)
-            setting.width.equalTo(38)
-            setting.height.equalTo(38)
+//            setting.width.equalTo(38)
+//            setting.height.equalTo(38)
         }
         
         audioButton.snp.makeConstraints { audio in
             audio.leading.equalTo(settingButton.snp.trailing).offset(hPadding)
             audio.top.equalTo(stack.snp.top)
-            audio.width.equalTo(38)
-            audio.height.equalTo(38)
+//            audio.width.equalTo(38)
+//            audio.height.equalTo(38)
         }
         
         storeButton.snp.makeConstraints { store in
             store.leading.equalTo(audioButton.snp.trailing).offset(hPadding)
             store.top.equalTo(stack.snp.top)
-            store.width.equalTo(38)
-            store.height.equalTo(38)
+//            store.width.equalTo(38)
+//            store.height.equalTo(38)
         }
+        
+        stack.snp.makeConstraints { stack in
+            stack.leading.equalToSuperview().offset(20)
+            stack.top.equalToSuperview().offset(vPadding)
+            stack.trailing.equalTo(storeButton.snp.trailing)
+            stack.height.equalTo(settingButton.snp.height)
+        }
+        
+
     }
     
     private func stackConfig(){
@@ -306,11 +322,12 @@ class HomeVC: NSViewController {
     func setupPointsLabel() {
         
         let icon = CLSFSymbol(symbolName: "c.circle", description: "coins")
-        icon.setConfiguration(size: 18.79, weight: .bold)
+        icon.setConfiguration(size: 22, weight: .bold)
         icon.contentTintColor = .black
         
         points.backgroundColor = .clear
         points.setTextColor(.black)
+        points.setText("\(0)")
         
         pointsView.wantsLayer = true
         
@@ -325,7 +342,7 @@ class HomeVC: NSViewController {
       
         pointsView.setAccessibilityTitle("Coins")
         pointsView.setAccessibilityLabel("View your balance")
-        pointsView.setAccessibilityRole(.button)
+        pointsView.setAccessibilityRole(.staticText)
         
         view.addSubview(pointsView)
         
@@ -333,12 +350,51 @@ class HomeVC: NSViewController {
         pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
-            pointsView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: 10),
+            pointsView.leadingAnchor.constraint(equalTo: streakView.trailingAnchor, constant: 10),
             pointsView.topAnchor.constraint(equalTo: storeButton.topAnchor),
-            pointsView.widthAnchor.constraint(equalToConstant: 160),
-            pointsView.heightAnchor.constraint(equalToConstant: 38)
+            pointsView.widthAnchor.constraint(equalToConstant: 137),
+            pointsView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+    
+    func setupStreakLabel() {
+        
+        let icon = CLSFSymbol(symbolName: "flame.fill", description: "Streak")
+        icon.setConfiguration(size: 22, weight: .bold)
+        icon.contentTintColor = .black
+        
+        streak.backgroundColor = .clear
+        streak.setTextColor(.black)
+        streak.setText("\(0)")
+        
+        streakView.wantsLayer = true
+        
+        streakView.setViews([icon, streak], in: .center)
+        streakView.translatesAutoresizingMaskIntoConstraints = false
+        streakView.orientation = .horizontal
+        streakView.alignment = .centerY
+        streakView.distribution = .equalSpacing
+        streakView.layer?.backgroundColor = .white.copy(alpha: 0.7)
+        streakView.layer?.cornerRadius = 10
+        streakView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+      
+        streakView.setAccessibilityTitle("Streak")
+        streakView.setAccessibilityLabel("View your streak")
+        streakView.setAccessibilityRole(.button)
+        
+        view.addSubview(streakView)
+        
+        let blur = CLBlurEffectView(frame: streakView.bounds)
+        streakView.addSubview(blur, positioned: .below, relativeTo: nil)
+        
+        NSLayoutConstraint.activate([
+            streakView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: 10),
+            streakView.topAnchor.constraint(equalTo: storeButton.topAnchor),
+            streakView.widthAnchor.constraint(equalToConstant: 100),
+            streakView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
     
     private func reloadAnimation() {
         riveView.removeFromSuperview()
@@ -349,6 +405,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
+        setupStreakLabel()
         setupPointsLabel()
     }
 }

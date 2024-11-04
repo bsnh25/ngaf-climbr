@@ -27,18 +27,21 @@ class CLPickerButton: NSButton {
                 updateAttributedTitle()
             }
         }
+  
+  var subtitle: String?
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.isBordered = false // Remove default button border
         self.wantsLayer = true // Ensure the layer is available for custom drawing
     }
-    init(title: String, backgroundColor: NSColor, foregroundColorText: NSColor, fontText: NSFont) {
+  init(title: String, subtitle: String? = nil, backgroundColor: NSColor, foregroundColorText: NSColor, fontText: NSFont) {
         super.init(frame: .zero)
         
         wantsLayer = true
         
         self.title                  = title
+    self.subtitle = subtitle
         self.isBordered             = false
         layer?.backgroundColor      = backgroundColor.cgColor
         
