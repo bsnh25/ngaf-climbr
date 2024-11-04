@@ -8,15 +8,49 @@
 import AppKit
 import Swinject
 import UserNotifications
+import SnapKit
 
 extension HomeVC {
     
     @objc
     func actionStore(){
         if let vc = Container.shared.resolve(ShopItemVC.self) {
-            vc.delegate = self
-            push(to: vc)
-            print("go to stretching shop")
+            //                        push(to: vc)
+            //            vc.view.setFrameSize(NSSize(width: 400, height: 500))
+            //            view.addSubview(vc.view)
+            //
+            //            vc.view.snp.makeConstraints { make in
+            //                make.top.equalTo(settingButton.snp.bottom).offset(20)
+            //                make.leading.equalTo(settingButton.snp.leading)
+            //            }
+            
+            if !isShowPopover {
+                storeButton.updateColorBox(true)
+                //             Configure popover
+                popover.contentViewController = vc
+                
+                print("VC frame size sblm:", vc.view.frame.size)
+                // Show popover anchored to the store button
+                popover.show(relativeTo: storeButton.bounds, of: storeButton, preferredEdge: .minY)
+                print("Popover size sblm:", popover.contentSize)
+                vc.view.frame.size = NSSize(width: 380, height: 380)
+                //            vc.preferredContentSize = NSSize(width: 400, height: 400)
+                popover.contentSize = NSSize(width: vc.view.frame.width, height: vc.view.frame.height)
+                popover.behavior = .applicationDefined
+                popover.appearance = .none
+                popover.animates = true
+                
+                print("Popover size:", popover.contentSize)
+                print("VC frame size:", vc.view.frame.size)
+                print("Popover visible:", popover.isShown)
+                
+                vc.delegate = self
+            } else if isShowPopover {
+                popover.close()
+                storeButton.updateColorBox(false)
+            }
+            
+            isShowPopover.toggle()
         }
     }
     
@@ -30,6 +64,12 @@ extension HomeVC {
                 vc.setOfMovements = Movement.setOfMovements.first!
             }
             
+            if isShowPopover {
+                popover.close()
+                storeButton.updateColorBox(false)
+                isShowPopover.toggle()
+            }
+            
             push(to: vc)
             print("go to stretching session")
         }
@@ -39,6 +79,11 @@ extension HomeVC {
     func actionSetting(){
         guard let settingsVC = Container.shared.resolve(SettingVC.self) else {return}
         settingsVC.preferredContentSize = CGSize(width: 863.34, height: 660.34)
+        if isShowPopover {
+            popover.close()
+            storeButton.updateColorBox(false)
+            isShowPopover.toggle()
+        }
         self.presentAsModalWindow(settingsVC)
     }
     
@@ -48,11 +93,13 @@ extension HomeVC {
         isSoundTapped.toggle()
         if isSoundTapped{
             audio.muteSound()
-            audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: .black.withAlphaComponent(0.5)))
+//            audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: .black.withAlphaComponent(0.5)))
+            audioButton.updateImage("speaker.slash")
             return
         } else {
             audio.unmuteSound()
-            audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: .black.withAlphaComponent(0.5)))
+            audioButton.updateImage("speaker.wave.3")
+//            audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: .black.withAlphaComponent(0.5)))
             return
         }
     }
@@ -90,8 +137,8 @@ extension HomeVC {
     
     func observeTimer(){
         //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
-//        observeNotif()
-//        checkInRange()
+        //        observeNotif()
+        //        checkInRange()
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
         
     }
@@ -102,28 +149,28 @@ extension HomeVC {
     }
     
     func observeNotif(){
-//        UNUserNotificationCenter.current().getDeliveredNotifications { notif in
-//            guard var identifier = notif.first?.request.identifier else {return}
-//            self.arrNotif.append(identifier)
-//            print("Ini identifier yang masuk : \(identifier)")
-//        }
+        //        UNUserNotificationCenter.current().getDeliveredNotifications { notif in
+        //            guard var identifier = notif.first?.request.identifier else {return}
+        //            self.arrNotif.append(identifier)
+        //            print("Ini identifier yang masuk : \(identifier)")
+        //        }
         
         let progress = UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession)
         let notificationCount = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
         print("Notif count:", notificationCount)
         print("Progress count:", progress)
         
-//        if count == progress {
-//            animationMain?.setInput("WalkingStyle", value: 0.0)
-//        } else if count - progress <= 2 {
-//            animationMain?.setInput("WalkingStyle", value: 1.0)
-//        } else {
-//            animationMain?.setInput("WalkingStyle", value: 2.0)
-//        }
+        //        if count == progress {
+        //            animationMain?.setInput("WalkingStyle", value: 0.0)
+        //        } else if count - progress <= 2 {
+        //            animationMain?.setInput("WalkingStyle", value: 1.0)
+        //        } else {
+        //            animationMain?.setInput("WalkingStyle", value: 2.0)
+        //        }
         
         /// Notification count state
         /// - state = notificationCount - progress
-        /// 
+        ///
         /// state 0: walk
         /// state 1: tired/fatigue
         /// state 2: death
@@ -149,59 +196,59 @@ extension HomeVC {
 //            let startWorkingHour = prefs?.startWorkingHour ?? .now
 //            let endWorkingHour = prefs?.endWorkingHour ?? .now
             
-//            if Date.now >= startWorkingHour && Date.now <= endWorkingHour && progress == 4 {
-//                characterState = 3
-//                backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
-//            } else {
-//                /// State for default walk
-//                characterState = 0
-//                backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
-//            }
+            //            if Date.now >= startWorkingHour && Date.now <= endWorkingHour && progress == 4 {
+            //                characterState = 3
+            //                backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
+            //            } else {
+            //                /// State for default walk
+            //                characterState = 0
+            //                backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
+            //            }
         }
         
         animationMain?.setInput("WalkingStyle", value: characterState)
         animationMain?.setInput("Background", value: backgroundState)
     }
     
-//    func checkInRange(){
-//        let calendar = Calendar.current
-//        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
-//        if let date = calendar.date(from: components) {
-//            if let char = Container.shared.resolve(CharacterService.self) {
-//                guard let getPreference = char.getPreferences() else {return}
-//                guard let start = getPreference.startWorkingHour else {return}
-//                guard let end = getPreference.endWorkingHour else {return}
-//                
-//                print("start : \(start)")
-//                print("date : \(date)")
-//                print("end : \(end)")
-//
-//                if date > start && date < end {
-//                    showCharSakit()
-//                } else {
-//                    UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) == 4 ? animationMain?.setInput("WalkingStyle", value: 3.0) : animationMain?.setInput("WalkingStyle", value: 2.0)
-//                }
-//            }
-//        }
-//    }
+    //    func checkInRange(){
+    //        let calendar = Calendar.current
+    //        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+    //        if let date = calendar.date(from: components) {
+    //            if let char = Container.shared.resolve(CharacterService.self) {
+    //                guard let getPreference = char.getPreferences() else {return}
+    //                guard let start = getPreference.startWorkingHour else {return}
+    //                guard let end = getPreference.endWorkingHour else {return}
+    //
+    //                print("start : \(start)")
+    //                print("date : \(date)")
+    //                print("end : \(end)")
+    //
+    //                if date > start && date < end {
+    //                    showCharSakit()
+    //                } else {
+    //                    UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) == 4 ? animationMain?.setInput("WalkingStyle", value: 3.0) : animationMain?.setInput("WalkingStyle", value: 2.0)
+    //                }
+    //            }
+    //        }
+    //    }
     
     func updateCharacter() {
         guard let character else { return }
-      
+        
         animationMain!.setInput("Headgear", value: Double(character.headEquipment.itemID))
-       
+        
         animationMain!.setInput("Stick", value: Double(character.handEquipment.itemID))
         animationMain!.setInput("Jacket", value: Double(character.handEquipment.itemID))
         animationMain!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
         animationMain!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
         animationMain!.setInput("RightShin", value: Double(character.handEquipment.itemID))
         animationMain!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
- 
+        
         animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
         animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
- 
+        
         animationMain!.setInput("Background", value: Double(character.locationEquipment.itemID))
-
+        
     }
 }
 

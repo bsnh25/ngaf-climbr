@@ -221,6 +221,10 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     workHoursStack.alignment = .leading
     workHoursStack.orientation = .vertical
     
+    workHourItemView.setAccessibilityElement(true)
+    workHourItemView.setAccessibilityTitle("Work Hours")
+    workHourItemView.setAccessibilityLabel("Set the start and end work hours")
+    
     workHoursStack.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(20)
       make.leading.trailing.equalToSuperview().inset(40)
@@ -236,6 +240,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       button.target = self
       button.action = #selector(actionReminderHandler)
       button.layer?.cornerRadius = 6
+      
+      button.setAccessibilityElement(true)
+      button.setAccessibilityTitle("\(button.title) minutes")
+      button.setAccessibilityLabel("Set the reminder interval to \(button.title) minutes")
+      button.setAccessibilityRole(.button)
       
       button.snp.makeConstraints{button in
         button.width.equalTo(44)
@@ -275,11 +284,17 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     // Apply the attributed title
     differentWorkHoursCheckbox.attributedTitle = NSAttributedString(string: differentWorkHoursCheckbox.title, attributes: attributes)
     
+    
     // Set the content tint color (optional, depending on what you want to achieve)
     differentWorkHoursCheckbox.contentTintColor = .white
     
     differentWorkHoursCheckbox.target = self
     differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
+    
+    differentWorkHoursCheckbox.setAccessibilityElement(true)
+    differentWorkHoursCheckbox.setAccessibilityTitle("Different Work Hours")
+    differentWorkHoursCheckbox.setAccessibilityLabel("Check this if you want to configure work hour independently")
+    differentWorkHoursCheckbox.setAccessibilityRole(.checkBox)
   }
   
   func configureWorkHourItemView(){
@@ -327,14 +342,13 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     preferenceStackView.distribution = .fillEqually
     
     for item in preferenceStack {
-      if let item = item as? DayTimePreferenceView {
-        item.isHidden = item.day != "Monday"
-        item.initialStartValue = initialStartWorkHour
-        item.initialEndValue = initialEndWorkHour
-        item.snp.makeConstraints{item in
-          item.height.equalTo(38.3)
-        }
+      item.isHidden = item.day != "Monday"
+      item.initialStartValue = initialStartWorkHour
+      item.initialEndValue = initialEndWorkHour
+      item.snp.makeConstraints{item in
+        item.height.equalTo(38.3)
       }
+      
     }
     
     mondayPreference.onValueChanged = { [weak self] start, end in
@@ -461,6 +475,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     launchAtLoginChecBox.target = self
     launchAtLoginChecBox.action = #selector(actionCheckbox)
     
+    launchAtLoginChecBox.setAccessibilityElement(true)
+    launchAtLoginChecBox.setAccessibilityTitle("Launch At StartUp")
+    launchAtLoginChecBox.setAccessibilityLabel("Check this if you want to launch Climbr automatically on startup")
+    launchAtLoginChecBox.setAccessibilityRole(.checkBox)
+    
     launchAtLoginChecBox.snp.makeConstraints{ check in
       check.leading.trailing.equalTo(reminderStack)
       check.top.equalTo(reminderStack.snp.bottom).offset(28)
@@ -501,10 +520,3 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     reminder120MinutesButton.isSelected = false
   }
 }
-
-
-
-
-//#Preview(traits: .defaultLayout, body: {
-//    UserPreferenceVC()
-//})

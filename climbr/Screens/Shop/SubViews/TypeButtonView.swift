@@ -67,4 +67,18 @@ class TypeButton: NSButton {
             icon.contentTintColor = .darkGray
         }
     }
+    
+    func updateColorBox(_ isActive: Bool){
+        if isActive{
+            icon.contentTintColor = .white
+            layer?.backgroundColor = NSColor.cButton.cgColor.copy(alpha: 1)
+        }else{
+            icon.contentTintColor = .darkGray
+            layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.6)
+        }
+    }
+    
+    func updateImage(_ imageName: String){
+        icon.image = NSImage(systemSymbolName: imageName, accessibilityDescription: imageName)
+    }
 }

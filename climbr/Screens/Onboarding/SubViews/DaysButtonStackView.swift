@@ -23,42 +23,49 @@ class DaysButtonStackView: NSStackView {
     weak var daysButtonDelegate: DaysButtonToUserPreferenceDelegate?
   let monday = CLPickerButton(
     title: "M",
+    subtitle: "Monday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
   )
   let tuesday = CLPickerButton(
     title: "T",
+    subtitle: "Tuesday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
   )
   let wednesday = CLPickerButton(
     title: "W",
+    subtitle: "Wednesday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
   )
   let thursday = CLPickerButton(
     title: "T",
+    subtitle: "Thursday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
   )
   let friday = CLPickerButton(
     title: "F",
+    subtitle: "Friday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
   )
   let saturday = CLPickerButton(
     title: "S",
+    subtitle: "Saturday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
   )
   let sunday = CLPickerButton(
     title: "S",
+    subtitle: "Sunday",
     backgroundColor: .white,
     foregroundColorText: .black,
     fontText: .boldSystemFont(ofSize: 20)
@@ -69,7 +76,7 @@ class DaysButtonStackView: NSStackView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         
-        daysButtonStack = [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+        daysButtonStack = [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
         configure()
         
     }
@@ -99,6 +106,11 @@ class DaysButtonStackView: NSStackView {
                 item.width.equalTo(32)
                 item.height.equalTo(36)
             }
+          
+            item.setAccessibilityElement(true)
+            item.setAccessibilityTitle("\(item.subtitle ?? "")")
+            item.setAccessibilityLabel("Enable this option to adjust work hours")
+            item.setAccessibilityRole(.button)
         }
         
         monday.target = self

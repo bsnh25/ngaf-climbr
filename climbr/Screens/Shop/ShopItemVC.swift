@@ -81,17 +81,22 @@ class ShopItemVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
+        view.layer?.backgroundColor = .clear
+//        view.alphaValue = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.layer?.borderWidth = 10
+//        view.layer?.borderColor = NSColor.purple.cgColor
         
         collectionViewContainer.collectionDelegate = self
         buyButton.delegate = self
-        setupAnimationView()
+//        setupAnimationView()
         
         setupSidebar()
-        setupPointsLabel()
+//        setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
         setupBuyButton()
-        setupBackButton()
+//        setupBackButton()
         
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
             highlightButton(firstButton)
@@ -113,11 +118,11 @@ class ShopItemVC: NSViewController {
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
             
             /// Configure rive artboard
-            do {
-                try animationShop?.configureModel(artboardName: character.gender == .male ? "ShopscreenMale" : "ShopscreenFemale")
-            } catch {
-                print(error.localizedDescription)
-            }
+//            do {
+//                try animationShop?.configureModel(artboardName: character.gender == .male ? "ShopscreenMale" : "ShopscreenFemale")
+//            } catch {
+//                print(error.localizedDescription)
+//            }
             
             /// Update character equipment
             updateCharacterEquipment()
@@ -145,11 +150,14 @@ class ShopItemVC: NSViewController {
         
         /// Hide the buy button for the first time
         buyButton.isHidden = true
+
+        buyButton.snp.makeConstraints { make in
+            make.top.equalTo(collectionViewContainer.snp.bottom)
+            make.centerX.equalTo(contentStack.snp.centerX)
+            make.height.equalTo(50)
+            make.width.equalTo(240)
+        }
         
-        NSLayoutConstraint.activate([
-            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 225),
-            buyButton.bottomAnchor.constraint(equalTo: contentStack.bottomAnchor)
-        ])
     }
     
     func setupSidebar() {
@@ -169,6 +177,7 @@ class ShopItemVC: NSViewController {
         
         sidebar.setViews(items, in: .top)
         sidebar.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     func horizontalStack(){
@@ -177,14 +186,17 @@ class ShopItemVC: NSViewController {
         contentStack.alignment = .top
         contentStack.spacing = 10
         
+        contentStack.wantsLayer = true
+//        contentStack.layer?.borderColor = NSColor.red.cgColor
+//        contentStack.layer?.borderWidth = 1
         
-        contentStack.setViews([sidebar, collectionViewContainer], in: .top)
+        contentStack.setViews([collectionViewContainer, sidebar], in: .top)
         self.view.addSubview(contentStack)
         
         NSLayoutConstraint.activate([
-            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80),
+            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor),
             contentStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            contentStack.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10)
+            contentStack.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         ])
     }
         
@@ -198,10 +210,11 @@ class ShopItemVC: NSViewController {
         
     func setupCollectionViewContainer() {
         collectionViewContainer.translatesAutoresizingMaskIntoConstraints = false
+//        collectionViewContainer.layer?.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
-            collectionViewContainer.widthAnchor.constraint(equalToConstant: 350),
-            collectionViewContainer.heightAnchor.constraint(equalToConstant: 700)
+            collectionViewContainer.widthAnchor.constraint(equalToConstant: 320),
+            collectionViewContainer.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
     
@@ -329,6 +342,7 @@ class ShopItemVC: NSViewController {
    
     func updateData(with type: EquipmentType = .head) {
         if let items = equipmentService?.getEquipments(equipmentType: type) {
+            print("Ini items dari update data: \(items)")
             collectionViewContainer.updateItems(items: items)
         }
     }

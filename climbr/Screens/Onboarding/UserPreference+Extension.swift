@@ -93,7 +93,7 @@ extension UserPreferenceVC{
       
       preferenceStackView.isHidden = false
       workHourItemView.isHidden = true
-      preferenceStack[0].isHidden = false
+      preferenceStack[1].isHidden = false
       
       if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
         day.isEnabled = true
@@ -118,10 +118,12 @@ extension UserPreferenceVC{
 }
 
 extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
-  func didMondayTap(_ isSelected: Bool) {
+  
+  
+  func didSundayTap(_ isSelected: Bool) {
     preferenceStack[0].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
@@ -134,10 +136,10 @@ extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
     }
   }
   
-  func didTuesdayTap(_ isSelected: Bool) {
+  func didMondayTap(_ isSelected: Bool) {
     preferenceStack[1].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
@@ -150,10 +152,10 @@ extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
     }
   }
   
-  func didWednesdayTap(_ isSelected: Bool) {
+  func didTuesdayTap(_ isSelected: Bool) {
     preferenceStack[2].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
@@ -166,10 +168,10 @@ extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
     }
   }
   
-  func didThursdayTap(_ isSelected: Bool) {
+  func didWednesdayTap(_ isSelected: Bool) {
     preferenceStack[3].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
@@ -182,10 +184,10 @@ extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
     }
   }
   
-  func didFridayTap(_ isSelected: Bool) {
+  func didThursdayTap(_ isSelected: Bool) {
     preferenceStack[4].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
@@ -198,10 +200,10 @@ extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
     }
   }
   
-  func didSaturdayTap(_ isSelected: Bool) {
+  func didFridayTap(_ isSelected: Bool) {
     preferenceStack[5].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
@@ -214,10 +216,10 @@ extension UserPreferenceVC: DaysButtonToUserPreferenceDelegate {
     }
   }
   
-  func didSundayTap(_ isSelected: Bool) {
+  func didSaturdayTap(_ isSelected: Bool) {
     preferenceStack[6].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+    if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
       day.isEnabled = isSelected
       
       if !isSelected {
