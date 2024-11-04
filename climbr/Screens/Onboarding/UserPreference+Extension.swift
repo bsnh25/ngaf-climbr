@@ -91,11 +91,11 @@ extension UserPreferenceVC{
     if isFlexibleWorkHour {
       daysButtonStack.unlockButton()
       
-      preferenceStackView.isHidden = false
       workHourItemView.isHidden = true
-      preferenceStack[1].isHidden = false
+      preferenceStackView.isHidden = false
+      preferenceStack[0].isHidden = false
       
-      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+        if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
         day.isEnabled = true
         
         workingHours.update(with: day)

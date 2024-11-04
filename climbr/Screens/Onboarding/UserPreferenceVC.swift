@@ -23,13 +23,14 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   var preferenceStack: [DayTimePreferenceView] = []
   
   let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
+  let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
   let mondayPreference = DayTimePreferenceView(dayName: "Monday")
   let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
   let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
   let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
   let fridayPreference = DayTimePreferenceView(dayName: "Friday")
   let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
-  let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
+  
   
   let daysButtonStack = DaysButtonStackView()
   
@@ -81,13 +82,13 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   }()
   
   lazy var workingHours: Set<WorkingHour> = [
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.wednesday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.thursday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.friday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
-    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
   ]
   
   var isLaunchAtLogin: Bool = false
@@ -286,7 +287,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     
     // Set the content tint color (optional, depending on what you want to achieve)
-    differentWorkHoursCheckbox.contentTintColor = .white
+      differentWorkHoursCheckbox.contentTintColor = .blue
     
     differentWorkHoursCheckbox.target = self
     differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
@@ -316,6 +317,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   func configureDifferentWorkHoursStackView(){
     let divider = Divider()
     preferenceStack = [
+        sundayPreference,
 //              Divider(),
       mondayPreference,
 //              Divider(),
@@ -328,9 +330,6 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       fridayPreference,
 //              Divider(),
       saturdayPreference,
-//              Divider(),
-      sundayPreference,
-//              Divider(),
     ]
     
     preferenceStackView.isHidden = true
@@ -342,7 +341,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     preferenceStackView.distribution = .fillEqually
     
     for item in preferenceStack {
-      item.isHidden = item.day != "Monday"
+      item.isHidden = item.day != "Sunday"
       item.initialStartValue = initialStartWorkHour
       item.initialEndValue = initialEndWorkHour
       item.snp.makeConstraints{item in
@@ -350,6 +349,21 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       }
       
     }
+      
+      sundayPreference.onValueChanged = { [weak self] start, end in
+        guard let self else { return }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+        
+        if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+          day.startHour = start
+          day.endHour = end
+          
+          workingHours.update(with: day)
+        }
+      }
     
     mondayPreference.onValueChanged = { [weak self] start, end in
       guard let self else { return }
@@ -441,20 +455,6 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       }
     }
     
-    sundayPreference.onValueChanged = { [weak self] start, end in
-      guard let self else { return }
-      
-      let formatter = DateFormatter()
-      formatter.dateFormat = "HH:mm"
-      print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-      
-      if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
-        day.startHour = start
-        day.endHour = end
-        
-        workingHours.update(with: day)
-      }
-    }
     
   }
   

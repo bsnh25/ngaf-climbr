@@ -24,11 +24,12 @@ extension SettingVC {
         if isFlexibleWorkHour {
           daysButtonStack.unlockButton()
           
-          preferenceStackView.isHidden = false
+          
           workHourItemView.isHidden = true
+          preferenceStackView.isHidden = false
           preferenceStack[0].isHidden = false
           
-          if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
             day.isEnabled = true
             
             workingHours.update(with: day)
@@ -101,116 +102,115 @@ extension SettingVC {
 }
 
 extension SettingVC: DaysButtonToUserPreferenceDelegate {
-  func didMondayTap(_ isSelected: Bool) {
-    preferenceStack[0].isHidden = !isSelected
-    
-    if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
-      day.isEnabled = isSelected
+    func didSundayTap(_ isSelected: Bool) {
+      preferenceStack[0].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[0].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[0].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
-  func didTuesdayTap(_ isSelected: Bool) {
-    preferenceStack[1].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
-      day.isEnabled = isSelected
+    func didMondayTap(_ isSelected: Bool) {
+      preferenceStack[1].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[1].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[1].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
-  func didWednesdayTap(_ isSelected: Bool) {
-    preferenceStack[2].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
-      day.isEnabled = isSelected
+    func didTuesdayTap(_ isSelected: Bool) {
+      preferenceStack[2].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[2].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[2].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
-  func didThursdayTap(_ isSelected: Bool) {
-    preferenceStack[3].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
-      day.isEnabled = isSelected
+    func didWednesdayTap(_ isSelected: Bool) {
+      preferenceStack[3].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[3].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[3].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
-  func didFridayTap(_ isSelected: Bool) {
-    preferenceStack[4].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
-      day.isEnabled = isSelected
+    func didThursdayTap(_ isSelected: Bool) {
+      preferenceStack[4].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[4].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[4].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
-  func didSaturdayTap(_ isSelected: Bool) {
-    preferenceStack[5].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
-      day.isEnabled = isSelected
+    func didFridayTap(_ isSelected: Bool) {
+      preferenceStack[5].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[5].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[5].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
-  func didSundayTap(_ isSelected: Bool) {
-    preferenceStack[6].isHidden = !isSelected
     
-    if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
-      day.isEnabled = isSelected
+    func didSaturdayTap(_ isSelected: Bool) {
+      preferenceStack[6].isHidden = !isSelected
       
-      if !isSelected {
-        preferenceStack[6].reset()
-        day.startHour = initialStartWorkHour
-        day.endHour = initialEndWorkHour
+      if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[6].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
       }
-      
-      workingHours.update(with: day)
     }
-  }
-  
 }

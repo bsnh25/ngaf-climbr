@@ -52,13 +52,14 @@ class SettingVC: NSViewController {
     let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
     let daysButtonStack = DaysButtonStackView()
     let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
+    let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
     let mondayPreference = DayTimePreferenceView(dayName: "Monday")
     let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
     let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
     let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
     let fridayPreference = DayTimePreferenceView(dayName: "Friday")
     let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
-    let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
+    
     var preferenceStack: [DayTimePreferenceView] = []
     var isFlexibleWorkHour: Bool = false
     
@@ -78,13 +79,13 @@ class SettingVC: NSViewController {
     }()
     
     lazy var workingHours: Set<WorkingHour> = [
+        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.wednesday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.thursday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.friday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
     ]
     
     let reminder30MinutesButton = CLPickerButton(
@@ -271,13 +272,13 @@ class SettingVC: NSViewController {
     
     func getDayPreference(for dayIndex: Int) -> DayTimePreferenceView? {
         switch dayIndex {
-        case 0: return mondayPreference
-        case 1: return tuesdayPreference
-        case 2: return wednesdayPreference
-        case 3: return thursdayPreference
-        case 4: return fridayPreference
-        case 5: return saturdayPreference
-        case 6: return sundayPreference
+        case 0: return sundayPreference
+        case 1: return mondayPreference
+        case 2: return tuesdayPreference
+        case 3: return wednesdayPreference
+        case 4: return thursdayPreference
+        case 5: return fridayPreference
+        case 6: return saturdayPreference
         default: return nil
         }
     }
@@ -294,7 +295,7 @@ class SettingVC: NSViewController {
         differentWorkHoursCheckbox.attributedTitle = NSAttributedString(string: differentWorkHoursCheckbox.title, attributes: attributes)
         
         // Set the content tint color (optional, depending on what you want to achieve)
-        differentWorkHoursCheckbox.contentTintColor = .white
+        differentWorkHoursCheckbox.contentTintColor = .blue
         
         differentWorkHoursCheckbox.target = self
         differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
@@ -324,13 +325,13 @@ class SettingVC: NSViewController {
     func configureDifferentWorkHoursStackView(){
         let divider = Divider()
         preferenceStack = [
+            sundayPreference,
             mondayPreference,
             tuesdayPreference,
             wednesdayPreference,
             thursdayPreference,
             fridayPreference,
             saturdayPreference,
-            sundayPreference,
         ]
         
         preferenceStackView.isHidden = true
@@ -342,121 +343,121 @@ class SettingVC: NSViewController {
         preferenceStackView.distribution = .fillEqually
         
         for item in preferenceStack {
-            if let item = item as? DayTimePreferenceView {
-                item.isHidden = item.day != "Monday"
-                item.initialStartValue = initialStartWorkHour
-                item.initialEndValue = initialEndWorkHour
-                item.snp.makeConstraints{item in
-                    item.width.equalTo(372.5)
-                    item.height.equalTo(38.3)
-                }
-            }
-        }
-        
-        mondayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Monday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
-        }
-        
-        tuesdayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Tuesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
-        }
-        
-        wednesdayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Wednesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
-        }
-        
-        thursdayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Thursday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
-        }
-        
-        fridayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Friday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
-        }
-        
-        saturdayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Saturday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
+          item.isHidden = item.day != "Sunday"
+          item.initialStartValue = initialStartWorkHour
+          item.initialEndValue = initialEndWorkHour
+          item.snp.makeConstraints{item in
+            item.width.equalTo(372.5)
+            item.height.equalTo(38.3)
+          }
+          
         }
         
         sundayPreference.onValueChanged = { [weak self] start, end in
-            guard let self else { return }
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
             
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-            
-            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
-                day.startHour = start
-                day.endHour = end
-                
-                workingHours.update(with: day)
-            }
+            workingHours.update(with: day)
+          }
         }
+        
+        mondayPreference.onValueChanged = { [weak self] start, end in
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Monday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
+            
+            workingHours.update(with: day)
+          }
+        }
+        
+        tuesdayPreference.onValueChanged = { [weak self] start, end in
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Tuesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
+            
+            workingHours.update(with: day)
+          }
+        }
+        
+        wednesdayPreference.onValueChanged = { [weak self] start, end in
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Wednesday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
+            
+            workingHours.update(with: day)
+          }
+        }
+        
+        thursdayPreference.onValueChanged = { [weak self] start, end in
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Thursday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
+            
+            workingHours.update(with: day)
+          }
+        }
+        
+        fridayPreference.onValueChanged = { [weak self] start, end in
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Friday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
+            
+            workingHours.update(with: day)
+          }
+        }
+        
+        saturdayPreference.onValueChanged = { [weak self] start, end in
+          guard let self else { return }
+          
+          let formatter = DateFormatter()
+          formatter.dateFormat = "HH:mm"
+          print("Saturday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+          
+          if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+            day.startHour = start
+            day.endHour = end
+            
+            workingHours.update(with: day)
+          }
+        }
+        
         
     }
     

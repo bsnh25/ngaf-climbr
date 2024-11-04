@@ -137,9 +137,9 @@ class DaysButtonStackView: NSStackView {
             item.isSelected = false
         }
         
-        monday.isSelected = true
-        monday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-        monday.foregroundColorText = .white
+        sunday.isSelected = true
+        sunday.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        sunday.foregroundColorText = .white
     }
     
     func lockButton() {
