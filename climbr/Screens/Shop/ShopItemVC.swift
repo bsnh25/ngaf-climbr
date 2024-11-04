@@ -55,12 +55,12 @@ class ShopItemVC: NSViewController {
     var selectedItem : EquipmentModel?
     
 //    var simpleVM = RiveViewModel(fileName: "climbr")
-    var animationShop : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
-        anima.fit = .fill
-        let riveView = anima.createRiveView()
-        return anima
-    }()
+//    var animationShop : RiveViewModel? = {
+//        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
+//        anima.fit = .fill
+////        let riveView = anima.createRiveView()
+//        return anima
+//    }()
     
     let backButton = CLImageButton(
         imageName: "arrowshape.backward",
@@ -129,20 +129,20 @@ class ShopItemVC: NSViewController {
         }
     }
     
-    func setupAnimationView(){
-        if let riveView = animationShop?.createRiveView() {
-            view.addSubview(riveView)
-            
-            riveView.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
-                riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                riveView.topAnchor.constraint(equalTo: view.topAnchor),
-                riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
-        }
-    }
+//    func setupAnimationView(){
+//        if let riveView = animationShop?.createRiveView() {
+//            view.addSubview(riveView)
+//            
+//            riveView.translatesAutoresizingMaskIntoConstraints = false
+//            
+//            NSLayoutConstraint.activate([
+//                riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//                riveView.topAnchor.constraint(equalTo: view.topAnchor),
+//                riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//                riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            ])
+//        }
+//    }
     
     func setupBuyButton(){
         buyButton.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +152,7 @@ class ShopItemVC: NSViewController {
         buyButton.isHidden = true
 
         buyButton.snp.makeConstraints { make in
-            make.top.equalTo(collectionViewContainer.snp.bottom)
+            make.top.equalTo(collectionViewContainer.snp.bottom).offset(20)
             make.centerX.equalTo(contentStack.snp.centerX)
             make.height.equalTo(50)
             make.width.equalTo(240)
@@ -171,6 +171,8 @@ class ShopItemVC: NSViewController {
             button.tag = index
             button.target = self
             button.action = #selector(sidebarButtonClicked(_:))
+            button.setAccessibilityLabel("\(item.text) Section")
+            button.setAccessibilityRole(.button)
             sidebar.addArrangedSubview(button)
             items.append(button)
         }
@@ -326,16 +328,16 @@ class ShopItemVC: NSViewController {
         default:
             break
         }
-        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
-        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
-        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
-        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
-        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
-        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
-        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
-        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
-        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
-        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
+//        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+//        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
+//        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+//        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+//        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+//        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+//        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+//        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+//        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
+//        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
         
         buyButton.isHidden = true
     }

@@ -143,6 +143,12 @@ class HomeVC: NSViewController {
         super.viewDidAppear()
         print("viewDidAppear")
         
+        if isShowPopover {
+            popover.close()
+            storeButton.updateColorBox(false)
+            isShowPopover.toggle()
+        }
+        
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
         observeTimer()

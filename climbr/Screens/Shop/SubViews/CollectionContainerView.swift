@@ -128,6 +128,10 @@ class CollectionContainerView: NSView {
     func updateItems(items: [EquipmentModel]) {
         equipmentCollections = items
         titleItems.setText("\(equipmentCollections[0].item.name)")
+        titleItems.setAccessibilityRole(.staticText)
+        titleItems.setAccessibilityTitle("\(equipmentCollections[0].item.name) Equipment")
+//        collectionView.setAccessibilityRole(.cell)
+//        collectionView.setAccessibilityLabel("\(equipmentCollections[0].item.name) Equipment")
         collectionView.reloadData()
     }
 }
@@ -140,6 +144,10 @@ extension CollectionContainerView: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GridItem"), for: indexPath) as! GridItem
         item.configure(equipmentModel: equipmentCollections[indexPath.item])
+        item.view.setAccessibilityElement(true)
+        item.view.setAccessibilityLabel("\(equipmentCollections[indexPath.item].item.name) Equipment is \(equipmentCollections[indexPath.item].isUnlocked ? "Item is Unlocked" : "Item is Locked")")
+        item.view.setAccessibilityRole(.cell)
+//        item.backgroundImageView.setAccessibilityTitle("\(equipmentCollections[indexPath.item].item.name)")
         return item
     }
     
