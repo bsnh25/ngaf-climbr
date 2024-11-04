@@ -9,196 +9,207 @@ import AppKit
 
 extension SettingVC {
     @objc
-    func actionCheckbox(){
-        let buttonState = checkboxButton.state
-        if buttonState == .on {
-            isChecked = true
+    func actionCheckbox(sender: NSButton) {
+        if sender.state == .on {
+            isLaunchAtLogin = true
         } else {
-            isChecked = false
+            isLaunchAtLogin = false
         }
     }
     
     @objc
-    func action30min(){
-        resetButtonColors()
-        min30.isSelected = true
-        min30.layer?.backgroundColor = NSColor.cButton.cgColor
-        min30.foregroundColorText = .white
-        print("\( min30.isSelected) : 30 choose")
-    }
-    
-    @objc
-    func action60min(){
-        resetButtonColors()
-        min60.isSelected = true
-        min60.layer?.backgroundColor = NSColor.cButton.cgColor
-        min60.foregroundColorText = .white
-        print("\( min60.isSelected) : 60 choose")
-    }
-    
-    @objc
-    func action90min(){
-        resetButtonColors()
-        min90.isSelected = true
-        min90.layer?.backgroundColor = NSColor.cButton.cgColor
-        min90.foregroundColorText = .white
-        print("\( min90.isSelected) : 90 choose")
-    }
-    
-    @objc
-    func action120min(){
-        resetButtonColors()
-        min120.isSelected = true
-        min120.layer?.backgroundColor = NSColor.cButton.cgColor
-        min120.foregroundColorText = .white
-        print("\( min120.isSelected) : 120 choose")
-    }
-    
-    func resetButtonColors() {
-        // Reset all buttons to gray
-        min30.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
-        min60.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
-        min90.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
-        min120.layer?.backgroundColor = NSColor.cContainerHome.cgColor.copy(alpha: 0.48)
+    func actionDifferentWorkHour(_ sender: NSButton) {
+        isFlexibleWorkHour = sender.state == .on
         
-        min30.foregroundColorText = .black
-        min60.foregroundColorText = .black
-        min90.foregroundColorText = .black
-        min120.foregroundColorText = .black
-        
-        min30.isSelected = false
-        min60.isSelected = false
-        min90.isSelected = false
-        min120.isSelected = false
-    
-    }
-    
-    @objc
-    func actionSave(){
-        ///get reminder value
-        ///get start working hour and end working hour
-        guard processSaveReminder() != 0, endTime.dateValue.timeIntervalSince(startTime.dateValue) >= 7200 else {
-            print("Date must greater than 2 hour or reminder has \(processSaveReminder()) value")
-            configureWarning()
-            return
+        if isFlexibleWorkHour {
+          daysButtonStack.unlockButton()
+          
+          workHourItemView.isHidden = true
+          preferenceStackView.isHidden = false
+          preferenceStack[0].isHidden = false
+          
+            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+            day.isEnabled = true
+            
+            workingHours.update(with: day)
+          }
+        } else{
+          daysButtonStack.lockButton()
+          preferenceStackView.isHidden = true
+          workHourItemView.isHidden = false
+          
+          preferenceStack.forEach { $0.isHidden = true }
+          
+          for item in workingHours {
+            var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+            
+            workingHours.update(with: data)
+          }
         }
-        let updateData = UserPreferenceModel(
-          launchAtLogin: isChecked,
-          reminderInterval: processSaveReminder(),
-          workingHours: workingHours
-        )
-        print("Reminder at \(processSaveReminder())")
-        print("diff time : \(endTime.dateValue.timeIntervalSince(startTime.dateValue))")
-        print("\(startTime.dateValue)")
-        
-        print("\(endTime.dateValue)")
-        ///get checkbox value
-        
-        
-        charService.updatePreferences(data: updateData)
-  
-        notifService.startOverlayScheduler(userPreference: updateData)
-        
+    }
+    
+    @objc
+    func actionReminderHandler(_ sender: CLPickerButton){
+      resetButtonColors()
+      sender.isSelected = true
+      sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+      sender.foregroundColorText = .white
+      nextButton.isEnabled = true
+      
+      print("\(sender.title) choose")
+      
+      intervalReminder = Int(sender.title)!
+    }
+    
+    @objc
+    func actSaveButton(){
+      
+      print("Flexible Working Hours: ", isFlexibleWorkHour)
+      
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm"
+      
+      if isFlexibleWorkHour {
+        for item in workingHours where item.isEnabled {
+          let day = Weekday(rawValue: item.day)!
+          print("\(day.fullName):", formatter.string(from: item.startHour), "to", formatter.string(from: item.endHour))
+        }
+      } else {
+        for item in workingHours {
+          let day = Weekday(rawValue: item.day)!
+          print("\(day.fullName): ", formatter.string(from: item.startHour), " to ", formatter.string(from: item.endHour))
+        }
+      }
+      
+      print("Reminder Interval: ", intervalReminder)
+      print("Launch At Login: ", isLaunchAtLogin)
+      
+      let data = UserPreferenceModel(
+        launchAtLogin: isLaunchAtLogin,
+        isFlexibleWorkHour: isFlexibleWorkHour,
+        reminderInterval: intervalReminder,
+        workingHours: Array(workingHours)
+      )
+      
+      UserManager.shared.savePreferences(data: data)
+      print("isi data preference: \(data)")
+      notifService.startOverlayScheduler(userPreference: data)
+      
+                
         self.dismiss(self)
     }
-    
-    func processSaveReminder() -> Int{
+}
+
+extension SettingVC: DaysButtonToUserPreferenceDelegate {
+    func didSundayTap(_ isSelected: Bool) {
+      preferenceStack[0].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+        day.isEnabled = isSelected
         
-        if min30.isSelected {
-            return 30
-        }else if min60.isSelected{
-            return 60
-        }else if min90.isSelected{
-            return 90
-        } else if min120.isSelected{
-            return 120
-        }else {
-            print("ERR: at setting (reminder)")
-            return 0
-        }
-    }
-    
-    @objc func startWorkHourChanged(_ sender: NSDatePicker) {
-        let calendar = Calendar.current
-        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
-        
-        if difference.minute == 120 && isTimeIncreased(from: lastStartValue, to: startTime.dateValue) {
-            // Start time increased and difference was 2 hours
-            updateStopWorkHour()
+        if !isSelected {
+          preferenceStack[0].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
         }
         
-        lastStartValue = startTime.dateValue
+        workingHours.update(with: day)
+      }
     }
     
-    @objc func stopWorkHourChanged(_ sender: NSDatePicker) {
-        let calendar = Calendar.current
-        let difference = calendar.dateComponents([.minute], from: lastStartValue, to: lastStopValue)
+    func didMondayTap(_ isSelected: Bool) {
+      preferenceStack[1].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+        day.isEnabled = isSelected
         
-        if handleSpecialCases(oldTime: lastStopValue, newTime: endTime.dateValue){
-            endTime.dateValue = lastStopValue
-            return
+        if !isSelected {
+          preferenceStack[1].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
         }
         
-        if difference.minute == 120 && isTimeDecreased(from: lastStopValue, to: endTime.dateValue) {
-            // Stop time decreased and difference was 2 hours
-            updateStartWorkHour()
+        workingHours.update(with: day)
+      }
+    }
+    
+    func didTuesdayTap(_ isSelected: Bool) {
+      preferenceStack[2].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[2].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
         }
         
-        lastStopValue = endTime.dateValue
+        workingHours.update(with: day)
+      }
     }
     
-    func updateStopWorkHour() {
-        let calendar = Calendar.current
-        let twoHours = DateComponents(hour: 2)
-        if let stopDate = calendar.date(byAdding: twoHours, to: startTime.dateValue) {
-            endTime.dateValue = stopDate
-            lastStopValue = stopDate
-        }
-    }
-    
-    func updateStartWorkHour() {
-        let calendar = Calendar.current
-        let minusTwoHours = DateComponents(hour: -2)
-        if let startDate = calendar.date(byAdding: minusTwoHours, to: endTime.dateValue) {
-            startTime.dateValue = startDate
-            lastStartValue = startDate
-        }
-    }
-    
-    func isTimeIncreased(from oldTime: Date, to newTime: Date) -> Bool {
-        let calendar = Calendar.current
-        let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
-        let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
+    func didWednesdayTap(_ isSelected: Bool) {
+      preferenceStack[3].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
+        day.isEnabled = isSelected
         
-        let oldMinutes = oldComponents.hour! * 60 + oldComponents.minute!
-        let newMinutes = newComponents.hour! * 60 + newComponents.minute!
-        
-        return (newMinutes - oldMinutes + 1440) % 1440 <= 720
-    }
-    
-    func isTimeDecreased(from oldTime: Date, to newTime: Date) -> Bool {
-        return !isTimeIncreased(from: oldTime, to: newTime)
-    }
-    
-    func handleSpecialCases(oldTime: Date, newTime: Date) -> Bool {
-            let calendar = Calendar.current
-            let oldComponents = calendar.dateComponents([.hour, .minute], from: oldTime)
-            let newComponents = calendar.dateComponents([.hour, .minute], from: newTime)
-            
-            let oldHour = oldComponents.hour!
-            let newHour = newComponents.hour!
-            
-            // Special case: from 23:00-23:59 to 00:00-00:59 (next day)
-            if oldHour == 23 && newHour == 3 {
-                return true
-            }
-            
-            // Special case: from 00:00-00:59 to 23:00-23:59 (same day)
-            if oldHour == 3 && newHour == 23 {
-                return false
-            }
-            
-            // No special case detected
-            return false
+        if !isSelected {
+          preferenceStack[3].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
         }
+        
+        workingHours.update(with: day)
+      }
+    }
+    
+    func didThursdayTap(_ isSelected: Bool) {
+      preferenceStack[4].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[4].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
+      }
+    }
+    
+    func didFridayTap(_ isSelected: Bool) {
+      preferenceStack[5].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[5].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
+      }
+    }
+    
+    func didSaturdayTap(_ isSelected: Bool) {
+      preferenceStack[6].isHidden = !isSelected
+      
+      if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
+        day.isEnabled = isSelected
+        
+        if !isSelected {
+          preferenceStack[6].reset()
+          day.startHour = initialStartWorkHour
+          day.endHour = initialEndWorkHour
+        }
+        
+        workingHours.update(with: day)
+      }
+    }
 }

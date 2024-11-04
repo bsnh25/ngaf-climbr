@@ -23,19 +23,20 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   var preferenceStack: [DayTimePreferenceView] = []
   
   let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
+  let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
   let mondayPreference = DayTimePreferenceView(dayName: "Monday")
   let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
   let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
   let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
   let fridayPreference = DayTimePreferenceView(dayName: "Friday")
   let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
-  let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
+  
   
   let daysButtonStack = DaysButtonStackView()
   
   let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
   
-  let reminderLabel = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+  let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
   
   let reminder30MinutesButton = CLPickerButton(
     title: "30",
@@ -81,13 +82,13 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   }()
   
   lazy var workingHours: Set<WorkingHour> = [
+    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.wednesday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.thursday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.friday.rawValue),
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
-    WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
   ]
   
   var isLaunchAtLogin: Bool = false
@@ -257,7 +258,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     let minutesLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .regular, contentLabel: "Minutes")
     
     let componentStack: NSStackView = NSStackView(views: [ everyLabel, reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton, minutesLabel ])
-    componentStack.spacing = 16
+    componentStack.spacing = 14
     componentStack.alignment = .leading
     componentStack.orientation = .horizontal
     
@@ -268,7 +269,8 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     reminderStack.snp.makeConstraints { make in
       make.top.equalTo(workHoursStack.snp.bottom).offset(28)
-      make.leading.trailing.equalTo(workHoursStack)
+        make.leading.equalTo(workHoursStack.snp.leading)
+        make.trailing.equalTo(workHoursStack.snp.trailing)
     }
   }
   
@@ -276,7 +278,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   func configureDifferentWorkHours(){
     
     let attributes: [NSAttributedString.Key: Any] = [
-      .font: NSFont.systemFont(ofSize: 22, weight: .bold),
+      .font: NSFont.systemFont(ofSize: 17, weight: .bold),
       .foregroundColor: NSColor.black
     ]
     
@@ -285,7 +287,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     
     // Set the content tint color (optional, depending on what you want to achieve)
-    differentWorkHoursCheckbox.contentTintColor = .white
+      differentWorkHoursCheckbox.contentTintColor = .blue
     
     differentWorkHoursCheckbox.target = self
     differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
@@ -315,22 +317,19 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   func configureDifferentWorkHoursStackView(){
     let divider = Divider()
     preferenceStack = [
-      
-      sundayPreference,
-      //        Divider(),
+        sundayPreference,
+//              Divider(),
       mondayPreference,
-      //        Divider(),
+//              Divider(),
       tuesdayPreference,
-      //        Divider(),
+//              Divider(),
       wednesdayPreference,
-      //        Divider(),
+//              Divider(),
       thursdayPreference,
-      //        Divider(),
+//              Divider(),
       fridayPreference,
-      //        Divider(),
+//              Divider(),
       saturdayPreference,
-      //        Divider(),
-      //        Divider(),
     ]
     
     preferenceStackView.isHidden = true
@@ -342,7 +341,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     preferenceStackView.distribution = .fillEqually
     
     for item in preferenceStack {
-      item.isHidden = item.day != "Monday"
+      item.isHidden = item.day != "Sunday"
       item.initialStartValue = initialStartWorkHour
       item.initialEndValue = initialEndWorkHour
       item.snp.makeConstraints{item in
@@ -350,6 +349,21 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       }
       
     }
+      
+      sundayPreference.onValueChanged = { [weak self] start, end in
+        guard let self else { return }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
+        
+        if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
+          day.startHour = start
+          day.endHour = end
+          
+          workingHours.update(with: day)
+        }
+      }
     
     mondayPreference.onValueChanged = { [weak self] start, end in
       guard let self else { return }
@@ -441,20 +455,6 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       }
     }
     
-    sundayPreference.onValueChanged = { [weak self] start, end in
-      guard let self else { return }
-      
-      let formatter = DateFormatter()
-      formatter.dateFormat = "HH:mm"
-      print("Sunday: ", formatter.string(from: start), " to ", formatter.string(from: end))
-      
-      if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
-        day.startHour = start
-        day.endHour = end
-        
-        workingHours.update(with: day)
-      }
-    }
     
   }
   
@@ -462,7 +462,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     view.addSubview(launchAtLoginChecBox)
     
     let attributes: [NSAttributedString.Key: Any] = [
-      .font: NSFont.systemFont(ofSize: 22, weight: .bold),
+      .font: NSFont.systemFont(ofSize: 17, weight: .bold),
       .foregroundColor: NSColor.black
     ]
     

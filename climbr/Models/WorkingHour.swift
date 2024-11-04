@@ -8,37 +8,38 @@
 import Foundation
 
 enum Weekday: Int, CaseIterable {
+  case sunday
   case monday
   case tuesday
   case wednesday
   case thursday
   case friday
   case saturday
-  case sunday
+  
   
   var fullName: String {
     switch self {
-      
+        
+    case .sunday: "Sunday"
     case .monday: "Monday"
     case .tuesday: "Tuesday"
     case .wednesday: "Wednesday"
     case .thursday: "Thursday"
     case .friday: "Friday"
     case .saturday: "Saturday"
-    case .sunday: "Sunday"
     }
   }
   
   var abbreviatedName: String {
     switch self {
       
+    case .sunday: "Sun"
     case .monday: "Mon"
     case .tuesday: "Tue"
     case .wednesday: "Wed"
     case .thursday: "Thu"
     case .friday: "Fri"
     case .saturday: "Sat"
-    case .sunday: "Sun"
     }
   }
 }
