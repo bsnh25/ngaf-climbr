@@ -69,6 +69,10 @@ class HomeVC: NSViewController {
     let popover = NSPopover()
     var isShowPopover: Bool = false
     
+    let popoverStreak = NSPopover()
+    var isShowPopoverStreak: Bool = false
+    let iconStreak = CLSFSymbol(symbolName: "flame.fill", description: "Streak")
+    
     var riveView = RiveView()
     var audioService: AudioService?
     var charService: CharacterService = UserManager.shared
@@ -365,9 +369,8 @@ class HomeVC: NSViewController {
     
     func setupStreakLabel() {
         
-        let icon = CLSFSymbol(symbolName: "flame.fill", description: "Streak")
-        icon.setConfiguration(size: 22, weight: .bold)
-        icon.contentTintColor = .black
+        iconStreak.setConfiguration(size: 22, weight: .bold)
+        iconStreak.contentTintColor = .black
         
         streak.backgroundColor = .clear
         streak.setTextColor(.black)
@@ -375,7 +378,7 @@ class HomeVC: NSViewController {
         
         streakView.wantsLayer = true
         
-        streakView.setViews([icon, streak], in: .center)
+        streakView.setViews([iconStreak, streak], in: .center)
         streakView.translatesAutoresizingMaskIntoConstraints = false
         streakView.orientation = .horizontal
         streakView.alignment = .centerY
@@ -390,8 +393,8 @@ class HomeVC: NSViewController {
         
         view.addSubview(streakView)
         
-        let blur = CLBlurEffectView(frame: streakView.bounds)
-        streakView.addSubview(blur, positioned: .below, relativeTo: nil)
+//        let blur = CLBlurEffectView(frame: streakView.bounds)
+//        streakView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
             streakView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: 10),
@@ -399,6 +402,10 @@ class HomeVC: NSViewController {
             streakView.widthAnchor.constraint(equalToConstant: 100),
             streakView.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+        // Menambahkan NSClickGestureRecognizer
+        let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(actionStreak))
+        streakView.addGestureRecognizer(clickGesture)
     }
     
     
