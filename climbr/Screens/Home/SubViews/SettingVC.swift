@@ -239,6 +239,7 @@ class SettingVC: NSViewController {
                         if let dayPreference = getDayPreference(for: dayIndex) {
                             // Enable the button for the corresponding day
                             let button = daysButtonStack.daysButtonStack[dayIndex]
+                            button.isSelected = true
                             button.isEnabled = true
                             button.layer?.backgroundColor = NSColor.cNewButton.cgColor
                             button.foregroundColorText = .white
@@ -317,6 +318,7 @@ class SettingVC: NSViewController {
                 self.workingHours.update(with: data)
             }
             
+            self.nextButton.isEnabled = true
         }
         
         workHourItemView.snp.makeConstraints{item in
@@ -369,6 +371,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            
+            self.nextButton.isEnabled = true
         }
         
         mondayPreference.onValueChanged = { [weak self] start, end in
@@ -384,6 +388,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            
+            self.nextButton.isEnabled = true
         }
         
         tuesdayPreference.onValueChanged = { [weak self] start, end in
@@ -399,6 +405,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            
+            self.nextButton.isEnabled = true
         }
         
         wednesdayPreference.onValueChanged = { [weak self] start, end in
@@ -414,6 +422,7 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
         
         thursdayPreference.onValueChanged = { [weak self] start, end in
@@ -429,6 +438,7 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
         
         fridayPreference.onValueChanged = { [weak self] start, end in
@@ -444,6 +454,7 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
         
         saturdayPreference.onValueChanged = { [weak self] start, end in
@@ -459,9 +470,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
-        
-        
     }
     
     private func configureReminderStack() {

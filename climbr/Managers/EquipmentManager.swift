@@ -19,31 +19,28 @@ class EquipmentManager: EquipmentService {
     func seedDatabase() {
         guard let container else { return }
         
-        var items: [EquipmentModel] = []
-        items.append(contentsOf: EquipmentModel.headGears)
-        items.append(contentsOf: EquipmentModel.backPacks)
-        items.append(contentsOf: EquipmentModel.hikingSticks)
-        items.append(contentsOf: EquipmentModel.locations)
-        
-        items.forEach { equipment in
-            let data = Equipment(context: container)
-            data.id         = Int64(equipment.item.itemID)
-            data.type       = equipment.type.rawValue
-            data.name       = equipment.item.rawValue
-            data.isUnlocked = equipment.isUnlocked
-            data.image      = equipment.item.image
-            data.price      = Int64(equipment.item.price)
+        // Make sure previous data not exist
+        guard getEquipments(equipmentType: .back).isEmpty else {
+            return
         }
-        
-        /// Create get equipment req
-        let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         
         do {
             
-            let items = try container.fetch(request)
+            var items: [EquipmentModel] = []
+            items.append(contentsOf: EquipmentModel.headGears)
+            items.append(contentsOf: EquipmentModel.backPacks)
+            items.append(contentsOf: EquipmentModel.hikingSticks)
+            items.append(contentsOf: EquipmentModel.locations)
             
-            /// Cancel database seeding if data is exist
-            if !items.isEmpty { return }
+            items.forEach { equipment in
+                let data = Equipment(context: container)
+                data.id         = Int64(equipment.item.itemID)
+                data.type       = equipment.type.rawValue
+                data.name       = equipment.item.rawValue
+                data.isUnlocked = equipment.isUnlocked
+                data.image      = equipment.item.image
+                data.price      = Int64(equipment.item.price)
+            }
             
             try container.save()
             print("Success")
@@ -84,8 +81,8 @@ class EquipmentManager: EquipmentService {
         
         guard let equipment = fetchEquipment(byID: data.rawValue , context: container) else {
             print("No equipment found with ID \(data.itemID)")
-             return
-         }
+            return
+        }
         
         do {
             equipment.isUnlocked = true
@@ -123,11 +120,11 @@ class EquipmentManager: EquipmentService {
         }
     }
     
-//    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
-//        self.currentHead = head
-//        self.currentHand = hand
-//        self.currentBack = back
-//        self.currentLocation = location
-//    }
-
+    //    func updateCurrentItem(head: EquipmentItem, hand: EquipmentItem, back: EquipmentItem, location: EquipmentItem){
+    //        self.currentHead = head
+    //        self.currentHand = hand
+    //        self.currentBack = back
+    //        self.currentLocation = location
+    //    }
+    
 }
