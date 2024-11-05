@@ -108,7 +108,7 @@ extension UserPreferenceVC{
       preferenceStack.forEach { $0.isHidden = true }
       
       for item in workingHours {
-        var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+        let data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
         
         workingHours.update(with: data)
       }
