@@ -194,7 +194,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
         
         print("gender pal user is : \(String(describing: gender))")
         
-        let userData = CharacterModel(name: textField.stringValue, gender: gender, point:1000)
+        let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
         charService.saveCharacterData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
         
