@@ -52,12 +52,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     // Cek jika launchAtLogin bernilai true
     if let preferences = userPreference {
-        notifService.startOverlayScheduler(userPreference: preferences)
       if preferences.launchAtLogin {
         enableHelperAppLaunchAtLogin(true)
       } else {
         enableHelperAppLaunchAtLogin(false)
       }
+        notifService.startOverlayScheduler(userPreference: preferences)
     }
     
     mainWindow = MainWindow()
