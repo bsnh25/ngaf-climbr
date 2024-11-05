@@ -239,6 +239,7 @@ class SettingVC: NSViewController {
                         if let dayPreference = getDayPreference(for: dayIndex) {
                             // Enable the button for the corresponding day
                             let button = daysButtonStack.daysButtonStack[dayIndex]
+                            button.isSelected = true
                             button.isEnabled = true
                             button.layer?.backgroundColor = NSColor.cNewButton.cgColor
                             button.foregroundColorText = .white
