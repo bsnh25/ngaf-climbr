@@ -317,6 +317,7 @@ class SettingVC: NSViewController {
                 self.workingHours.update(with: data)
             }
             
+            self.nextButton.isEnabled = true
         }
         
         workHourItemView.snp.makeConstraints{item in
@@ -369,6 +370,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            
+            self.nextButton.isEnabled = true
         }
         
         mondayPreference.onValueChanged = { [weak self] start, end in
@@ -384,6 +387,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            
+            self.nextButton.isEnabled = true
         }
         
         tuesdayPreference.onValueChanged = { [weak self] start, end in
@@ -399,6 +404,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            
+            self.nextButton.isEnabled = true
         }
         
         wednesdayPreference.onValueChanged = { [weak self] start, end in
@@ -414,6 +421,7 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
         
         thursdayPreference.onValueChanged = { [weak self] start, end in
@@ -429,6 +437,7 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
         
         fridayPreference.onValueChanged = { [weak self] start, end in
@@ -444,6 +453,7 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
         
         saturdayPreference.onValueChanged = { [weak self] start, end in
@@ -459,9 +469,8 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+            self.nextButton.isEnabled = true
         }
-        
-        
     }
     
     private func configureReminderStack() {

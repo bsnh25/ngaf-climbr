@@ -63,7 +63,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     fontText: .boldSystemFont(ofSize: 17)
   )
   
-  let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+  let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Climbr on startup", target: nil, action: #selector(actionCheckbox))
   
   let nextButton = CLTextButtonV2(title: "Next", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
   
@@ -91,7 +91,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
   ]
   
-  var isLaunchAtLogin: Bool = false
+  var isLaunchAtLogin: Bool = true
   var isFlexibleWorkHour: Bool = false
   var intervalReminder: Int = 0
   
@@ -471,7 +471,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     
     // Set the content tint color (optional, depending on what you want to achieve)
     launchAtLoginChecBox.contentTintColor = .blue
-    launchAtLoginChecBox.state = .off
+    launchAtLoginChecBox.state = .on
     launchAtLoginChecBox.target = self
     launchAtLoginChecBox.action = #selector(actionCheckbox)
     
