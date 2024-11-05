@@ -7,6 +7,7 @@
 
 import Cocoa
 import Swinject
+import RiveRuntime
 import SnapKit
 
 class UserPreferenceVC: NSViewController, NSStackViewDelegate {
@@ -14,11 +15,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   private lazy var workHoursStack: NSStackView = NSStackView()
   private lazy var reminderStack: NSStackView = NSStackView()
   
-  let bgContainer = NSView()
+//  let bgContainer = NSView()
   let warnContainer = NSView()
   let boxContainer = NSView()
-  let pathImage = NSImageView(image: .onboardingmountain)
-  let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
+//  let pathImage = NSImageView(image: .onboardingmountain)
+//  let appLogoImage = NSImageView(image: NSImage(resource: .appLogoWhite))
   let preferenceStackView = NSStackView()
   var preferenceStack: [DayTimePreferenceView] = []
   
@@ -98,12 +99,21 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   var charService: CharacterService = UserManager.shared
   var notifService: NotificationService = NotificationManager.shared
   
+  private lazy var animationMain : RiveViewModel = {
+    var anima: RiveViewModel = RiveViewModel(fileName: "splash_screen")
+    anima.fit = .cover
+    
+    // Set background input to 1 (for onboarding)
+    let background: Double = 1
+    anima.setInput("background", value: background)
+    
+    return anima
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     configureBgContainer()
-    configureImagePath()
-    configureAppLogo()
     configureBoxContainer()
     configureDifferentWorkHours()
     configureWorkHourItemView()
@@ -122,17 +132,25 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   }
   
   func configureBgContainer(){
-    view.addSubview(bgContainer)
-    bgContainer.wantsLayer = true
-    bgContainer.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
-    bgContainer.translatesAutoresizingMaskIntoConstraints = false
     
-    NSLayoutConstraint.activate([
-      bgContainer.topAnchor.constraint(equalTo: view.topAnchor),
-      bgContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      bgContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      bgContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    ])
+    let riveView = animationMain.createRiveView()
+    
+    view.addSubview(riveView)
+    
+    riveView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+//    view.addSubview(bgContainer)
+//    bgContainer.wantsLayer = true
+//    bgContainer.layer?.backgroundColor = NSColor.onboardingBackground.cgColor
+//    bgContainer.translatesAutoresizingMaskIntoConstraints = false
+//    
+//    NSLayoutConstraint.activate([
+//      bgContainer.topAnchor.constraint(equalTo: view.topAnchor),
+//      bgContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//      bgContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//      bgContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//    ])
   }
   
   //    func configureWarning(){
@@ -168,33 +186,33 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   //        ])
   //    }
   
-  func configureImagePath(){
-    view.addSubview(pathImage)
-    pathImage.wantsLayer = true
-    pathImage.translatesAutoresizingMaskIntoConstraints = false
-    
-    let padding = CGFloat(-1 * (view.bounds.width * 0.15))
-    
-    NSLayoutConstraint.activate([
-      pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: padding),
-      pathImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-    ])
-  }
-  
-  func configureAppLogo(){
-    view.addSubview(appLogoImage)
-    appLogoImage.translatesAutoresizingMaskIntoConstraints = false
-    
-    let width = CGFloat(1 * (view.frame.width * 0.475))
-    print("width adalah: \(width)")
-    
-    NSLayoutConstraint.activate([
-      appLogoImage.widthAnchor.constraint(equalToConstant: width),
-      appLogoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 147),
-      appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-    ])
-    
-  }
+//  func configureImagePath(){
+//    view.addSubview(pathImage)
+//    pathImage.wantsLayer = true
+//    pathImage.translatesAutoresizingMaskIntoConstraints = false
+//    
+//    let padding = CGFloat(-1 * (view.bounds.width * 0.15))
+//    
+//    NSLayoutConstraint.activate([
+//      pathImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: padding),
+//      pathImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//    ])
+//  }
+//  
+//  func configureAppLogo(){
+//    view.addSubview(appLogoImage)
+//    appLogoImage.translatesAutoresizingMaskIntoConstraints = false
+//    
+//    let width = CGFloat(1 * (view.frame.width * 0.475))
+//    print("width adalah: \(width)")
+//    
+//    NSLayoutConstraint.activate([
+//      appLogoImage.widthAnchor.constraint(equalToConstant: width),
+//      appLogoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 147),
+//      appLogoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//    ])
+//    
+//  }
   
   func configureBoxContainer(){
     view.addSubview(boxContainer)
