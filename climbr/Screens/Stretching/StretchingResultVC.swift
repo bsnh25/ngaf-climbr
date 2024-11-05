@@ -13,7 +13,7 @@ class StretchingResultVC: NSViewController {
     let neckProgress            = ProgressUserView(valueProgress: "0/2", typeStretch: "Neck")
     let armProgress             = ProgressUserView(valueProgress: "0/2", typeStretch: "Shoulder")
     let backProgress            = ProgressUserView(valueProgress: "0/2", typeStretch: "Lower Back")
-    let cointEarning            = ProgressUserView(valueProgress: "🪙 50", typeStretch: "Coins")
+    let cointEarning            = ProgressUserView(valueProgress: "🪙 0", typeStretch: "Coins")
     let greetingLabel           = CLLabel(fontSize: 36, fontWeight: .heavy)
     let stretchingDurationLabel = CLLabel(fontSize: 28, fontWeight: .bold)
     let rewardPointLabel        = CLLabel(fontSize: 28, fontWeight: .bold)
