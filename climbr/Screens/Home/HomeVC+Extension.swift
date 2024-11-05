@@ -55,6 +55,53 @@ extension HomeVC {
     }
     
     @objc
+    func actionStreak(){
+        
+        let vc = StreakVC()
+        
+        if !isShowPopoverStreak {
+            updateColorStreak(true)
+            //             Configure popover
+            popoverStreak.contentViewController = vc
+            
+            print("VC frame size sblm:", vc.view.frame.size)
+            // Show popover anchored to the store button
+            popoverStreak.show(relativeTo: streakView.bounds, of: streakView, preferredEdge: .minY)
+            print("Popover size sblm:", popoverStreak.contentSize)
+            vc.view.frame.size = NSSize(width: 380, height: 600)
+            //            vc.preferredContentSize = NSSize(width: 400, height: 400)
+            popoverStreak.contentSize = NSSize(width: vc.view.frame.width, height: vc.view.frame.height)
+            popoverStreak.behavior = .applicationDefined
+            popoverStreak.appearance = .none
+            popoverStreak.animates = true
+            
+            print("Popover size:", popoverStreak.contentSize)
+            print("VC frame size:", vc.view.frame.size)
+            print("Popover visible:", popoverStreak.isShown)
+            
+        } else if isShowPopoverStreak {
+            popoverStreak.close()
+            updateColorStreak(false)
+        }
+        
+        isShowPopoverStreak.toggle()
+    }
+    
+    func updateColorStreak(_ value: Bool){
+        if value {
+            streakView.layer?.backgroundColor = NSColor.cButton.cgColor
+            iconStreak.contentTintColor = .white
+            streak.backgroundColor = .clear
+            streak.setTextColor(.white)
+        } else {
+            streakView.layer?.backgroundColor = .white.copy(alpha: 0.7)
+            iconStreak.contentTintColor = .black
+            streak.backgroundColor = .clear
+            streak.setTextColor(.black)
+        }
+    }
+    
+    @objc
     func actionStartSession(){
         if let vc = Container.shared.resolve(StretchingVC.self) {
             
