@@ -89,7 +89,7 @@ class DayTimePreferenceView: NSStackView {
       
         startWorkPicker.setAccessibilityElement(true)
         startWorkPicker.setAccessibilityTitle("Start Work Hour Picker")
-        startWorkPicker.setAccessibilityLabel("Adjust your work hours based on your preference")
+        startWorkPicker.setAccessibilityLabel("Adjust your start work hours based on your preference")
       
         // Set the minimum date (00:00)
         var minComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
@@ -114,8 +114,8 @@ class DayTimePreferenceView: NSStackView {
         endWorkPicker.datePickerElements = [.hourMinute]
       
         endWorkPicker.setAccessibilityElement(true)
-        endWorkPicker.setAccessibilityTitle("Start Work Hour Picker")
-        endWorkPicker.setAccessibilityLabel("Adjust your work hours based on your preference")
+        endWorkPicker.setAccessibilityTitle("End Work Hour Picker")
+        endWorkPicker.setAccessibilityLabel("Adjust your end work hours based on your preference")
         
         endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
         endWorkPicker.dateValue = (initialStartValue ?? currentStartWorkHour).addingTimeInterval(2 * 60 * 60)
