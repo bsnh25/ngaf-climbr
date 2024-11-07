@@ -165,6 +165,10 @@ class HomeVC: NSViewController {
             return
         }
         
+        DispatchQueue.main.async {
+            self.updateProgressData()
+            self.observeNotif()
+        }
     }
     
     private func previewAnimaConfig(){
