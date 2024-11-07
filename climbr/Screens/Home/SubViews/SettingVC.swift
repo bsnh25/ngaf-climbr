@@ -14,34 +14,34 @@ class SettingVC: NSViewController {
     private lazy var workHoursStack: NSStackView = NSStackView()
     private lazy var reminderStack: NSStackView = NSStackView()
     
-    let settingText = CLTextLabelV2(
+    internal let settingText = CLTextLabelV2(
         sizeOfFont: 22,
         weightOfFont: .bold,
         contentLabel: "User Preference"
     )
-    let subTitleA = CLTextLabelV2(
+    internal let subTitleA = CLTextLabelV2(
         sizeOfFont: 17,
         weightOfFont: .bold,
         contentLabel: "Your Work Days"
     )
     
-    let preferenceStackView = NSStackView()
-    let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
-    let daysButtonStack = DaysButtonStackView()
-    let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
-    let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
-    let mondayPreference = DayTimePreferenceView(dayName: "Monday")
-    let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
-    let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
-    let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
-    let fridayPreference = DayTimePreferenceView(dayName: "Friday")
-    let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
+    internal let preferenceStackView = NSStackView()
+    internal let differentWorkHoursCheckbox = NSButton(checkboxWithTitle: "I have different daily work hours", target: nil, action: #selector(actionDifferentWorkHour))
+    internal let daysButtonStack = DaysButtonStackView()
+    internal let workHourItemView = DayTimePreferenceView(dayName: "Work Hours")
+    internal let sundayPreference = DayTimePreferenceView(dayName: "Sunday")
+    internal let mondayPreference = DayTimePreferenceView(dayName: "Monday")
+    internal let tuesdayPreference = DayTimePreferenceView(dayName: "Tuesday")
+    internal let wednesdayPreference = DayTimePreferenceView(dayName: "Wednesday")
+    internal let thursdayPreference = DayTimePreferenceView(dayName: "Thursday")
+    internal let fridayPreference = DayTimePreferenceView(dayName: "Friday")
+    internal let saturdayPreference = DayTimePreferenceView(dayName: "Saturday")
     
-    var preferenceStack: [DayTimePreferenceView] = []
-    var isFlexibleWorkHour: Bool = false
+    internal var preferenceStack: [DayTimePreferenceView] = []
+    internal var isFlexibleWorkHour: Bool = false
     
     
-    lazy var initialStartWorkHour: Date = {
+    internal lazy var initialStartWorkHour: Date = {
         let calendar = Calendar.current
         
         var components = calendar.dateComponents([.hour, .minute], from: Date())
@@ -51,11 +51,11 @@ class SettingVC: NSViewController {
         return calendar.date(from: components)!
     }()
     
-    lazy var initialEndWorkHour: Date = {
+    internal lazy var initialEndWorkHour: Date = {
         initialStartWorkHour.addingTimeInterval(2 * 60 * 60)
     }()
     
-    lazy var workingHours: Set<WorkingHour> = [
+    internal lazy var workingHours: Set<WorkingHour> = [
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
@@ -65,68 +65,68 @@ class SettingVC: NSViewController {
         WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
     ]
     
-    let reminder30MinutesButton = CLPickerButton(
+    internal let reminder30MinutesButton = CLPickerButton(
         title: "30",
         backgroundColor: .white.withAlphaComponent(0.5),
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
-    let reminder60MinutesButton = CLPickerButton(
+    internal let reminder60MinutesButton = CLPickerButton(
         title: "60",
         backgroundColor: .white.withAlphaComponent(0.5),
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
-    let reminder90MinutesButton = CLPickerButton(
+    internal let reminder90MinutesButton = CLPickerButton(
         title: "90",
         backgroundColor: .white.withAlphaComponent(0.5),
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
-    let reminder120MinutesButton = CLPickerButton(
+    internal let reminder120MinutesButton = CLPickerButton(
         title: "120",
         backgroundColor: .white.withAlphaComponent(0.5),
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
-    var intervalReminder: Int = 0
-    let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
-    var isLaunchAtLogin: Bool = false
-    @Published var isPreferenceEdited: Bool = false
+    internal var intervalReminder: Int = 0
+    internal let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
+    internal var isLaunchAtLogin: Bool = false
+    @Published internal var isPreferenceEdited: Bool = false
   
-    var bag: AnyCancellable?
+    internal var bag: AnyCancellable?
   
-    let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
+    internal let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
     
     
-    let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
+    internal let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
     
-    let fromText = CLTextLabelV2(
+    internal let fromText = CLTextLabelV2(
         sizeOfFont: 17,
         weightOfFont: .regular,
         contentLabel: "From"
     )
     
-    let everyText = CLTextLabelV2(
+    internal let everyText = CLTextLabelV2(
         sizeOfFont: 17,
         weightOfFont: .regular,
         contentLabel: "Every"
     )
     
-    let minutesText = CLTextLabelV2(
+    internal let minutesText = CLTextLabelV2(
         sizeOfFont: 17,
         weightOfFont: .regular,
         contentLabel: "minutes"
     )
     
     
-    let warnContainer = NSView()
-    let warnLabel = CLTextLabelV2(sizeOfFont: 14, weightOfFont: .light, contentLabel: "􀇾 Can’t be less than 2 (two) hours")
+    internal let warnContainer = NSView()
+    internal let warnLabel = CLTextLabelV2(sizeOfFont: 14, weightOfFont: .light, contentLabel: "􀇾 Can’t be less than 2 (two) hours")
     
     
-    var notifService: NotificationService = NotificationManager.shared
-    var charService: CharacterService = UserManager.shared
-    var userPreferenceData: UserPreferenceModel?
+    internal var notifService: NotificationService = NotificationManager.shared
+    internal var charService: CharacterService = UserManager.shared
+    internal var userPreferenceData: UserPreferenceModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()

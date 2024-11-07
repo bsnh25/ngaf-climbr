@@ -9,7 +9,7 @@ import AppKit
 
 extension SettingVC {
     @objc
-    func actionCheckbox(sender: NSButton) {
+    internal func actionCheckbox(sender: NSButton) {
         isPreferenceEdited = true
       
         if sender.state == .on {
@@ -23,7 +23,7 @@ extension SettingVC {
     }
     
     @objc
-    func actionDifferentWorkHour(_ sender: NSButton) {
+    internal func actionDifferentWorkHour(_ sender: NSButton) {
         isFlexibleWorkHour = sender.state == .on
           
         isPreferenceEdited = true
@@ -56,7 +56,7 @@ extension SettingVC {
     }
     
     @objc
-    func actionReminderHandler(_ sender: CLPickerButton){
+    internal func actionReminderHandler(_ sender: CLPickerButton){
       resetButtonColors()
       sender.isSelected = true
       sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
@@ -70,7 +70,7 @@ extension SettingVC {
     }
     
     @objc
-    func actSaveButton(){
+    internal func actSaveButton(){
       
       print("Flexible Working Hours: ", isFlexibleWorkHour)
       
