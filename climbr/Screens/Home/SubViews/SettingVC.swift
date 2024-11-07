@@ -7,30 +7,7 @@
 
 import AppKit
 import SnapKit
-
-
-//class SettingWC: NSWindowController {
-//
-//    init(contentVC: NSViewController) {
-//        let window = NSWindow(contentViewController: contentVC)
-//        window.titleVisibility = .visible
-//        window.styleMask.remove(.titled)
-//        window.styleMask.remove(.miniaturizable)
-//        window.styleMask.remove(.resizable)
-//        window.styleMask.insert(.closable)
-//
-//        super.init(window: window)
-//
-//        window.level = .modalPanel
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
-
-
-
+import Combine
 
 class SettingVC: NSViewController {
     
@@ -115,7 +92,11 @@ class SettingVC: NSViewController {
     var intervalReminder: Int = 0
     let launchAtLoginChecBox = NSButton(checkboxWithTitle: "Launch Limbr on startup", target: nil, action: #selector(actionCheckbox))
     var isLaunchAtLogin: Bool = false
-    let nextButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
+    @Published var isPreferenceEdited: Bool = false
+  
+    var bag: AnyCancellable?
+  
+    let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
     
     
     let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
@@ -154,6 +135,11 @@ class SettingVC: NSViewController {
         
         userPreferenceData = charService.getPreferences()
         configure()
+      
+        bag = $isPreferenceEdited.sink { [weak self] isEdited in
+          guard let self else { return }
+          self.saveButton.isEnabled = isEdited
+        }
         
     }
     
@@ -171,6 +157,10 @@ class SettingVC: NSViewController {
             window.styleMask.remove(.resizable)
         }
     }
+  
+    override func viewDidDisappear() {
+      bag?.cancel()
+    }
     
     func configure(){
         configureSettingTitle()
@@ -181,7 +171,7 @@ class SettingVC: NSViewController {
         configureWorkHoursStack()
         configureReminderStack()
         configureLaunchAtLoginCheckBox()
-        configureNextButton()
+        configureSaveButton()
         
         daysButtonStack.daysButtonDelegate = self
     }
@@ -319,7 +309,9 @@ class SettingVC: NSViewController {
     }
     
     func configureWorkHourItemView(){
-        workHourItemView.onValueChanged = { start, end in
+        workHourItemView.onValueChanged = { [weak self] start, end in
+          
+            guard let self else { return }
             
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
@@ -331,7 +323,7 @@ class SettingVC: NSViewController {
                 self.workingHours.update(with: data)
             }
             
-            self.nextButton.isEnabled = true
+            self.isPreferenceEdited = true
         }
         
         workHourItemView.snp.makeConstraints{item in
@@ -341,7 +333,6 @@ class SettingVC: NSViewController {
     }
     
     func configureDifferentWorkHoursStackView(){
-        let divider = Divider()
         preferenceStack = [
             sundayPreference,
             mondayPreference,
@@ -384,8 +375,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
-            
-            self.nextButton.isEnabled = true
+          
+          self.isPreferenceEdited = true
+          
         }
         
         mondayPreference.onValueChanged = { [weak self] start, end in
@@ -401,8 +393,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+          
+          self.isPreferenceEdited = true
             
-            self.nextButton.isEnabled = true
         }
         
         tuesdayPreference.onValueChanged = { [weak self] start, end in
@@ -418,8 +411,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
+          
+          self.isPreferenceEdited = true
             
-            self.nextButton.isEnabled = true
         }
         
         wednesdayPreference.onValueChanged = { [weak self] start, end in
@@ -435,7 +429,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
-            self.nextButton.isEnabled = true
+          
+          self.isPreferenceEdited = true
+          
         }
         
         thursdayPreference.onValueChanged = { [weak self] start, end in
@@ -451,7 +447,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
-            self.nextButton.isEnabled = true
+          
+          self.isPreferenceEdited = true
+          
         }
         
         fridayPreference.onValueChanged = { [weak self] start, end in
@@ -467,7 +465,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
-            self.nextButton.isEnabled = true
+          
+          self.isPreferenceEdited = true
+          
         }
         
         saturdayPreference.onValueChanged = { [weak self] start, end in
@@ -483,7 +483,9 @@ class SettingVC: NSViewController {
             
             workingHours.update(with: day)
           }
-            self.nextButton.isEnabled = true
+          
+          self.isPreferenceEdited = true
+          
         }
     }
     
@@ -514,8 +516,11 @@ class SettingVC: NSViewController {
             if let index = intervals.firstIndex(of: interval) {
                 let correspondingButton = buttons[index]
                 
+              correspondingButton.isSelected = true
+              correspondingButton.layer?.backgroundColor = NSColor.cNewButton.cgColor
+              correspondingButton.foregroundColorText = .white
                 // Programmatically trigger the action as if the user pressed the button
-                actionReminderHandler(correspondingButton)
+//                actionReminderHandler(correspondingButton)
             }
         }
         
@@ -596,19 +601,20 @@ class SettingVC: NSViewController {
         
     }
     
-    func configureNextButton(){
-        view.addSubview(nextButton)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.isEnabled = false
-        nextButton.target = self
-        nextButton.action = #selector(actSaveButton)
+    func configureSaveButton(){
+        view.addSubview(saveButton)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.isEnabled = false
+        saveButton.target = self
+        saveButton.action = #selector(actSaveButton)
+      saveButton.isEnabled = false
         
-        nextButton.setAccessibilityElement(true)
-        nextButton.setAccessibilityTitle("\(nextButton.title)")
-        nextButton.setAccessibilityLabel("Save your preference and go to ")
-        nextButton.setAccessibilityRole(.button)
+        saveButton.setAccessibilityElement(true)
+        saveButton.setAccessibilityTitle("\(saveButton.title)")
+        saveButton.setAccessibilityLabel("Save your preference and go to ")
+        saveButton.setAccessibilityRole(.button)
         
-        nextButton.snp.makeConstraints {next in
+        saveButton.snp.makeConstraints {next in
             next.trailing.equalTo(launchAtLoginChecBox)
             next.bottom.equalToSuperview().inset(16.67)
             next.width.equalTo(88.34)

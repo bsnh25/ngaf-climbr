@@ -10,6 +10,8 @@ import AppKit
 extension SettingVC {
     @objc
     func actionCheckbox(sender: NSButton) {
+        isPreferenceEdited = true
+      
         if sender.state == .on {
             isLaunchAtLogin = true
         } else {
@@ -23,7 +25,9 @@ extension SettingVC {
     @objc
     func actionDifferentWorkHour(_ sender: NSButton) {
         isFlexibleWorkHour = sender.state == .on
-        
+          
+        isPreferenceEdited = true
+      
         if isFlexibleWorkHour {
           daysButtonStack.unlockButton()
           
@@ -44,7 +48,7 @@ extension SettingVC {
           preferenceStack.forEach { $0.isHidden = true }
           
           for item in workingHours {
-            var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+            let data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
             
             workingHours.update(with: data)
           }
@@ -57,7 +61,8 @@ extension SettingVC {
       sender.isSelected = true
       sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
       sender.foregroundColorText = .white
-      nextButton.isEnabled = true
+      
+      isPreferenceEdited = true
       
       print("\(sender.title) choose")
       
@@ -106,6 +111,7 @@ extension SettingVC {
 extension SettingVC: DaysButtonToUserPreferenceDelegate {
     func didSundayTap(_ isSelected: Bool) {
       preferenceStack[0].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
         day.isEnabled = isSelected
@@ -122,6 +128,7 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didMondayTap(_ isSelected: Bool) {
       preferenceStack[1].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
         day.isEnabled = isSelected
@@ -138,6 +145,7 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didTuesdayTap(_ isSelected: Bool) {
       preferenceStack[2].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
         day.isEnabled = isSelected
@@ -154,6 +162,7 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didWednesdayTap(_ isSelected: Bool) {
       preferenceStack[3].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
         day.isEnabled = isSelected
@@ -170,6 +179,7 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didThursdayTap(_ isSelected: Bool) {
       preferenceStack[4].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
         day.isEnabled = isSelected
@@ -186,6 +196,7 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didFridayTap(_ isSelected: Bool) {
       preferenceStack[5].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
         day.isEnabled = isSelected
@@ -202,6 +213,7 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didSaturdayTap(_ isSelected: Bool) {
       preferenceStack[6].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
         day.isEnabled = isSelected
