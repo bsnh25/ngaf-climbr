@@ -511,6 +511,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     nextButton.isEnabled = false
     nextButton.target = self
     nextButton.action = #selector(actNextButton)
+      
+      nextButton.setAccessibilityElement(true)
+      nextButton.setAccessibilityTitle("\(nextButton.title)")
+      nextButton.setAccessibilityLabel("Save your preference and go to the next page")
+      nextButton.setAccessibilityRole(.button)
     
     nextButton.snp.makeConstraints {next in
       next.trailing.equalTo(launchAtLoginChecBox)

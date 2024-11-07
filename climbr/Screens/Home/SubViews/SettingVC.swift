@@ -195,6 +195,10 @@ class SettingVC: NSViewController {
             setting.trailing.equalTo(635)
         }
         
+        settingText.setAccessibilityElement(true)
+        settingText.setAccessibilityTitle(settingText.stringValue)
+        settingText.setAccessibilityLabel("This is \(settingText.stringValue) page. You can modify your work hours preference here")
+        settingText.setAccessibilityRole(.staticText)
         
     }
     
@@ -205,6 +209,11 @@ class SettingVC: NSViewController {
             subTitle.top.equalTo(settingText.snp.bottom).offset(26.67)
             subTitle.leading.equalTo(view.snp.leading).inset(33.34)
         }
+        
+        subTitleA.setAccessibilityElement(true)
+        subTitleA.setAccessibilityTitle(subTitleA.stringValue)
+        subTitleA.setAccessibilityLabel("This is \(subTitleA.stringValue) section. below you can modify your day and time preference")
+        subTitleA.setAccessibilityRole(.staticText)
     }
     
     func configureWorkHoursStack() {
@@ -303,6 +312,10 @@ class SettingVC: NSViewController {
         
         differentWorkHoursCheckbox.target = self
         differentWorkHoursCheckbox.action = #selector(actionDifferentWorkHour)
+        differentWorkHoursCheckbox.setAccessibilityElement(true)
+        differentWorkHoursCheckbox.setAccessibilityTitle("Different Work Hours")
+        differentWorkHoursCheckbox.setAccessibilityLabel("Check this if you want to configure work hour independently")
+        differentWorkHoursCheckbox.setAccessibilityRole(.checkBox)
     }
     
     func configureWorkHourItemView(){
@@ -485,6 +498,11 @@ class SettingVC: NSViewController {
             button.action = #selector(actionReminderHandler(_:))
             button.layer?.cornerRadius = 6
             
+            button.setAccessibilityElement(true)
+            button.setAccessibilityTitle("\(button.title) minutes")
+            button.setAccessibilityLabel("Set the reminder interval to \(button.title) minutes")
+            button.setAccessibilityRole(.button)
+            
             button.snp.makeConstraints{button in
                 button.width.equalTo(44)
                 button.height.equalTo(30)
@@ -548,12 +566,14 @@ class SettingVC: NSViewController {
             .foregroundColor: NSColor.black
         ]
         
+        
         if ((userPreferenceData?.launchAtLogin) != nil){
             launchAtLoginChecBox.state = .on
         } else{
             launchAtLoginChecBox.state = .off
         }
         
+        let newState = launchAtLoginChecBox.state == .on ? "Checked" : "Unchecked"
         // Apply the attributed title
         launchAtLoginChecBox.attributedTitle = NSAttributedString(string: launchAtLoginChecBox.title, attributes: attributes)
         
@@ -561,6 +581,13 @@ class SettingVC: NSViewController {
         launchAtLoginChecBox.contentTintColor = .blue
         launchAtLoginChecBox.target = self
         launchAtLoginChecBox.action = #selector(actionCheckbox)
+        
+        launchAtLoginChecBox.setAccessibilityElement(true)
+        launchAtLoginChecBox.setAccessibilityTitle("Launch At StartUp")
+        launchAtLoginChecBox.setAccessibilityLabel("Check this if you want to launch Climbr automatically on startup")
+        launchAtLoginChecBox.setAccessibilityRole(.checkBox)
+        
+        launchAtLoginChecBox.setAccessibilityValue(newState)
         
         launchAtLoginChecBox.snp.makeConstraints{ check in
             check.leading.trailing.equalTo(reminderStack)
@@ -575,6 +602,11 @@ class SettingVC: NSViewController {
         nextButton.isEnabled = false
         nextButton.target = self
         nextButton.action = #selector(actSaveButton)
+        
+        nextButton.setAccessibilityElement(true)
+        nextButton.setAccessibilityTitle("\(nextButton.title)")
+        nextButton.setAccessibilityLabel("Save your preference and go to ")
+        nextButton.setAccessibilityRole(.button)
         
         nextButton.snp.makeConstraints {next in
             next.trailing.equalTo(launchAtLoginChecBox)

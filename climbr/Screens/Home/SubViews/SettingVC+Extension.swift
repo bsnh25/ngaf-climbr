@@ -15,6 +15,9 @@ extension SettingVC {
         } else {
             isLaunchAtLogin = false
         }
+        
+        let newState = sender.state == .on ? "Checked" : "Unchecked"
+        sender.setAccessibilityValue(newState)
     }
     
     @objc
