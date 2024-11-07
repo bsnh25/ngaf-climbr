@@ -109,7 +109,7 @@ class DaysButtonStackView: NSStackView {
           
             item.setAccessibilityElement(true)
             item.setAccessibilityTitle("\(item.subtitle ?? "")")
-            item.setAccessibilityLabel("Enable this option to adjust work hours")
+            item.setAccessibilityLabel("Enable this day option to adjust your work hours")
             item.setAccessibilityRole(.button)
         }
         
