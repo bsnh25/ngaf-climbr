@@ -254,8 +254,7 @@ class SettingVC: NSViewController {
                             button.foregroundColorText = .white
                             
                             // Update the start and end hours in the DayTimePreferenceView
-                            dayPreference.startWorkPicker.dateValue = workingHour.startHour
-                            dayPreference.endWorkPicker.dateValue = workingHour.endHour
+                            dayPreference.setInitialValue(workingHour.startHour, workingHour.endHour)
                             dayPreference.isHidden = false
                             workingHours.update(with: workingHour)
                         }
@@ -267,8 +266,9 @@ class SettingVC: NSViewController {
                 daysButtonStack.lockButton()
                 preferenceStackView.isHidden = true  // Hide the preferences if not flexible
                 
-                workHourItemView.startWorkPicker.dateValue = userPreference.workingHours.first!.startHour
-                workHourItemView.endWorkPicker.dateValue = userPreference.workingHours.first!.endHour
+                if let workingHour = userPreference.workingHours.first {
+                  workHourItemView.setInitialValue(workingHour.startHour, workingHour.endHour)
+                }
                 
                 for workingHour in userPreference.workingHours {
                     workingHours.update(with: workingHour)
