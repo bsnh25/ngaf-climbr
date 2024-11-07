@@ -97,6 +97,8 @@ class SettingVC: NSViewController {
     internal var bag: AnyCancellable?
   
     internal let saveButton = CLTextButtonV2(title: "Save", backgroundColor: .cButton, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
+  
+  internal let cancelButton = CLTextButtonV2(title: "Cancel", backgroundColor: .kDarkGray, foregroundColorText: .white, fontText: .systemFont(ofSize: 26, weight: .bold))
     
     
     internal let reminderLabel = CLTextLabelV2(sizeOfFont: 17, weightOfFont: .bold, contentLabel: "Choose When do you want to be reminded")
@@ -142,21 +144,6 @@ class SettingVC: NSViewController {
         }
         
     }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        
-        // Check if the view is hosted in a window
-        if let window = self.view.window {
-            // Remove the minimize button
-            window.styleMask.remove(.miniaturizable)
-            window.titleVisibility = .hidden
-            
-            // Optionally, remove the close and zoom buttons
-            // window.styleMask.remove(.closable)
-            window.styleMask.remove(.resizable)
-        }
-    }
   
     override func viewDidDisappear() {
       bag?.cancel()
@@ -172,6 +159,7 @@ class SettingVC: NSViewController {
         configureReminderStack()
         configureLaunchAtLoginCheckBox()
         configureSaveButton()
+        configureCancelButton()
         
         daysButtonStack.daysButtonDelegate = self
     }
@@ -603,15 +591,13 @@ class SettingVC: NSViewController {
     
     func configureSaveButton(){
         view.addSubview(saveButton)
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.isEnabled = false
         saveButton.target = self
         saveButton.action = #selector(actSaveButton)
-      saveButton.isEnabled = false
         
         saveButton.setAccessibilityElement(true)
         saveButton.setAccessibilityTitle("\(saveButton.title)")
-        saveButton.setAccessibilityLabel("Save your preference and go to ")
+        saveButton.setAccessibilityLabel("Save your preference data")
         saveButton.setAccessibilityRole(.button)
         
         saveButton.snp.makeConstraints {next in
@@ -621,7 +607,24 @@ class SettingVC: NSViewController {
             next.height.equalTo(42.5)
         }
     }
+
+  func configureCancelButton(){
+    view.addSubview(cancelButton)
+    cancelButton.target = self
+    cancelButton.action = #selector(actCancelButton)
     
+    cancelButton.setAccessibilityElement(true)
+    cancelButton.setAccessibilityTitle("\(cancelButton.title)")
+    cancelButton.setAccessibilityLabel("Cancel and close the settings page")
+    cancelButton.setAccessibilityRole(.button)
+    
+    cancelButton.snp.makeConstraints { make in
+      make.trailing.equalTo(saveButton.snp.leading).offset(-20)
+      make.bottom.height.equalTo(saveButton)
+      make.width.equalTo(136)
+    }
+  }
+
 }
 
 //#Preview(traits: .defaultLayout, body: {

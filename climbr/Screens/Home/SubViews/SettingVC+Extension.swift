@@ -106,6 +106,12 @@ extension SettingVC {
                 
         self.dismiss(self)
     }
+  
+  @objc
+  internal func actCancelButton(){
+              
+      self.dismiss(self)
+  }
 }
 
 extension SettingVC: DaysButtonToUserPreferenceDelegate {

@@ -84,7 +84,7 @@ extension HomeVC {
             storeButton.updateColorBox(false)
             isShowPopover.toggle()
         }
-        self.presentAsModalWindow(settingsVC)
+      self.presentAsSheet(settingsVC)
     }
     
     @objc
