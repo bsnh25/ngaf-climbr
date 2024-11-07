@@ -14,14 +14,14 @@ class DayTimePreferenceView: NSStackView {
     private lazy var calendar = Calendar.current
     var day: String!
     private var dayName: CLTextLabelV2!
-    var startWorkPicker: CLDatePicker = CLDatePicker(
+    private var startWorkPicker: CLDatePicker = CLDatePicker(
       backgroundColor: .white.withAlphaComponent(0.5),
       textColor: .black,
       datePickerStyleElement: .hourMinute,
       font: NSFont.systemFont(ofSize: 18.3)
     )
     private var toLabel: CLTextLabelV2 = CLTextLabelV2(sizeOfFont: 18, weightOfFont: .regular, contentLabel: "to")
-    var endWorkPicker: CLDatePicker = CLDatePicker(
+    private var endWorkPicker: CLDatePicker = CLDatePicker(
       backgroundColor: .white.withAlphaComponent(0.5),
       textColor: .black,
       datePickerStyleElement: .hourMinute,
@@ -38,7 +38,7 @@ class DayTimePreferenceView: NSStackView {
       return calendar.date(from: components)!
     }()
     lazy var currentEndWorkHour: Date = {
-      currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
+      currentStartWorkHour.addingTimeInterval(3 * 60)
     }()
   
     var initialStartValue: Date?
@@ -117,8 +117,8 @@ class DayTimePreferenceView: NSStackView {
         endWorkPicker.setAccessibilityTitle("End Work Hour Picker")
         endWorkPicker.setAccessibilityLabel("Adjust your end work hours based on your preference")
         
-        endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(2 * 60 * 60)
-        endWorkPicker.dateValue = (initialStartValue ?? currentStartWorkHour).addingTimeInterval(2 * 60 * 60)
+        endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(30 * 60)
+        endWorkPicker.dateValue = (initialStartValue ?? currentStartWorkHour).addingTimeInterval(30 * 60)
         currentEndWorkHour = endWorkPicker.dateValue
         
         var maxStopComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
@@ -143,16 +143,24 @@ class DayTimePreferenceView: NSStackView {
     @objc func startWorkHourChanged(_ sender: NSDatePicker) {
         let difference = calendar.dateComponents([.minute], from: sender.dateValue, to: currentEndWorkHour)
 //
-        if difference.minute! < 120 {
-          endWorkPicker.dateValue = sender.dateValue.addingTimeInterval(2 * 60 * 60)
+        if difference.minute! < 30 {
+          endWorkPicker.dateValue = sender.dateValue.addingTimeInterval(30 * 60)
         }
       
-      endWorkPicker.minDate = sender.dateValue.addingTimeInterval(2 * 60 * 60)
+      endWorkPicker.minDate = sender.dateValue.addingTimeInterval(30 * 60)
       currentStartWorkHour = sender.dateValue
       
       currentEndWorkHour = endWorkPicker.dateValue
       
       onValueChanged?(currentStartWorkHour, currentEndWorkHour)
+    }
+  
+    func setInitialValue(_ start: Date, _ end: Date) {
+      startWorkPicker.dateValue = start
+      endWorkPicker.dateValue = end
+      
+      initialStartValue = start
+      initialEndValue = end
     }
   
     func reset() {
