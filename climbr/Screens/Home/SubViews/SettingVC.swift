@@ -40,52 +40,29 @@ class SettingVC: NSViewController {
     internal var preferenceStack: [DayTimePreferenceView] = []
     internal var isFlexibleWorkHour: Bool = false
     
-    
-    internal lazy var initialStartWorkHour: Date = {
-        let calendar = Calendar.current
-        
-        var components = calendar.dateComponents([.hour, .minute], from: Date())
-        components.hour = 8
-        components.minute = 0
-        
-        return calendar.date(from: components)!
-    }()
-    
-    internal lazy var initialEndWorkHour: Date = {
-        initialStartWorkHour.addingTimeInterval(2 * 60 * 60)
-    }()
-    
-    internal lazy var workingHours: Set<WorkingHour> = [
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.sunday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.monday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.tuesday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.wednesday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.thursday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.friday.rawValue),
-        WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: Weekday.saturday.rawValue),
-    ]
+    internal lazy var workingHours: Set<WorkingHour> = []
     
     internal let reminder30MinutesButton = CLPickerButton(
         title: "30",
-        backgroundColor: .white.withAlphaComponent(0.5),
+        backgroundColor: .white,
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
     internal let reminder60MinutesButton = CLPickerButton(
         title: "60",
-        backgroundColor: .white.withAlphaComponent(0.5),
+        backgroundColor: .white,
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
     internal let reminder90MinutesButton = CLPickerButton(
         title: "90",
-        backgroundColor: .white.withAlphaComponent(0.5),
+        backgroundColor: .white,
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
     internal let reminder120MinutesButton = CLPickerButton(
         title: "120",
-        backgroundColor: .white.withAlphaComponent(0.5),
+        backgroundColor: .white,
         foregroundColorText: .black,
         fontText: .boldSystemFont(ofSize: 17)
     )
@@ -145,6 +122,16 @@ class SettingVC: NSViewController {
         
     }
   
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    userPreferenceData = charService.getPreferences()
+    
+    if let workingHours = userPreferenceData?.workingHours {
+      self.workingHours = Set(workingHours)
+    }
+  }
+  
     override func viewDidDisappear() {
       bag?.cancel()
     }
@@ -160,7 +147,9 @@ class SettingVC: NSViewController {
         configureLaunchAtLoginCheckBox()
         configureSaveButton()
         configureCancelButton()
-        
+      
+    
+        configureWorkingHours()
         daysButtonStack.daysButtonDelegate = self
     }
     
@@ -195,6 +184,7 @@ class SettingVC: NSViewController {
     }
     
     func configureWorkHoursStack() {
+      
         view.addSubview(workHoursStack)
         
         // Add views to the workHoursStack
@@ -203,87 +193,99 @@ class SettingVC: NSViewController {
         workHoursStack.alignment = .leading
         workHoursStack.orientation = .vertical
         
-        if let userPreference = userPreferenceData {
-            if userPreference.isFlexibleWorkHour {
-                isFlexibleWorkHour = true
-                differentWorkHoursCheckbox.state = .on
-                // Unlock the day buttons
-                daysButtonStack.unlockButton()
-                daysButtonStack.sunday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
-                daysButtonStack.sunday.foregroundColorText = .black
-                daysButtonStack.sunday.isSelected = false
-                
-                // Show the preference stack view
-                workHourItemView.isHidden = true
-                
-                preferenceStackView.isHidden = false
-                
-                // Loop through the working hours and update preferences accordingly
-                for workingHour in userPreference.workingHours {
-                    if workingHour.isEnabled {
-                        // Find the corresponding day index and preference view
-                        let dayIndex = workingHour.day
-                        if let dayPreference = getDayPreference(for: dayIndex) {
-                            // Enable the button for the corresponding day
-                            let button = daysButtonStack.daysButtonStack[dayIndex]
-                            button.isSelected = true
-                            button.isEnabled = true
-                            button.layer?.backgroundColor = NSColor.cNewButton.cgColor
-                            button.foregroundColorText = .white
-                            
-                            // Update the start and end hours in the DayTimePreferenceView
-                            dayPreference.setInitialValue(workingHour.startHour, workingHour.endHour)
-                            dayPreference.isHidden = false
-                            workingHours.update(with: workingHour)
-                        }
-                    }
-                }
-            } else {
-                isFlexibleWorkHour = false
-                differentWorkHoursCheckbox.state = .off
-                daysButtonStack.lockButton()
-                preferenceStackView.isHidden = true  // Hide the preferences if not flexible
-                
-                if let workingHour = userPreference.workingHours.first {
-                  workHourItemView.setInitialValue(workingHour.startHour, workingHour.endHour)
-                }
-                
-                for workingHour in userPreference.workingHours {
-                    workingHours.update(with: workingHour)
-                }
-            }
-        }
+//        if let userPreference = userPreferenceData {
+//            if userPreference.isFlexibleWorkHour {
+//                isFlexibleWorkHour = true
+//                differentWorkHoursCheckbox.state = .on
+//                // Unlock the day buttons
+//                daysButtonStack.unlockButton()
+//                daysButtonStack.sunday.layer?.backgroundColor = .init(gray: 1, alpha: 0.48)
+//                daysButtonStack.sunday.foregroundColorText = .black
+//                daysButtonStack.sunday.isSelected = false
+//                
+//                // Show the preference stack view
+//                workHourItemView.isHidden = true
+//                
+//                preferenceStackView.isHidden = false
+//                
+//                // Loop through the working hours and update preferences accordingly
+//                for workingHour in userPreference.workingHours {
+//                    if workingHour.isEnabled {
+//                        // Find the corresponding day index and preference view
+//                        let dayIndex = workingHour.day
+//                        if let dayPreference = getDayPreference(for: dayIndex) {
+//                            // Enable the button for the corresponding day
+//                            let button = daysButtonStack.daysButtonStack[dayIndex]
+//                            button.isSelected = true
+//                            button.isEnabled = true
+//                            button.layer?.backgroundColor = NSColor.cNewButton.cgColor
+//                            button.foregroundColorText = .white
+//                            
+//                            // Update the start and end hours in the DayTimePreferenceView
+//                            dayPreference.setInitialValue(workingHour.startHour, workingHour.endHour)
+//                            dayPreference.isHidden = false
+//                            workingHours.update(with: workingHour)
+//                        }
+//                    }
+//                }
+//            } else {
+//                isFlexibleWorkHour = false
+//                differentWorkHoursCheckbox.state = .off
+//                daysButtonStack.lockButton()
+//                preferenceStackView.isHidden = true  // Hide the preferences if not flexible
+//                
+//                if let workingHour = userPreference.workingHours.first {
+//                  workHourItemView.setInitialValue(workingHour.startHour, workingHour.endHour)
+//                }
+//                
+//                for workingHour in userPreference.workingHours {
+//                    workingHours.update(with: workingHour)
+//                }
+//            }
+//        }
         
         // Set constraints for the stack
         workHoursStack.snp.makeConstraints { make in
             make.top.equalTo(subTitleA.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(40)
         }
+
     }
     
     func getDayPreference(for dayIndex: Int) -> DayTimePreferenceView? {
-        switch dayIndex {
-        case 0: return sundayPreference
-        case 1: return mondayPreference
-        case 2: return tuesdayPreference
-        case 3: return wednesdayPreference
-        case 4: return thursdayPreference
-        case 5: return fridayPreference
-        case 6: return saturdayPreference
-        default: return nil
-        }
+      guard let dayName = Weekday(rawValue: dayIndex) else { return nil }
+      
+      switch dayName {
+      case .sunday:
+        return sundayPreference
+      case .monday:
+        return mondayPreference
+      case .tuesday:
+        return tuesdayPreference
+      case .wednesday:
+        return wednesdayPreference
+      case .thursday:
+        return thursdayPreference
+      case .friday:
+        return fridayPreference
+      case .saturday:
+        return saturdayPreference
+      }
     }
     
     func configureDifferentWorkHours(){
+      
+      guard let userPreferenceData else { return }
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 22, weight: .bold),
             .foregroundColor: NSColor.black
         ]
         
-        
         // Apply the attributed title
         differentWorkHoursCheckbox.attributedTitle = NSAttributedString(string: differentWorkHoursCheckbox.title, attributes: attributes)
+      
+        differentWorkHoursCheckbox.state = userPreferenceData.isFlexibleWorkHour ? .on : .off
         
         // Set the content tint color (optional, depending on what you want to achieve)
         differentWorkHoursCheckbox.contentTintColor = .blue
@@ -297,6 +299,15 @@ class SettingVC: NSViewController {
     }
     
     func configureWorkHourItemView(){
+      guard let userPreferenceData else { return }
+      
+      workHourItemView.isHidden = userPreferenceData.isFlexibleWorkHour
+      let workingHour = userPreferenceData.workingHours.first
+      
+      if let workingHour {
+        workHourItemView.setInitialValue(workingHour.startHour, workingHour.endHour)
+      }
+      
         workHourItemView.onValueChanged = { [weak self] start, end in
           
             guard let self else { return }
@@ -319,8 +330,54 @@ class SettingVC: NSViewController {
             item.height.equalTo(38.3)
         }
     }
+  
+  func configureWorkingHours() {
+    guard let userPreferenceData else { return }
+    if userPreferenceData.isFlexibleWorkHour {
+      daysButtonStack.unlockButton()
+      
+      for workingHour in userPreferenceData.workingHours where workingHour.isEnabled {
+        let dayPreference: DayTimePreferenceView? = getDayPreference(for: workingHour.day)
+        
+        dayPreference?.isHidden = false
+        dayPreference?.setInitialValue(workingHour.startHour, workingHour.endHour)
+      }
+      
+      for workingHour in userPreferenceData.workingHours {
+        guard let dayName = Weekday(rawValue: workingHour.day) else { return }
+        
+        let weekDayButton: CLPickerButton?
+        
+        switch dayName {
+          
+        case .sunday:
+          weekDayButton = daysButtonStack.sunday
+        case .monday:
+          weekDayButton = daysButtonStack.monday
+        case .tuesday:
+          weekDayButton = daysButtonStack.tuesday
+        case .wednesday:
+          weekDayButton = daysButtonStack.wednesday
+        case .thursday:
+          weekDayButton = daysButtonStack.thursday
+        case .friday:
+          weekDayButton = daysButtonStack.friday
+        case .saturday:
+          weekDayButton = daysButtonStack.saturday
+        }
+        
+        weekDayButton?.isSelected = workingHour.isEnabled
+      }
+      
+    } else {
+      daysButtonStack.lockButton()
+    }
+    
+  }
     
     func configureDifferentWorkHoursStackView(){
+        guard let userPreferenceData else { return }
+      
         preferenceStack = [
             sundayPreference,
             mondayPreference,
@@ -331,7 +388,7 @@ class SettingVC: NSViewController {
             saturdayPreference,
         ]
         
-        preferenceStackView.isHidden = true
+        preferenceStackView.isHidden = !userPreferenceData.isFlexibleWorkHour
         preferenceStackView.spacing = 16
         preferenceStackView.alignment = .leading
         
@@ -340,9 +397,7 @@ class SettingVC: NSViewController {
         preferenceStackView.distribution = .fillEqually
         
         for item in preferenceStack {
-            item.isHidden = true
-          item.initialStartValue = initialStartWorkHour
-          item.initialEndValue = initialEndWorkHour
+          item.isHidden = true
           item.snp.makeConstraints{item in
             item.width.equalTo(372.5)
             item.height.equalTo(38.3)
@@ -478,10 +533,12 @@ class SettingVC: NSViewController {
     }
     
     private func configureReminderStack() {
+        guard let userPreferenceData else { return }
+        
         view.addSubview(reminderStack)
         
         let buttons = [ reminder30MinutesButton, reminder60MinutesButton, reminder90MinutesButton, reminder120MinutesButton ]
-        let intervals = [30, 60, 90, 120]
+        let intervals = buttons.map { Int($0.title) }
         
         for button in buttons {
             button.target = self
@@ -500,16 +557,10 @@ class SettingVC: NSViewController {
         }
         
         // Handle the user preference for reminderInterval
-        if let interval = userPreferenceData?.reminderInterval {
-            if let index = intervals.firstIndex(of: interval) {
-                let correspondingButton = buttons[index]
-                
-              correspondingButton.isSelected = true
-              correspondingButton.layer?.backgroundColor = NSColor.cNewButton.cgColor
-              correspondingButton.foregroundColorText = .white
-                // Programmatically trigger the action as if the user pressed the button
-//                actionReminderHandler(correspondingButton)
-            }
+        if let index = intervals.firstIndex(of: userPreferenceData.reminderInterval) {
+          let correspondingButton = buttons[index]
+            
+          correspondingButton.isSelected = true
         }
         
         

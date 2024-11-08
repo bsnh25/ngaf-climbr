@@ -29,17 +29,26 @@ extension SettingVC {
         isPreferenceEdited = true
       
         if isFlexibleWorkHour {
+          
+          configureWorkingHours()
           daysButtonStack.unlockButton()
           
           workHourItemView.isHidden = true
           preferenceStackView.isHidden = false
-          preferenceStack[0].isHidden = false
           
-            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
-            day.isEnabled = true
+          let reservedWorkingHours = workingHours.filter { $0.isEnabled }.count
+          
+          if reservedWorkingHours == 0 {
+            daysButtonStack.sunday.isSelected = true
+            preferenceStack[0].isHidden = false
             
-            workingHours.update(with: day)
+            if var workHour = workingHours.first {
+              workHour.isEnabled = true
+              
+              workingHours.update(with: workHour)
+            }
           }
+          
         } else{
           daysButtonStack.lockButton()
           preferenceStackView.isHidden = true
@@ -48,7 +57,8 @@ extension SettingVC {
           preferenceStack.forEach { $0.isHidden = true }
           
           for item in workingHours {
-            let data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+            var data = item
+            data.isEnabled = false
             
             workingHours.update(with: data)
           }
@@ -122,11 +132,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[0].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[0].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -139,11 +149,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[1].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[1].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -156,11 +166,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[2].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[2].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -173,11 +183,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[3].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[3].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -190,11 +200,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[4].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[4].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -207,11 +217,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[5].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[5].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -224,11 +234,11 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
       if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[6].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[6].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
