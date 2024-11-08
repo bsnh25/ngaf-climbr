@@ -66,6 +66,9 @@ class HomeVC: NSViewController {
     let pointsView = NSStackView()
     let streakView = NSStackView()
     
+    let popover = NSPopover()
+    var isShowPopover: Bool = false
+    
     var riveView = RiveView()
     var audioService: AudioService?
     var charService: CharacterService = UserManager.shared
