@@ -118,14 +118,6 @@ class HomeVC: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
-        view.wantsLayer = true
-//        previewAnimaConfig()
-        ButtonConfigure()
-        viewStretchConfig()
-        dailyProgress()
-        setupStreakLabel()
-        setupPointsLabel()
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -137,17 +129,27 @@ class HomeVC: NSViewController {
                 }
             }
             .store(in: &bagss)
+        
+        // Do view setup here.
+        view.wantsLayer = true
+//        previewAnimaConfig()
+        ButtonConfigure()
+        viewStretchConfig()
+        dailyProgress()
+        setupStreakLabel()
+        setupPointsLabel()
+        
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         print("viewDidAppear")
         
-        if isShowPopover {
-            popover.close()
-            storeButton.updateColorBox(false)
-            isShowPopover.toggle()
-        }
+//        if isShowPopover {
+//            popover.close()
+//            storeButton.updateColorBox(false)
+//            isShowPopover.toggle()
+//        }
         
         let audio = Container.shared.resolve(AudioService.self)
         audio?.playBackgroundMusic(fileName: "summer")
@@ -165,6 +167,10 @@ class HomeVC: NSViewController {
             return
         }
         
+        DispatchQueue.main.async {
+            self.updateProgressData()
+            self.observeNotif()
+        }
     }
     
     private func previewAnimaConfig(){

@@ -15,7 +15,9 @@ extension HomeVC {
     @objc
     func actionStore(){
         if let vc = Container.shared.resolve(ShopItemVC.self) {
-            //                        push(to: vc)
+            vc.delegate = self
+            push(to: vc)
+            print("go to shop page")
             //            vc.view.setFrameSize(NSSize(width: 400, height: 500))
             //            view.addSubview(vc.view)
             //
@@ -24,33 +26,33 @@ extension HomeVC {
             //                make.leading.equalTo(settingButton.snp.leading)
             //            }
             
-            if !isShowPopover {
-                storeButton.updateColorBox(true)
-                //             Configure popover
-                popover.contentViewController = vc
-                
-                print("VC frame size sblm:", vc.view.frame.size)
-                // Show popover anchored to the store button
-                popover.show(relativeTo: storeButton.bounds, of: storeButton, preferredEdge: .minY)
-                print("Popover size sblm:", popover.contentSize)
-                vc.view.frame.size = NSSize(width: 380, height: 380)
-                //            vc.preferredContentSize = NSSize(width: 400, height: 400)
-                popover.contentSize = NSSize(width: vc.view.frame.width, height: vc.view.frame.height)
-                popover.behavior = .applicationDefined
-                popover.appearance = .none
-                popover.animates = true
-                
-                print("Popover size:", popover.contentSize)
-                print("VC frame size:", vc.view.frame.size)
-                print("Popover visible:", popover.isShown)
-                
-                vc.delegate = self
-            } else if isShowPopover {
-                popover.close()
-                storeButton.updateColorBox(false)
-            }
-            
-            isShowPopover.toggle()
+//            if !isShowPopover {
+//                storeButton.updateColorBox(true)
+//                //             Configure popover
+//                popover.contentViewController = vc
+//                
+//                print("VC frame size sblm:", vc.view.frame.size)
+//                // Show popover anchored to the store button
+//                popover.show(relativeTo: storeButton.bounds, of: storeButton, preferredEdge: .minY)
+//                print("Popover size sblm:", popover.contentSize)
+//                vc.view.frame.size = NSSize(width: 380, height: 380)
+//                //            vc.preferredContentSize = NSSize(width: 400, height: 400)
+//                popover.contentSize = NSSize(width: vc.view.frame.width, height: vc.view.frame.height)
+//                popover.behavior = .applicationDefined
+//                popover.appearance = .none
+//                popover.animates = true
+//                
+//                print("Popover size:", popover.contentSize)
+//                print("VC frame size:", vc.view.frame.size)
+//                print("Popover visible:", popover.isShown)
+//                
+//                vc.delegate = self
+//            } else if isShowPopover {
+//                popover.close()
+//                storeButton.updateColorBox(false)
+//            }
+//            
+//            isShowPopover.toggle()
         }
     }
     
@@ -64,11 +66,11 @@ extension HomeVC {
                 vc.setOfMovements = Movement.setOfMovements.first!
             }
             
-            if isShowPopover {
-                popover.close()
-                storeButton.updateColorBox(false)
-                isShowPopover.toggle()
-            }
+//            if isShowPopover {
+//                popover.close()
+//                storeButton.updateColorBox(false)
+//                isShowPopover.toggle()
+//            }
             
             push(to: vc)
             print("go to stretching session")
