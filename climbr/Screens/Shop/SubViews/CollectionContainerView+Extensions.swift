@@ -18,6 +18,7 @@ extension CollectionContainerView {
             hView.configure(text: "", backgroundImage: NSImage(named: data.image))
             titleItems.setText("\(data.name)")
             collectionView.selectItems(at: indexPaths, scrollPosition: .centeredHorizontally)
+            titleItems.setAccessibilityTitle("Current you see \(data.name) Equipment")
         }
     }
 }

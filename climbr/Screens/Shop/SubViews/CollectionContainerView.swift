@@ -25,12 +25,6 @@ class CollectionContainerView: NSView {
     let HOutterStack: NSStackView = NSStackView()
     let VMiddleStack : NSStackView = NSStackView()
     let HInnerStack: NSStackView = NSStackView()
-    let HImageView: NSImageView = {
-        let imageView = NSImageView()
-        imageView.image = NSImage(systemSymbolName: "xbox.logo", accessibilityDescription: "Coba")
-        imageView.imageScaling = .scaleAxesIndependently
-        return imageView
-    }()
     let hView: HView = HView()
     
     weak var collectionDelegate: CollectionContainerProtocol?
@@ -94,6 +88,10 @@ class CollectionContainerView: NSView {
         // Tambahkan titleItems ke verticalStack
 //        verticalStack.addArrangedSubview(titleItems)
 //        verticalStack.addArrangedSubview(scrollView) // Tambah scrollView setelah titleItems
+        collectionView.setAccessibilityElement(true)
+        collectionView.setAccessibilityTitle("Collection Area for Shop Items")
+        collectionView.setAccessibilityLabel("You can select items to buy")
+        collectionView.setAccessibilityRole(.layoutArea)
         
         
 
@@ -115,6 +113,10 @@ class CollectionContainerView: NSView {
         verticalStack.layer?.backgroundColor = .clear
 //        verticalStack.layer?.borderColor = NSColor.yellow.cgColor
 //        verticalStack.layer?.borderWidth = 1
+        scrollView.setAccessibilityElement(true)
+        scrollView.setAccessibilityLabel("You can scroll this area collection")
+        scrollView.setAccessibilityTitle("Scroll Area")
+        scrollView.setAccessibilityRole(.scrollArea)
         
         verticalStack.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
@@ -145,6 +147,9 @@ class CollectionContainerView: NSView {
 //        HOutterStack.layer?.borderWidth = 1
         
         hView.wantsLayer = true
+        hView.setAccessibilityRole(.cell)
+        hView.setAccessibilityLabel("This is item picture preview")
+        hView.setAccessibilityTitle("Preview Image Store")
 //        hView.layer?.borderColor = NSColor.blue.cgColor
 //        hView.layer?.borderWidth = 5
         
@@ -201,7 +206,7 @@ class CollectionContainerView: NSView {
         equipmentCollections = items
         titleItems.setText("\(equipmentCollections[0].item.name)")
         titleItems.setAccessibilityRole(.staticText)
-        titleItems.setAccessibilityTitle("\(equipmentCollections[0].item.name) Equipment")
+        titleItems.setAccessibilityTitle("Current you see \(equipmentCollections[0].item.name) Equipment")
         //        collectionView.setAccessibilityRole(.cell)
         //        collectionView.setAccessibilityLabel("\(equipmentCollections[0].item.name) Equipment")
         collectionView.reloadData()
@@ -306,6 +311,7 @@ class HView: NSView{
 
     func configure(equipmentModel: EquipmentModel) {
         backgroundImageView.image = NSImage(named: equipmentModel.item.image)
+        backgroundImageView.setAccessibilityTitle("Preview of \(equipmentModel.item.name) Picture")
         data = equipmentModel
         overlayView.isHidden = equipmentModel.isUnlocked
         lockIcon.isHidden = equipmentModel.isUnlocked
