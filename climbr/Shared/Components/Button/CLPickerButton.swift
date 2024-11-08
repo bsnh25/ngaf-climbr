@@ -14,6 +14,14 @@ class CLPickerButton: NSButton {
                 updateLayer()
             }
         }
+  
+  override var isEnabled: Bool {
+    didSet {
+       if !isEnabled {
+           layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
+       }
+    }
+  }
 
   
     var backgroundColor: NSColor!
@@ -35,7 +43,7 @@ class CLPickerButton: NSButton {
         self.isBordered = false // Remove default button border
         self.wantsLayer = true // Ensure the layer is available for custom drawing
     }
-  init(title: String, subtitle: String? = nil, backgroundColor: NSColor, foregroundColorText: NSColor, fontText: NSFont) {
+  init(title: String, subtitle: String? = nil, backgroundColor: NSColor, foregroundColorText: NSColor, fontText: NSFont, isSelected: Bool = false) {
         super.init(frame: .zero)
         
         wantsLayer = true
@@ -48,7 +56,7 @@ class CLPickerButton: NSButton {
         self.backgroundColor        = backgroundColor
         self.foregroundColorText    = foregroundColorText
         self.fontText               = fontText
-        
+    self.isSelected = isSelected
        
         configure(foregroundColorText: foregroundColorText, font: fontText)
     }
@@ -93,10 +101,16 @@ class CLPickerButton: NSButton {
 
     override func updateLayer() {
        super.updateLayer()
-        
-        if !isEnabled {
-            layer?.backgroundColor = layer?.backgroundColor?.copy(alpha: 0.2)
-        }
+      
+      if isSelected {
+        layer?.backgroundColor = NSColor.cNewButton.cgColor
+        foregroundColorText = .white
+      } else {
+        layer?.backgroundColor = backgroundColor.cgColor
+        foregroundColorText = .black
+      }
+      
+      updateAttributedTitle()
         
    }
     

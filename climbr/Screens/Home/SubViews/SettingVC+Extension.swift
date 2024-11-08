@@ -9,7 +9,9 @@ import AppKit
 
 extension SettingVC {
     @objc
-    func actionCheckbox(sender: NSButton) {
+    internal func actionCheckbox(sender: NSButton) {
+        isPreferenceEdited = true
+      
         if sender.state == .on {
             isLaunchAtLogin = true
         } else {
@@ -21,21 +23,32 @@ extension SettingVC {
     }
     
     @objc
-    func actionDifferentWorkHour(_ sender: NSButton) {
+    internal func actionDifferentWorkHour(_ sender: NSButton) {
         isFlexibleWorkHour = sender.state == .on
-        
+          
+        isPreferenceEdited = true
+      
         if isFlexibleWorkHour {
+          
+          configureWorkingHours()
           daysButtonStack.unlockButton()
           
           workHourItemView.isHidden = true
           preferenceStackView.isHidden = false
-          preferenceStack[0].isHidden = false
           
-            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
-            day.isEnabled = true
+          let reservedWorkingHours = workingHours.filter { $0.isEnabled }.count
+          
+          if reservedWorkingHours == 0 {
+            daysButtonStack.sunday.isSelected = true
+            preferenceStack[0].isHidden = false
             
-            workingHours.update(with: day)
+            if var workHour = workingHours.first {
+              workHour.isEnabled = true
+              
+              workingHours.update(with: workHour)
+            }
           }
+          
         } else{
           daysButtonStack.lockButton()
           preferenceStackView.isHidden = true
@@ -44,7 +57,8 @@ extension SettingVC {
           preferenceStack.forEach { $0.isHidden = true }
           
           for item in workingHours {
-            var data = WorkingHour(startHour: initialStartWorkHour, endHour: initialEndWorkHour, day: item.day)
+            var data = item
+            data.isEnabled = false
             
             workingHours.update(with: data)
           }
@@ -52,12 +66,13 @@ extension SettingVC {
     }
     
     @objc
-    func actionReminderHandler(_ sender: CLPickerButton){
+    internal func actionReminderHandler(_ sender: CLPickerButton){
       resetButtonColors()
       sender.isSelected = true
       sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
       sender.foregroundColorText = .white
-      nextButton.isEnabled = true
+      
+      isPreferenceEdited = true
       
       print("\(sender.title) choose")
       
@@ -65,7 +80,7 @@ extension SettingVC {
     }
     
     @objc
-    func actSaveButton(){
+    internal func actSaveButton(){
       
       print("Flexible Working Hours: ", isFlexibleWorkHour)
       
@@ -101,20 +116,27 @@ extension SettingVC {
                 
         self.dismiss(self)
     }
+  
+  @objc
+  internal func actCancelButton(){
+              
+      self.dismiss(self)
+  }
 }
 
 extension SettingVC: DaysButtonToUserPreferenceDelegate {
     func didSundayTap(_ isSelected: Bool) {
       preferenceStack[0].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[0].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[0].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -122,15 +144,16 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didMondayTap(_ isSelected: Bool) {
       preferenceStack[1].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[1].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[1].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -138,15 +161,16 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didTuesdayTap(_ isSelected: Bool) {
       preferenceStack[2].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[2].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[2].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -154,15 +178,16 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didWednesdayTap(_ isSelected: Bool) {
       preferenceStack[3].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[3].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[3].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -170,15 +195,16 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didThursdayTap(_ isSelected: Bool) {
       preferenceStack[4].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[4].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[4].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -186,15 +212,16 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didFridayTap(_ isSelected: Bool) {
       preferenceStack[5].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[5].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[5].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
@@ -202,15 +229,16 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
     
     func didSaturdayTap(_ isSelected: Bool) {
       preferenceStack[6].isHidden = !isSelected
+      isPreferenceEdited = true
       
       if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
         day.isEnabled = isSelected
         
-        if !isSelected {
-          preferenceStack[6].reset()
-          day.startHour = initialStartWorkHour
-          day.endHour = initialEndWorkHour
-        }
+//        if !isSelected {
+//          preferenceStack[6].reset()
+//          day.startHour = initialStartWorkHour
+//          day.endHour = initialEndWorkHour
+//        }
         
         workingHours.update(with: day)
       }
