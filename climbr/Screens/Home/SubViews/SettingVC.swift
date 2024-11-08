@@ -341,6 +341,7 @@ class SettingVC: NSViewController {
         
         dayPreference?.isHidden = false
         dayPreference?.setInitialValue(workingHour.startHour, workingHour.endHour)
+          workingHours.update(with: workingHour)
       }
       
       for workingHour in userPreferenceData.workingHours {
@@ -615,6 +616,7 @@ class SettingVC: NSViewController {
         
         if ((userPreferenceData?.launchAtLogin) != nil){
             launchAtLoginChecBox.state = .on
+            isFlexibleWorkHour = true
         } else{
             launchAtLoginChecBox.state = .off
         }
