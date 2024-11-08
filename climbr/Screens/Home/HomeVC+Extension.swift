@@ -81,11 +81,11 @@ extension HomeVC {
     func actionSetting(){
         guard let settingsVC = Container.shared.resolve(SettingVC.self) else {return}
         settingsVC.preferredContentSize = CGSize(width: 863.34, height: 660.34)
-        if isShowPopover {
-            popover.close()
-            storeButton.updateColorBox(false)
-            isShowPopover.toggle()
-        }
+//        if isShowPopover {
+//            popover.close()
+//            storeButton.updateColorBox(false)
+//            isShowPopover.toggle()
+//        }
       self.presentAsSheet(settingsVC)
     }
     
