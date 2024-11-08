@@ -48,8 +48,8 @@ class TypeButton: NSButton {
 
         addSubview(icon)
         
-        let blur = CLBlurEffectView(frame: bounds)
-        addSubview(blur, positioned: .below, relativeTo: nil)
+//        let blur = CLBlurEffectView(frame: bounds)
+//        addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
             icon.centerXAnchor.constraint(equalTo: centerXAnchor),

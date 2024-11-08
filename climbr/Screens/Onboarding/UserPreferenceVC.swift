@@ -71,7 +71,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   lazy var initialStartWorkHour: Date = {
     let calendar = Calendar.current
     
-    var components = calendar.dateComponents([.hour, .minute], from: Date())
+      var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
     components.hour = 8
     components.minute = 0
     
@@ -79,7 +79,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   }()
   
   lazy var initialEndWorkHour: Date = {
-    initialStartWorkHour.addingTimeInterval(2 * 60 * 60)
+    initialStartWorkHour.addingTimeInterval(30 * 60)
   }()
   
   lazy var workingHours: Set<WorkingHour> = [
@@ -511,6 +511,11 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     nextButton.isEnabled = false
     nextButton.target = self
     nextButton.action = #selector(actNextButton)
+      
+      nextButton.setAccessibilityElement(true)
+      nextButton.setAccessibilityTitle("\(nextButton.title)")
+      nextButton.setAccessibilityLabel("Save your preference and go to the next page")
+      nextButton.setAccessibilityRole(.button)
     
     nextButton.snp.makeConstraints {next in
       next.trailing.equalTo(launchAtLoginChecBox)
