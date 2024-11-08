@@ -38,7 +38,7 @@ class DayTimePreferenceView: NSStackView {
       return calendar.date(from: components)!
     }()
     lazy var currentEndWorkHour: Date = {
-      currentStartWorkHour.addingTimeInterval(3 * 60)
+      currentStartWorkHour.addingTimeInterval(30 * 60)
     }()
   
     var initialStartValue: Date?
@@ -84,7 +84,6 @@ class DayTimePreferenceView: NSStackView {
     }
     
     func setupStartPicker(){
-        startWorkPicker.dateValue = initialStartValue ?? currentStartWorkHour
         startWorkPicker.datePickerElements = [.hourMinute]
       
         startWorkPicker.setAccessibilityElement(true)
@@ -106,6 +105,8 @@ class DayTimePreferenceView: NSStackView {
         if let maxDate = calendar.date(from: maxComponents) {
             startWorkPicker.maxDate = maxDate
         }
+        
+        startWorkPicker.dateValue = initialStartValue ?? currentStartWorkHour
         startWorkPicker.target = self
         startWorkPicker.action = #selector(startWorkHourChanged)
     }
@@ -118,7 +119,6 @@ class DayTimePreferenceView: NSStackView {
         endWorkPicker.setAccessibilityLabel("Adjust your end work hours based on your preference")
         
         endWorkPicker.minDate = currentStartWorkHour.addingTimeInterval(30 * 60)
-        endWorkPicker.dateValue = (initialStartValue ?? currentStartWorkHour).addingTimeInterval(30 * 60)
         currentEndWorkHour = endWorkPicker.dateValue
         
         var maxStopComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: Date())
@@ -129,6 +129,7 @@ class DayTimePreferenceView: NSStackView {
             endWorkPicker.maxDate = maxStopDate
         }
       
+        endWorkPicker.dateValue = (initialEndValue ?? currentStartWorkHour).addingTimeInterval(30 * 60)
         endWorkPicker.target = self
         endWorkPicker.action = #selector(stopWorkHourChanged)
     }
@@ -157,7 +158,11 @@ class DayTimePreferenceView: NSStackView {
   
     func setInitialValue(_ start: Date, _ end: Date) {
       startWorkPicker.dateValue = start
+        
+        endWorkPicker.minDate = start.addingTimeInterval(30 * 60)
+        
       endWorkPicker.dateValue = end
+
       
       initialStartValue = start
       initialEndValue = end

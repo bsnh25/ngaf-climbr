@@ -561,6 +561,8 @@ class SettingVC: NSViewController {
           let correspondingButton = buttons[index]
             
           correspondingButton.isSelected = true
+            correspondingButton.layer?.backgroundColor = NSColor.cNewButton.cgColor
+            correspondingButton.foregroundColorText = .white
         }
         
         
