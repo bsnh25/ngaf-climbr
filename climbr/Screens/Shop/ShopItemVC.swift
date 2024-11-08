@@ -21,6 +21,7 @@ class ShopItemVC: NSViewController {
     let pointsView = NSStackView()
     let points  = CLLabel(fontSize: 18, fontWeight: .bold)
     let buyButton = BuyButtonView()
+    let priceLabel = CLLabel(fontSize: 20, fontWeight: .bold)
     weak var delegate: ChooseCaraterDelegate?
     
     
@@ -55,19 +56,20 @@ class ShopItemVC: NSViewController {
     var selectedItem : EquipmentModel?
     
 //    var simpleVM = RiveViewModel(fileName: "climbr")
-//    var animationShop : RiveViewModel? = {
-//        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
-//        anima.fit = .fill
-////        let riveView = anima.createRiveView()
-//        return anima
-//    }()
+    var animationShop : RiveViewModel? = {
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
+        anima.fit = .fill
+        let riveView = anima.createRiveView()
+        return anima
+    }()
     
-    let backButton = CLImageButton(
-        imageName: "arrowshape.backward",
-        accesibilityName: "back home",
-        imgColor: .black.withAlphaComponent(0.5),
-        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
-    )
+//    let backButton = CLImageButton(
+//        imageName: "arrowshape.backward",
+//        accesibilityName: "back home",
+//        imgColor: .black.withAlphaComponent(0.5),
+//        bgColor: NSColor.cContainerHome.cgColor.copy(alpha: 0.84)!
+//    )
+    let backButton = TypeButton(imageName: "arrowshape.backward", text: "Back to Home Page")
     
     init(equipment : EquipmentService?){
         super.init(nibName: nil, bundle: nil)
@@ -81,22 +83,21 @@ class ShopItemVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
-        view.layer?.backgroundColor = .clear
+//        view.layer?.backgroundColor = .clear
 //        view.alphaValue = 0
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
 //        view.layer?.borderWidth = 10
 //        view.layer?.borderColor = NSColor.purple.cgColor
         
         collectionViewContainer.collectionDelegate = self
         buyButton.delegate = self
-//        setupAnimationView()
-        
+        setupAnimationView()
+        setupBackButton()
         setupSidebar()
-//        setupPointsLabel()
         setupCollectionViewContainer()
         horizontalStack()
         setupBuyButton()
-//        setupBackButton()
+        setupPointsLabel()
         
         if let firstButton = sidebar.arrangedSubviews.first as? TypeButton {
             highlightButton(firstButton)
@@ -116,46 +117,53 @@ class ShopItemVC: NSViewController {
             points.setText("\(character.point)")
             /// Select first init to current head equipment
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
-            
+            ///
+            priceLabel.setText("􀀈\(character.headEquipment.price)")
             /// Configure rive artboard
-//            do {
-//                try animationShop?.configureModel(artboardName: character.gender == .male ? "ShopscreenMale" : "ShopscreenFemale")
-//            } catch {
-//                print(error.localizedDescription)
-//            }
+            do {
+                try animationShop?.configureModel(artboardName: character.gender == .male ? "ShopscreenMale" : "ShopscreenFemale")
+            } catch {
+                print(error.localizedDescription)
+            }
             
             /// Update character equipment
             updateCharacterEquipment()
         }
     }
     
-//    func setupAnimationView(){
-//        if let riveView = animationShop?.createRiveView() {
-//            view.addSubview(riveView)
-//            
-//            riveView.translatesAutoresizingMaskIntoConstraints = false
-//            
-//            NSLayoutConstraint.activate([
-//                riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                riveView.topAnchor.constraint(equalTo: view.topAnchor),
-//                riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            ])
-//        }
-//    }
+    func setupAnimationView(){
+        if let riveView = animationShop?.createRiveView() {
+            view.addSubview(riveView)
+            
+            riveView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                riveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                riveView.topAnchor.constraint(equalTo: view.topAnchor),
+                riveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                riveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        }
+    }
     
     func setupBuyButton(){
-        buyButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(buyButton)
+        
+        collectionViewContainer.HInnerStack.addArrangedSubview(priceLabel)
+        collectionViewContainer.HInnerStack.addArrangedSubview(buyButton)
+//        priceLabel.setText("􀀈 0")
+        priceLabel.wantsLayer = true
+//        priceLabel.layer?.borderColor = NSColor.purple.cgColor
+//        priceLabel.layer?.borderWidth = 2
         
         /// Hide the buy button for the first time
-        buyButton.isHidden = true
-
+        buyButton.itemButton.isEnabled = false
+        priceLabel.snp.makeConstraints { make in
+            make.height.equalTo(26)
+            make.width.equalTo(70)
+        }
         buyButton.snp.makeConstraints { make in
-            make.top.equalTo(collectionViewContainer.snp.bottom).offset(20)
-            make.centerX.equalTo(contentStack.snp.centerX)
-            make.height.equalTo(50)
-            make.width.equalTo(240)
+            make.height.equalTo(38)
+            make.width.equalTo(122)
         }
         
     }
@@ -195,11 +203,18 @@ class ShopItemVC: NSViewController {
         contentStack.setViews([collectionViewContainer, sidebar], in: .top)
         self.view.addSubview(contentStack)
         
-        NSLayoutConstraint.activate([
-            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor),
-            contentStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            contentStack.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-        ])
+        contentStack.snp.makeConstraints { make in
+            make.top.equalTo(backButton.snp.bottom).offset(20)
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(backButton.snp.leading)
+            make.height.equalTo(544)
+            make.width.equalTo(406)
+        }
+//        NSLayoutConstraint.activate([
+//            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor),
+//            contentStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+//            contentStack.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+//        ])
     }
         
     func createSidebarButton(title: String) -> NSButton {
@@ -215,8 +230,8 @@ class ShopItemVC: NSViewController {
 //        collectionViewContainer.layer?.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
-            collectionViewContainer.widthAnchor.constraint(equalToConstant: 320),
-            collectionViewContainer.heightAnchor.constraint(equalToConstant: 300)
+            collectionViewContainer.widthAnchor.constraint(equalToConstant: 352),
+            collectionViewContainer.heightAnchor.constraint(equalToConstant: 486)
         ])
     }
     
@@ -225,15 +240,17 @@ class ShopItemVC: NSViewController {
 
         backButton.action = #selector(backToMenu)
         backButton.target = self
+        backButton.layer?.backgroundColor = .white
+        backButton.setAccessibilityElement(true)
+        backButton.setAccessibilityTitle("Back Button")
+        backButton.setAccessibilityLabel("Back to Home Page from Shop Page")
+        backButton.setAccessibilityRole(.button)
         
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            backButton.heightAnchor.constraint(equalToConstant: 45),
-            backButton.widthAnchor.constraint(equalToConstant: 45)
-        ])
+        backButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(50)
+        }
+
     }
     
     func setupPointsLabel() {
@@ -247,39 +264,47 @@ class ShopItemVC: NSViewController {
         
         pointsView.wantsLayer = true
         
-        let blur = CLBlurEffectView(frame: pointsView.bounds)
-        
-        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
+//        let blur = CLBlurEffectView(frame: pointsView.bounds)
+//        
+//        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         pointsView.setViews([icon, points], in: .center)
         pointsView.translatesAutoresizingMaskIntoConstraints = false
         pointsView.orientation = .horizontal
         pointsView.alignment = .centerY
         pointsView.distribution = .equalSpacing
-        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.72)
+        pointsView.layer?.backgroundColor = .white
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         view.addSubview(pointsView)
         
-        NSLayoutConstraint.activate([
-            pointsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            pointsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            pointsView.widthAnchor.constraint(equalToConstant: 200),
-            pointsView.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        pointsView.snp.makeConstraints { make in
+            make.leading.equalTo(backButton.snp.trailing).offset(100)
+            make.trailing.equalTo(collectionViewContainer.snp.trailing)
+            make.top.equalTo(backButton.snp.top)
+//            make.width.equalTo(200)
+            make.height.equalTo(50)
+        }
+        
     }
     
     func highlightButton(_ button: TypeButton) {
         selectedButton?.isSelected = false
         selectedButton?.layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.7)
+        selectedButton?.layer?.borderColor = .clear
+        selectedButton?.layer?.borderWidth = 0
         selectedButton?.updateItemIcon(false)
         
 
         selectedButton = button
         selectedButton?.isSelected = true
-        selectedButton?.layer?.backgroundColor = .white.copy(alpha: 0.84) // Highlight color
+        selectedButton?.layer?.backgroundColor = .white/*.copy(alpha: 0.84)*/ // Highlight color
+        selectedButton?.layer?.borderColor = NSColor.cButton.cgColor
+        selectedButton?.layer?.borderWidth = 4
         selectedButton?.updateItemIcon(true)
+        
+        priceLabel.setText("􀀈\(character?.headEquipment.price)")
     }
     
 //    func updateGridItemsWithSelectedItem() {
@@ -300,6 +325,7 @@ class ShopItemVC: NSViewController {
             itemType = .head
             updateData(with: .head)
             collectionViewContainer.selectCurrentItem(with: character.headEquipment)
+            priceLabel.setText("􀀈\(character.headEquipment.price)")
 //            collectionViewContainer.updateItems(items: headItems)
 //            buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((characterService?.getCharacterData()!.point)!))
 //            buyButton.isHidden = currentHeadModel.isUnlocked
@@ -307,6 +333,7 @@ class ShopItemVC: NSViewController {
             itemType = .back
             updateData(with: .back)
             collectionViewContainer.selectCurrentItem(with: character.backEquipment)
+            priceLabel.setText("􀀈\(character.backEquipment.price)")
 //            collectionViewContainer.updateItems(items: backItems)
 //            buyButton.updateItemButtonPreview(item: currentBack, price: currentBack.price, point: Int((characterService?.getCharacterData()!.point)!))
 //            buyButton.isHidden = currentBackModel.isUnlocked
@@ -314,6 +341,7 @@ class ShopItemVC: NSViewController {
             itemType = .hand
             updateData(with: .hand)
             collectionViewContainer.selectCurrentItem(with: character.handEquipment)
+            priceLabel.setText("􀀈\(character.handEquipment.price)")
 //            collectionViewContainer.updateItems(items: handItems)
 //            buyButton.updateItemButtonPreview(item: currentHand, price: currentHand.price, point: Int((characterService?.getCharacterData()!.point)!))
 //            buyButton.isHidden = currentHandModel.isUnlocked
@@ -321,6 +349,7 @@ class ShopItemVC: NSViewController {
             itemType = .location
             updateData(with: .location)
             collectionViewContainer.selectCurrentItem(with: character.locationEquipment)
+            priceLabel.setText("􀀈\(character.locationEquipment.price)")
 //            collectionViewContainer.selectCurrentItem(with: character.location)
 //            collectionViewContainer.updateItems(items: locationItems)
 //            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((characterService?.getCharacterData()!.point)!))
@@ -328,18 +357,18 @@ class ShopItemVC: NSViewController {
         default:
             break
         }
-//        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
-//        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
-//        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
-//        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
-//        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
-//        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
-//        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
-//        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
-//        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
-//        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
+        animationShop!.setInput("Headgear", value: Double(character.headEquipment.itemID))
+        animationShop!.setInput("Stick", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Jacket", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftThigh", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("RightShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
+        animationShop!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Tent", value: Double(character.backEquipment.itemID))
+        animationShop!.setInput("Background", value: Double(character.locationEquipment.itemID))
         
-        buyButton.isHidden = true
+        buyButton.isHidden = false
     }
    
     func updateData(with type: EquipmentType = .head) {
