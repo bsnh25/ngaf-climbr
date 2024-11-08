@@ -8,215 +8,192 @@ import Cocoa
 import AppKit
 import SnapKit
 
-class CalendarView: NSView {
+
+class CalendarView: NSStackView {
+  struct CalendarDay {
+    var date: Date?
+    var dayNumber: Int?
+    var isCurrentMonth: Bool = false
+  }
+  
+  var days: [CalendarDay] = []
+  var streakDays: [Streak] = []
+  var currentMonth: Date = .now
+  
+  private let calendarHeaderView = CalendarHeaderView()
+  
+  private lazy var collectionView: NSCollectionView = {
+    let collectionView = NSCollectionView()
+    let layout = NSCollectionViewFlowLayout()
     
-    private let datePicker: NSDatePicker = {
-        let picker = NSDatePicker()
-        picker.datePickerMode = .single
-        picker.datePickerStyle = .textFieldAndStepper
-        picker.isBezeled = true
-        picker.isBordered = true
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        return picker
-    }()
+    let availableWidth = 316 - 40
+    let itemWidth = availableWidth / 6
     
-    private let collectionView: NSCollectionView = {
-        let collectionView = NSCollectionView()
-        let layout = NSCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 5
-        layout.minimumLineSpacing = 5
-        layout.itemSize = NSSize(width: 30, height: 30)
-        collectionView.collectionViewLayout = layout
-        collectionView.isSelectable = true
-        collectionView.allowsMultipleSelection = true
-        collectionView.register(CalendarDayItem.self, forItemWithIdentifier: CalendarDayItem.identifier)
-        return collectionView
-    }()
+    layout.itemSize = NSSize(width: itemWidth, height: itemWidth - 8)
+    layout.minimumInteritemSpacing = -4
+    layout.minimumLineSpacing = 8
     
-    private let monthYearLabel: NSTextField = {
-        let label = NSTextField(labelWithString: "")
-        label.font = .boldSystemFont(ofSize: 16)
-        label.alignment = .center
-        return label
-    }()
+    collectionView.collectionViewLayout = layout
+    collectionView.isSelectable = true
+    collectionView.allowsMultipleSelection = false
+    collectionView.allowsEmptySelection = false
     
-    private let dayLabels: [NSTextField] = {
-        let dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-        return dayNames.map { day in
-            let label = NSTextField(labelWithString: day)
-            label.alignment = .center
-            label.font = .systemFont(ofSize: 12)
-            return label
-        }
-    }()
+    collectionView.register(CalendarDayItem.self, forItemWithIdentifier: CalendarDayItem.identifier)
+    return collectionView
+  }()
+  
+  var dayStackView: NSStackView!
+  
+  private let dayLabels: [NSTextField] = {
+    let dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     
-    private var streakDates: Set<Date> = []
-    private let calendar = Calendar(identifier: .gregorian)
-    private var currentDate = Date()
-    private let stackView = NSStackView()
+    let availableWidth = 316 - 40
+    let itemWidth = availableWidth / 7
     
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        setupView()
+    return dayNames.map { day in
+      let label = NSTextField(labelWithString: day)
+      label.alignment = .center
+      label.font = .systemFont(ofSize: 12)
+      
+      label.snp.makeConstraints { make in
+        make.width.equalTo(itemWidth)
+      }
+      
+      return label
+    }
+  }()
+  
+  private var streakDates: Set<Date> = []
+  private let calendar = Calendar(identifier: .gregorian)
+  private var currentDate = Date()
+  private let stackView = NSStackView()
+  
+  init() {
+    super.init(frame: .zero)
+    setupView()
+  }
+  
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    setupView()
+  }
+  
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    setupView()
+  }
+  
+  private func setupView() {
+    wantsLayer = true
+    orientation = .vertical
+    alignment = .centerX
+    distribution = .fill
+    spacing = 8
+    
+    setupHeader()
+    setupDayLabels()
+    setupCollectionView()
+    setupStreakDates()
+    generateDays(for: currentMonth)
+  }
+  
+  private func setupHeader() {
+    addArrangedSubview(calendarHeaderView)
+    setCustomSpacing(16, after: calendarHeaderView)
+    
+    calendarHeaderView.onPreviousMonth = { [weak self] month in
+      
+      guard let self else { return }
+      
+      self.currentMonth = month
+      self.generateDays(for: month)
+      self.collectionView.reloadData()
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
+    calendarHeaderView.onNextMonth = { [weak self] month in
+      
+      guard let self else { return }
+      
+      self.currentMonth = month
+      self.generateDays(for: month)
+      self.collectionView.reloadData()
+    }
+  }
+  
+  private func setupDayLabels() {
+    dayStackView = NSStackView(views: dayLabels)
+    dayStackView.orientation = .horizontal
+    
+    addArrangedSubview(dayStackView)
+  }
+  
+  private func setupCollectionView() {
+    addArrangedSubview(collectionView)
+    
+    collectionView.delegate = self
+    collectionView.dataSource = self
+    
+  }
+  
+  private func setupStreakDates() {
+    for dayOffset in -4...0 {
+      if let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) {
+        streakDates.insert(date)
+      }
+    }
+  }
+  
+  func generateDays(for date: Date) {
+    days.removeAll()
+    
+    let calendar = Calendar.current
+    let components = calendar.dateComponents([.month, .year], from: date)
+    guard let firstDayOfMonth = calendar.date(from: components) else { return }
+    
+    // Get number of days in the month
+    let range = calendar.range(of: .day, in: .month, for: firstDayOfMonth)!
+    let numDaysInMonth = range.count
+    
+    // Find out which weekday the month starts on
+    let weekdayOfFirst = calendar.component(.weekday, from: firstDayOfMonth) - 1
+    
+    // Add padding for the first week if the month doesn't start on Sunday (or preferred weekday)
+    for _ in 0..<weekdayOfFirst {
+      days.append(CalendarDay(date: nil, dayNumber: nil, isCurrentMonth: false))
     }
     
-    private func setupView() {
-//        setupDatePicker()
-//        setupMonthYearLabel()
-        stackViewConfig()
-        setupDayLabels()
-        setupCollectionView()
-        setupStreakDates()
+    // Add days of the month
+    for day in 1...numDaysInMonth {
+      let date = calendar.date(byAdding: .day, value: day - 1, to: firstDayOfMonth)
+      days.append(CalendarDay(date: date, dayNumber: day, isCurrentMonth: true))
     }
-    
-    private func stackViewConfig() {
-        addSubview(stackView)
-        stackView.addArrangedSubview(monthYearLabel)
-        stackView.addArrangedSubview(datePicker)
-        stackView.alignment = .centerX
-        stackView.orientation = .horizontal
-        stackView.spacing = 10
-        
-        stackView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top)
-            make.horizontalEdges.equalTo(self.snp.horizontalEdges)
-        }
-        
-        datePicker.dateValue = currentDate
-        datePicker.target = self
-        datePicker.action = #selector(datePickerChanged(_:))
-        datePicker.wantsLayer = true
-        datePicker.layer?.borderColor = NSColor.orange.cgColor
-        datePicker.layer?.borderWidth = 1
-        
-        monthYearLabel.wantsLayer = true
-        monthYearLabel.layer?.borderColor = NSColor.orange.cgColor
-        monthYearLabel.layer?.borderWidth = 1
-        
-        updateMonthYearLabel()
-    }
-    
-    private func setupDatePicker() {
-//        addSubview(datePicker)
-        let formateDate = DateFormatter()
-        formateDate.dateFormat = "MMMM yyyy"
-        let formattedDateString = formateDate.string(from: currentDate)
-         
-        datePicker.dateValue = currentDate // Set default date
-        
-        datePicker.wantsLayer = true
-        datePicker.layer?.borderColor = NSColor.orange.cgColor
-        datePicker.layer?.borderWidth = 1
-        
-        datePicker.target = self
-        datePicker.action = #selector(datePickerChanged(_:))
-        
-//        NSLayoutConstraint.activate([
-//            datePicker.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-//            datePicker.centerXAnchor.constraint(equalTo: centerXAnchor)
-//        ])
-    }
-    
-    private func setupMonthYearLabel() {
-//        addSubview(monthYearLabel)
-        monthYearLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        monthYearLabel.wantsLayer = true
-        monthYearLabel.layer?.borderColor = NSColor.orange.cgColor
-        monthYearLabel.layer?.borderWidth = 1
-        
-//        NSLayoutConstraint.activate([
-//            monthYearLabel.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 10),
-//            monthYearLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
-//        ])
-        updateMonthYearLabel()
-    }
-    
-    private func setupDayLabels() {
-        let dayStackView = NSStackView(views: dayLabels)
-        dayStackView.orientation = .horizontal
-        dayStackView.distribution = .fillEqually
-        addSubview(dayStackView)
-        
-        dayStackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            dayStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
-            dayStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            dayStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-    }
-    
-    private func setupCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        addSubview(collectionView)
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: dayLabels.first!.bottomAnchor, constant: 5),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
-    
-    private func setupStreakDates() {
-        for dayOffset in -4...0 {
-            if let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) {
-                streakDates.insert(date)
-            }
-        }
-    }
-    
-    private func updateMonthYearLabel() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
-        monthYearLabel.stringValue = formatter.string(from: currentDate)
-    }
-    
-    @objc private func datePickerChanged(_ sender: NSDatePicker) {
-        currentDate = sender.dateValue
-        updateMonthYearLabel()
-        collectionView.reloadData()
-    }
+  }
 }
 
 extension CalendarView: NSCollectionViewDataSource, NSCollectionViewDelegate {
-    
-    func numberOfSections(in collectionView: NSCollectionView) -> Int {
-        return 1
+  
+  func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    days.count
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    guard let item = collectionView.makeItem(withIdentifier: CalendarDayItem.identifier, for: indexPath) as? CalendarDayItem else {
+      return NSCollectionViewItem()
     }
     
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        let range = calendar.range(of: .day, in: .month, for: currentDate)!
-        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
-        let weekday = calendar.component(.weekday, from: firstDayOfMonth) - 1
-        return range.count + weekday
+    let day = days[indexPath.item]
+    
+    if let dayNumber = day.dayNumber, day.isCurrentMonth {
+      item.configure(with: dayNumber, isStreak: true)
+    } else {
+      item.configure(with: nil)
     }
     
-    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        guard let item = collectionView.makeItem(withIdentifier: CalendarDayItem.identifier, for: indexPath) as? CalendarDayItem else {
-            return NSCollectionViewItem()
-        }
-        
-        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
-        let weekday = calendar.component(.weekday, from: firstDayOfMonth) - 1
-        
-        if indexPath.item >= weekday {
-            let day = indexPath.item - weekday + 1
-            if let date = calendar.date(bySetting: .day, value: day, of: firstDayOfMonth) {
-                let isStreak = streakDates.contains(date)
-                item.configure(with: day, isStreak: isStreak, hasEvent: false)
-            }
-        } else {
-            item.configure(with: nil, isStreak: false, hasEvent: false)
-        }
-        
-        return item
-    }
+    return item
+  }
 }
+
+
+#Preview(traits: .fixedLayout(width: 356, height: 600), body: {
+  CalendarView()
+})
