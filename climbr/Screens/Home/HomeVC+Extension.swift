@@ -57,27 +57,16 @@ extension HomeVC {
     @objc
     func actionStreak(){
         
-        let vc = StreakVC()
+      let vc = StreakVC(streakService: StreakManager(controller: PersistenceController.shared))
         
         if !isShowPopoverStreak {
             updateColorStreak(true)
             //             Configure popover
             popoverStreak.contentViewController = vc
             
-            print("VC frame size sblm:", vc.view.frame.size)
             // Show popover anchored to the store button
             popoverStreak.show(relativeTo: streakView.bounds, of: streakView, preferredEdge: .minY)
-            print("Popover size sblm:", popoverStreak.contentSize)
-            vc.view.frame.size = NSSize(width: 380, height: 600)
-            //            vc.preferredContentSize = NSSize(width: 400, height: 400)
-            popoverStreak.contentSize = NSSize(width: vc.view.frame.width, height: vc.view.frame.height)
-            popoverStreak.behavior = .applicationDefined
-            popoverStreak.appearance = .none
-            popoverStreak.animates = true
-            
-            print("Popover size:", popoverStreak.contentSize)
-            print("VC frame size:", vc.view.frame.size)
-            print("Popover visible:", popoverStreak.isShown)
+            popoverStreak.contentSize = NSSize(width: 356, height: 556)
             
         } else if isShowPopoverStreak {
             popoverStreak.close()

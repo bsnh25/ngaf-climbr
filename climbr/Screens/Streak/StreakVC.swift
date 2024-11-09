@@ -10,25 +10,38 @@ import AppKit
 import SnapKit
 
 class StreakVC: NSViewController {
-    
-    let headerView: HeaderStreakView = HeaderStreakView()
-    let calendarView: CalendarView = CalendarView()
-    let outterVStack: NSStackView = {
+  var streakService: StreakService?
+  
+    private let headerView: HeaderStreakView = HeaderStreakView()
+    private let calendarView: CalendarView = CalendarView()
+    private let outterVStack: NSStackView = {
         let stack = NSStackView()
         stack.orientation = .vertical
-        stack.edgeInsets = .init(top: 20, left: 20, bottom: 20, right: 20)
-        stack.spacing = 26
-        stack.alignment = .centerX
-        stack.distribution = .fillEqually
+        stack.spacing = 24
         return stack
     }()
+  
+  init(streakService: StreakService? = nil) {
+    self.streakService = streakService
     
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewWillAppear() {
+    super.viewWillAppear()
     
+  }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         view.wantsLayer = true
         view.layer?.backgroundColor = .white
         setupViews()
+        calendarView.streakDays = streakService?.getStreakHistory() ?? []
     }
     
     func setupViews() {
@@ -38,27 +51,9 @@ class StreakVC: NSViewController {
         
         // Tambahkan `outterVStack` ke tampilan utama
         view.addSubview(outterVStack)
-        
-        outterVStack.wantsLayer = true
-        outterVStack.layer?.borderColor = .black
-        outterVStack.layer?.borderWidth = 1
-        
-        headerView.wantsLayer = true
-        headerView.layer?.borderColor = NSColor.red.cgColor
-        headerView.layer?.borderWidth = 1
-        
-        // Tambahkan constraints untuk `outterVStack`
-        outterVStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            outterVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            outterVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            outterVStack.topAnchor.constraint(equalTo: view.topAnchor),
-//            outterVStack.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            outterVStack.heightAnchor.constraint(equalToConstant: 500)
-        ])
-        
-        headerView.snp.makeConstraints { make in
-            make.height.equalTo(200)
+      
+        outterVStack.snp.makeConstraints { make in
+          make.edges.equalToSuperview().inset(20)
         }
     }
     
@@ -67,3 +62,7 @@ class StreakVC: NSViewController {
     }
     
 }
+
+#Preview(traits: .defaultLayout, body: {
+  StreakVC()
+})

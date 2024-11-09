@@ -23,9 +23,12 @@ class StreakManager: StreakService {
     do {
       let items = try container.fetch(request)
       
-      return items.map {
-        Streak(
-          date: $0.date!,
+      
+      return items.compactMap {
+        guard let date = $0.date else { return nil }
+        
+        return Streak(
+          date: date,
           completedSession: Int($0.completedSession),
           collectedEquipmentId: Int($0.collectedEquipmentId)
         )

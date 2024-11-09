@@ -16,20 +16,28 @@ class CalendarView: NSStackView {
     var isCurrentMonth: Bool = false
   }
   
-  var days: [CalendarDay] = []
-  var streakDays: [Streak] = []
+  var days: [CalendarDay] = [] {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
+  var streakDays: [Streak] = [] {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
   var currentMonth: Date = .now
   
   private let calendarHeaderView = CalendarHeaderView()
   
+  let availableWidth = 316 - 40
+  
   private lazy var collectionView: NSCollectionView = {
     let collectionView = NSCollectionView()
     let layout = NSCollectionViewFlowLayout()
-    
-    let availableWidth = 316 - 40
     let itemWidth = availableWidth / 6
     
-    layout.itemSize = NSSize(width: itemWidth, height: itemWidth - 8)
+    layout.itemSize = NSSize(width: itemWidth, height: itemWidth)
     layout.minimumInteritemSpacing = -4
     layout.minimumLineSpacing = 8
     
@@ -107,7 +115,6 @@ class CalendarView: NSStackView {
       
       self.currentMonth = month
       self.generateDays(for: month)
-      self.collectionView.reloadData()
     }
     
     calendarHeaderView.onNextMonth = { [weak self] month in
@@ -116,7 +123,6 @@ class CalendarView: NSStackView {
       
       self.currentMonth = month
       self.generateDays(for: month)
-      self.collectionView.reloadData()
     }
   }
   
@@ -144,9 +150,10 @@ class CalendarView: NSStackView {
   }
   
   func generateDays(for date: Date) {
-    days.removeAll()
+    days = []
     
     let calendar = Calendar.current
+    
     let components = calendar.dateComponents([.month, .year], from: date)
     guard let firstDayOfMonth = calendar.date(from: components) else { return }
     
@@ -168,6 +175,15 @@ class CalendarView: NSStackView {
       days.append(CalendarDay(date: date, dayNumber: day, isCurrentMonth: true))
     }
   }
+  
+  func isDateSame(date1: Date, date2: Date) -> Bool {
+    
+//    let day = calendar.compare(date1, to: date2, toGranularity: .day)
+//    let month = calendar.compare(date1, to: date2, toGranularity: .month)
+//    let year = calendar.compare(date1, to: date2, toGranularity: .year)
+    
+    return calendar.isDate(date1, inSameDayAs: date2)
+  }
 }
 
 extension CalendarView: NSCollectionViewDataSource, NSCollectionViewDelegate {
@@ -183,8 +199,39 @@ extension CalendarView: NSCollectionViewDataSource, NSCollectionViewDelegate {
     
     let day = days[indexPath.item]
     
-    if let dayNumber = day.dayNumber, day.isCurrentMonth {
-      item.configure(with: dayNumber, isStreak: true)
+    guard let date = day.date, let dayNumber = day.dayNumber else { return NSCollectionViewItem() }
+    
+    let isStreak = streakDays.contains { isDateSame(date1: $0.date, date2: date ) }
+    
+    var isFirst = false
+    var isLast = false
+    if streakDays.count == 1 {
+      isFirst = true
+      isLast = true
+    } else {
+      let index = streakDays.firstIndex(where: { isDateSame(date1: $0.date, date2: date) })
+      
+      if let index {
+        if index == 0 {
+          isFirst = true
+          isLast = false
+        }
+        
+        if index == streakDays.count - 1 {
+          isFirst = false
+          isLast = true
+        }
+      }
+    }
+    
+    if day.isCurrentMonth {
+      item.configure(
+        with: dayNumber,
+        isStreak: isStreak,
+        isFirst: isFirst,
+        isLast: isLast,
+        radius: CGFloat(availableWidth / 6 / 2)
+      )
     } else {
       item.configure(with: nil)
     }
