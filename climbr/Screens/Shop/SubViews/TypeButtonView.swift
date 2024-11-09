@@ -60,6 +60,13 @@ class TypeButton: NSButton {
         ])
     }
     
+    // Implement accessibilityPerformPress for accessibility action
+    override func accessibilityPerformPress() -> Bool {
+        // Trigger the button action when accessibility is used
+        self.performClick(nil)
+        return true
+    }
+    
     func updateItemIcon(_ isActive: Bool){
         if isActive{
             icon.contentTintColor = .cButton
