@@ -130,4 +130,10 @@ class NotificationManager: NotificationService {
         
         UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
     }
+    
+    func snoozeOverlay() {
+        overlayWindow = OverlayWindow()
+        overlayWindow?.addViewContoller(OverlayView())
+        overlayWindow?.show()
+    }
 }
