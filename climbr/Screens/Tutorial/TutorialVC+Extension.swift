@@ -35,19 +35,16 @@ extension TutorialVC {
     }
     
     @objc
-    func actionLetsGo(){
+    func actionWhatIsThat(){
         print("close pop up - letsgo")
-        pop()
-    }
-    
-    @objc
-    func actionInterest(){
-        print("Hitted Action Interest")
-        let height: CGFloat = 150
-        let width: CGFloat = 450
-        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+//        pop()
         skipTutorialButton.isHidden = true
-        skipTutorialButton.title = "Let's Go!"
+        skipTutorialButton.title = "What's That?"
+        
+        let height: CGFloat = 40
+        let width: CGFloat = (137 + 50 + 10)
+        background.subtract(with: NSRect(x: view.bounds.minX + 70, y: view.bounds.maxY + 40, width: width, height: height))
+        
         let firstAttr: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 24, weight: .bold)
         ]
@@ -61,10 +58,45 @@ extension TutorialVC {
             .font: NSFont.systemFont(ofSize: 24, weight: .bold)
         ]
         
-        let firstText    = NSMutableAttributedString(string: "Everyday, we need to meet a goal of a minimum of four stretching sessions, as per recommended by WHO. Let’s give it a go! Click ", attributes: firstAttr)
+        let firstText    = NSMutableAttributedString(string: "I also found ", attributes: firstAttr)
+        let coinText  = NSAttributedString(string: "50 coins ", attributes: startAttr)
+        let midText  = NSAttributedString(string: "while you were stretching. Check out all the cool items available in the shop. Click ", attributes: endAttr)
+        let shopText  = NSAttributedString(string: "Shop ", attributes: startAttr)
+        let endText  = NSAttributedString(string: "above and start shopping!", attributes: endAttr)
         
-        let midText  = NSAttributedString(string: "START SESSION ", attributes: startAttr)
-        let endText  = NSAttributedString(string: "to begin.", attributes: endAttr)
+        firstText.append(coinText)
+        firstText.append(midText)
+        firstText.append(shopText)
+        firstText.append(endText)
+        
+        tutorialLabel.attributedStringValue = firstText
+    }
+    
+    @objc
+    func actionInterest(){
+        print("Hitted Action Interest")
+        let height: CGFloat = 150
+        let width: CGFloat = 450
+        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+        skipTutorialButton.isHidden = true
+        skipTutorialButton.title = "What's That?"
+        let firstAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let startAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .black),
+            NSAttributedString.Key.foregroundColor: NSColor.cButton
+        ]
+        
+        let endAttr : [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let firstText    = NSMutableAttributedString(string: "Everyday, we need to meet a goal of stretching every 2 hour as recommended by WHO. Let’s give it a go! Click ", attributes: firstAttr)
+        
+        let midText  = NSAttributedString(string: "Start Stretch Session ", attributes: startAttr)
+        let endText  = NSAttributedString(string: "on top of the screen to begin.", attributes: endAttr)
         
         firstText.append(midText)
         firstText.append(endText)
@@ -89,14 +121,24 @@ extension TutorialVC {
                 skipTutorialButton.action = #selector(actionSeeyou)
                 tutorialLabel.stringValue = "Alrighty! I’ll see you around :)"
                 
-            } else if skipTutorialButton.title == "Let's Go!" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "Let's Go!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionLetsGo)
-                tutorialLabel.stringValue = "Look at that. We’re progressing! Each session a step closer to a healthier work life. Keep going and let’s conquer all the mountains in the world!"
+            } else if skipTutorialButton.title == "What's That?" {
+                skipTutorialButton.setupTitleForegroundAndFont(title: "What's That?", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+                skipTutorialButton.action = #selector(actionWhatIsThat)
+                tutorialLabel.stringValue = "Look at that. We’re progressing! Each session a step closer to a healthier work life. Don't forget one things..."
                 
-                let height: CGFloat = 150
-                let width: CGFloat = 450
-                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+//                let height: CGFloat = 150
+//                let width: CGFloat = 450
+//                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+                
+                /// New Updated Tutorial
+            } else if skipTutorialButton.title == "What's That?" {
+                skipTutorialButton.setupTitleForegroundAndFont(title: "What's That?", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+                skipTutorialButton.action = #selector(actionWhatIsThat)
+//                tutorialLabel.stringValue = "I also found 50 coins while you were stretching. Check out all the cool items available in the shop. Click Shop above and start shopping!"
+                
+//                let height: CGFloat = 150
+//                let width: CGFloat = 450
+//                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
             }
         }
         

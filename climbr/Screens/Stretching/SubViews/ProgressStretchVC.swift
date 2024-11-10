@@ -279,6 +279,7 @@ class SubProgressStretchView: NSView {
     var movementStackView: NSStackView = {
         let stack = NSStackView()
         stack.orientation = .vertical
+        stack.alignment = .leading
         stack.spacing = 8
         return stack
     }()
@@ -322,13 +323,13 @@ class SubProgressStretchView: NSView {
         progressStackView.setViews(views, in: .leading)
         imageProgressView.imageScaling = .scaleAxesIndependently
         
-//        progressStackView.wantsLayer = true
-//        progressStackView.layer?.borderColor = .black
-//        progressStackView.layer?.borderWidth = 2
+        progressStackView.wantsLayer = true
+        progressStackView.layer?.borderColor = .black
+        progressStackView.layer?.borderWidth = 2
 //
-//        imageProgressView.wantsLayer = true
-//        imageProgressView.layer?.borderColor = NSColor.purple.cgColor
-//        imageProgressView.layer?.borderWidth = 2
+        imageProgressView.wantsLayer = true
+        imageProgressView.layer?.borderColor = NSColor.purple.cgColor
+        imageProgressView.layer?.borderWidth = 2
 //        
 //        movementStackView.wantsLayer = true
 //        movementStackView.layer?.borderColor = NSColor.red.cgColor
@@ -347,8 +348,9 @@ class SubProgressStretchView: NSView {
         }
         
         movementStackView.snp.makeConstraints { make in
-            make.trailing.equalTo(progressStackView.snp.trailing)
-            make.height.equalTo(56)
+//            make.trailing.equalTo(progressStackView.snp.trailing)
+//            make.height.equalTo(56)
+//            make.width.equalTo(150)
             
         }
     }
@@ -358,24 +360,24 @@ class SubProgressStretchView: NSView {
         movementStackView.setViews(views, in: .leading)
         typeStretchLabel.wantsLayer = true
         detailMovementLabel.wantsLayer = true
-        typeStretchLabel.alignment = .justified
-        detailMovementLabel.alignment = .justified
+        typeStretchLabel.alignment = .left
+        detailMovementLabel.alignment = .left
+//
+        typeStretchLabel.layer?.borderColor = NSColor.red.cgColor
+        typeStretchLabel.layer?.borderWidth = 2
 //        
-//        typeStretchLabel.layer?.borderColor = NSColor.red.cgColor
-//        typeStretchLabel.layer?.borderWidth = 2
-//        
-//        detailMovementLabel.layer?.borderColor = NSColor.red.cgColor
-//        detailMovementLabel.layer?.borderWidth = 2
+        detailMovementLabel.layer?.borderColor = NSColor.red.cgColor
+        detailMovementLabel.layer?.borderWidth = 2
         
         typeStretchLabel.snp.makeConstraints { make in
-            make.top.equalTo(movementStackView.snp.top)
-            make.horizontalEdges.equalTo(movementStackView.snp.horizontalEdges)
+//            make.top.equalTo(movementStackView.snp.top)
+//            make.horizontalEdges.equalTo(movementStackView.snp.horizontalEdges)
         }
         
         detailMovementLabel.snp.makeConstraints { make in
-            make.top.equalTo(typeStretchLabel.snp.bottom)
-            make.bottom.equalTo(movementStackView.snp.bottom)
-            make.trailing.equalTo(movementStackView.snp.trailing)
+//            make.top.equalTo(typeStretchLabel.snp.bottom)
+//            make.bottom.equalTo(movementStackView.snp.bottom)
+//            make.trailing.equalTo(movementStackView.snp.trailing)
         }
         
     }

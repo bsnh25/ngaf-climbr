@@ -34,20 +34,29 @@ class ProgressUserView: NSView {
         stackView.distribution = .equalSpacing
 //        stackView.layer?.backgroundColor = colorBg.cgColor
         stackView.layer?.cornerRadius = 8
+        stackView.edgeInsets = NSEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         
         typeLabel.stringValue = typeStretch
         valueLabel.stringValue = valueProgress
 //        valueLabel.textColor = colorBg
         typeLabel.textColor = .white
+        typeLabel.alignment = .center
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+//            make.edges.equalToSuperview()
+//            make.top.equalTo(self.snp.top)
+            make.leading.equalTo(self.snp.leading)
+            make.trailing.equalTo(self.snp.trailing)
+//            make.bottom.equalTo(self.snp.bottom)
+            
             make.width.equalTo(163)
             make.height.equalTo(131)
         }
         
         typeLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
+//            make.top.equalToSuperview().inset(10)
+            make.height.equalTo(22)
+            make.width.equalTo(100)
         }
         
         
@@ -61,7 +70,7 @@ class ProgressUserView: NSView {
         valueView.layer?.cornerRadius = 8
         
         valueView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(8)
+//            make.bottom.equalToSuperview().inset(8)
             make.width.equalTo(147)
             make.height.equalTo(85)
         }

@@ -80,7 +80,7 @@ class StretchingResultVC: NSViewController {
     private func configureResultUI() {
         /// old:  greeting, subgreeting, charView, rewardPoint
         /// new: greeting, charView, progressView
-//        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
+        //        let views                   = [greetingLabel, stretchingDurationLabel, characterView, rewardPointLabel]
         
         let views = [greetingLabel, characterView, progressStack]
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -90,8 +90,8 @@ class StretchingResultVC: NSViewController {
         resultStack.spacing         = 24
         resultStack.distribution    = .fillEqually
         resultStack.wantsLayer = true
-//        resultStack.layer?.borderColor = .black
-//        resultStack.layer?.borderWidth = 1
+        //        resultStack.layer?.borderColor = .black
+        //        resultStack.layer?.borderWidth = 1
         
         resultStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -99,7 +99,7 @@ class StretchingResultVC: NSViewController {
         progressStack.setViews(viewsProgress, in: .center)
         progressStack.orientation = .horizontal
         progressStack.spacing = 28
-                
+        
         view.addSubview(resultStack)
         
         ///coint setup
@@ -139,7 +139,7 @@ class StretchingResultVC: NSViewController {
         
         /// Button
         configureButton()
-
+        
         resultStack.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(view.bounds.height / 10)
             make.bottom.equalToSuperview().inset(view.bounds.height / 10)
@@ -149,7 +149,16 @@ class StretchingResultVC: NSViewController {
         
         greetingLabel.snp.makeConstraints { make in
             make.width.equalTo(811)
-            make.top.equalTo(resultStack.snp.top).inset(104)
+            //            make.top.equalTo(resultStack.snp.top).inset(104)
+        }
+        
+        progressStack.wantsLayer = true
+        progressStack.layer?.borderColor = .black
+        progressStack.layer?.borderWidth = 1
+        
+        progressStack.snp.makeConstraints { make in
+            make.width.equalTo(736)
+            make.height.equalTo(131)
         }
     }
     
