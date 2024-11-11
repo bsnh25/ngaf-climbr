@@ -96,9 +96,12 @@ class GridItem: NSCollectionViewItem {
 
     func configure(equipmentModel: EquipmentModel) {
         backgroundImageView.image = NSImage(named: equipmentModel.item.image)
+        backgroundImageView.setAccessibilityTitle("\(equipmentModel.item.itemName) Items Section")
         data = equipmentModel
         overlayView.isHidden = equipmentModel.isUnlocked
+        overlayView.setAccessibilityTitle("\(equipmentModel.item.itemName) Items is \(equipmentModel.isUnlocked ? "Unlocked" : "Locked")")
         lockIcon.isHidden = equipmentModel.isUnlocked
+        lockIcon.setAccessibilityTitle("\(equipmentModel.item.itemName) Items is \(equipmentModel.isUnlocked ? "Unlocked" : "Locked")")
 //        overlayView.setAccessibilityLabel("\(equipmentModel.isUnlocked ? "Item is Unlocked" : "Item is Locked")")
 //        backgroundImageView.setAccessibilityLabel("\(equipmentModel.item.itemName) Equipment Picture")
 //        lockIcon.setAccessibilityLabel("\(equipmentModel.isUnlocked ? "Item is Unlocked" : "Item is Locked")")

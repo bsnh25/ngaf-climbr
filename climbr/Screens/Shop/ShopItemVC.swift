@@ -119,6 +119,7 @@ class ShopItemVC: NSViewController {
             collectionViewContainer.selectCurrentItem(with: selectedItem?.item ?? character.headEquipment)
             ///
             priceLabel.setText("􀀈\(character.headEquipment.price)")
+            priceLabel.setAccessibilityTitle("Current equipment price is \(character.headEquipment.price)")
             /// Configure rive artboard
             do {
                 try animationShop?.configureModel(artboardName: character.gender == .male ? "ShopscreenMale" : "ShopscreenFemale")
@@ -276,6 +277,10 @@ class ShopItemVC: NSViewController {
         pointsView.layer?.backgroundColor = .white
         pointsView.layer?.cornerRadius = 10
         pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        pointsView.setAccessibilityElement(true)
+        pointsView.setAccessibilityTitle("Your Points")
+        pointsView.setAccessibilityLabel("Your current point is \(character?.point ?? 0)")
+        pointsView.setAccessibilityRole(.group)
         
         view.addSubview(pointsView)
         
@@ -305,6 +310,7 @@ class ShopItemVC: NSViewController {
         selectedButton?.updateItemIcon(true)
         
         priceLabel.setText("􀀈\(character?.headEquipment.price)")
+        priceLabel.setAccessibilityTitle("Current equipment price is \(character?.headEquipment.price)")
     }
     
 //    func updateGridItemsWithSelectedItem() {
@@ -326,6 +332,7 @@ class ShopItemVC: NSViewController {
             updateData(with: .head)
             collectionViewContainer.selectCurrentItem(with: character.headEquipment)
             priceLabel.setText("􀀈\(character.headEquipment.price)")
+            priceLabel.setAccessibilityTitle("Current equipment price is \(character.headEquipment.price)")
 //            collectionViewContainer.updateItems(items: headItems)
 //            buyButton.updateItemButtonPreview(item: currentHead, price: currentHead.price, point: Int((characterService?.getCharacterData()!.point)!))
 //            buyButton.isHidden = currentHeadModel.isUnlocked
@@ -334,6 +341,7 @@ class ShopItemVC: NSViewController {
             updateData(with: .back)
             collectionViewContainer.selectCurrentItem(with: character.backEquipment)
             priceLabel.setText("􀀈\(character.backEquipment.price)")
+            priceLabel.setAccessibilityTitle("Current equipment price is \(character.headEquipment.price)")
 //            collectionViewContainer.updateItems(items: backItems)
 //            buyButton.updateItemButtonPreview(item: currentBack, price: currentBack.price, point: Int((characterService?.getCharacterData()!.point)!))
 //            buyButton.isHidden = currentBackModel.isUnlocked
@@ -342,6 +350,7 @@ class ShopItemVC: NSViewController {
             updateData(with: .hand)
             collectionViewContainer.selectCurrentItem(with: character.handEquipment)
             priceLabel.setText("􀀈\(character.handEquipment.price)")
+            priceLabel.setAccessibilityTitle("Current equipment price is \(character.headEquipment.price)")
 //            collectionViewContainer.updateItems(items: handItems)
 //            buyButton.updateItemButtonPreview(item: currentHand, price: currentHand.price, point: Int((characterService?.getCharacterData()!.point)!))
 //            buyButton.isHidden = currentHandModel.isUnlocked
@@ -350,6 +359,7 @@ class ShopItemVC: NSViewController {
             updateData(with: .location)
             collectionViewContainer.selectCurrentItem(with: character.locationEquipment)
             priceLabel.setText("􀀈\(character.locationEquipment.price)")
+            priceLabel.setAccessibilityTitle("Current equipment price is \(character.headEquipment.price)")
 //            collectionViewContainer.selectCurrentItem(with: character.location)
 //            collectionViewContainer.updateItems(items: locationItems)
 //            buyButton.updateItemButtonPreview(item: currentLocation, price: currentLocation.price, point: Int((characterService?.getCharacterData()!.point)!))
