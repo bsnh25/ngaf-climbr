@@ -149,10 +149,10 @@ class OverlayView: NSViewController {
         
         snoozeTimer?.cancel()
         snoozeTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
-        snoozeTimer?.schedule(deadline: .now() + 300)
+        snoozeTimer?.schedule(deadline: .now() + .seconds(300))
         snoozeTimer?.setEventHandler { [weak self] in
             DispatchQueue.main.async {
-                self?.notifService.showOverlay()
+                self?.notifService.snoozeOverlay()
             }
         }
         snoozeTimer?.resume()
