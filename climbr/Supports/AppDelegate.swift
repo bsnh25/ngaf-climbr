@@ -68,14 +68,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       mainWindow?.addViewController(vc)
     }
     
-    bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
-        .sink { [weak self] _ in
-            guard let self = self else {return}
-            
-            DispatchQueue.main.async {
-                self.observeUserCharacter()
-            }
-        }
+    if UserManager.shared.getCharacterData() == nil {
+      bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+          .sink { [weak self] _ in
+              guard let self = self else {return}
+              
+              DispatchQueue.main.async {
+                  self.observeUserCharacter()
+              }
+          }
+    } else {
+      createStatusBar()
+    }
     
     createAppMenuBar()
     createWindowMenuBar()

@@ -7,6 +7,7 @@
 
 import AppKit
 import Swinject
+import Combine
 
 class MenuBarVC: NSViewController {
   private lazy var titleStateLabel: CLLabel = {
@@ -19,8 +20,8 @@ class MenuBarVC: NSViewController {
   
   private lazy var stateLabel: CLLabel = {
     let label = CLLabel()
-    label.stringValue = "Capek!!!"
-    label.textColor = .cButton
+    label.stringValue = "Fit"
+    label.textColor = .kGreen
     label.font = .boldSystemFont(ofSize: 22)
     
     return label
@@ -70,7 +71,7 @@ class MenuBarVC: NSViewController {
   }()
   
   private lazy var quitBtn: CLTextButtonV2 = {
-    let button = CLTextButtonV2(title: "Quit", borderColor: .tertiaryLabelColor, font: .preferredFont(forTextStyle: .body))
+    let button = CLTextButtonV2(title: "Quit", borderColor: .labelColor, font: .preferredFont(forTextStyle: .body))
     button.target = self
     button.action = #selector(quitApp)
     
@@ -97,6 +98,9 @@ class MenuBarVC: NSViewController {
   var openStretchNowHandler: (() -> Void)
   var quitAppHandler: (() -> Void)
   
+  private var bag: AnyCancellable?
+  private var userManager = UserManager.shared
+  
   init(
     onOpenStretchNow: @escaping (() -> Void),
     onQuitApp: @escaping (() -> Void)
@@ -118,6 +122,28 @@ class MenuBarVC: NSViewController {
     configureViews()
     configureConstraints()
     
+    bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+        .sink { [weak self] _ in
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                self.observeNotification()
+            }
+        }
+  }
+  
+  private func observeNotification() {
+    let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+    
+    print("Current session: ", UserDefaults.standard.object(forKey: UserDefaultsKey.kCurrentSessionReminder))
+    
+    if notifCount > 0 {
+      stateLabel.setText("Fit")
+      stateLabel.setTextColor(.kGreen)
+    } else {
+      stateLabel.setText("Tired")
+      stateLabel.setTextColor(.cNewButton)
+    }
   }
   
   private func configureViews() {
