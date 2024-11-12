@@ -85,6 +85,8 @@ class HomeVC: NSViewController {
         anima.fit = .fill
         return anima
     }()
+  
+    var isBGMActive: Bool = false
     
     @Published var progressValue: Double = UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession)
     
@@ -104,6 +106,8 @@ class HomeVC: NSViewController {
         print("viewWillAppear")
         reloadAnimation()
         self.character = self.charService.getCharacterData()
+      
+        isBGMActive = UserDefaults.standard.bool(forKey: UserDefaultsKey.kBGMActive)
         
         if let character {
             /// Configure rive artboard
@@ -118,6 +122,8 @@ class HomeVC: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        isBGMActive = UserDefaults.standard.bool(forKey: UserDefaultsKey.kBGMActive)
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -126,6 +132,7 @@ class HomeVC: NSViewController {
                 DispatchQueue.main.async {
                     self.updateProgressData()
                     self.observeNotif()
+                  self.observeBacksound()
                 }
             }
             .store(in: &bagss)
@@ -150,9 +157,12 @@ class HomeVC: NSViewController {
 //            storeButton.updateColorBox(false)
 //            isShowPopover.toggle()
 //        }
-        
-        let audio = Container.shared.resolve(AudioService.self)
-        audio?.playBackgroundMusic(fileName: "summer")
+      
+        if isBGMActive {
+          let audio = Container.shared.resolve(AudioService.self)
+          audio?.playBackgroundMusic(fileName: "summer")
+        }
+      
         observeTimer()
     
         print("Rive Home Status: \(String(describing: animationMain?.isPlaying))")
@@ -171,6 +181,16 @@ class HomeVC: NSViewController {
             self.updateProgressData()
             self.observeNotif()
         }
+    }
+  
+    private func observeBacksound() {
+      isBGMActive = UserDefaults.standard.bool(forKey: UserDefaultsKey.kBGMActive)
+      
+      if !isBGMActive {
+        audioButton.updateImage("speaker.slash")
+      } else {
+        audioButton.updateImage("speaker.wave.3")
+      }
     }
     
     private func previewAnimaConfig(){
@@ -216,6 +236,12 @@ class HomeVC: NSViewController {
         audioButton.setAccessibilityTitle("Background Music")
         audioButton.setAccessibilityLabel("Mute or unmute the background music")
         audioButton.setAccessibilityRole(.button)
+        
+        if !isBGMActive {
+          audioButton.updateImage("speaker.slash")
+        } else {
+          audioButton.updateImage("speaker.wave.3")
+        }
         
         //MARK: Store Button Action
         storeButton.action = #selector(actionStore)
