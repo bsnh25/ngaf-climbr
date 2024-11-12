@@ -10,6 +10,7 @@
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
 		034EADE12CC786BF006C0C9C /* climbrHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034EADCD2CC78493006C0C9C /* climbrHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EB35022CE3344100DDF4E4 /* AboutAlert.swift */; };
 		8A6FF3242CD681B900E8E5EC /* overlay_notification-2.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A6FF3232CD681B900E8E5EC /* overlay_notification-2.riv */; };
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
 		8A6FF3292CD682C700E8E5EC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3282CD682C700E8E5EC /* OverlayView.swift */; };
@@ -154,6 +155,7 @@
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		03EB35022CE3344100DDF4E4 /* AboutAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAlert.swift; sourceTree = "<group>"; };
 		8A6FF3232CD681B900E8E5EC /* overlay_notification-2.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = "overlay_notification-2.riv"; sourceTree = "<group>"; };
 		8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNotifServices.swift; sourceTree = "<group>"; };
 		8A6FF3282CD682C700E8E5EC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				9095DFC92CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift */,
+				03EB35022CE3344100DDF4E4 /* AboutAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1016,6 +1019,7 @@
 				9095E0142CD6683D00280F13 /* CLDatePicker.swift in Sources */,
 				9095E0C12CD6685400280F13 /* StreakManager.swift in Sources */,
 				9095E0C22CD6685400280F13 /* AudioManager.swift in Sources */,
+				03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */,
 				9095E0C32CD6685400280F13 /* EquipmentManager.swift in Sources */,
 				9095E0C42CD6685400280F13 /* ProgressManager.swift in Sources */,
 				9095E0C52CD6685400280F13 /* PersistenceController.swift in Sources */,
