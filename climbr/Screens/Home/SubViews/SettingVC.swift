@@ -378,7 +378,6 @@ class SettingVC: NSViewController {
       }
       
     } else {
-        isFlexibleWorkHour = false
 //      daysButtonStack.lockButton()
         for workingHour in userPreferenceData.workingHours where workingHour.isEnabled {
             workingHours.update(with: workingHour)

@@ -130,15 +130,15 @@ extension SettingVC {
 extension SettingVC: DaysButtonToUserPreferenceDelegate {
     func didSundayTap(_ isSelected: Bool) {
         if isFlexibleWorkHour {
-            preferenceStack[1].isHidden = !isSelected
+            preferenceStack[0].isHidden = !isSelected
             
-            if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
                 day.isEnabled = isSelected
                 
                 workingHours.update(with: day)
             }
         } else {
-            if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+            if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
                 day.isEnabled = isSelected
                 
                 if !isSelected {
