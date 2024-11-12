@@ -151,7 +151,7 @@ class StretchingVC: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        cameraService?.startSession()
+        cameraService?.startSessionIfPermitted()
         progressSideView.loadMovement(self.setOfMovements)
         print("LOG setMovement : \(setOfMovements)")
         configureCameraPreview()
