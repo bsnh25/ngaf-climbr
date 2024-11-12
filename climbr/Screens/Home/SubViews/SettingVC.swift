@@ -286,6 +286,7 @@ class SettingVC: NSViewController {
         differentWorkHoursCheckbox.attributedTitle = NSAttributedString(string: differentWorkHoursCheckbox.title, attributes: attributes)
       
         differentWorkHoursCheckbox.state = userPreferenceData.isFlexibleWorkHour ? .on : .off
+        isFlexibleWorkHour = userPreferenceData.isFlexibleWorkHour
         
         // Set the content tint color (optional, depending on what you want to achieve)
         differentWorkHoursCheckbox.contentTintColor = .blue
@@ -607,6 +608,8 @@ class SettingVC: NSViewController {
     }
     
     func configureLaunchAtLoginCheckBox(){
+        guard let userPreferenceData else { return }
+      
         view.addSubview(launchAtLoginChecBox)
         
         let attributes: [NSAttributedString.Key: Any] = [
@@ -615,12 +618,7 @@ class SettingVC: NSViewController {
         ]
         
         
-        if ((userPreferenceData?.launchAtLogin) != nil){
-            launchAtLoginChecBox.state = .on
-            isFlexibleWorkHour = true
-        } else{
-            launchAtLoginChecBox.state = .off
-        }
+        launchAtLoginChecBox.state = userPreferenceData.launchAtLogin ? .on : .off
         
         let newState = launchAtLoginChecBox.state == .on ? "Checked" : "Unchecked"
         // Apply the attributed title
