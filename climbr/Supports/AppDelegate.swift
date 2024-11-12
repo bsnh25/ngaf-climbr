@@ -10,6 +10,7 @@ import Swinject
 import UserNotifications
 import RiveRuntime
 import ServiceManagement
+import Combine
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   
@@ -19,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     let notifService = NotificationManager.shared
   
   var userPreference: UserPreferenceModel?
+  var bag: AnyCancellable?
   var mainWindow: MainWindow?
   var statusBarWindow: NSWindow!
   var statusBar: NSStatusBar?
@@ -62,11 +64,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     mainWindow = MainWindow()
     
-    if let vc                  = Container.shared.resolve(MainVC.self) {
+    if let vc = Container.shared.resolve(MainVC.self) {
       mainWindow?.addViewController(vc)
     }
     
-    createStatusBar()
+    bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+        .sink { [weak self] _ in
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                self.observeUserCharacter()
+            }
+        }
+    
     createAppMenuBar()
     createWindowMenuBar()
     
@@ -211,5 +221,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
       mainWindow?.orderFrontRegardless()
       
     }
+  }
+  
+  func observeUserCharacter() {
+    let character = UserManager.shared.getCharacterData()
+    
+    guard character != nil else { return }
+    
+    createStatusBar()
+    
+    bag?.cancel()
   }
 }
