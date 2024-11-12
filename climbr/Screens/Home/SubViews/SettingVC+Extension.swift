@@ -39,6 +39,7 @@ extension SettingVC {
             for workingHour in self.workingHours {
                 if workingHour.isEnabled{
                     preferenceStack[workingHour.day].isHidden = false
+                    preferenceStack[workingHour.day].setInitialValue(workingHour.startHour, workingHour.endHour)
                       
                     workingHours.update(with: workingHour)
                     
