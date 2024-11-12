@@ -101,7 +101,7 @@ class DaysButtonStackView: NSStackView {
             item.foregroundColorText = .black
             item.isSelected = false
             
-            item.isEnabled = false
+            item.isEnabled = true
             item.snp.makeConstraints{item in
                 item.width.equalTo(32)
                 item.height.equalTo(36)
@@ -127,6 +127,10 @@ class DaysButtonStackView: NSStackView {
         saturday.action = #selector(saturdayAction)
         sunday.target = self
         sunday.action = #selector(sundayAction)
+        
+        monday.isSelected = true
+        monday.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        monday.foregroundColorText = .white
     }
     
     func unlockButton() {
@@ -137,9 +141,9 @@ class DaysButtonStackView: NSStackView {
             item.isSelected = false
         }
         
-        sunday.isSelected = true
-        sunday.layer?.backgroundColor = NSColor.cNewButton.cgColor
-        sunday.foregroundColorText = .white
+//        sunday.isSelected = true
+//        sunday.layer?.backgroundColor = NSColor.cNewButton.cgColor
+//        sunday.foregroundColorText = .white
     }
     
     func lockButton() {

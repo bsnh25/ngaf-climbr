@@ -317,9 +317,15 @@ class SettingVC: NSViewController {
             print("Work Hours: ", formatter.string(from: start), " to ", formatter.string(from: end))
             
             for item in self.workingHours {
-                let data = WorkingHour(startHour: start, endHour: end, day: item.day)
-                
-                self.workingHours.update(with: data)
+                if item.isEnabled {
+                    let data = WorkingHour(startHour: start, endHour: end, day: item.day, isEnabled: true)
+                    
+                    self.workingHours.update(with: data)
+                } else {
+                    let data = WorkingHour(startHour: start, endHour: end, day: item.day)
+                    
+                    self.workingHours.update(with: data)
+                }
             }
             
             self.isPreferenceEdited = true
@@ -334,7 +340,7 @@ class SettingVC: NSViewController {
   func configureWorkingHours() {
     guard let userPreferenceData else { return }
     if userPreferenceData.isFlexibleWorkHour {
-      daysButtonStack.unlockButton()
+//      daysButtonStack.unlockButton()
       
       for workingHour in userPreferenceData.workingHours where workingHour.isEnabled {
         let dayPreference: DayTimePreferenceView? = getDayPreference(for: workingHour.day)
@@ -371,7 +377,35 @@ class SettingVC: NSViewController {
       }
       
     } else {
-      daysButtonStack.lockButton()
+//      daysButtonStack.lockButton()
+        for workingHour in userPreferenceData.workingHours where workingHour.isEnabled {
+            workingHours.update(with: workingHour)
+        }
+        for workingHour in userPreferenceData.workingHours {
+          guard let dayName = Weekday(rawValue: workingHour.day) else { return }
+          
+          let weekDayButton: CLPickerButton?
+          
+          switch dayName {
+            
+          case .sunday:
+            weekDayButton = daysButtonStack.sunday
+          case .monday:
+            weekDayButton = daysButtonStack.monday
+          case .tuesday:
+            weekDayButton = daysButtonStack.tuesday
+          case .wednesday:
+            weekDayButton = daysButtonStack.wednesday
+          case .thursday:
+            weekDayButton = daysButtonStack.thursday
+          case .friday:
+            weekDayButton = daysButtonStack.friday
+          case .saturday:
+            weekDayButton = daysButtonStack.saturday
+          }
+          
+          weekDayButton?.isSelected = workingHour.isEnabled
+        }
     }
     
   }
@@ -617,7 +651,6 @@ class SettingVC: NSViewController {
         
         if ((userPreferenceData?.launchAtLogin) != nil){
             launchAtLoginChecBox.state = .on
-            isFlexibleWorkHour = true
         } else{
             launchAtLoginChecBox.state = .off
         }
