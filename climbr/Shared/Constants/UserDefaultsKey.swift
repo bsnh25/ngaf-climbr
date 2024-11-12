@@ -16,4 +16,5 @@ struct UserDefaultsKey {
     static let kNotificationCount   = "kNotificationCount"
     static let kUserPreference      = "kUserPreference"
     static let kUserCharacter       = "kUserCharacter"
+    static let kBGMActive           = "kBGMActive"
 }

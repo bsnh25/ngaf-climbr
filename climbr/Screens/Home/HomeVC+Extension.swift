@@ -90,19 +90,15 @@ extension HomeVC {
     }
     
     @objc
-    func actionAudio(){
+  func actionAudio(_ sender: NSButton){
         guard let audio = audioService else {return}
         isSoundTapped.toggle()
-        if isSoundTapped{
+      
+        if sender.state == .on {
             audio.muteSound()
-//            audioButton.image = NSImage(systemSymbolName: "speaker.slash", accessibilityDescription: "Music Muted")?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: .black.withAlphaComponent(0.5)))
-            audioButton.updateImage("speaker.slash")
-            return
         } else {
             audio.unmuteSound()
-            audioButton.updateImage("speaker.wave.3")
-//            audioButton.image = NSImage(systemSymbolName: "speaker.wave.2", accessibilityDescription: "Music Muted")?.withSymbolConfiguration(NSImage.SymbolConfiguration(hierarchicalColor: .black.withAlphaComponent(0.5)))
-            return
+            audio.playBackgroundMusic(fileName: "summer")
         }
     }
     
