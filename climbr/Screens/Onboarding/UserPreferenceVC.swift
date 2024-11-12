@@ -317,6 +317,12 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
   }
   
   func configureWorkHourItemView(){
+      if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
+          day.isEnabled = true
+          print("day raw value: \(day.day)")
+          self.workingHours.update(with: day)
+      }
+      
     workHourItemView.onValueChanged = { start, end in
       
       let formatter = DateFormatter()
@@ -324,9 +330,15 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
       print("Work Hours: ", formatter.string(from: start), " to ", formatter.string(from: end))
       
       for item in self.workingHours {
-        let data = WorkingHour(startHour: start, endHour: end, day: item.day)
-        
-        self.workingHours.update(with: data)
+          if item.isEnabled {
+              let data = WorkingHour(startHour: start, endHour: end, day: item.day, isEnabled: true)
+              
+              self.workingHours.update(with: data)
+          } else {
+              let data = WorkingHour(startHour: start, endHour: end, day: item.day)
+              
+              self.workingHours.update(with: data)
+          }
       }
       
     }
@@ -359,7 +371,7 @@ class UserPreferenceVC: NSViewController, NSStackViewDelegate {
     preferenceStackView.distribution = .fillEqually
     
     for item in preferenceStack {
-      item.isHidden = item.day != "Sunday"
+        item.isHidden = true
       item.initialStartValue = initialStartWorkHour
       item.initialEndValue = initialEndWorkHour
       item.snp.makeConstraints{item in
