@@ -141,6 +141,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
                 day.isEnabled = isSelected
                 
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }
@@ -163,7 +166,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.monday.rawValue }) {
                 day.isEnabled = isSelected
                 
-
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }
@@ -184,6 +189,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.tuesday.rawValue }) {
                 day.isEnabled = isSelected
                 
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }
@@ -205,7 +213,10 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
         } else {
             if var day = workingHours.first(where: { $0.day == Weekday.wednesday.rawValue }) {
                 day.isEnabled = isSelected
-
+                
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }
@@ -228,7 +239,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.thursday.rawValue }) {
                 day.isEnabled = isSelected
                 
-
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }
@@ -251,7 +264,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.friday.rawValue }) {
                 day.isEnabled = isSelected
                 
-
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }
@@ -275,7 +290,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.saturday.rawValue }) {
                 day.isEnabled = isSelected
                 
-
+                if !isSelected {
+                    day.isEnabled = isSelected
+                }
                 
                 workingHours.update(with: day)
             }

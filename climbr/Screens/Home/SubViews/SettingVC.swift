@@ -341,6 +341,7 @@ class SettingVC: NSViewController {
     guard let userPreferenceData else { return }
     if userPreferenceData.isFlexibleWorkHour {
 //      daysButtonStack.unlockButton()
+        isFlexibleWorkHour = true
       
       for workingHour in userPreferenceData.workingHours where workingHour.isEnabled {
         let dayPreference: DayTimePreferenceView? = getDayPreference(for: workingHour.day)
@@ -377,6 +378,7 @@ class SettingVC: NSViewController {
       }
       
     } else {
+        isFlexibleWorkHour = false
 //      daysButtonStack.lockButton()
         for workingHour in userPreferenceData.workingHours where workingHour.isEnabled {
             workingHours.update(with: workingHour)
