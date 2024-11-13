@@ -30,7 +30,7 @@ extension SettingVC {
       
         if isFlexibleWorkHour {
           
-          configureWorkingHours()
+//          configureWorkingHours()
 //          daysButtonStack.unlockButton()
           
           workHourItemView.isHidden = true

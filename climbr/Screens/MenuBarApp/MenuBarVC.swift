@@ -134,14 +134,19 @@ class MenuBarVC: NSViewController, NotificationDelegate {
       
     
     
-    bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+      bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
         .sink { [weak self] _ in
             guard let self = self else {return}
             
             DispatchQueue.main.async {
+                self.userPreference = self.userManager.getPreferences()
                 self.observeNotification()
+                self.updateSessionTime()
             }
         }
+    
+    
+    
   }
   
   private func observeNotification() {
@@ -151,12 +156,30 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     
     if notifCount > 0 {
       stateLabel.setText("Tired")
-      stateLabel.setTextColor(.kGreen)
+        stateLabel.setTextColor(.cNewButton)
     } else {
       stateLabel.setText("Fit")
-      stateLabel.setTextColor(.cNewButton)
+      stateLabel.setTextColor(.kGreen)
     }
   }
+    
+    private func getNextEnabledDayName(after day: Int, workingHours: [WorkingHour]) -> String {
+        let calendar = Calendar.current
+        var currentDay = day
+
+        for _ in 0...6 {
+            currentDay = (currentDay + 1)  % 7
+            
+            
+            if let workingHour = workingHours.first(where: { $0.day == currentDay && $0.isEnabled }) {
+                print("current day get enabled: \(calendar.weekdaySymbols[currentDay])")
+                return calendar.weekdaySymbols[currentDay]
+            }
+        }
+
+        return "No Working Day Found"
+    }
+
     
     private func calculateNextSessionTime() -> String {
         guard let reminderInterval = userPreference?.reminderInterval,
@@ -164,42 +187,46 @@ class MenuBarVC: NSViewController, NotificationDelegate {
             return "No Session Set"
         }
 
-        // Get the current day of the week (1 = Sunday, 2 = Monday, etc.)
         let calendar = Calendar.current
-        let todayWeekday = calendar.component(.weekday, from: Date())
+        let todayWeekday = calendar.component(.weekday, from: Date()) - 1
+        print("todayWeekday: \(todayWeekday)")
+        let notifCount = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
         
-        // Look for today's working hour in the array
+        print("workingHours: \(workingHours)")
+        
         for workingHour in workingHours {
+            print("workingHour day: \(workingHour.day)")
             if workingHour.day == todayWeekday {
                 if workingHour.isEnabled {
-                    // Today is a working day, calculate the next session time
+                    
                     let formatter = DateFormatter()
                     formatter.dateFormat = "HH:mm"
                     
                     let nextSessionTime = getNextSessionTime(from: lastSessionTime,
                                                              interval: reminderInterval,
                                                              workingHour: workingHour)
-                    sessionLabel.setTextColor(.kGreen)
-                    return formatter.string(from: nextSessionTime)
+                    
+                    sessionLabel.setTextColor(notifCount > 0 ? .cNewButton : .kGreen)
+                    
+                    return nextSessionTime
                 } else {
-                    // Today is not a working day
-                    sessionLabel.setTextColor(.cNewButton)
-                    return "Tomorrow"
+                    
+                    let nextEnabledDayName = getNextEnabledDayName(after: todayWeekday, workingHours: workingHours)
+                    sessionLabel.setTextColor(notifCount > 0 ? .cNewButton : .kGreen)
+                    return nextEnabledDayName
                 }
             }
         }
 
-        // Fallback if no matching day is found (shouldn't happen with exactly 7 items)
         sessionLabel.setTextColor(.cNewButton)
         return "No Session Set"
     }
 
-    /// Determines the next session time constrained within today's working hours
-    private func getNextSessionTime(from baseTime: Date, interval: Int, workingHour: WorkingHour) -> Date {
+    private func getNextSessionTime(from baseTime: Date, interval: Int, workingHour: WorkingHour) -> String {
         var nextTime = baseTime.addingTimeInterval(TimeInterval(interval * 60))
         let calendar = Calendar.current
 
-        // Define the start and end of today's working hours
+       
         let startOfWorkday = calendar.date(bySettingHour: calendar.component(.hour, from: workingHour.startHour),
                                            minute: calendar.component(.minute, from: workingHour.startHour),
                                            second: 0, of: nextTime)!
@@ -207,22 +234,23 @@ class MenuBarVC: NSViewController, NotificationDelegate {
                                          minute: calendar.component(.minute, from: workingHour.endHour),
                                          second: 0, of: nextTime)!
         
-        // Check if `nextTime` is within working hours
+        
         if nextTime >= startOfWorkday && nextTime < endOfWorkday {
-            // If within working hours, return `nextTime`
-
-            return nextTime
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter.string(from: nextTime)
         } else if nextTime >= endOfWorkday {
-            // If after working hours, set `nextTime` to tomorrow's start hour
-    
-            return startOfWorkday.addingTimeInterval(24 * 60 * 60) // move to the next day's start if needed
+            
+            print("based working hour day: \(workingHour.day)")
+            return getNextEnabledDayName(after: workingHour.day, workingHours: userPreference?.workingHours ?? [])
         } else {
-            // If before working hours, set `nextTime` to today’s start hour
-       
-            return startOfWorkday
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter.string(from: startOfWorkday)
         }
     }
-      
+
   
         private func updateSessionTime() {
             sessionLabel.stringValue = calculateNextSessionTime()

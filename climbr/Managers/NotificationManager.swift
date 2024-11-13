@@ -48,7 +48,7 @@ class NotificationManager: NotificationService {
         let now = Date()
         
         // Mendapatkan komponen hari dan waktu saat ini
-        let currentDay = calendar.component(.weekday, from: now)
+        let currentDay = calendar.component(.weekday, from: now) - 1
         let currentHour = calendar.component(.hour, from: now)
         let currentMinute = calendar.component(.minute, from: now)
     

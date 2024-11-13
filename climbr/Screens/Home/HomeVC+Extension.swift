@@ -116,6 +116,8 @@ extension HomeVC {
         progressStretch.doubleValue = progressValue
     }
     
+    
+    
     @objc
     func validateYesterday(){
         let date = UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date
