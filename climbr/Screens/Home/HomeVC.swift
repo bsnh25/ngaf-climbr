@@ -82,7 +82,7 @@ class HomeVC: NSViewController {
     
     var animationMain : RiveViewModel? = {
         var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
-        anima.fit = .fill
+      anima.fit = .cover
         return anima
     }()
   

@@ -124,7 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       }
     } else {
       // Fallback untuk macOS yang lebih lama
-      let mainAppIdentifier = "com.hkbp.climbr"
+      let mainAppIdentifier = "com.ngaf.climbr"
       let runningApps = NSWorkspace.shared.runningApplications
       let isRunning = runningApps.contains(where: { $0.bundleIdentifier == mainAppIdentifier })
       

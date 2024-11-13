@@ -138,6 +138,7 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         view.wantsLayer = true
+      view.layer?.backgroundColor = NSColor.red.cgColor
 
     }
   
@@ -153,7 +154,7 @@ class StretchingVC: NSViewController {
         super.viewDidAppear()
         cameraService?.startSessionIfPermitted()
         progressSideView.loadMovement(self.setOfMovements)
-        print("LOG setMovement : \(setOfMovements)")
+//        print("LOG setMovement : \(setOfMovements)")
         configureCameraPreview()
         configureMovementView()
         predictor?.delegate = self
@@ -162,7 +163,7 @@ class StretchingVC: NSViewController {
         configureButton()
         configurePositionStateLabel()
         configureInstructionView()
-        
+//        
         updateMovementData()
         updateMovementState()
         
@@ -228,19 +229,16 @@ class StretchingVC: NSViewController {
     private func configureMovementView() {
         view.addSubview(movementInfoView)
         
-        movementInfoView.translatesAutoresizingMaskIntoConstraints = false
         movementInfoView.wantsLayer                = true
         movementInfoView.layer?.backgroundColor    = .white.copy(alpha: 0.72)
         
         let blurEffect = CLBlurEffectView(frame: movementInfoView.bounds)
         movementInfoView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
         
-        NSLayoutConstraint.activate([
-            movementInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            movementInfoView.topAnchor.constraint(equalTo: view.topAnchor),
-            movementInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            movementInfoView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-        ])
+      movementInfoView.snp.makeConstraints { make in
+        make.verticalEdges.trailing.equalToSuperview()
+        make.width.equalToSuperview().multipliedBy(0.3)
+      }
         
         configureMovementStack()
     }
@@ -277,7 +275,6 @@ class StretchingVC: NSViewController {
 //    }
     
     private func configureMovementStack() {
-        view.addSubview(movementInfoView)
         movementInfoView.addSubview(progressSideView)
 
         // Set background color
@@ -287,22 +284,20 @@ class StretchingVC: NSViewController {
 //        movementInfoView.layer?.borderWidth = 1
 //        movementInfoView.layer?.borderColor = NSColor.red.cgColor
         progressSideView.setAccessibilityElement(true)
-        
-        movementInfoView.translatesAutoresizingMaskIntoConstraints = false
-        progressSideView.translatesAutoresizingMaskIntoConstraints = false
 
         // Layout constraints for `movementInfoView` and `progressSideView`
-        NSLayoutConstraint.activate([
-            movementInfoView.topAnchor.constraint(equalTo: view.topAnchor),
-            movementInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            movementInfoView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-            movementInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            progressSideView.topAnchor.constraint(equalTo: movementInfoView.topAnchor, constant: padding),
-            progressSideView.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
-            progressSideView.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
-            progressSideView.bottomAnchor.constraint(equalTo: movementInfoView.bottomAnchor, constant: -padding)
-        ])
+//        NSLayoutConstraint.activate([
+//            progressSideView.topAnchor.constraint(equalTo: movementInfoView.topAnchor, constant: padding),
+//            progressSideView.leadingAnchor.constraint(equalTo: movementInfoView.leadingAnchor, constant: padding),
+//            progressSideView.trailingAnchor.constraint(equalTo: movementInfoView.trailingAnchor, constant: -padding),
+//            progressSideView.bottomAnchor.constraint(equalTo: movementInfoView.bottomAnchor, constant: -padding)
+//        ])
+      
+      progressSideView.snp.makeConstraints { make in
+//        make.horizontalEdges.equalToSuperview()
+        make.verticalEdges.equalToSuperview().inset(20)
+        make.leading.equalToSuperview().inset(20)
+      }
     }
     
     /// Configure button horizontally
