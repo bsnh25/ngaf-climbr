@@ -13,8 +13,14 @@ class AboutAlert: NSAlert {
         super.init()
         
         icon = NSImage(named: "AppIcon")
-        messageText = "Climbr Desktop App\nversion 2.0.0"
-        informativeText = "Optimized for Apple Silicon\nCopyright 􀀈 2024 !GAF Team"
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+          messageText = "Climbr Desktop App\nversion \(version)"
+        }
+      
+        if let year = Calendar.current.dateComponents([.year], from: .now).year {
+          informativeText = "Optimized for Apple Silicon\nCopyright 􀀈 \(year) !GAF Team"
+        }
+      
         addButton(withTitle: "OK")
         alertStyle = .informational
     }
