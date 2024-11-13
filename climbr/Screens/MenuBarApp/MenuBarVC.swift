@@ -74,7 +74,7 @@ class MenuBarVC: NSViewController, NotificationDelegate {
   }()
   
   private lazy var quitBtn: CLTextButtonV2 = {
-    let button = CLTextButtonV2(title: "Quit", borderColor: .labelColor, font: .preferredFont(forTextStyle: .body))
+      let button = CLTextButtonV2(title: "Quit", borderColor: .cQuitButtonMenuBar, font: .preferredFont(forTextStyle: .body) )
     button.target = self
     button.action = #selector(quitApp)
     
