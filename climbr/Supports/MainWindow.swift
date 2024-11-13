@@ -15,7 +15,7 @@ class MainWindow: NSWindow {
     init() {
         /// Init the main window with following parameters:
         super.init(
-            contentRect: screenFrame,
+          contentRect: screenFrame,
             styleMask: [
               .titled, .closable, .miniaturizable, .resizable, .borderless, .fullSizeContentView
             ],
@@ -26,7 +26,7 @@ class MainWindow: NSWindow {
         /// Set the title bar to transparent
         titlebarAppearsTransparent = true
       
-        minSize = NSSize(width: screenFrame.width, height: screenFrame.height)
+        minSize = screenFrame.size
         
         /// Set the window to center axis by default
         center()
