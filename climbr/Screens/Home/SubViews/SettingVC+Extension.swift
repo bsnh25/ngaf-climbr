@@ -30,7 +30,7 @@ extension SettingVC {
       
         if isFlexibleWorkHour {
           
-          configureWorkingHours()
+//          configureWorkingHours()
 //          daysButtonStack.unlockButton()
           
           workHourItemView.isHidden = true
@@ -142,9 +142,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
                 day.isEnabled = isSelected
                 
-                if !isSelected {
-                    day.isEnabled = isSelected
-                }
+//                if !isSelected {
+//                    day.isEnabled = isSelected
+//                }
                 
                 workingHours.update(with: day)
             }
