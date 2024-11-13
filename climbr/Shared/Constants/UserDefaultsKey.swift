@@ -17,4 +17,5 @@ struct UserDefaultsKey {
     static let kUserPreference      = "kUserPreference"
     static let kUserCharacter       = "kUserCharacter"
     static let kCurrentSessionReminder = "kCurrentSessionReminder"
+    static let kBGMActive           = "kBGMActive"
 }
