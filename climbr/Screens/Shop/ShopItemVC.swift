@@ -206,16 +206,8 @@ class ShopItemVC: NSViewController {
         
         contentStack.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(20)
-            make.centerY.equalToSuperview()
             make.leading.equalTo(backButton.snp.leading)
-            make.height.equalTo(544)
-            make.width.equalTo(406)
         }
-//        NSLayoutConstraint.activate([
-//            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor),
-//            contentStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-//            contentStack.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-//        ])
     }
         
     func createSidebarButton(title: String) -> NSButton {

@@ -46,6 +46,8 @@ extension NSViewController {
                 vc.view.animator().alphaValue = 1
                 
                 print("NAV - After Push: ", contentVC.children)
+              print("NAV - VC", vc.view.frame)
+              print("NAV - ContentVC", contentVC.view.frame)
             }
         }
         
