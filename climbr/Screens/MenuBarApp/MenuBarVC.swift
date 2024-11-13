@@ -179,15 +179,18 @@ class MenuBarVC: NSViewController, NotificationDelegate {
                     let nextSessionTime = getNextSessionTime(from: lastSessionTime,
                                                              interval: reminderInterval,
                                                              workingHour: workingHour)
+                    sessionLabel.setTextColor(.kGreen)
                     return formatter.string(from: nextSessionTime)
                 } else {
                     // Today is not a working day
-                    return "Libur"
+                    sessionLabel.setTextColor(.cNewButton)
+                    return "Tomorrow"
                 }
             }
         }
 
         // Fallback if no matching day is found (shouldn't happen with exactly 7 items)
+        sessionLabel.setTextColor(.cNewButton)
         return "No Session Set"
     }
 
@@ -207,12 +210,15 @@ class MenuBarVC: NSViewController, NotificationDelegate {
         // Check if `nextTime` is within working hours
         if nextTime >= startOfWorkday && nextTime < endOfWorkday {
             // If within working hours, return `nextTime`
+
             return nextTime
         } else if nextTime >= endOfWorkday {
             // If after working hours, set `nextTime` to tomorrow's start hour
+    
             return startOfWorkday.addingTimeInterval(24 * 60 * 60) // move to the next day's start if needed
         } else {
             // If before working hours, set `nextTime` to today’s start hour
+       
             return startOfWorkday
         }
     }
