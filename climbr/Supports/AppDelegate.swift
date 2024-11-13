@@ -51,6 +51,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     // Load user preferences (Anda dapat mengganti ini dengan cara Anda menyimpan/memuat preferensi)
     loadUserPreference()
+      
+      if UserManager.shared.getCharacterData() == nil {
+        bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                
+                DispatchQueue.main.async {
+                    self.observeUserCharacter()
+                }
+            }
+      } else {
+        createStatusBar()
+      }
     
     // Cek jika launchAtLogin bernilai true
     if let preferences = userPreference {
@@ -68,18 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       mainWindow?.addViewController(vc)
     }
     
-    if UserManager.shared.getCharacterData() == nil {
-      bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
-          .sink { [weak self] _ in
-              guard let self = self else {return}
-              
-              DispatchQueue.main.async {
-                  self.observeUserCharacter()
-              }
-          }
-    } else {
-      createStatusBar()
-    }
+    
     
     createAppMenuBar()
     createWindowMenuBar()

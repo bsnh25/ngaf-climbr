@@ -7,15 +7,26 @@
 
 import Foundation
 
+protocol NotificationDelegate: AnyObject {
+    func didStartScheduler(_ time: Date)
+}
+
 class NotificationManager: NotificationService {
     
     static let shared = NotificationManager()
     var overlayWindow: OverlayWindow?
     var checkTimer: DispatchSourceTimer?
     var overlayTimer: DispatchSourceTimer?
+    weak var notifDelegate: NotificationDelegate?
     
     func startOverlayScheduler(userPreference: UserPreferenceModel) {
         stopOverlayScheduler()
+        DispatchQueue.main.async {
+            self.notifDelegate?.didStartScheduler(.now)
+            print("delegate date : \(Date())")
+        }
+        
+        
         
         checkTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         checkTimer?.schedule(deadline: .now(), repeating: .seconds(60))
@@ -103,6 +114,9 @@ class NotificationManager: NotificationService {
         count += 1
         
         UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+        
+        notifDelegate?.didStartScheduler(.now)
+        print("delegate date after main overlay: \(Date())")
     }
     
     func snoozeOverlay() {

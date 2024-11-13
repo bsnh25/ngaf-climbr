@@ -58,6 +58,13 @@ extension HomeVC {
     
     @objc
     func actionStartSession(){
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        if count > 0 {
+            count -= 1
+            UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+        }
+        
         if let vc = Container.shared.resolve(StretchingVC.self) {
             
             let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
