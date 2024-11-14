@@ -25,7 +25,60 @@ class CameraManager: NSObject, CameraService {
         cameraQueue = DispatchQueue(label: "sample buffer delegate", attributes: [])
         
         super.init()
-        setupSession()
+//        startSessionIfPermitted()
+    }
+    
+    func checkCameraPermission(completion: @escaping (Bool) -> Void) {
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch authorizationStatus {
+        case .authorized:
+            // Izin telah diberikan
+            completion(true)
+        case .notDetermined:
+            // Izin belum diminta, minta izin kamera
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    completion(granted)
+                }
+            }
+        case .denied, .restricted:
+            // Izin ditolak atau dibatasi
+            completion(false)
+        @unknown default:
+            completion(false)
+        }
+    }
+    
+    func startSessionIfPermitted() {
+        checkCameraPermission { [weak self] isPermitted in
+            if isPermitted {
+                self?.setupSession()
+                self?.startSession()
+            } else {
+                // Tampilkan pesan atau arahkan pengguna ke pengaturan
+                self?.showPermissionAlert()
+            }
+        }
+    }
+    
+    private func showPermissionAlert() {
+        let alert = NSAlert()
+        alert.messageText = "Camera Permission Needed"
+        alert.informativeText = "Please enable camera access in settings to use this feature."
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Open Settings")
+        alert.addButton(withTitle: "Cancel")
+        
+        if alert.runModal() == .alertFirstButtonReturn {
+            openSettings()
+        }
+    }
+    
+    private func openSettings() {
+        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Camera") {
+            NSWorkspace.shared.open(url)
+        }
     }
     
     func setSampleBufferDelegate(delegate: AVCaptureVideoDataOutputSampleBufferDelegate) {

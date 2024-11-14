@@ -90,11 +90,13 @@ class AudioManager: AudioService {
     func muteSound(){
         backgroundPlayer?.volume = 0
         effectPlayer?.volume = 0
+        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kBGMActive)
     }
     
     func unmuteSound(){
         backgroundMusicVolume = self.backgroundMusicVolume
         sfxVolume = self.sfxVolume
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kBGMActive)
 //        print("value : \(UserDefaults.standard.bool(forKey: kBackgroundVolume))")
     }
     
@@ -104,7 +106,9 @@ class AudioManager: AudioService {
     
     func playBackgroundMusic(fileName: String) {
         guard let path = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
-        
+      
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kBGMActive)
+      
         do {
             backgroundPlayer = try AVAudioPlayer(contentsOf: path)
             backgroundPlayer?.numberOfLoops = -1 // Loop indefinitely

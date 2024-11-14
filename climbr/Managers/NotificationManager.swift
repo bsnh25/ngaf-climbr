@@ -40,9 +40,7 @@ class NotificationManager: NotificationService {
         let currentDay = calendar.component(.weekday, from: now)
         let currentHour = calendar.component(.hour, from: now)
         let currentMinute = calendar.component(.minute, from: now)
-        
-        
-        if userPreference.isFlexibleWorkHour {
+    
             
             for workingHour in userPreference.workingHours {
                 // Periksa apakah jadwal aktif dan hari sesuai
@@ -70,30 +68,6 @@ class NotificationManager: NotificationService {
                     return
                 }
             }
-            
-        } else {
-            for workingHour in userPreference.workingHours {
-                
-                let startComponents = calendar.dateComponents([.hour, .minute], from: workingHour.startHour)
-                let endComponents = calendar.dateComponents([.hour, .minute], from: workingHour.endHour)
-                
-                guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
-                      let endHour = endComponents.hour, let endMinute = endComponents.minute else {
-                    continue
-                }
-                
-                
-                if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
-                    (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
-                    
-                    
-                    if overlayTimer == nil {
-                        startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 60))
-                    }
-                    return
-                }
-            }
-        }
         
         // Jika tidak dalam waktu kerja atau tidak memenuhi kriteria, matikan overlayTimer jika aktif
         overlayTimer?.cancel()
@@ -129,5 +103,11 @@ class NotificationManager: NotificationService {
         count += 1
         
         UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+    }
+    
+    func snoozeOverlay() {
+        overlayWindow = OverlayWindow()
+        overlayWindow?.addViewContoller(OverlayView())
+        overlayWindow?.show()
     }
 }
