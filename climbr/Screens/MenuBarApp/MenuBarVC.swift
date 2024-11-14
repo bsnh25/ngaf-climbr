@@ -8,8 +8,13 @@
 import AppKit
 import Swinject
 import Combine
+import RiveRuntime
 
 class MenuBarVC: NSViewController, NotificationDelegate {
+    
+    let climbrVmMale = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
+    let climbrVmFemale = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
+    var riveView = RiveView()
     
     private var lastSessionTime: Date = Date()
     
@@ -105,6 +110,7 @@ class MenuBarVC: NSViewController, NotificationDelegate {
   private var userManager = UserManager.shared
     private var notifManager = NotificationManager.shared
     private var userPreference: UserPreferenceModel?
+    private var userCharacterData: CharacterModel?
   
   init(
     onOpenStretchNow: @escaping (() -> Void),
@@ -117,7 +123,8 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     super.init(nibName: nil, bundle: nil)
       
     notifManager.notifDelegate = self
-      userPreference = userManager.getPreferences()
+    userPreference = userManager.getPreferences()
+    userCharacterData = userManager.getCharacterData()
       
   }
   
@@ -261,10 +268,16 @@ class MenuBarVC: NSViewController, NotificationDelegate {
         }
   
   private func configureViews() {
+      if userCharacterData?.gender == .male {
+          riveView = climbrVmMale.createRiveView()
+      }else {
+          riveView = climbrVmFemale.createRiveView()
+      }
+      
     view.addSubview(stateStackView)
     view.addSubview(sessionStackView)
     view.addSubview(buttonStackView)
-    view.addSubview(imageView)
+      view.addSubview(riveView)
     
     view.wantsLayer = true
     view.layer?.backgroundColor = .white
@@ -292,7 +305,7 @@ class MenuBarVC: NSViewController, NotificationDelegate {
       make.leading.bottom.trailing.equalToSuperview().inset(16)
     }
     
-    imageView.snp.makeConstraints { make in
+      riveView.snp.makeConstraints { make in
       make.width.height.equalTo(116)
       make.trailing.top.equalToSuperview().inset(16)
     }
