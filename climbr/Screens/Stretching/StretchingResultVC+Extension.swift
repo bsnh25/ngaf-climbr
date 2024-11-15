@@ -10,7 +10,7 @@ import Swinject
 
 extension StretchingResultVC {
     func calculatePoints(){
-        let points = movementList.reduce(0) { partial, next in
+        var points = movementList.reduce(0) { partial, next in
             return partial + next.rewardPoint
         }
         
@@ -22,6 +22,11 @@ extension StretchingResultVC {
         }
         
         rewardPointLabel.setText(label)
+        
+        let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
+        if isTutorial {
+            points += 100
+        }
         
         if let char {
             charService.updatePoint(character: char, points: points)
