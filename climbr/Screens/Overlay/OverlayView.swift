@@ -13,8 +13,8 @@ import SnapKit
 import Swinject
 
 class OverlayView: NSViewController {
-    let climbrVmMale = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
-    let climbrVmFemale = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
+    let climbrVmMale = RiveViewModel(fileName: "overlay_notification", artboardName: "maleCry")
+    let climbrVmFemale = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleCry")
     let boxContent = NSView()
     let notifText = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Hey, aren't you tired? I'm feeling sore, can we rest and stretch first?")
     let dismissBtn = CLTextButtonV2(title: "Stretch Now", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
