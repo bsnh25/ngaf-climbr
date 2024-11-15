@@ -21,12 +21,6 @@ class TutorialVC: NSViewController {
         foregroundColorText: .white,
         fontText: .systemFont(ofSize: 18, weight: .bold)
     )
-    let skipTutorialButton = CLTextButtonV2(
-        title: "I'll learn on my own",
-        backgroundColor: .cButton,
-        foregroundColorText: .white,
-        fontText: .systemFont(ofSize: 18, weight: .bold)
-    )
     
     var getUser: CharacterModel!
     var charLabel       = CLLabel(fontSize: 28, fontWeight: .bold)
@@ -105,28 +99,25 @@ class TutorialVC: NSViewController {
     
     func configureButton(){
         view.addSubview(startTutorialButton)
-        view.addSubview(skipTutorialButton)
         
         startTutorialButton.target = self
-        skipTutorialButton.target = self
         
         let padding = view.bounds.width * 0.05
-        let height = view.bounds.height * 0.1
-        let width = view.bounds.width * 0.4
+        let height = view.bounds.height * 0.096
+        let width = view.bounds.width * 0.6
         
-        skipTutorialButton.snp.makeConstraints { skip in
+        print("Ini width : \(width)")
+        print("Ini height : \(height)")
+        print("Ini View height : \(view.bounds.height)")
+        print("Ini View width : \(view.bounds.width)")
+        
+        startTutorialButton.snp.makeConstraints { skip in
             skip.top.equalTo(container.snp.bottom).offset(view.bounds.width * 0.02)
             skip.trailing.equalToSuperview().inset(padding)
             skip.height.equalTo(height)
             skip.width.equalTo(width)
         }
         
-        startTutorialButton.snp.makeConstraints { start in
-            start.top.equalTo(skipTutorialButton.snp.top)
-            start.trailing.equalTo(skipTutorialButton.snp.leading).inset(-padding)
-            start.height.equalTo(height)
-            start.width.equalTo(width)
-        }
     }
     
     func configureText(){
@@ -138,7 +129,7 @@ class TutorialVC: NSViewController {
         tutorialLabel.backgroundColor = .clear
         
         let padding = view.bounds.width * 0.04
-        let descPadding = view.bounds.width * 0.02
+        let descPadding = view.bounds.width * 0.04
         
         charLabel.snp.makeConstraints { title in
             title.top.equalTo(container.snp.top).inset(padding)

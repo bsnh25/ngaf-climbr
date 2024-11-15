@@ -75,6 +75,7 @@ class StretchingResultVC: NSViewController {
     private func configureVC() {
         view.wantsLayer             = true
         view.layer?.backgroundColor = NSColor.kGreen.cgColor
+        
     }
     
     private func configureResultUI() {
@@ -87,11 +88,11 @@ class StretchingResultVC: NSViewController {
         
         resultStack.setViews(views, in: .center)
         resultStack.orientation     = .vertical
-        resultStack.spacing         = 24
+        resultStack.spacing         = 10
         resultStack.distribution    = .fillEqually
         resultStack.wantsLayer = true
-        //        resultStack.layer?.borderColor = .black
-        //        resultStack.layer?.borderWidth = 1
+                resultStack.layer?.borderColor = .black
+                resultStack.layer?.borderWidth = 1
         
         resultStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -152,9 +153,9 @@ class StretchingResultVC: NSViewController {
             //            make.top.equalTo(resultStack.snp.top).inset(104)
         }
         
-        progressStack.wantsLayer = true
-        progressStack.layer?.borderColor = .black
-        progressStack.layer?.borderWidth = 1
+//        progressStack.wantsLayer = true
+//        progressStack.layer?.borderColor = .black
+//        progressStack.layer?.borderWidth = 1
         
         progressStack.snp.makeConstraints { make in
             make.width.equalTo(736)

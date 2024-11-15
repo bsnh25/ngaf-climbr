@@ -381,6 +381,7 @@ class ShopItemVC: NSViewController {
     }
     
     @objc func backToMenu(){
+        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         pop()
     }
 }

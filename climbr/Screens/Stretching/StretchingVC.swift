@@ -288,9 +288,9 @@ class StretchingVC: NSViewController {
         movementInfoView.translatesAutoresizingMaskIntoConstraints = false
         progressSideView.translatesAutoresizingMaskIntoConstraints = false
         
-        progressSideView.wantsLayer = true
-        progressSideView.layer?.borderWidth = 1
-        progressSideView.layer?.borderColor = NSColor.red.cgColor
+//        progressSideView.wantsLayer = true
+//        progressSideView.layer?.borderWidth = 1
+//        progressSideView.layer?.borderColor = NSColor.red.cgColor
 
         // Layout constraints for `movementInfoView` and `progressSideView`
 //        NSLayoutConstraint.activate([

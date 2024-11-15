@@ -279,7 +279,7 @@ class SubProgressStretchView: NSView {
     var movementStackView: NSStackView = {
         let stack = NSStackView()
         stack.orientation = .vertical
-        stack.alignment = .left
+        stack.alignment = .leading
         stack.spacing = 8
         return stack
     }()
@@ -323,13 +323,13 @@ class SubProgressStretchView: NSView {
         progressStackView.setViews(views, in: .leading)
         imageProgressView.imageScaling = .scaleAxesIndependently
         
-        progressStackView.wantsLayer = true
-        progressStackView.layer?.borderColor = .black
-        progressStackView.layer?.borderWidth = 2
+//        progressStackView.wantsLayer = true
+//        progressStackView.layer?.borderColor = .black
+//        progressStackView.layer?.borderWidth = 2
 //
-        imageProgressView.wantsLayer = true
-        imageProgressView.layer?.borderColor = NSColor.purple.cgColor
-        imageProgressView.layer?.borderWidth = 2
+//        imageProgressView.wantsLayer = true
+//        imageProgressView.layer?.borderColor = NSColor.purple.cgColor
+//        imageProgressView.layer?.borderWidth = 2
 //        
 //        movementStackView.wantsLayer = true
 //        movementStackView.layer?.borderColor = NSColor.red.cgColor

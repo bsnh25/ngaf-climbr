@@ -13,37 +13,52 @@ extension TutorialVC {
     
     @objc
     func actionStart(){
-        startTutorialButton.removeFromSuperview()
-        skipTutorialButton.title = "Interesting"
+        startTutorialButton.title = "Nice!"
         firstTutorial = false
         print("first tutorial status : \(firstTutorial)")
     }
     
     @objc
-    func actionSkip(){
-        startTutorialButton.removeFromSuperview()
-        skipTutorialButton.title = "See you"
-        firstTutorial = false
-        print("See you")
-        print("first tutorial status : \(firstTutorial)")
-    }
-    
-    @objc
-    func actionSeeyou(){
-        print("close pop up - see you")
-        pop()
-    }
-    
-    @objc
-    func actionWhatIsThat(){
-        print("close pop up - letsgo")
-//        pop()
-        skipTutorialButton.isHidden = true
-        skipTutorialButton.title = "What's That?"
+    func actionNice(){
+        print("Hitted Action Nice")
+        let height: CGFloat = 150
+        let width: CGFloat = 450
+        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+        startTutorialButton.isHidden = true
+        startTutorialButton.title = "Healthier everyday!"
+        let firstAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
         
-        let height: CGFloat = 40
-        let width: CGFloat = (137 + 50 + 10)
-        background.subtract(with: NSRect(x: view.bounds.minX + 70, y: view.bounds.maxY + 40, width: width, height: height))
+        let startAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .black),
+            NSAttributedString.Key.foregroundColor: NSColor.cButton
+        ]
+        
+        let endAttr : [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let firstText    = NSMutableAttributedString(string: "Everyday, we need to meet a goal of stretching every 2 hour as recommended by experts. Let’s give it a go! Click ", attributes: firstAttr)
+        
+        let midText  = NSAttributedString(string: "Start Stretch Session ", attributes: startAttr)
+        let endText  = NSAttributedString(string: "on top of the screen to begin.", attributes: endAttr)
+        
+        firstText.append(midText)
+        firstText.append(endText)
+        
+        tutorialLabel.attributedStringValue = firstText
+    }
+    
+    @objc
+    func actionSoundsNice(){
+        print("Hitted Action Sounds Nice!")
+        startTutorialButton.isHidden = true
+        startTutorialButton.title = "Sounds nice!"
+        
+        let height: CGFloat = 60
+        let width: CGFloat = (137 + 50 + 10 + 20)
+        background.subtract(with: NSRect(x: view.bounds.minX + 70, y: view.bounds.maxY - 95, width: width, height: height))
         
         let firstAttr: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 24, weight: .bold)
@@ -58,9 +73,9 @@ extension TutorialVC {
             .font: NSFont.systemFont(ofSize: 24, weight: .bold)
         ]
         
-        let firstText    = NSMutableAttributedString(string: "I also found ", attributes: firstAttr)
-        let coinText  = NSAttributedString(string: "50 coins ", attributes: startAttr)
-        let midText  = NSAttributedString(string: "while you were stretching. Check out all the cool items available in the shop. Click ", attributes: endAttr)
+        let firstText    = NSMutableAttributedString(string: "OH WOW! I also found ", attributes: firstAttr)
+        let coinText  = NSAttributedString(string: "some coins ", attributes: startAttr)
+        let midText  = NSAttributedString(string: "whilst you were stretching. How about we spend some of it to commorate our first day working together? Click ", attributes: endAttr)
         let shopText  = NSAttributedString(string: "Shop ", attributes: startAttr)
         let endText  = NSAttributedString(string: "above and start shopping!", attributes: endAttr)
         
@@ -73,13 +88,12 @@ extension TutorialVC {
     }
     
     @objc
-    func actionInterest(){
-        print("Hitted Action Interest")
-        let height: CGFloat = 150
-        let width: CGFloat = 450
-        background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
-        skipTutorialButton.isHidden = true
-        skipTutorialButton.title = "What's That?"
+    func actionMidway(){
+        print("Hitted Action Midway")
+        startTutorialButton.title = "Oh dear..."
+        startTutorialButton.isHidden = false
+        background.subtract(with: .zero)
+        
         let firstAttr: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 24, weight: .bold)
         ]
@@ -93,52 +107,118 @@ extension TutorialVC {
             .font: NSFont.systemFont(ofSize: 24, weight: .bold)
         ]
         
-        let firstText    = NSMutableAttributedString(string: "Everyday, we need to meet a goal of stretching every 2 hour as recommended by WHO. Let’s give it a go! Click ", attributes: firstAttr)
+        let firstText    = NSMutableAttributedString(string: "But I guess, if you are too preoccupied on working and don’t stretch with me, I would be stuck in a ", attributes: firstAttr)
+        let midText  = NSAttributedString(string: "midway camp. ", attributes: startAttr)
+        let midJourneyText  = NSAttributedString(string: "Don’t fret! We can always continue climbing the next day.", attributes: endAttr)
         
-        let midText  = NSAttributedString(string: "Start Stretch Session ", attributes: startAttr)
-        let endText  = NSAttributedString(string: "on top of the screen to begin.", attributes: endAttr)
+        firstText.append(midText)
+        firstText.append(midJourneyText)
+        
+        tutorialLabel.attributedStringValue = firstText
+        firstTutorial = false
+    }
+    
+    @objc
+    func actionOhDear(){
+        print("Hitted Action Oh dear!")
+        startTutorialButton.isHidden = false
+        startTutorialButton.title = "See you on top!"
+        background.subtract(with: .zero)
+        let firstAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let startAttr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .black),
+            NSAttributedString.Key.foregroundColor: NSColor.cButton
+        ]
+        
+        let endAttr : [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+        ]
+        
+        let firstText    = NSMutableAttributedString(string: "That’s all! You’re a natural at this. Don’t forget to stretch ", attributes: firstAttr)
+        let midText  = NSAttributedString(string: "at least 4 times a day ", attributes: startAttr)
+        let endText  = NSAttributedString(string: "to conquer this mountain today whilst you advance your career. See you on top!", attributes: endAttr)
         
         firstText.append(midText)
         firstText.append(endText)
         
         tutorialLabel.attributedStringValue = firstText
+        firstTutorial = false
+    }
+    
+    @objc
+    func actionSeeyou(){
+        print("close pop up - see you")
+        firstTutorial = false
+        pop()
     }
     
     func selectorButton(){
         if firstTutorial {
             startTutorialButton.action = #selector(actionStart)
-            skipTutorialButton.action = #selector(actionSkip)
             tutorialLabel.stringValue = "Hello, friend! I’m so excited to work with you. Would you like me to explain how things work around here?"
+            
         } else {
-            skipTutorialButton.isHidden = false
-            if skipTutorialButton.title == "Interesting" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "Interesting", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionInterest)
+            
+            if startTutorialButton.title == "Nice!" {
+                startTutorialButton.setupTitleForegroundAndFont(title: "Nice!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+                startTutorialButton.action = #selector(actionNice)
                 tutorialLabel.stringValue = "It’s actually pretty simple. When you work, I’ll climb. When you stretch, I’ll rest. The more you stretch, I’ll be able to find more coins during my rest."
                 
-            } else if skipTutorialButton.title == "See you" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "See you", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionSeeyou)
-                tutorialLabel.stringValue = "Alrighty! I’ll see you around :)"
+            } else if startTutorialButton.title == "Healthier everyday!" {
                 
-            } else if skipTutorialButton.title == "What's That?" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "What's That?", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionWhatIsThat)
-                tutorialLabel.stringValue = "Look at that. We’re progressing! Each session a step closer to a healthier work life. Don't forget one things..."
+                let height: CGFloat = 150
+                let width: CGFloat = 450
+                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
                 
-//                let height: CGFloat = 150
-//                let width: CGFloat = 450
-//                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+                startTutorialButton.isHidden = false
+                startTutorialButton.setupTitleForegroundAndFont(title: "Healthier everyday!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+                startTutorialButton.action = #selector(actionSoundsNice)
+                tutorialLabel.stringValue = "Look at that. We’re progressing! Each session a step closer to a healthier work life."
                 
-                /// New Updated Tutorial
-            } else if skipTutorialButton.title == "What's That?" {
-                skipTutorialButton.setupTitleForegroundAndFont(title: "What's That?", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-                skipTutorialButton.action = #selector(actionWhatIsThat)
-//                tutorialLabel.stringValue = "I also found 50 coins while you were stretching. Check out all the cool items available in the shop. Click Shop above and start shopping!"
+            } else if startTutorialButton.title == "Sounds nice!" {
+                background.subtract(with: .zero)
+                startTutorialButton.isHidden = false
+                startTutorialButton.setupTitleForegroundAndFont(title: "Sounds nice!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
                 
-//                let height: CGFloat = 150
-//                let width: CGFloat = 450
-//                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+                let firstAttr: [NSAttributedString.Key: Any] = [
+                    .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+                ]
+                
+                let startAttr: [NSAttributedString.Key: Any] = [
+                    .font: NSFont.systemFont(ofSize: 24, weight: .black),
+                    NSAttributedString.Key.foregroundColor: NSColor.cButton
+                ]
+                
+                let endAttr : [NSAttributedString.Key: Any] = [
+                    .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+                ]
+                
+                let firstText    = NSMutableAttributedString(string: "Oh! I would love to see the ", attributes: firstAttr)
+                let peakText  = NSAttributedString(string: "mountain peak ", attributes: startAttr)
+                let midText  = NSAttributedString(string: "and camp there! ", attributes: endAttr)
+                let tnCText  = NSAttributedString(string: "If you stretch a minimum of 4 times a day, ", attributes: startAttr)
+                let endText  = NSAttributedString(string: "I can camp there.", attributes: endAttr)
+                
+                firstText.append(peakText)
+                firstText.append(midText)
+                firstText.append(tnCText)
+                firstText.append(endText)
+                
+                tutorialLabel.attributedStringValue = firstText
+                startTutorialButton.action = #selector(actionMidway)
+                
+            } else if startTutorialButton.title == "Oh dear..." {
+                background.subtract(with: .zero)
+                startTutorialButton.setupTitleForegroundAndFont(title: "Oh dear...", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+                startTutorialButton.action = #selector(actionOhDear)
+
+            } else if startTutorialButton.title == "See you on top!" {
+                background.subtract(with: .zero)
+                startTutorialButton.setupTitleForegroundAndFont(title: "See you on top!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+                startTutorialButton.action = #selector(actionSeeyou)
             }
         }
         
@@ -171,5 +251,5 @@ extension TutorialVC {
     func updateSelectorButton(){
         firstTutorial = false
     }
-
+    
 }

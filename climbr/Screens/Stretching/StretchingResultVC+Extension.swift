@@ -141,7 +141,17 @@ extension StretchingResultVC {
             backProgress.updateColor(.red)
             greetingLabel.setText("You didn't do any stretching! So you didn't get any coins")
             
+            let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
+            if isTutorial {
+                self.updateProgress()
+            }
+            
         } else if (armTotal == 0 && neckTotal == 0) || (armTotal == 0 && backTotal == 0) || (neckTotal == 0 && backTotal == 0){
+            
+            let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
+            if isTutorial {
+                self.updateProgress()
+            }
             greetingLabel.setText("You missed two type of movements! Let’s try to finish the whole sequence next time")
         }
         
@@ -153,7 +163,6 @@ extension StretchingResultVC {
     }
     
     @objc func goToMainMenu() {
-        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         self.pop()
     }
     
