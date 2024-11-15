@@ -12,8 +12,11 @@ import RiveRuntime
 
 class MenuBarVC: NSViewController, NotificationDelegate {
     
-    let climbrVmMale = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
-    let climbrVmFemale = RiveViewModel(fileName: "overlay_notification-2", artboardName: "sad")
+    let climbrVmMaleHappy = RiveViewModel(fileName: "overlay_notification", artboardName: "maleHappy")
+    let climbrVmMaleCry = RiveViewModel(fileName: "overlay_notification", artboardName: "maleCry")
+    let climbrVmFemaleHappy = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleHappy")
+    let climbrVmFemaleCry = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleCry")
+    
     var riveView = RiveView()
     
     private var lastSessionTime: Date = Date()
@@ -136,7 +139,10 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     super.viewDidLoad()
     
     configureViews()
+    configureRiveView()
     configureConstraints()
+    configureRiveConstraints()
+      
     resetSessionAfterStretching()
       
     
@@ -148,6 +154,9 @@ class MenuBarVC: NSViewController, NotificationDelegate {
             DispatchQueue.main.async {
                 self.userPreference = self.userManager.getPreferences()
                 self.observeNotification()
+                self.riveView.removeFromSuperview()
+                self.configureRiveView()
+                self.configureRiveConstraints()
                 self.updateSessionTime()
             }
         }
@@ -268,21 +277,41 @@ class MenuBarVC: NSViewController, NotificationDelegate {
         }
   
   private func configureViews() {
-      if userCharacterData?.gender == .male {
-          riveView = climbrVmMale.createRiveView()
-      }else {
-          riveView = climbrVmFemale.createRiveView()
-      }
       
     view.addSubview(stateStackView)
     view.addSubview(sessionStackView)
     view.addSubview(buttonStackView)
-      view.addSubview(riveView)
     
     view.wantsLayer = true
     view.layer?.backgroundColor = .white
   }
   
+    func configureRiveView(){
+        let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        if notifCount > 0 {
+            if userCharacterData?.gender == .male {
+                riveView = climbrVmMaleCry.createRiveView()
+            }else {
+                riveView = climbrVmFemaleCry.createRiveView()
+            }
+        } else {
+            if userCharacterData?.gender == .male {
+                riveView = climbrVmMaleHappy.createRiveView()
+            }else {
+                riveView = climbrVmFemaleHappy.createRiveView()
+            }
+        }
+        view.addSubview(riveView)
+    }
+    
+    func configureRiveConstraints(){
+        riveView.snp.makeConstraints { make in
+        make.width.height.equalTo(116)
+        make.trailing.top.equalToSuperview().inset(16)
+      }
+    }
+    
   private func configureConstraints() {
     stateStackView.snp.makeConstraints { make in
       make.leading.top.equalToSuperview().inset(16)
@@ -303,11 +332,6 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     
     buttonStackView.snp.makeConstraints { make in
       make.leading.bottom.trailing.equalToSuperview().inset(16)
-    }
-    
-      riveView.snp.makeConstraints { make in
-      make.width.height.equalTo(116)
-      make.trailing.top.equalToSuperview().inset(16)
     }
     
   }
