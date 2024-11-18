@@ -18,6 +18,7 @@
 		8A6FF3532CD891A600E8E5EC /* ModelFixV8.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3522CD891A600E8E5EC /* ModelFixV8.mlmodel */; };
 		8AE9CA1E2CDDB32C00EE98CD /* NSPanelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE9CA1D2CDDB32C00EE98CD /* NSPanelExtension.swift */; };
 		900852932CDA679500317C4F /* splash_screen.riv in Resources */ = {isa = PBXBuildFile; fileRef = 900852922CDA679500317C4F /* splash_screen.riv */; };
+		902258C82CEB3D6900AD31DF /* climbr.riv in Resources */ = {isa = PBXBuildFile; fileRef = 902258C72CEB3D6900AD31DF /* climbr.riv */; };
 		9095DFD02CD6683300280F13 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DFCC2CD6683300280F13 /* main.swift */; };
 		9095DFD12CD6683300280F13 /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DFCE2CD6683300280F13 /* MainWindow.swift */; };
 		9095DFD22CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DFC92CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift */; };
@@ -69,7 +70,6 @@
 		9095E07E2CD6684900280F13 /* upperBackStretch-Left.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9095E0382CD6684800280F13 /* upperBackStretch-Left.mp4 */; };
 		9095E07F2CD6684900280F13 /* frontShoulderStatic-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9095E02C2CD6684800280F13 /* frontShoulderStatic-Right.mp4 */; };
 		9095E0802CD6684900280F13 /* tricepStatic-Right.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9095E0362CD6684800280F13 /* tricepStatic-Right.mp4 */; };
-		9095E0812CD6684900280F13 /* climbr.riv in Resources */ = {isa = PBXBuildFile; fileRef = 9095E0272CD6684800280F13 /* climbr.riv */; };
 		9095E0822CD6684900280F13 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9095E0232CD6684800280F13 /* incorrect.mp3 */; };
 		9095E0832CD6684900280F13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9095E03F2CD6684800280F13 /* Assets.xcassets */; };
 		9095E0842CD6684900280F13 /* countdown.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9095E0222CD6684800280F13 /* countdown.mp3 */; };
@@ -167,6 +167,7 @@
 		8ABB12892C661D1500616C57 /* Pose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
 		8AE9CA1D2CDDB32C00EE98CD /* NSPanelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPanelExtension.swift; sourceTree = "<group>"; };
 		900852922CDA679500317C4F /* splash_screen.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash_screen.riv; sourceTree = "<group>"; };
+		902258C72CEB3D6900AD31DF /* climbr.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr.riv; sourceTree = "<group>"; };
 		9095DFC92CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuBar+Extension.swift"; sourceTree = "<group>"; };
 		9095DFCB2CD6683300280F13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9095DFCC2CD6683300280F13 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -211,7 +212,6 @@
 		9095E0222CD6684800280F13 /* countdown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = countdown.mp3; sourceTree = "<group>"; };
 		9095E0232CD6684800280F13 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		9095E0242CD6684800280F13 /* next-move.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "next-move.mp3"; sourceTree = "<group>"; };
-		9095E0272CD6684800280F13 /* climbr.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr.riv; sourceTree = "<group>"; };
 		9095E0292CD6684800280F13 /* crossBodyShoulder-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "crossBodyShoulder-Left.mp4"; sourceTree = "<group>"; };
 		9095E02A2CD6684800280F13 /* crossBodyShoulder-Right.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "crossBodyShoulder-Right.mp4"; sourceTree = "<group>"; };
 		9095E02B2CD6684800280F13 /* frontShoulderStatic-Left.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "frontShoulderStatic-Left.mp4"; sourceTree = "<group>"; };
@@ -529,8 +529,8 @@
 			isa = PBXGroup;
 			children = (
 				8A60B2E62CE790A10085462E /* overlay_notification.riv */,
+				902258C72CEB3D6900AD31DF /* climbr.riv */,
 				900852922CDA679500317C4F /* splash_screen.riv */,
-				9095E0272CD6684800280F13 /* climbr.riv */,
 			);
 			path = Rive;
 			sourceTree = "<group>";
@@ -924,9 +924,9 @@
 				9095E07E2CD6684900280F13 /* upperBackStretch-Left.mp4 in Resources */,
 				9095E07F2CD6684900280F13 /* frontShoulderStatic-Right.mp4 in Resources */,
 				9095E0802CD6684900280F13 /* tricepStatic-Right.mp4 in Resources */,
-				9095E0812CD6684900280F13 /* climbr.riv in Resources */,
 				9095E0822CD6684900280F13 /* incorrect.mp3 in Resources */,
 				900852932CDA679500317C4F /* splash_screen.riv in Resources */,
+				902258C82CEB3D6900AD31DF /* climbr.riv in Resources */,
 				9095E0832CD6684900280F13 /* Assets.xcassets in Resources */,
 				9095E0842CD6684900280F13 /* countdown.mp3 in Resources */,
 				9095E0852CD6684900280F13 /* neckExtension-Front.mp4 in Resources */,
