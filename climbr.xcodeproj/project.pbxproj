@@ -10,12 +10,11 @@
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
 		03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EB35022CE3344100DDF4E4 /* AboutAlert.swift */; };
-		8A2368272CEB49D1005953FE /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A2368262CEB49D1005953FE /* overlay_notification.riv */; };
+		8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A2368282CEB4A60005953FE /* overlay_notification.riv */; };
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
 		8A6FF3292CD682C700E8E5EC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3282CD682C700E8E5EC /* OverlayView.swift */; };
 		8A6FF32B2CD682ED00E8E5EC /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF32A2CD682ED00E8E5EC /* OverlayWindow.swift */; };
 		8A6FF3532CD891A600E8E5EC /* ModelFixV8.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3522CD891A600E8E5EC /* ModelFixV8.mlmodel */; };
-		8A92EF7B2CE7994000A7EF88 /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A92EF7A2CE7994000A7EF88 /* overlay_notification.riv */; };
 		8AE9CA1E2CDDB32C00EE98CD /* NSPanelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE9CA1D2CDDB32C00EE98CD /* NSPanelExtension.swift */; };
 		900852932CDA679500317C4F /* splash_screen.riv in Resources */ = {isa = PBXBuildFile; fileRef = 900852922CDA679500317C4F /* splash_screen.riv */; };
 		902258C82CEB3D6900AD31DF /* climbr.riv in Resources */ = {isa = PBXBuildFile; fileRef = 902258C72CEB3D6900AD31DF /* climbr.riv */; };
@@ -143,7 +142,7 @@
 		03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03EB35022CE3344100DDF4E4 /* AboutAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAlert.swift; sourceTree = "<group>"; };
-		8A2368262CEB49D1005953FE /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
+		8A2368282CEB4A60005953FE /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8A60B2E62CE790A10085462E /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNotifServices.swift; sourceTree = "<group>"; };
 		8A6FF3282CD682C700E8E5EC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
@@ -517,7 +516,7 @@
 		9095E0282CD6684800280F13 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
-				8A2368262CEB49D1005953FE /* overlay_notification.riv */,
+				8A2368282CEB4A60005953FE /* overlay_notification.riv */,
 				902258C72CEB3D6900AD31DF /* climbr.riv */,
 				900852922CDA679500317C4F /* splash_screen.riv */,
 			);
@@ -900,13 +899,12 @@
 				9095E0712CD6684900280F13 /* next-move.mp3 in Resources */,
 				9095E0722CD6684900280F13 /* summer.mp3 in Resources */,
 				9095E0732CD6684900280F13 /* frontShoulderStatic-Left.mp4 in Resources */,
-				8A92EF7B2CE7994000A7EF88 /* overlay_notification.riv in Resources */,
 				9095E0742CD6684900280F13 /* upperBackStretch-Up.mp4 in Resources */,
 				9095E0752CD6684900280F13 /* correct.mp3 in Resources */,
 				9095E0762CD6684900280F13 /* lowerBackSpin-Right.mp4 in Resources */,
 				9095E0772CD6684900280F13 /* neckDeep-Right.mp4 in Resources */,
 				9095E0782CD6684900280F13 /* night.mp3 in Resources */,
-				8A2368272CEB49D1005953FE /* overlay_notification.riv in Resources */,
+				8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */,
 				9095E0792CD6684900280F13 /* neckDeep-Left.mp4 in Resources */,
 				9095E07A2CD6684900280F13 /* neckRotation-Right.mp4 in Resources */,
 				9095E07B2CD6684900280F13 /* neckRotation-Left.mp4 in Resources */,
