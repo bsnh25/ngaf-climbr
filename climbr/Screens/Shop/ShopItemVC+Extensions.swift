@@ -77,12 +77,12 @@ extension ShopItemVC : CollectionContainerProtocol {
         
         if let character {
             print("price: ", Int(character.point) < equipment.item.price)
-            buyButton.itemButton.isEnabled = !(Int(character.point) < equipment.item.price)
+            buyButton.itemButton.isEnabled = (Int(character.point) >= equipment.item.price)
         }
         
         if equipment.isUnlocked, let selectedItem = self.selectedItem {
             self.updateCharacter(with: selectedItem)
-            
+            buyButton.itemButton.isEnabled = true
         }
         collectionViewContainer.hView.configure(text: "", backgroundImage: NSImage(named: equipment.item.image))
         
@@ -118,7 +118,6 @@ extension ShopItemVC: BuyButtonDelegate {
             self.updateCharacter(with: selectedItem)
             print("Char Point 6: \(character.point)")
             buyButton.isHidden = false
-            buyButton.itemButton.isEnabled = false
         }else{
             print("kurang point")
         }
