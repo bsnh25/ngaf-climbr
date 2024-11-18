@@ -94,6 +94,7 @@ extension ShopItemVC : CollectionContainerProtocol {
         priceLabel.setText("􀀈\(equipment.item.price)")
         print("Ini \(equipment.item.price)")
         buyButton.itemButton.isEnabled = !equipment.isUnlocked
+        delegateTutorial?.didTutorialShopUpdate()
     }
 }
 

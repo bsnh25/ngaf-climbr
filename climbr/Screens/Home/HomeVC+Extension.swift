@@ -18,10 +18,12 @@ extension HomeVC {
             vc.delegate = self
             push(to: vc)
             
-            if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
-                guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
-                push(to: tutorialVc)
+            if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorialShop) {
+                guard let tutorialVc = Container.shared.resolve(TutorialShopVC.self) else {return}
+                push(to: tutorialVc, disablePreviousInteraction: false)
+                vc.delegateTutorial = tutorialVc
             }
+            
             
             print("go to shop page")
             //            vc.view.setFrameSize(NSSize(width: 400, height: 500))

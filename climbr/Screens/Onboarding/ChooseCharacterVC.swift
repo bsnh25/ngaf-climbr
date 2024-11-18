@@ -197,6 +197,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
         let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
         charService.saveCharacterData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorialShop)
         
         pop()
         

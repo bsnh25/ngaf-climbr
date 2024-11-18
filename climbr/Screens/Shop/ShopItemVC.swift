@@ -23,6 +23,7 @@ class ShopItemVC: NSViewController {
     let buyButton = BuyButtonView()
     let priceLabel = CLLabel(fontSize: 20, fontWeight: .bold)
     weak var delegate: ChooseCaraterDelegate?
+    weak var delegateTutorial: TutorialShopProtocol?
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
