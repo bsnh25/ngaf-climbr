@@ -193,7 +193,7 @@ class MenuBarVC: NSViewController, NotificationDelegate {
             }
         }
 
-        return "No Working Day Found"
+        return "No Working Day"
     }
 
     
