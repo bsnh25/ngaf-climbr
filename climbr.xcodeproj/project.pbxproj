@@ -13,7 +13,7 @@
 		038CFB7B2CEB171400E3BCA8 /* TutorialShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */; };
 		038CFB7F2CEB175100E3BCA8 /* TutorialShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */; };
 		03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EB35022CE3344100DDF4E4 /* AboutAlert.swift */; };
-		8A60B2E72CE790A10085462E /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A60B2E62CE790A10085462E /* overlay_notification.riv */; };
+		8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A2368282CEB4A60005953FE /* overlay_notification.riv */; };
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
 		8A6FF3292CD682C700E8E5EC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3282CD682C700E8E5EC /* OverlayView.swift */; };
 		8A6FF32B2CD682ED00E8E5EC /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF32A2CD682ED00E8E5EC /* OverlayWindow.swift */; };
@@ -136,19 +136,6 @@
 		E7FDDB272C64370E00DE2A7A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = E7FDDB262C64370E00DE2A7A /* RiveRuntime */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		034EADE02CC7867A006C0C9C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LoginItems;
-			dstSubfolderSpec = 1;
-			files = (
-				034EADE12CC786BF006C0C9C /* climbrHelper.app in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		034EADCD2CC78493006C0C9C /* climbrHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbrHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		034EADDE2CC78654006C0C9C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -160,11 +147,13 @@
 		03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03EB35022CE3344100DDF4E4 /* AboutAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAlert.swift; sourceTree = "<group>"; };
+		8A2368282CEB4A60005953FE /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8A60B2E62CE790A10085462E /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNotifServices.swift; sourceTree = "<group>"; };
 		8A6FF3282CD682C700E8E5EC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		8A6FF32A2CD682ED00E8E5EC /* OverlayWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayWindow.swift; sourceTree = "<group>"; };
 		8A6FF3522CD891A600E8E5EC /* ModelFixV8.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ModelFixV8.mlmodel; sourceTree = "<group>"; };
+		8A92EF7A2CE7994000A7EF88 /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8ABB127F2C66074C00616C57 /* ModelFixV1+Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Singleton.swift"; sourceTree = "<group>"; };
 		8ABB12812C66099200616C57 /* ModelFixV1+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+Label.swift"; sourceTree = "<group>"; };
 		8ABB12872C661B1000616C57 /* ModelFixV1+FrameRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelFixV1+FrameRate.swift"; sourceTree = "<group>"; };
@@ -550,7 +539,7 @@
 		9095E0282CD6684800280F13 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
-				8A60B2E62CE790A10085462E /* overlay_notification.riv */,
+				8A2368282CEB4A60005953FE /* overlay_notification.riv */,
 				902258C72CEB3D6900AD31DF /* climbr.riv */,
 				900852922CDA679500317C4F /* splash_screen.riv */,
 			);
@@ -782,6 +771,8 @@
 				03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */,
 				03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */,
 				AB9A790B2C6FCBF000028B36 /* ShopItemVC.swift */,
+				8A60B2E62CE790A10085462E /* overlay_notification.riv */,
+				8A92EF7A2CE7994000A7EF88 /* overlay_notification.riv */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -855,7 +846,6 @@
 				E7FDDACF2C64301B00DE2A7A /* Sources */,
 				E7FDDAD02C64301B00DE2A7A /* Frameworks */,
 				E7FDDAD12C64301B00DE2A7A /* Resources */,
-				034EADE02CC7867A006C0C9C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -937,7 +927,7 @@
 				9095E0762CD6684900280F13 /* lowerBackSpin-Right.mp4 in Resources */,
 				9095E0772CD6684900280F13 /* neckDeep-Right.mp4 in Resources */,
 				9095E0782CD6684900280F13 /* night.mp3 in Resources */,
-				8A60B2E72CE790A10085462E /* overlay_notification.riv in Resources */,
+				8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */,
 				9095E0792CD6684900280F13 /* neckDeep-Left.mp4 in Resources */,
 				9095E07A2CD6684900280F13 /* neckRotation-Right.mp4 in Resources */,
 				9095E07B2CD6684900280F13 /* neckRotation-Left.mp4 in Resources */,
