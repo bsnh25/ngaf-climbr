@@ -7,8 +7,20 @@
 
 import AppKit
 import Swinject
+import Combine
+import RiveRuntime
 
-class MenuBarVC: NSViewController {
+class MenuBarVC: NSViewController, NotificationDelegate {
+    
+    let climbrVmMaleHappy = RiveViewModel(fileName: "overlay_notification", artboardName: "maleHappy")
+    let climbrVmMaleCry = RiveViewModel(fileName: "overlay_notification", artboardName: "maleCry")
+    let climbrVmFemaleHappy = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleHappy")
+    let climbrVmFemaleCry = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleCry")
+    
+    var riveView = RiveView()
+    
+    private var lastSessionTime: Date = Date()
+    
   private lazy var titleStateLabel: CLLabel = {
     let label = CLLabel()
     label.stringValue = "Status"
@@ -19,8 +31,8 @@ class MenuBarVC: NSViewController {
   
   private lazy var stateLabel: CLLabel = {
     let label = CLLabel()
-    label.stringValue = "Capek!!!"
-    label.textColor = .cButton
+    label.stringValue = "Fit"
+    label.textColor = .kGreen
     label.font = .boldSystemFont(ofSize: 22)
     
     return label
@@ -70,7 +82,7 @@ class MenuBarVC: NSViewController {
   }()
   
   private lazy var quitBtn: CLTextButtonV2 = {
-    let button = CLTextButtonV2(title: "Quit", borderColor: .tertiaryLabelColor, font: .preferredFont(forTextStyle: .body))
+      let button = CLTextButtonV2(title: "Quit", borderColor: .cQuitButtonMenuBar, font: .preferredFont(forTextStyle: .body) )
     button.target = self
     button.action = #selector(quitApp)
     
@@ -97,6 +109,12 @@ class MenuBarVC: NSViewController {
   var openStretchNowHandler: (() -> Void)
   var quitAppHandler: (() -> Void)
   
+  private var bag: AnyCancellable?
+  private var userManager = UserManager.shared
+    private var notifManager = NotificationManager.shared
+    private var userPreference: UserPreferenceModel?
+    private var userCharacterData: CharacterModel?
+  
   init(
     onOpenStretchNow: @escaping (() -> Void),
     onQuitApp: @escaping (() -> Void)
@@ -106,6 +124,11 @@ class MenuBarVC: NSViewController {
     quitAppHandler = onQuitApp
     
     super.init(nibName: nil, bundle: nil)
+      
+    notifManager.notifDelegate = self
+    userPreference = userManager.getPreferences()
+    userCharacterData = userManager.getCharacterData()
+      
   }
   
   required init?(coder: NSCoder) {
@@ -116,20 +139,179 @@ class MenuBarVC: NSViewController {
     super.viewDidLoad()
     
     configureViews()
+    configureRiveView()
     configureConstraints()
+    configureRiveConstraints()
+      
+    resetSessionAfterStretching()
+      
+    
+    
+      bag = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+        .sink { [weak self] _ in
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                self.userPreference = self.userManager.getPreferences()
+                self.observeNotification()
+                self.riveView.removeFromSuperview()
+                self.configureRiveView()
+                self.configureRiveConstraints()
+                self.updateSessionTime()
+            }
+        }
+    
+    
     
   }
   
+  private func observeNotification() {
+    let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+    
+    print("Current session: ", UserDefaults.standard.object(forKey: UserDefaultsKey.kCurrentSessionReminder))
+    
+    if notifCount > 0 {
+      stateLabel.setText("Tired")
+        stateLabel.setTextColor(.cNewButton)
+    } else {
+      stateLabel.setText("Fit")
+      stateLabel.setTextColor(.kGreen)
+    }
+  }
+    
+    private func getNextEnabledDayName(after day: Int, workingHours: [WorkingHour]) -> String {
+        let calendar = Calendar.current
+        var currentDay = day
+
+        for _ in 0...6 {
+            currentDay = (currentDay + 1)  % 7
+            
+            
+            if let workingHour = workingHours.first(where: { $0.day == currentDay && $0.isEnabled }) {
+                print("current day get enabled: \(calendar.weekdaySymbols[currentDay])")
+                return calendar.weekdaySymbols[currentDay]
+            }
+        }
+
+        return "No Working Day"
+    }
+
+    
+    private func calculateNextSessionTime() -> String {
+        guard let reminderInterval = userPreference?.reminderInterval,
+              let workingHours = userPreference?.workingHours else {
+            return "No Session Set"
+        }
+
+        let calendar = Calendar.current
+        let todayWeekday = calendar.component(.weekday, from: Date()) - 1
+        print("todayWeekday: \(todayWeekday)")
+        let notifCount = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        print("workingHours: \(workingHours)")
+        
+        for workingHour in workingHours {
+            print("workingHour day: \(workingHour.day)")
+            if workingHour.day == todayWeekday {
+                if workingHour.isEnabled {
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "HH:mm"
+                    
+                    let nextSessionTime = getNextSessionTime(from: lastSessionTime,
+                                                             interval: reminderInterval,
+                                                             workingHour: workingHour)
+                    
+                    sessionLabel.setTextColor(notifCount > 0 ? .cNewButton : .kGreen)
+                    
+                    return nextSessionTime
+                } else {
+                    
+                    let nextEnabledDayName = getNextEnabledDayName(after: todayWeekday, workingHours: workingHours)
+                    sessionLabel.setTextColor(notifCount > 0 ? .cNewButton : .kGreen)
+                    return nextEnabledDayName
+                }
+            }
+        }
+
+        sessionLabel.setTextColor(.cNewButton)
+        return "No Session Set"
+    }
+
+    private func getNextSessionTime(from baseTime: Date, interval: Int, workingHour: WorkingHour) -> String {
+        var nextTime = baseTime.addingTimeInterval(TimeInterval(interval * 60))
+        let calendar = Calendar.current
+
+       
+        let startOfWorkday = calendar.date(bySettingHour: calendar.component(.hour, from: workingHour.startHour),
+                                           minute: calendar.component(.minute, from: workingHour.startHour),
+                                           second: 0, of: nextTime)!
+        let endOfWorkday = calendar.date(bySettingHour: calendar.component(.hour, from: workingHour.endHour),
+                                         minute: calendar.component(.minute, from: workingHour.endHour),
+                                         second: 0, of: nextTime)!
+        
+        
+        if nextTime >= startOfWorkday && nextTime < endOfWorkday {
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter.string(from: nextTime)
+        } else if nextTime >= endOfWorkday {
+            
+            print("based working hour day: \(workingHour.day)")
+            return getNextEnabledDayName(after: workingHour.day, workingHours: userPreference?.workingHours ?? [])
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter.string(from: startOfWorkday)
+        }
+    }
+
+  
+        private func updateSessionTime() {
+            sessionLabel.stringValue = calculateNextSessionTime()
+        }
+  
+        func resetSessionAfterStretching() {
+            updateSessionTime()
+        }
+  
   private func configureViews() {
+      
     view.addSubview(stateStackView)
     view.addSubview(sessionStackView)
     view.addSubview(buttonStackView)
-    view.addSubview(imageView)
     
     view.wantsLayer = true
     view.layer?.backgroundColor = .white
   }
   
+    func configureRiveView(){
+        let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        
+        if notifCount > 0 {
+            if userCharacterData?.gender == .male {
+                riveView = climbrVmMaleCry.createRiveView()
+            }else {
+                riveView = climbrVmFemaleCry.createRiveView()
+            }
+        } else {
+            if userCharacterData?.gender == .male {
+                riveView = climbrVmMaleHappy.createRiveView()
+            }else {
+                riveView = climbrVmFemaleHappy.createRiveView()
+            }
+        }
+        view.addSubview(riveView)
+    }
+    
+    func configureRiveConstraints(){
+        riveView.snp.makeConstraints { make in
+        make.width.height.equalTo(116)
+        make.trailing.top.equalToSuperview().inset(16)
+      }
+    }
+    
   private func configureConstraints() {
     stateStackView.snp.makeConstraints { make in
       make.leading.top.equalToSuperview().inset(16)
@@ -152,11 +334,6 @@ class MenuBarVC: NSViewController {
       make.leading.bottom.trailing.equalToSuperview().inset(16)
     }
     
-    imageView.snp.makeConstraints { make in
-      make.width.height.equalTo(116)
-      make.trailing.top.equalToSuperview().inset(16)
-    }
-    
   }
   
   @objc private func openStretchNow(_ sender: Any?) {
@@ -166,5 +343,10 @@ class MenuBarVC: NSViewController {
   @objc private func quitApp(_ sender: Any?) {
     quitAppHandler()
   }
+    
+    func didStartScheduler(_ time: Date) {
+        lastSessionTime = time
+        resetSessionAfterStretching()
+    }
   
 }
