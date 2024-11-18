@@ -50,11 +50,7 @@ class OverlayWindow: NSWindowController {
         window?.contentViewController = vc
         window?.contentView = vc.view
         
-        if userCharacterData?.gender == .male {
-            riveVm = vc.climbrVmMale
-        }else {
-            riveVm = vc.climbrVmFemale
-        }
+        riveVm = vc.climbrVm
         
     }
     

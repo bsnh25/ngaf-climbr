@@ -13,8 +13,7 @@ import SnapKit
 import Swinject
 
 class OverlayView: NSViewController {
-    let climbrVmMale = RiveViewModel(fileName: "overlay_notification", artboardName: "maleCry")
-    let climbrVmFemale = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleCry")
+    let climbrVm = RiveViewModel(fileName: "overlay_notification")
     let boxContent = NSView()
     let notifText = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Hey, aren't you tired? I'm feeling sore, can we rest and stretch first?")
     let dismissBtn = CLTextButtonV2(title: "Stretch Now", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
@@ -25,19 +24,27 @@ class OverlayView: NSViewController {
     var userCharacterData: CharacterModel?
     var snoozeTimer: DispatchSourceTimer?
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        userCharacterData = userManager.getCharacterData()
+        if let userCharacterData{
+            /// Configure rive artboard
+            do {
+                try climbrVm.configureModel(artboardName: userCharacterData.gender == .male ? "maleCry" : "femaleCry")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        userCharacterData = userManager.getCharacterData()
         configure()
     }
     
     
     func configure(){
-        if userCharacterData?.gender == .male {
-            configureRiveViewMale()
-        }else {
-            configureRiveViewFemale()
-        }
+        configureRiveView()
         configureBoxContent()
         configureButtonDismiss()
         configureButtonSnooze()
@@ -45,8 +52,8 @@ class OverlayView: NSViewController {
     }
     
     
-    func configureRiveViewMale(){
-        let riveView = climbrVmMale.createRiveView()
+    func configureRiveView(){
+        let riveView = climbrVm.createRiveView()
         riveView.frame = view.bounds
         view.addSubview(riveView)
         
@@ -60,20 +67,7 @@ class OverlayView: NSViewController {
         
     }
     
-    func configureRiveViewFemale(){
-        let riveView = climbrVmFemale.createRiveView()
-        riveView.frame = view.bounds
-        view.addSubview(riveView)
-        
-        
-        riveView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(250)
-            make.bottom.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
-        }
-        
-    }
+
     
     func configureBoxContent(){
         view.addSubview(boxContent)
