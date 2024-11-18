@@ -46,11 +46,11 @@ class CLTextButtonV2: NSButton {
         self.wantsLayer             = true
         self.title                  = title
         self.isBordered             = false
+        self.layer?.backgroundColor = borderColor.cgColor
         self.layer?.borderColor     = borderColor.cgColor
-        self.layer?.borderWidth     = 1.5
 //        self.layer?.backgroundColor = .white.copy(alpha: 0)
         
-        configure(foregroundColorText: borderColor, font: font)
+        configure(foregroundColorText: .black, font: font)
     }
 
     required init?(coder: NSCoder) {

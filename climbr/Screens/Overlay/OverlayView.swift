@@ -39,12 +39,17 @@ class OverlayView: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userCharacterData = userManager.getCharacterData()
         configure()
     }
     
     
     func configure(){
-        configureRiveView()
+        if userCharacterData?.gender == .male {
+            configureRiveViewMale()
+        }else {
+            configureRiveViewFemale()
+        }
         configureBoxContent()
         configureButtonDismiss()
         configureButtonSnooze()
@@ -52,8 +57,23 @@ class OverlayView: NSViewController {
     }
     
     
-    func configureRiveView(){
-        let riveView = climbrVm.createRiveView()
+    func configureRiveViewMale(){
+        let riveView = climbrVmMale.createRiveView()
+        riveView.frame = view.bounds
+        view.addSubview(riveView)
+        
+        
+        riveView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(250)
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        
+    }
+    
+    func configureRiveViewFemale(){
+        let riveView = climbrVmFemale.createRiveView()
         riveView.frame = view.bounds
         view.addSubview(riveView)
         
