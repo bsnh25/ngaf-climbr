@@ -13,6 +13,8 @@ import RiveRuntime
 
 class OverlayWindow: NSWindowController {
     var riveVm: RiveViewModel?
+    let userManager = UserManager.shared
+    var userCharacterData: CharacterModel?
     
     init() {
         let frame = NSScreen.main?.frame ?? .zero
@@ -33,6 +35,8 @@ class OverlayWindow: NSWindowController {
         window.animationBehavior = .alertPanel
         
         super.init(window: window)
+        
+        userCharacterData = userManager.getCharacterData()
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +49,9 @@ class OverlayWindow: NSWindowController {
         vc.delegate = self
         window?.contentViewController = vc
         window?.contentView = vc.view
+        
         riveVm = vc.climbrVm
+        
     }
     
     func show() {

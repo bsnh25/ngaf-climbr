@@ -13,17 +13,33 @@ import SnapKit
 import Swinject
 
 class OverlayView: NSViewController {
-    let climbrVm = RiveViewModel(fileName: "overlay_notification", artboardName: "maleCry")
+    let climbrVm = RiveViewModel(fileName: "overlay_notification")
     let boxContent = NSView()
     let notifText = CLTextLabelV2(sizeOfFont: 22, weightOfFont: .bold, contentLabel: "Hey, aren't you tired? I'm feeling sore, can we rest and stretch first?")
     let dismissBtn = CLTextButtonV2(title: "Stretch Now", backgroundColor: .cButton, foregroundColorText: .white, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     let snoozeBtn = CLTextButtonV2(title: "Snooze (5 min)", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     var delegate: OverlayNotifServices?
     let notifService = NotificationManager.shared
+    let userManager = UserManager.shared
+    var userCharacterData: CharacterModel?
     var snoozeTimer: DispatchSourceTimer?
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        userCharacterData = userManager.getCharacterData()
+        if let userCharacterData{
+            /// Configure rive artboard
+            do {
+                try climbrVm.configureModel(artboardName: userCharacterData.gender == .male ? "maleCry" : "femaleCry")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userCharacterData = userManager.getCharacterData()
         configure()
     }
     
@@ -51,6 +67,10 @@ class OverlayView: NSViewController {
         }
         
     }
+    
+
+    
+
     
     func configureBoxContent(){
         view.addSubview(boxContent)
