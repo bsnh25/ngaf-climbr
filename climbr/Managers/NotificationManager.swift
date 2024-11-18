@@ -74,7 +74,7 @@ class NotificationManager: NotificationService {
                     
                     // Waktu sesuai, mulai `overlayTimer` jika belum aktif
                     if overlayTimer == nil {
-                        startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 3))
+                        startOverlayTimer(interval: TimeInterval(userPreference.reminderInterval * 60))
                     }
                     return
                 }
