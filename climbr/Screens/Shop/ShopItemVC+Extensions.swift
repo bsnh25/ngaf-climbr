@@ -81,8 +81,9 @@ extension ShopItemVC : CollectionContainerProtocol {
         }
         
         if equipment.isUnlocked, let selectedItem = self.selectedItem {
+            buyButton.itemButton.isEnabled = false
+            buyButton.itemLabel.stringValue = "Equipped"
             self.updateCharacter(with: selectedItem)
-            buyButton.itemButton.isEnabled = true
         }
         collectionViewContainer.hView.configure(text: "", backgroundImage: NSImage(named: equipment.item.image))
         
@@ -93,7 +94,6 @@ extension ShopItemVC : CollectionContainerProtocol {
         )
         priceLabel.setText("􀀈\(equipment.item.price)")
         print("Ini \(equipment.item.price)")
-        buyButton.itemButton.isEnabled = !equipment.isUnlocked
         delegateTutorial?.didTutorialShopUpdate()
     }
 }
@@ -118,6 +118,7 @@ extension ShopItemVC: BuyButtonDelegate {
             self.updateCharacter(with: selectedItem)
             print("Char Point 6: \(character.point)")
             buyButton.isHidden = false
+            delegateTutorial?.didTutorialShopUpdate()
         }else{
             print("kurang point")
         }

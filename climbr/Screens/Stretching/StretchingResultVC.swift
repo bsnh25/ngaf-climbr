@@ -90,9 +90,6 @@ class StretchingResultVC: NSViewController {
         resultStack.orientation     = .vertical
         resultStack.spacing         = 10
         resultStack.distribution    = .fillEqually
-        resultStack.wantsLayer = true
-                resultStack.layer?.borderColor = .black
-                resultStack.layer?.borderWidth = 1
         
         resultStack.translatesAutoresizingMaskIntoConstraints = false
         

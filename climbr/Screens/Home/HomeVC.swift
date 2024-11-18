@@ -146,6 +146,7 @@ class HomeVC: NSViewController {
         setupStreakLabel()
         setupPointsLabel()
         
+        print("Value tutorial \(UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial))")
     }
     
     override func viewDidAppear() {

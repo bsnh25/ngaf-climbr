@@ -11,13 +11,6 @@ import AppKit
 
 extension TutorialShopVC {
     
-    @objc
-    func actionSeeyou(){
-        print("close pop up - see you")
-        firstShopTutorial = false
-        pop()
-    }
-    
     func selectorButton(){
         if firstShopTutorial {
             let height: CGFloat = 95
@@ -41,7 +34,7 @@ extension TutorialShopVC {
         if getUser?.gender == .male {
             character.image = NSImage(resource: .boyHalf)
             height = view.bounds.height * 0.59
-            width = view.bounds.width * 0.51
+            width = view.bounds.width * 0.39
         } else {
             character.image = NSImage(resource: .femaleHalf)
             height = view.bounds.height * 0.59
@@ -76,11 +69,13 @@ extension TutorialShopVC: TutorialShopProtocol {
             tutorialLabel.attributedStringValue = firstText
             
         } else if tutorialLabel.stringValue == "This one is excellent! Just my style, let’s get this one! Go ahead and click Purchase."{
+            let height: CGFloat = 70
+            let width: CGFloat = 70
+            background.subtract(with: NSRect(x: view.bounds.maxX * 0.01, y: view.bounds.maxY * 0.865, width: width, height: height))
             let firstText    = NSMutableAttributedString(string: "Magnificent! Let’s get back to hiking. Click the ", attributes: firstAttr)
             let midText  = NSAttributedString(string: "􁉈 button.", attributes: startAttr)
             firstText.append(midText)
             tutorialLabel.attributedStringValue = firstText
-            background.subtract(with: .zero)
         }
     }
     

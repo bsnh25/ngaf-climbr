@@ -138,7 +138,6 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         view.wantsLayer = true
-      view.layer?.backgroundColor = NSColor.red.cgColor
 
     }
   

@@ -201,7 +201,7 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
         
         pop()
         
-        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) == true {
             guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
             push(to: tutorialVc)
         }

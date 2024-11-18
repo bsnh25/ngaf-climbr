@@ -15,6 +15,7 @@ class TutorialVC: NSViewController {
     let background      = SubtractedView()
     let container       = NSView()
     let character       = NSImageView()
+    let overviewFinish  = NSImageView()
     let startTutorialButton = CLTextButtonV2(
         title: "Yes, please!",
         backgroundColor: .cButton,
@@ -52,7 +53,7 @@ class TutorialVC: NSViewController {
         configureText()
         configureButton()
         selectorButton()
-        
+        configurePreviewFinish()
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -138,6 +139,13 @@ class TutorialVC: NSViewController {
             
         }
         
+    }
+    
+    func configurePreviewFinish() {
+        self.view.addSubview(overviewFinish)
+        self.overviewFinish.wantsLayer = true
+        self.overviewFinish.needsLayout = true
+        self.overviewFinish.frame = NSRect(x: getUser.gender == .male ? self.view.frame.maxX * 0.63 : self.view.frame.maxX * 0.68, y: self.view.frame.maxY * 0.68, width: 800, height: 600)
     }
     
 }

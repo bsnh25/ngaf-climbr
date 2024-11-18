@@ -362,12 +362,6 @@ class SubProgressStretchView: NSView {
         detailMovementLabel.wantsLayer = true
         typeStretchLabel.alignment = .left
         detailMovementLabel.alignment = .left
-//
-        typeStretchLabel.layer?.borderColor = NSColor.red.cgColor
-        typeStretchLabel.layer?.borderWidth = 2
-//        
-        detailMovementLabel.layer?.borderColor = NSColor.red.cgColor
-        detailMovementLabel.layer?.borderWidth = 2
         
 //        typeStretchLabel.snp.makeConstraints { make in
 //            make.top.equalTo(movementStackView.snp.top)

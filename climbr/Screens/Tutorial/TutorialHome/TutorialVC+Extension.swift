@@ -152,7 +152,12 @@ extension TutorialVC {
     func actionSeeyou(){
         print("close pop up - see you")
         firstTutorial = false
+        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         pop()
+        
+        print("Value of user default tutorial: \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial))")
+        print("Value of user default tutorial shop: \(UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorialShop))")
+        print("Value of firstTutorial: \(firstTutorial)")
     }
     
     func selectorButton(){
@@ -169,9 +174,8 @@ extension TutorialVC {
                 
             } else if startTutorialButton.title == "Healthier everyday!" {
                 
-                let height: CGFloat = 150
                 let width: CGFloat = 450
-                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: 840 - height - 32, width: width, height: height))
+                background.subtract(with: NSRect(x: view.bounds.maxX - width - 12, y: view.bounds.maxY * 0.865, width: width, height: 25))
                 
                 startTutorialButton.isHidden = false
                 startTutorialButton.setupTitleForegroundAndFont(title: "Healthier everyday!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
@@ -206,17 +210,21 @@ extension TutorialVC {
                 firstText.append(midText)
                 firstText.append(tnCText)
                 firstText.append(endText)
-                
+//                overviewFinish.image = NSImage(resource: getUser.gender == .male ? .malechar1 : .femalePeak)
+                overviewFinish.image = NSImage(resource: .femalePeak)
                 tutorialLabel.attributedStringValue = firstText
                 startTutorialButton.action = #selector(actionMidway)
                 
             } else if startTutorialButton.title == "Oh dear..." {
                 background.subtract(with: .zero)
                 startTutorialButton.setupTitleForegroundAndFont(title: "Oh dear...", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
+//                overviewFinish.image = NSImage(resource: getUser.gender == .male ? .malechar1 : .femaleMidway)
+                overviewFinish.image = NSImage(resource: .femaleMidway)
                 startTutorialButton.action = #selector(actionOhDear)
 
             } else if startTutorialButton.title == "See you on top!" {
                 background.subtract(with: .zero)
+                overviewFinish.removeFromSuperview()
                 startTutorialButton.setupTitleForegroundAndFont(title: "See you on top!", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
                 startTutorialButton.action = #selector(actionSeeyou)
             }
@@ -235,7 +243,7 @@ extension TutorialVC {
         if getUser?.gender == .male {
             character.image = NSImage(resource: .boyHalf)
             height = view.bounds.height * 0.82
-            width = view.bounds.width * 0.42
+            width = view.bounds.width * 0.48
         } else {
             character.image = NSImage(resource: .femaleHalf)
             height = view.bounds.height * 0.74

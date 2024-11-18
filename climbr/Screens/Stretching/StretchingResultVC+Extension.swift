@@ -23,9 +23,8 @@ extension StretchingResultVC {
         
         rewardPointLabel.setText(label)
         
-        let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
-        if isTutorial {
-            points += 100
+        if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
+            points += 110
         }
         
         if let char {
@@ -146,15 +145,13 @@ extension StretchingResultVC {
             backProgress.updateColor(.red)
             greetingLabel.setText("You didn't do any stretching! So you didn't get any coins")
             
-            let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
-            if isTutorial {
+            if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
                 self.updateProgress()
             }
             
         } else if (armTotal == 0 && neckTotal == 0) || (armTotal == 0 && backTotal == 0) || (neckTotal == 0 && backTotal == 0){
             
-            let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
-            if isTutorial {
+            if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
                 self.updateProgress()
             }
             greetingLabel.setText("You missed two type of movements! Let’s try to finish the whole sequence next time")
