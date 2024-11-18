@@ -20,23 +20,16 @@ class OverlayView: NSViewController {
     let snoozeBtn = CLTextButtonV2(title: "Snooze (5 min)", backgroundColor: .white, foregroundColorText: .black, fontText: NSFont.systemFont(ofSize: 17, weight: .bold))
     var delegate: OverlayNotifServices?
     let notifService = NotificationManager.shared
-    let userManager = UserManager.shared
-    var userCharacterData: CharacterModel?
     var snoozeTimer: DispatchSourceTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userCharacterData = userManager.getCharacterData()
         configure()
     }
     
     
     func configure(){
-        if userCharacterData?.gender == .male {
-            configureRiveViewMale()
-        }else {
-            configureRiveViewFemale()
-        }
+        configureRiveView()
         configureBoxContent()
         configureButtonDismiss()
         configureButtonSnooze()
@@ -44,23 +37,8 @@ class OverlayView: NSViewController {
     }
     
     
-    func configureRiveViewMale(){
-        let riveView = climbrVmMale.createRiveView()
-        riveView.frame = view.bounds
-        view.addSubview(riveView)
-        
-        
-        riveView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(250)
-            make.bottom.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
-        }
-        
-    }
-    
-    func configureRiveViewFemale(){
-        let riveView = climbrVmFemale.createRiveView()
+    func configureRiveView(){
+        let riveView = climbrVm.createRiveView()
         riveView.frame = view.bounds
         view.addSubview(riveView)
         
