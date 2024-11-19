@@ -312,6 +312,8 @@ extension StretchingVC {
         
         if let stretchingResult = Container.shared.resolve(StretchingResultVC.self) {
             stretchingResult.movementList = self.completedMovement
+            print("Ini stretching result frame : \(stretchingResult.view.frame)")
+//            stretchingResult.view.translatesAutoresizingMaskIntoConstraints = false
             self.replace(with: stretchingResult)
         }
     }

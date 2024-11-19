@@ -10,7 +10,7 @@ import Swinject
 
 extension StretchingResultVC {
     func calculatePoints(){
-        let points = movementList.reduce(0) { partial, next in
+        var points = movementList.reduce(0) { partial, next in
             return partial + next.rewardPoint
         }
         
@@ -22,6 +22,10 @@ extension StretchingResultVC {
         }
         
         rewardPointLabel.setText(label)
+        
+        if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
+            points += 110
+        }
         
         if let char {
             charService.updatePoint(character: char, points: points)
@@ -141,7 +145,15 @@ extension StretchingResultVC {
             backProgress.updateColor(.red)
             greetingLabel.setText("You didn't do any stretching! So you didn't get any coins")
             
+            if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
+                self.updateProgress()
+            }
+            
         } else if (armTotal == 0 && neckTotal == 0) || (armTotal == 0 && backTotal == 0) || (neckTotal == 0 && backTotal == 0){
+            
+            if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
+                self.updateProgress()
+            }
             greetingLabel.setText("You missed two type of movements! Let’s try to finish the whole sequence next time")
         }
         
@@ -153,7 +165,6 @@ extension StretchingResultVC {
     }
     
     @objc func goToMainMenu() {
-        UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
         self.pop()
     }
     

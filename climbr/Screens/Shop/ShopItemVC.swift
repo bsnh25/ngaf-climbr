@@ -23,6 +23,7 @@ class ShopItemVC: NSViewController {
     let buyButton = BuyButtonView()
     let priceLabel = CLLabel(fontSize: 20, fontWeight: .bold)
     weak var delegate: ChooseCaraterDelegate?
+    weak var delegateTutorial: TutorialShopProtocol?
     
     
     let sidebarItems: [(imageName: String, text: String)] = [
@@ -198,8 +199,6 @@ class ShopItemVC: NSViewController {
         contentStack.spacing = 10
         
         contentStack.wantsLayer = true
-//        contentStack.layer?.borderColor = NSColor.red.cgColor
-//        contentStack.layer?.borderWidth = 1
         
         contentStack.setViews([collectionViewContainer, sidebar], in: .top)
         self.view.addSubview(contentStack)
@@ -220,7 +219,6 @@ class ShopItemVC: NSViewController {
         
     func setupCollectionViewContainer() {
         collectionViewContainer.translatesAutoresizingMaskIntoConstraints = false
-//        collectionViewContainer.layer?.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
             collectionViewContainer.widthAnchor.constraint(equalToConstant: 352),
@@ -381,6 +379,10 @@ class ShopItemVC: NSViewController {
     }
     
     @objc func backToMenu(){
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorialShop) == true {
+            pop()
+            UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kTutorialShop)
+        }
         pop()
     }
 }

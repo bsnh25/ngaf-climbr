@@ -17,42 +17,21 @@ extension HomeVC {
         if let vc = Container.shared.resolve(ShopItemVC.self) {
             vc.delegate = self
             push(to: vc)
-            print("go to shop page")
-            //            vc.view.setFrameSize(NSSize(width: 400, height: 500))
-            //            view.addSubview(vc.view)
-            //
-            //            vc.view.snp.makeConstraints { make in
-            //                make.top.equalTo(settingButton.snp.bottom).offset(20)
-            //                make.leading.equalTo(settingButton.snp.leading)
-            //            }
             
-//            if !isShowPopover {
-//                storeButton.updateColorBox(true)
-//                //             Configure popover
-//                popover.contentViewController = vc
-//                
-//                print("VC frame size sblm:", vc.view.frame.size)
-//                // Show popover anchored to the store button
-//                popover.show(relativeTo: storeButton.bounds, of: storeButton, preferredEdge: .minY)
-//                print("Popover size sblm:", popover.contentSize)
-//                vc.view.frame.size = NSSize(width: 380, height: 380)
-//                //            vc.preferredContentSize = NSSize(width: 400, height: 400)
-//                popover.contentSize = NSSize(width: vc.view.frame.width, height: vc.view.frame.height)
-//                popover.behavior = .applicationDefined
-//                popover.appearance = .none
-//                popover.animates = true
-//                
-//                print("Popover size:", popover.contentSize)
-//                print("VC frame size:", vc.view.frame.size)
-//                print("Popover visible:", popover.isShown)
-//                
-//                vc.delegate = self
-//            } else if isShowPopover {
-//                popover.close()
-//                storeButton.updateColorBox(false)
-//            }
-//            
-//            isShowPopover.toggle()
+            if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorialShop) == true {
+                guard let tutorialVc = Container.shared.resolve(TutorialShopVC.self) else {return}
+                if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == false {
+                    let points = 110
+                    if let character {
+                        charService.updatePoint(character: character, points: points)
+                        print("Ini point gratis : \(String((charService.getCharacterData()!.point)))")
+                    }
+                }
+                push(to: tutorialVc, disablePreviousInteraction: false)
+                vc.delegateTutorial = tutorialVc
+            }
+            
+            print("go to shop page")
         }
     }
     
@@ -67,17 +46,9 @@ extension HomeVC {
         
         if let vc = Container.shared.resolve(StretchingVC.self) {
             
-            let isTutorial = UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
-            
-            if isTutorial {
+            if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
                 vc.setOfMovements = Movement.setOfMovements.first!
             }
-            
-//            if isShowPopover {
-//                popover.close()
-//                storeButton.updateColorBox(false)
-//                isShowPopover.toggle()
-//            }
             
             push(to: vc)
             print("go to stretching session")
@@ -97,7 +68,7 @@ extension HomeVC {
     }
     
     @objc
-  func actionAudio(_ sender: NSButton){
+    func actionAudio(_ sender: NSButton){
         guard let audio = audioService else {return}
         isSoundTapped.toggle()
       

@@ -39,7 +39,7 @@ class HomeVC: NSViewController {
 //    )
     
     let startStretchButton = CLTextButtonV2(
-        title: "Start Session",
+        title: "Start Stretch Session",
         backgroundColor: .cButton,
         foregroundColorText: .white,
         fontText: .systemFont(ofSize: 20, weight: .semibold)
@@ -146,6 +146,7 @@ class HomeVC: NSViewController {
         setupStreakLabel()
         setupPointsLabel()
         
+        print("Value tutorial \(UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial))")
     }
     
     override func viewDidAppear() {
@@ -217,7 +218,7 @@ class HomeVC: NSViewController {
         view.addSubview(stack)
         
         stack.wantsLayer = true
-        stack.setViews([settingButton, audioButton, storeButton], in: .center)
+        stack.setViews([settingButton, storeButton, pointsView, streakView, audioButton], in: .center)
         stack.orientation = .horizontal
         stack.spacing = 10
         
@@ -252,34 +253,11 @@ class HomeVC: NSViewController {
         storeButton.setAccessibilityRole(.button)
         
         let vPadding = 40
-        let hPadding = 10
-//        let heightBtn = 40
-        
-        settingButton.snp.makeConstraints { setting in
-            setting.leading.equalTo(stack.snp.leading)
-            setting.top.equalTo(stack.snp.top)
-//            setting.width.equalTo(38)
-//            setting.height.equalTo(38)
-        }
-        
-        audioButton.snp.makeConstraints { audio in
-            audio.leading.equalTo(settingButton.snp.trailing).offset(hPadding)
-            audio.top.equalTo(stack.snp.top)
-//            audio.width.equalTo(38)
-//            audio.height.equalTo(38)
-        }
-        
-        storeButton.snp.makeConstraints { store in
-            store.leading.equalTo(audioButton.snp.trailing).offset(hPadding)
-            store.top.equalTo(stack.snp.top)
-//            store.width.equalTo(38)
-//            store.height.equalTo(38)
-        }
         
         stack.snp.makeConstraints { stack in
             stack.leading.equalToSuperview().offset(20)
             stack.top.equalToSuperview().offset(vPadding)
-            stack.trailing.equalTo(storeButton.snp.trailing)
+            stack.trailing.equalTo(audioButton.snp.trailing)
             stack.height.equalTo(settingButton.snp.height)
         }
         
@@ -382,16 +360,13 @@ class HomeVC: NSViewController {
         pointsView.setAccessibilityLabel("View your balance")
         pointsView.setAccessibilityRole(.staticText)
         
-        view.addSubview(pointsView)
+//        view.addSubview(pointsView)
         
         let blur = CLBlurEffectView(frame: pointsView.bounds)
         pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
-            pointsView.leadingAnchor.constraint(equalTo: streakView.trailingAnchor, constant: 10),
-            pointsView.topAnchor.constraint(equalTo: storeButton.topAnchor),
             pointsView.widthAnchor.constraint(equalToConstant: 137),
-            pointsView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -420,16 +395,13 @@ class HomeVC: NSViewController {
         streakView.setAccessibilityLabel("View your streak")
         streakView.setAccessibilityRole(.button)
         
-        view.addSubview(streakView)
+//        view.addSubview(streakView)
         
         let blur = CLBlurEffectView(frame: streakView.bounds)
         streakView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
-            streakView.leadingAnchor.constraint(equalTo: storeButton.trailingAnchor, constant: 10),
-            streakView.topAnchor.constraint(equalTo: storeButton.topAnchor),
             streakView.widthAnchor.constraint(equalToConstant: 100),
-            streakView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     

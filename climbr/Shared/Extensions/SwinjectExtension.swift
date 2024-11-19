@@ -71,6 +71,9 @@ extension Container {
             return TutorialVC()
         }
         
+        container.register(TutorialShopVC.self){ resolver in
+            return TutorialShopVC()
+        }
         
         return container
     }()

@@ -197,10 +197,11 @@ class ChooseCharacterVC: NSViewController, NSTextFieldDelegate {
         let userData = CharacterModel(name: textField.stringValue, gender: gender, point: 0)
         charService.saveCharacterData(data: userData)
         UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorial)
+        UserDefaults.standard.set(true, forKey: UserDefaultsKey.kTutorialShop)
         
         pop()
         
-        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) {
+        if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial) == true {
             guard let tutorialVc = Container.shared.resolve(TutorialVC.self) else {return}
             push(to: tutorialVc)
         }

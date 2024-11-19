@@ -1,8 +1,8 @@
 //
-//  TutorialVC.swift
+//  TutorialShop.swift
 //  climbr
 //
-//  Created by Bayu Septyan Nur Hidayat on 17/08/24.
+//  Created by Bayu Septyan Nur Hidayat on 18/11/24.
 //
 
 import Cocoa
@@ -11,7 +11,11 @@ import SnapKit
 import Combine
 import Swinject
 
-class TutorialVC: NSViewController {
+protocol TutorialShopProtocol: AnyObject {
+    func didTutorialShopUpdate()
+}
+
+class TutorialShopVC: NSViewController {
     let background      = SubtractedView()
     let container       = NSView()
     let character       = NSImageView()
@@ -21,12 +25,14 @@ class TutorialVC: NSViewController {
         foregroundColorText: .white,
         fontText: .systemFont(ofSize: 18, weight: .bold)
     )
-    let skipTutorialButton = CLTextButtonV2(
-        title: "I'll learn on my own",
-        backgroundColor: .cButton,
-        foregroundColorText: .white,
-        fontText: .systemFont(ofSize: 18, weight: .bold)
-    )
+    let firstAttr: [NSAttributedString.Key: Any] = [
+        .font: NSFont.systemFont(ofSize: 24, weight: .bold)
+    ]
+    
+    let startAttr: [NSAttributedString.Key: Any] = [
+        .font: NSFont.systemFont(ofSize: 24, weight: .black),
+        NSAttributedString.Key.foregroundColor: NSColor.cButton
+    ]
     
     var getUser: CharacterModel!
     var charLabel       = CLLabel(fontSize: 28, fontWeight: .bold)
@@ -34,7 +40,7 @@ class TutorialVC: NSViewController {
     var bags: Set<AnyCancellable> = []
     var charService: CharacterService = UserManager.shared
     
-    var firstTutorial: Bool = true {
+    var firstShopTutorial: Bool = true {
         didSet {
             selectorButton()
         }
@@ -45,20 +51,18 @@ class TutorialVC: NSViewController {
         
         view.addSubview(background)
         
+        
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-
         
         configureChar()
         configureContainer()
         configureText()
-        configureButton()
         selectorButton()
-        
         
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
@@ -80,7 +84,7 @@ class TutorialVC: NSViewController {
         
         character.snp.makeConstraints { char in
             char.leading.equalToSuperview().inset(padding)
-            char.centerY.equalToSuperview()
+            char.centerY.equalToSuperview().offset(view.bounds.height * 0.2)
         }
     }
     
@@ -94,38 +98,13 @@ class TutorialVC: NSViewController {
         
         let padding = view.bounds.width * 0.05
         let topPadding = view.bounds.width * 0.1
-        let height = view.bounds.height * 0.35
+        let height = view.bounds.height * 0.3
         
         container.snp.makeConstraints { container in
             container.top.equalTo(character.snp.bottom).inset(topPadding)
             container.leading.trailing.equalToSuperview().inset(padding)
             container.height.equalTo(height)
-        }
-    }
-    
-    func configureButton(){
-        view.addSubview(startTutorialButton)
-        view.addSubview(skipTutorialButton)
-        
-        startTutorialButton.target = self
-        skipTutorialButton.target = self
-        
-        let padding = view.bounds.width * 0.05
-        let height = view.bounds.height * 0.1
-        let width = view.bounds.width * 0.4
-        
-        skipTutorialButton.snp.makeConstraints { skip in
-            skip.top.equalTo(container.snp.bottom).offset(view.bounds.width * 0.02)
-            skip.trailing.equalToSuperview().inset(padding)
-            skip.height.equalTo(height)
-            skip.width.equalTo(width)
-        }
-        
-        startTutorialButton.snp.makeConstraints { start in
-            start.top.equalTo(skipTutorialButton.snp.top)
-            start.trailing.equalTo(skipTutorialButton.snp.leading).inset(-padding)
-            start.height.equalTo(height)
-            start.width.equalTo(width)
+            container.bottom.equalToSuperview().inset(padding)
         }
     }
     
@@ -138,7 +117,7 @@ class TutorialVC: NSViewController {
         tutorialLabel.backgroundColor = .clear
         
         let padding = view.bounds.width * 0.04
-        let descPadding = view.bounds.width * 0.02
+        let descPadding = view.bounds.width * 0.04
         
         charLabel.snp.makeConstraints { title in
             title.top.equalTo(container.snp.top).inset(padding)

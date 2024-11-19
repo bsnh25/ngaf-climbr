@@ -80,11 +80,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     if let vc = Container.shared.resolve(MainVC.self) {
       mainWindow?.addViewController(vc)
     }
-    
-    
-    
+      
     createAppMenuBar()
     createWindowMenuBar()
+      UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
     
     NSApplication.shared.setActivationPolicy(.regular)
     
@@ -153,6 +152,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   func applicationWillTerminate(_ aNotification: Notification) {
     // Insert code here to tear down your application
     audio?.stopBackground()
+      UserDefaults.standard.set(false, forKey: UserDefaultsKey.kTutorial)
     print("Application will terminate")
   }
   

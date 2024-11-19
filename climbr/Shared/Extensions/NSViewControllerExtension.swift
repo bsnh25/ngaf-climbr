@@ -87,6 +87,7 @@ extension NSViewController {
             guard let currentVC = contentVC.children.last else {
                 return
             }
+            print("Ini currentVC frame before : \(currentVC.view.frame)")
             
             NSAnimationContext.runAnimationGroup { context in
                 context.duration = 0.3
@@ -95,6 +96,7 @@ extension NSViewController {
                 nextViewController.view.animator().alphaValue = 0
             } completionHandler: {
                 /// Add next vc to the content vc
+                print("Ini contentVC frame before replace : \(contentVC.view.frame)")
                 contentVC.addSubViewController(nextViewController, to: contentVC.view)
                 
                 NSAnimationContext.runAnimationGroup { context in
@@ -106,11 +108,14 @@ extension NSViewController {
                     /// After animation comple, remove current vc from parent and remove current view from super view
                     currentVC.removeFromParent()
                     currentVC.view.removeFromSuperview()
+                    contentVC.view.frame = contentVC.view.frame
+                    print("Ini contentVC frame after replace : \(contentVC.view.frame)")
                     
                     print("NAV - After Replace: ", contentVC.children)
                 }
-                
+                print("Ini currentVC frame after replace : \(currentVC.view.frame)")
             }
+            
         }
     }
 }

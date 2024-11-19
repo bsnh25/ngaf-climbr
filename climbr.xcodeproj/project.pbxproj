@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
+		034EADE12CC786BF006C0C9C /* climbrHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034EADCD2CC78493006C0C9C /* climbrHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		038CFB7B2CEB171400E3BCA8 /* TutorialShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */; };
+		038CFB7F2CEB175100E3BCA8 /* TutorialShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */; };
 		03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EB35022CE3344100DDF4E4 /* AboutAlert.swift */; };
 		8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A2368282CEB4A60005953FE /* overlay_notification.riv */; };
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
@@ -138,6 +141,8 @@
 		034EADDE2CC78654006C0C9C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		0367F5AE2C720A5300938747 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0367F5AF2C720A5300938747 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialShopVC.swift; sourceTree = "<group>"; };
+		038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TutorialShopVC+Extension.swift"; sourceTree = "<group>"; };
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -310,6 +315,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		038CFB7C2CEB173400E3BCA8 /* TutorialHome */ = {
+			isa = PBXGroup;
+			children = (
+				9095E0692CD6684800280F13 /* TutorialVC.swift */,
+				9095E06A2CD6684800280F13 /* TutorialVC+Extension.swift */,
+			);
+			path = TutorialHome;
+			sourceTree = "<group>";
+		};
+		038CFB7D2CEB173F00E3BCA8 /* TutorialShop */ = {
+			isa = PBXGroup;
+			children = (
+				038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */,
+				038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */,
+			);
+			path = TutorialShop;
+			sourceTree = "<group>";
+		};
 		8A6FF3252CD681C900E8E5EC /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,8 +699,8 @@
 		9095E06B2CD6684800280F13 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				9095E0692CD6684800280F13 /* TutorialVC.swift */,
-				9095E06A2CD6684800280F13 /* TutorialVC+Extension.swift */,
+				038CFB7D2CEB173F00E3BCA8 /* TutorialShop */,
+				038CFB7C2CEB173400E3BCA8 /* TutorialHome */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -993,6 +1016,7 @@
 				9095E0A32CD6684900280F13 /* ChooseCharacterVC.swift in Sources */,
 				9095E0A42CD6684900280F13 /* DayTimePreferenceView.swift in Sources */,
 				9095E0A52CD6684900280F13 /* UserPreferenceVC.swift in Sources */,
+				038CFB7F2CEB175100E3BCA8 /* TutorialShopVC+Extension.swift in Sources */,
 				9095E0A62CD6684900280F13 /* StretchingVC.swift in Sources */,
 				9095E0A72CD6684900280F13 /* BuyButtonView.swift in Sources */,
 				9095E0A82CD6684900280F13 /* Character.swift in Sources */,
@@ -1029,6 +1053,7 @@
 				9095DFD22CD6683300280F13 /* AppDelegate+MenuBar+Extension.swift in Sources */,
 				9095DFD32CD6683300280F13 /* MainVC.swift in Sources */,
 				9095DFD42CD6683300280F13 /* AppDelegate.swift in Sources */,
+				038CFB7B2CEB171400E3BCA8 /* TutorialShopVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

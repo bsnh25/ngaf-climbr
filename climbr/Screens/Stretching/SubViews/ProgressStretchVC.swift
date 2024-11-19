@@ -279,7 +279,7 @@ class SubProgressStretchView: NSView {
     var movementStackView: NSStackView = {
         let stack = NSStackView()
         stack.orientation = .vertical
-        stack.alignment = .left
+        stack.alignment = .leading
         stack.spacing = 8
         return stack
     }()
@@ -348,8 +348,9 @@ class SubProgressStretchView: NSView {
         }
       
         movementStackView.snp.makeConstraints { make in
-            make.trailing.equalTo(progressStackView.snp.trailing)
-            make.height.equalTo(56)
+//            make.trailing.equalTo(progressStackView.snp.trailing)
+//            make.height.equalTo(56)
+//            make.width.equalTo(150)
             
         }
     }
@@ -359,14 +360,8 @@ class SubProgressStretchView: NSView {
         movementStackView.setViews(views, in: .leading)
         typeStretchLabel.wantsLayer = true
         detailMovementLabel.wantsLayer = true
-        typeStretchLabel.alignment = .justified
-        detailMovementLabel.alignment = .justified
-//        
-//        typeStretchLabel.layer?.borderColor = NSColor.red.cgColor
-//        typeStretchLabel.layer?.borderWidth = 2
-//        
-//        detailMovementLabel.layer?.borderColor = NSColor.red.cgColor
-//        detailMovementLabel.layer?.borderWidth = 2
+        typeStretchLabel.alignment = .left
+        detailMovementLabel.alignment = .left
         
 //        typeStretchLabel.snp.makeConstraints { make in
 //            make.top.equalTo(movementStackView.snp.top)
