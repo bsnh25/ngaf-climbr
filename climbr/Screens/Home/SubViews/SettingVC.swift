@@ -654,6 +654,7 @@ class SettingVC: NSViewController {
         
         
         launchAtLoginChecBox.state = userPreferenceData.launchAtLogin ? .on : .off
+        isLaunchAtLogin = userPreferenceData.launchAtLogin
         
         let newState = launchAtLoginChecBox.state == .on ? "Checked" : "Unchecked"
         // Apply the attributed title
