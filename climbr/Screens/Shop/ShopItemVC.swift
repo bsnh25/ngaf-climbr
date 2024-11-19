@@ -172,8 +172,8 @@ class ShopItemVC: NSViewController {
     
     func setupSidebar() {
         sidebar.orientation = .vertical
-        sidebar.alignment = .leading
-        sidebar.spacing = 10
+        sidebar.alignment = .centerX
+        sidebar.spacing = 20
         var items : [TypeButton] = []
         
         for (index, item) in sidebarItems.enumerated() {
@@ -188,8 +188,6 @@ class ShopItemVC: NSViewController {
         }
         
         sidebar.setViews(items, in: .top)
-        sidebar.translatesAutoresizingMaskIntoConstraints = false
-        
     }
     
     func horizontalStack(){
@@ -205,10 +203,9 @@ class ShopItemVC: NSViewController {
         
         contentStack.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(20)
-            make.centerY.equalToSuperview()
             make.leading.equalTo(backButton.snp.leading)
-            make.height.equalTo(544)
-            make.width.equalTo(406)
+//            make.height.equalTo(544)
+//            make.width.equalTo(406)
         }
 //        NSLayoutConstraint.activate([
 //            contentStack.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -388,9 +385,10 @@ class ShopItemVC: NSViewController {
     
     @objc func backToMenu(){
         if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorialShop) == true {
-            pop()
+            doublePop()
             UserDefaults.standard.setValue(false, forKey: UserDefaultsKey.kTutorialShop)
+        } else {
+            pop()
         }
-        pop()
     }
 }
