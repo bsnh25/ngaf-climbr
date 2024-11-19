@@ -138,6 +138,31 @@ class StretchingVC: NSViewController {
         
         super.viewDidLoad()
         view.wantsLayer = true
+      
+      
+      self.configureCameraPreview()
+      progressSideView.loadMovement(self.setOfMovements)
+//        print("LOG setMovement : \(setOfMovements)")
+      configureMovementView()
+      predictor?.delegate = self
+      predictor?.bufferSize = cameraService?.bufferSize ?? .zero
+      configureButton()
+      configurePositionStateLabel()
+      configureInstructionView()
+//
+      updateMovementData()
+      updateMovementState()
+      
+      
+      cameraService?.checkCameraPermission(completion: { granted in
+        if granted {
+          self.cameraService?.startSession()
+          self.cameraService?.setSampleBufferDelegate(delegate: self)
+          self.setupVideoPreview()
+        } else {
+          self.pop()
+        }
+      })
 
     }
   
@@ -151,20 +176,6 @@ class StretchingVC: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        cameraService?.startSessionIfPermitted()
-        progressSideView.loadMovement(self.setOfMovements)
-//        print("LOG setMovement : \(setOfMovements)")
-        configureCameraPreview()
-        configureMovementView()
-        predictor?.delegate = self
-        predictor?.bufferSize = cameraService?.bufferSize ?? .zero
-        cameraService?.setSampleBufferDelegate(delegate: self)
-        configureButton()
-        configurePositionStateLabel()
-        configureInstructionView()
-//        
-        updateMovementData()
-        updateMovementState()
         
 //        configureBoundingBox()
     }
@@ -191,7 +202,10 @@ class StretchingVC: NSViewController {
     }
     
     private func setupVideoPreview(){
-        
+      
+        cameraPreview.setupPreviewLayer(with: cameraService?.previewLayer)
+        cameraPreview.addOtherSubLayer(layer: pointsLayer)
+      
         guard let previewLayer  = cameraService?.previewLayer else {return}
         
         cameraPreview.layer?.addSublayer(previewLayer)
@@ -205,12 +219,7 @@ class StretchingVC: NSViewController {
         cameraPreview.wantsLayer                = true
         cameraPreview.layer?.backgroundColor    = .black
         
-        cameraPreview.setupPreviewLayer(with: cameraService?.previewLayer)
-        cameraPreview.addOtherSubLayer(layer: pointsLayer)
-        
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false
-        
-        setupVideoPreview()
         
         view.addSubview(cameraPreview)
         

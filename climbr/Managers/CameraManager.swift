@@ -34,31 +34,29 @@ class CameraManager: NSObject, CameraService {
         switch authorizationStatus {
         case .authorized:
             // Izin telah diberikan
+          self.setupSession()
             completion(true)
         case .notDetermined:
             // Izin belum diminta, minta izin kamera
             AVCaptureDevice.requestAccess(for: .video) { granted in
-                DispatchQueue.main.async {
-                    completion(granted)
+              
+              DispatchQueue.main.async {
+                if granted {
+                  self.setupSession()
+                } else {
+                  self.showPermissionAlert()
                 }
+                completion(granted)
+              }
             }
         case .denied, .restricted:
             // Izin ditolak atau dibatasi
+            DispatchQueue.main.async {
+              self.showPermissionAlert()
+            }
             completion(false)
         @unknown default:
             completion(false)
-        }
-    }
-    
-    func startSessionIfPermitted() {
-        checkCameraPermission { [weak self] isPermitted in
-            if isPermitted {
-                self?.setupSession()
-                self?.startSession()
-            } else {
-                // Tampilkan pesan atau arahkan pengguna ke pengaturan
-                self?.showPermissionAlert()
-            }
         }
     }
     
