@@ -25,6 +25,12 @@ class CollectionContainerView: NSView {
     let HOutterStack: NSStackView = NSStackView()
     let VMiddleStack : NSStackView = NSStackView()
     let HInnerStack: NSStackView = NSStackView()
+    let HImageView: NSImageView = {
+        let imageView = NSImageView()
+        imageView.image = NSImage(systemSymbolName: "xbox.logo", accessibilityDescription: "Coba")
+        imageView.imageScaling = .scaleAxesIndependently
+        return imageView
+    }()
     let hView: HView = HView()
     
     weak var collectionDelegate: CollectionContainerProtocol?
@@ -64,6 +70,8 @@ class CollectionContainerView: NSView {
         self.layer?.cornerRadius = 10
         self.layer?.masksToBounds = true
         self.layer?.backgroundColor = .white
+        self.layer?.borderColor = NSColor.red.cgColor
+        self.layer?.borderWidth = 1
         
         setupConstraints()
         configOutterStack()

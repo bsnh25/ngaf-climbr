@@ -17,6 +17,14 @@ extension HomeVC {
         if let vc = Container.shared.resolve(ShopItemVC.self) {
             vc.delegate = self
             push(to: vc)
+            print("go to shop page")
+            //            vc.view.setFrameSize(NSSize(width: 400, height: 500))
+            //            view.addSubview(vc.view)
+            //
+            //            vc.view.snp.makeConstraints { make in
+            //                make.top.equalTo(settingButton.snp.bottom).offset(20)
+            //                make.leading.equalTo(settingButton.snp.leading)
+            //            }
             
             if UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorialShop) == true {
                 guard let tutorialVc = Container.shared.resolve(TutorialShopVC.self) else {return}
@@ -49,6 +57,12 @@ extension HomeVC {
             if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
                 vc.setOfMovements = Movement.setOfMovements.first!
             }
+            
+//            if isShowPopover {
+//                popover.close()
+//                storeButton.updateColorBox(false)
+//                isShowPopover.toggle()
+//            }
             
             push(to: vc)
             print("go to stretching session")

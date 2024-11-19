@@ -11,7 +11,7 @@ extension SettingVC {
     @objc
     internal func actionCheckbox(sender: NSButton) {
         isPreferenceEdited = true
-      
+        
         if sender.state == .on {
             isLaunchAtLogin = true
         } else {
@@ -25,34 +25,35 @@ extension SettingVC {
     @objc
     internal func actionDifferentWorkHour(_ sender: NSButton) {
         isFlexibleWorkHour = sender.state == .on
-          
+        
         isPreferenceEdited = true
-      
+        
         if isFlexibleWorkHour {
-          
-//          configureWorkingHours()
-//          daysButtonStack.unlockButton()
-          
-          workHourItemView.isHidden = true
-          preferenceStackView.isHidden = false
-          
+            
+            //          configureWorkingHours()
+            //          daysButtonStack.unlockButton()
+            
+            workHourItemView.isHidden = true
+            preferenceStackView.isHidden = false
+            
             for workingHour in self.workingHours {
                 if workingHour.isEnabled{
                     preferenceStack[workingHour.day].isHidden = false
                     preferenceStack[workingHour.day].setInitialValue(workingHour.startHour, workingHour.endHour)
-                      
+                    
                     workingHours.update(with: workingHour)
                     
                 }
             }
-          
+            
+            
         } else{
-//          daysButtonStack.lockButton()
-          preferenceStackView.isHidden = true
-          workHourItemView.isHidden = false
-          
-          preferenceStack.forEach { $0.isHidden = true }
-          
+            //          daysButtonStack.lockButton()
+            preferenceStackView.isHidden = true
+            workHourItemView.isHidden = false
+            
+            preferenceStack.forEach { $0.isHidden = true }
+            
             for item in workingHours {
                 if item.isEnabled{
                     var data = WorkingHour(startHour: item.startHour, endHour: item.endHour, day: item.day, isEnabled: true)
@@ -65,67 +66,68 @@ extension SettingVC {
                 }
             }
         }
-        
-        
     }
+    
+    
+    
     
     @objc
     internal func actionReminderHandler(_ sender: CLPickerButton){
-      resetButtonColors()
-      sender.isSelected = true
-      sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
-      sender.foregroundColorText = .white
-      
-      isPreferenceEdited = true
-      
-      print("\(sender.title) choose")
-      
-      intervalReminder = Int(sender.title)!
+        resetButtonColors()
+        sender.isSelected = true
+        sender.layer?.backgroundColor = NSColor.cNewButton.cgColor
+        sender.foregroundColorText = .white
+        
+        isPreferenceEdited = true
+        
+        print("\(sender.title) choose")
+        
+        intervalReminder = Int(sender.title)!
     }
     
     @objc
     internal func actSaveButton(){
-      
-      print("Flexible Working Hours: ", isFlexibleWorkHour)
-      
-      let formatter = DateFormatter()
-      formatter.dateFormat = "HH:mm"
-      
-      if isFlexibleWorkHour {
-        for item in workingHours where item.isEnabled {
-          let day = Weekday(rawValue: item.day)!
-          print("\(day.fullName):", formatter.string(from: item.startHour), "to", formatter.string(from: item.endHour))
+        
+        print("Flexible Working Hours: ", isFlexibleWorkHour)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        if isFlexibleWorkHour {
+            for item in workingHours where item.isEnabled {
+                let day = Weekday(rawValue: item.day)!
+                print("\(day.fullName):", formatter.string(from: item.startHour), "to", formatter.string(from: item.endHour))
+            }
+        } else {
+            for item in workingHours {
+                let day = Weekday(rawValue: item.day)!
+                print("\(day.fullName): ", formatter.string(from: item.startHour), " to ", formatter.string(from: item.endHour))
+            }
         }
-      } else {
-        for item in workingHours {
-          let day = Weekday(rawValue: item.day)!
-          print("\(day.fullName): ", formatter.string(from: item.startHour), " to ", formatter.string(from: item.endHour))
-        }
-      }
-      
-      print("Reminder Interval: ", intervalReminder)
-      print("Launch At Login: ", isLaunchAtLogin)
-      
-      let data = UserPreferenceModel(
-        launchAtLogin: isLaunchAtLogin,
-        isFlexibleWorkHour: isFlexibleWorkHour,
-        reminderInterval: intervalReminder,
-        workingHours: Array(workingHours)
-      )
-      
-      UserManager.shared.savePreferences(data: data)
-      print("isi data preference: \(data)")
-      notifService.startOverlayScheduler(userPreference: data)
-      
-                
+        
+        print("Reminder Interval: ", intervalReminder)
+        print("Launch At Login: ", isLaunchAtLogin)
+        
+        let data = UserPreferenceModel(
+            launchAtLogin: isLaunchAtLogin,
+            isFlexibleWorkHour: isFlexibleWorkHour,
+            reminderInterval: intervalReminder,
+            workingHours: Array(workingHours)
+        )
+        
+        UserManager.shared.savePreferences(data: data)
+        print("isi data preference: \(data)")
+        notifService.startOverlayScheduler(userPreference: data)
+        
+        
         self.dismiss(self)
     }
-  
-  @objc
-  internal func actCancelButton(){
-              
-      self.dismiss(self)
-  }
+    
+    @objc
+    internal func actCancelButton(){
+        
+        self.dismiss(self)
+    }
 }
 
 extension SettingVC: DaysButtonToUserPreferenceDelegate {
@@ -142,9 +144,9 @@ extension SettingVC: DaysButtonToUserPreferenceDelegate {
             if var day = workingHours.first(where: { $0.day == Weekday.sunday.rawValue }) {
                 day.isEnabled = isSelected
                 
-//                if !isSelected {
-//                    day.isEnabled = isSelected
-//                }
+                //                if !isSelected {
+                //                    day.isEnabled = isSelected
+                //                }
                 
                 workingHours.update(with: day)
             }
