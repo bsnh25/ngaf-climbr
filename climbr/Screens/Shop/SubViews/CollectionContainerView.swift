@@ -70,8 +70,8 @@ class CollectionContainerView: NSView {
         self.layer?.cornerRadius = 10
         self.layer?.masksToBounds = true
         self.layer?.backgroundColor = .white
-        self.layer?.borderColor = NSColor.red.cgColor
-        self.layer?.borderWidth = 1
+//        self.layer?.borderColor = NSColor.red.cgColor
+//        self.layer?.borderWidth = 1
         
         setupConstraints()
         configOutterStack()
