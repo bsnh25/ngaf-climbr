@@ -210,16 +210,14 @@ extension TutorialVC {
                 firstText.append(midText)
                 firstText.append(tnCText)
                 firstText.append(endText)
-//                overviewFinish.image = NSImage(resource: getUser.gender == .male ? .malechar1 : .femalePeak)
-                overviewFinish.image = NSImage(resource: .femalePeak)
+                overviewFinish.image = NSImage(resource: getUser.gender == .male ? .boyPeak : .femalePeak)
                 tutorialLabel.attributedStringValue = firstText
                 startTutorialButton.action = #selector(actionMidway)
                 
             } else if startTutorialButton.title == "Oh dear..." {
                 background.subtract(with: .zero)
                 startTutorialButton.setupTitleForegroundAndFont(title: "Oh dear...", foregroundColorText: .white, font: .systemFont(ofSize: 18, weight: .bold))
-//                overviewFinish.image = NSImage(resource: getUser.gender == .male ? .malechar1 : .femaleMidway)
-                overviewFinish.image = NSImage(resource: .femaleMidway)
+                overviewFinish.image = NSImage(resource: getUser.gender == .male ? .boyMidway : .femaleMidway)
                 startTutorialButton.action = #selector(actionOhDear)
 
             } else if startTutorialButton.title == "See you on top!" {

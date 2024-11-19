@@ -46,8 +46,8 @@ extension NSViewController {
                 vc.view.animator().alphaValue = 1
                 
                 print("NAV - After Push: ", contentVC.children)
-              print("NAV - VC", vc.view.frame)
-              print("NAV - ContentVC", contentVC.view.frame)
+                print("NAV - VC", vc.view.frame)
+                print("NAV - ContentVC", contentVC.view.frame)
             }
         }
         
@@ -114,6 +114,34 @@ extension NSViewController {
                     print("NAV - After Replace: ", contentVC.children)
                 }
                 print("Ini currentVC frame after replace : \(currentVC.view.frame)")
+            }
+            
+        }
+    }
+    
+    func doublePop() {
+        
+        if let contentVC = self.view.window?.contentViewController {
+            print("NAV - Before Pop: ", contentVC.children)
+            let count = contentVC.children.count
+            for i in stride(from: count - 1, through: max(count - 2, 0), by: -1) {
+                guard i >= 0 && i < contentVC.children.count else { continue }
+                
+                let currentVC = contentVC.children[i] // Ambil VC berdasarkan indeks i
+                
+                NSAnimationContext.runAnimationGroup { context in
+                    context.duration = 0.3
+                    currentVC.view.animator().alphaValue = 0
+                } completionHandler: {
+                    currentVC.removeFromParent()
+                    currentVC.view.removeFromSuperview()
+                    
+                    if addBlockerView {
+                        overlayView.removeFromSuperview()
+                    }
+                    
+                    print("NAV - After Pop: ", contentVC.children)
+                }
             }
             
         }
