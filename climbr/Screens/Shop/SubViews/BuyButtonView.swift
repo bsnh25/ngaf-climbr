@@ -14,7 +14,7 @@ protocol BuyButtonDelegate: AnyObject {
 
 class BuyButtonView: NSView {
     let itemLabel = CLLabel()
-    var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 24, weight: .medium))
+    var itemButton : CLTextButtonV2 = CLTextButtonV2(title: "Purchase", backgroundColor: .cButton, foregroundColorText: .black, fontText: .systemFont(ofSize: 17, weight: .medium))
     
     var item : EquipmentItem?
     
@@ -37,7 +37,6 @@ class BuyButtonView: NSView {
     func updateItemButtonPreview(item: EquipmentItem, price: Int, point: Int){
         self.item = item
         itemLabel.setText(item.name)
-        itemButton.title = "Get for 􀀈 \(price)"
     }
     
     func setupUI(){
@@ -61,7 +60,7 @@ class BuyButtonView: NSView {
     func setupItemLabel(){
         addSubview(itemLabel)
         itemLabel.backgroundColor = .clear
-        itemLabel.setFont(ofSize: 26, weight: .bold)
+        itemLabel.setFont(ofSize: 22, weight: .bold)
         
         itemLabel.setText("Nama item")
         
@@ -76,11 +75,11 @@ class BuyButtonView: NSView {
         
         addSubview(itemButton)
         
-        itemButton.title = "harga item"
+//        itemButton.title = "harga item"
         
         itemButton.snp.makeConstraints { button in
             button.leading.trailing.bottom.equalToSuperview()
-            button.height.equalTo(50)
+            button.height.equalTo(38)
         }
     }
     

@@ -51,8 +51,8 @@ class NotificationManager: NotificationService {
                 }
                 
                 // Dapatkan komponen jam dan menit dari `startHour` dan `endHour`
-                let startComponents = calendar.dateComponents([.hour, .minute], from: workingHour.startHour)
-                let endComponents = calendar.dateComponents([.hour, .minute], from: workingHour.endHour)
+                let startComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: workingHour.startHour)
+                let endComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: workingHour.endHour)
                 
                 guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
                       let endHour = endComponents.hour, let endMinute = endComponents.minute else {
@@ -109,7 +109,7 @@ class NotificationManager: NotificationService {
     private func startOverlayTimer(interval: TimeInterval) {
         overlayTimer?.cancel()
         overlayTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
-        overlayTimer?.schedule(deadline: .now() + interval, repeating: interval)
+        overlayTimer?.schedule(deadline: .now() + .seconds(Int(interval)), repeating: .seconds(Int(interval)))
         overlayTimer?.setEventHandler { [weak self] in
             DispatchQueue.main.async {
                 self?.showOverlay()

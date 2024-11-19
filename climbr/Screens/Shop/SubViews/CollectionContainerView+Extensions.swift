@@ -14,6 +14,8 @@ extension CollectionContainerView {
         if let index = equipmentCollections.firstIndex(where: { $0.item == data }) {
             /// Always use section 0 because the collection view only has 1 section (current case)
             let indexPaths: Set<IndexPath> = [IndexPath(item: index, section: 0)]
+            hView.configure(equipmentModel: equipmentCollections[index])
+            hView.configure(text: "", backgroundImage: NSImage(named: data.image))
             titleItems.setText("\(data.name)")
             collectionView.selectItems(at: indexPaths, scrollPosition: .centeredHorizontally)
         }
@@ -33,7 +35,9 @@ extension CollectionContainerView: NSCollectionViewDelegateFlowLayout {
         if let data = cell.data {
             titleItems.setText("\(data.item.name)")
             collectionDelegate?.itemSelectedChangedWithType(to: data)
+            hView.configure(text: "", backgroundImage: NSImage(named: data.item.image))
         }
         
     }
+    
 }

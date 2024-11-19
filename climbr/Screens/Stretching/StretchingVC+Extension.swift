@@ -408,8 +408,8 @@ extension StretchingVC : PredictorDelegate {
             if name.rawValue == action && confidence > 0.65 {
                 if exerciseName != name {
                     self.exerciseName = name
-                    //                    print("\(name) and the confidence is \(confidence)")
                 }
+                print("\(name) and the confidence is \(confidence)")
             }
         }
     }

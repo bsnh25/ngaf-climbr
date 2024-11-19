@@ -157,7 +157,7 @@ class PredictorManager: PredictorService {
   }
   
   private func upperBodyHandler(request: VNRequest, error: Error?){
-    print("upperBodyHandler")
+//    print("upperBodyHandler")
     if let error {
       print(error)
       return
@@ -171,8 +171,8 @@ class PredictorManager: PredictorService {
       
       delegate?.predictor(didDetectUpperBody: didDetectUpperBody, boundingBox: objectBounds)
       
-      print("View BB: \(objectBounds) - confidence: \(result.confidence)")
-      print("ROI BB: \(result.boundingBox) - confidence: \(result.confidence)")
+//      print("View BB: \(objectBounds) - confidence: \(result.confidence)")
+//      print("ROI BB: \(result.boundingBox) - confidence: \(result.confidence)")
     }
   }
   

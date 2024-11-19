@@ -22,7 +22,7 @@ class GridItem: NSCollectionViewItem {
     let overlayView: NSView = {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.darkGray.cgColor.copy(alpha: 0.8)
+        view.layer?.backgroundColor = NSColor.lightGray.cgColor.copy(alpha: 0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,7 +39,13 @@ class GridItem: NSCollectionViewItem {
     
     override var isSelected: Bool {
         didSet {
-            borderView.layer?.borderWidth = isSelected ? 4 : 0
+            if isSelected {
+                borderView.layer?.borderColor = NSColor.cButton.cgColor
+                borderView.layer?.borderWidth = 4
+            } else {
+                borderView.layer?.borderColor = NSColor.darkGray.cgColor
+                borderView.layer?.borderWidth = 2
+            }
         }
     }
     
@@ -59,6 +65,9 @@ class GridItem: NSCollectionViewItem {
         view.addSubview(overlayView)
         view.addSubview(lockIcon)
         view.addSubview(borderView)
+        
+        borderView.layer?.borderColor = NSColor.darkGray.cgColor
+        borderView.layer?.borderWidth = 2
 
         NSLayoutConstraint.activate([
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),

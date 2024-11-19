@@ -96,7 +96,9 @@ class UserManager : CharacterService {
     var decodedData: CharacterModel = getCharacterData()!
     
     do {
+        print("Point before update: \(decodedData.point)")
       decodedData.point += points
+        print("Point after update: \(decodedData.point)")
       let encodedData = try JSONEncoder().encode(decodedData)
       UserDefaults.standard.set(encodedData, forKey: UserDefaultsKey.kUserCharacter)
     } catch {
