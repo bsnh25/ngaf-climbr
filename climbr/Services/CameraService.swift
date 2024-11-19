@@ -11,7 +11,8 @@ import AVFoundation
 protocol CameraService {
     var previewLayer: AVCaptureVideoPreviewLayer! { get }
     var bufferSize: CGSize { get }
-    func startSessionIfPermitted()
+    func startSession()
     func stopSession()
     func setSampleBufferDelegate(delegate: AVCaptureVideoDataOutputSampleBufferDelegate)
+  func checkCameraPermission(completion: @escaping (Bool) -> Void)
 }
