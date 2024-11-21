@@ -11,6 +11,8 @@ import Swinject
 import Combine
 import RiveRuntime
 
+//kalau kurang dari 4 dia camp, kalo dia 4 == peak.
+
 class HomeVC: NSViewController {
     
 //    let settingButton = CLImageButton(
@@ -113,6 +115,9 @@ class HomeVC: NSViewController {
             /// Configure rive artboard
             do {
                 try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
+                Task {
+                    self.observeAnimation()
+                }
             } catch {
                 print(error.localizedDescription)
             }
@@ -131,7 +136,6 @@ class HomeVC: NSViewController {
                 
                 DispatchQueue.main.async {
                     self.updateProgressData()
-                    self.observeNotif()
                   self.observeBacksound()
                 }
             }
@@ -139,6 +143,7 @@ class HomeVC: NSViewController {
         
         // Do view setup here.
         view.wantsLayer = true
+        self.observeAnimation()
 //        previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()
@@ -152,12 +157,6 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         print("viewDidAppear")
-        
-//        if isShowPopover {
-//            popover.close()
-//            storeButton.updateColorBox(false)
-//            isShowPopover.toggle()
-//        }
       
         if isBGMActive {
           let audio = Container.shared.resolve(AudioService.self)
@@ -174,13 +173,11 @@ class HomeVC: NSViewController {
             choosCharVc.genderDelegate = self
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
-            
             return
         }
         
         DispatchQueue.main.async {
             self.updateProgressData()
-            self.observeNotif()
         }
     }
   
