@@ -81,7 +81,7 @@ class HomeVC: NSViewController {
     var character: CharacterModel?
     
     var animationMain : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr_camps")
       anima.fit = .cover
         return anima
     }()
@@ -143,7 +143,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
-        setupStreakLabel()
+//        setupStreakLabel()
         setupPointsLabel()
         
         print("Value tutorial \(UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial))")
@@ -218,7 +218,7 @@ class HomeVC: NSViewController {
         view.addSubview(stack)
         
         stack.wantsLayer = true
-        stack.setViews([settingButton, storeButton, pointsView, streakView, audioButton], in: .center)
+        stack.setViews([settingButton, storeButton, pointsView, /*streakView ,*/ audioButton], in: .center)
         stack.orientation = .horizontal
         stack.spacing = 10
         
@@ -415,7 +415,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
-        setupStreakLabel()
+//        setupStreakLabel()
         setupPointsLabel()
     }
 }

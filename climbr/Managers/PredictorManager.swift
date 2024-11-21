@@ -39,6 +39,7 @@ class PredictorManager: PredictorService {
         let request = VNDetectHumanBodyPoseRequest(completionHandler: bodyPoseHandler)
         
         do{
+            //[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions
             try requestHandler.perform([request])
         }catch{
             print("Unable to perform the request, with error \(error)")

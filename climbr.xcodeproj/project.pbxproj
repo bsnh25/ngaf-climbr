@@ -11,6 +11,7 @@
 		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
 		038CFB7B2CEB171400E3BCA8 /* TutorialShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */; };
 		038CFB7F2CEB175100E3BCA8 /* TutorialShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */; };
+		03C8FC4E2CEF4C160089D035 /* climbr_camps.riv in Resources */ = {isa = PBXBuildFile; fileRef = 03C8FC4D2CEF4C160089D035 /* climbr_camps.riv */; };
 		03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EB35022CE3344100DDF4E4 /* AboutAlert.swift */; };
 		8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A2368282CEB4A60005953FE /* overlay_notification.riv */; };
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
@@ -142,6 +143,7 @@
 		0367F5AF2C720A5300938747 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialShopVC.swift; sourceTree = "<group>"; };
 		038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TutorialShopVC+Extension.swift"; sourceTree = "<group>"; };
+		03C8FC4D2CEF4C160089D035 /* climbr_camps.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr_camps.riv; sourceTree = "<group>"; };
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 		9095E0282CD6684800280F13 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
+				03C8FC4D2CEF4C160089D035 /* climbr_camps.riv */,
 				8A2368282CEB4A60005953FE /* overlay_notification.riv */,
 				902258C72CEB3D6900AD31DF /* climbr.riv */,
 				900852922CDA679500317C4F /* splash_screen.riv */,
@@ -929,6 +932,7 @@
 				8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */,
 				9095E0792CD6684900280F13 /* neckDeep-Left.mp4 in Resources */,
 				9095E07A2CD6684900280F13 /* neckRotation-Right.mp4 in Resources */,
+				03C8FC4E2CEF4C160089D035 /* climbr_camps.riv in Resources */,
 				9095E07B2CD6684900280F13 /* neckRotation-Left.mp4 in Resources */,
 				9095E07C2CD6684900280F13 /* upperBackStretch-Right.mp4 in Resources */,
 				9095E07D2CD6684900280F13 /* upperBackStretch-Front.mp4 in Resources */,
