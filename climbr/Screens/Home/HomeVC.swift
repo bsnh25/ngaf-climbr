@@ -137,13 +137,13 @@ class HomeVC: NSViewController {
                 DispatchQueue.main.async {
                     self.updateProgressData()
                   self.observeBacksound()
+                    self.observeAnimation()
                 }
             }
             .store(in: &bagss)
         
         // Do view setup here.
         view.wantsLayer = true
-        self.observeAnimation()
 //        previewAnimaConfig()
         ButtonConfigure()
         viewStretchConfig()

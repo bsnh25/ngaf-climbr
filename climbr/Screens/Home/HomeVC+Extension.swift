@@ -105,6 +105,7 @@ extension HomeVC {
     
     @objc
     func validateYesterday(){
+        observeAnimation()
         let date = UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date
         if Calendar.current.isDateInYesterday(date) {
             print("Date param : \(date)")
@@ -174,7 +175,7 @@ extension HomeVC {
             if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
                 (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
                 if notificationCount > 0 {
-                    characterState = 0
+                    characterState = 1
                     backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
                 } else {
                     characterState = 0
