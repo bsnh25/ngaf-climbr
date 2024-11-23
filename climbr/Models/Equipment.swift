@@ -169,27 +169,27 @@ enum EquipmentItem: String, CaseIterable, Identifiable, Codable {
         case .emptyBP:
             0
         case .climbingBP:
-            80
-        case .cuddlyBP:
-            90
-        case .duffelBP:
-            100
-        case .hikingBP:
             110
+        case .cuddlyBP:
+            150
+        case .duffelBP:
+            160
+        case .hikingBP:
+            180
         case .emptyS:
             0
         case .highWizardS:
-            80
-        case .iceGripS:
-            90
-        case .natureGuideS:
             100
+        case .iceGripS:
+            120
+        case .natureGuideS:
+            130
         case .trekTrooperS:
             110
         case .jungleJumble:
             140
         case .snowySummit:
-            150
+            250
         }
     }
     

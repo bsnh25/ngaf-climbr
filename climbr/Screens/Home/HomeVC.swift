@@ -83,7 +83,7 @@ class HomeVC: NSViewController {
     var character: CharacterModel?
     
     var animationMain : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr_camps")
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr_adjust")
       anima.fit = .cover
         return anima
     }()
@@ -117,12 +117,12 @@ class HomeVC: NSViewController {
                 try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
                 Task {
                     self.observeAnimation()
+                    self.updateCharacter()
                 }
             } catch {
                 print(error.localizedDescription)
             }
         }
-        self.updateCharacter()
     }
     
     override func viewDidLoad() {

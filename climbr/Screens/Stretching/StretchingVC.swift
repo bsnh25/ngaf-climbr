@@ -115,6 +115,7 @@ class StretchingVC: NSViewController {
     var isArmPassed : Bool?
     var isNeckPassed : Bool?
     var isBodyPassed : Bool?
+    var isTutorial : Bool?
     
     /// Dependencies
     var audioService: AudioService?
@@ -135,11 +136,10 @@ class StretchingVC: NSViewController {
     
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         view.wantsLayer = true
       
-      
+        isTutorial =  UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial)
       self.configureCameraPreview()
       progressSideView.loadMovement(self.setOfMovements)
 //        print("LOG setMovement : \(setOfMovements)")
@@ -218,17 +218,18 @@ class StretchingVC: NSViewController {
     private func configureCameraPreview() {
         cameraPreview.wantsLayer                = true
         cameraPreview.layer?.backgroundColor    = .black
-        
+        guard let isTutorial = isTutorial else {return}
         cameraPreview.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(cameraPreview)
         
         NSLayoutConstraint.activate([
             cameraPreview.topAnchor.constraint(equalTo: view.topAnchor),
-            cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -300),
+            cameraPreview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: isTutorial ? -150 : -300),
             cameraPreview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             cameraPreview.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+        print("Ini value tutorial : \(isTutorial)")
     }
     
     /// Configure the movement sidebar info

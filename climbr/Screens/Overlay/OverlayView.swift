@@ -147,12 +147,6 @@ class OverlayView: NSViewController {
     @objc private func stretchNow() {
         delegate?.didOverlayDismissed()
         
-        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        
-        count -= 1
-        
-        UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
-        
             if let appDelegate = NSApplication.shared.delegate as? AppDelegate,
                let mainWindow = appDelegate.mainWindow {
                 

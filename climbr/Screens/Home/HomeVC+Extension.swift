@@ -44,14 +44,7 @@ extension HomeVC {
     }
     
     @objc
-    func actionStartSession(){
-        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        
-        if count > 0 {
-            count -= 1
-            UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
-        }
-        
+    func actionStartSession(){  
         if let vc = Container.shared.resolve(StretchingVC.self) {
             
             if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
@@ -161,11 +154,14 @@ extension HomeVC {
         /// state 3...n: walk
         for workingHour in userPreference.workingHours {
             guard workingHour.isEnabled && workingHour.day == currentDay else {
+                print("Hari \(workingHour.day) \(workingHour.isEnabled ? "aktif" : "tidak aktif") ")
                 continue
             }
             
             let startComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: workingHour.startHour)
             let endComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: workingHour.endHour)
+            
+            print("Ini start hour \(workingHour.startHour) dan ini end hour \(workingHour.endHour) untuk hari \(workingHour.day)")
             
             guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
                   let endHour = endComponents.hour, let endMinute = endComponents.minute else {
@@ -212,7 +208,7 @@ extension HomeVC {
         
         animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
         animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
-        
+        print()
     }
 }
 
