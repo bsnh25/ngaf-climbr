@@ -11,6 +11,8 @@ import Swinject
 import Combine
 import RiveRuntime
 
+//kalau kurang dari 4 dia camp, kalo dia 4 == peak.
+
 class HomeVC: NSViewController {
     
 //    let settingButton = CLImageButton(
@@ -81,7 +83,7 @@ class HomeVC: NSViewController {
     var character: CharacterModel?
     
     var animationMain : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr")
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr2")
       anima.fit = .cover
         return anima
     }()
@@ -113,11 +115,14 @@ class HomeVC: NSViewController {
             /// Configure rive artboard
             do {
                 try animationMain?.configureModel(artboardName: character.gender == .male ? "HomescreenMale" : "HomescreenFemale")
+                Task {
+                    self.observeAnimation()
+                    self.updateCharacter()
+                }
             } catch {
                 print(error.localizedDescription)
             }
         }
-        self.updateCharacter()
     }
     
     override func viewDidLoad() {
@@ -131,8 +136,8 @@ class HomeVC: NSViewController {
                 
                 DispatchQueue.main.async {
                     self.updateProgressData()
-                    self.observeNotif()
                   self.observeBacksound()
+                    self.observeAnimation()
                 }
             }
             .store(in: &bagss)
@@ -143,7 +148,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
-        setupStreakLabel()
+//        setupStreakLabel()
         setupPointsLabel()
         
         print("Value tutorial \(UserDefaults.standard.bool(forKey:UserDefaultsKey.kTutorial))")
@@ -152,12 +157,6 @@ class HomeVC: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         print("viewDidAppear")
-        
-//        if isShowPopover {
-//            popover.close()
-//            storeButton.updateColorBox(false)
-//            isShowPopover.toggle()
-//        }
       
         if isBGMActive {
           let audio = Container.shared.resolve(AudioService.self)
@@ -174,13 +173,12 @@ class HomeVC: NSViewController {
             choosCharVc.genderDelegate = self
             /// Store all equipments data to coredata
             equipmentService?.seedDatabase()
-            
             return
         }
         
         DispatchQueue.main.async {
             self.updateProgressData()
-            self.observeNotif()
+            print("Ini value progress : \(self.progressValue)" )
         }
     }
   
@@ -218,7 +216,7 @@ class HomeVC: NSViewController {
         view.addSubview(stack)
         
         stack.wantsLayer = true
-        stack.setViews([settingButton, storeButton, pointsView, streakView, audioButton], in: .center)
+        stack.setViews([settingButton, storeButton, pointsView, /*streakView ,*/ audioButton], in: .center)
         stack.orientation = .horizontal
         stack.spacing = 10
         
@@ -415,7 +413,7 @@ class HomeVC: NSViewController {
         ButtonConfigure()
         viewStretchConfig()
         dailyProgress()
-        setupStreakLabel()
+//        setupStreakLabel()
         setupPointsLabel()
     }
 }

@@ -42,6 +42,20 @@ class SettingVC: NSViewController {
     
     internal lazy var workingHours: Set<WorkingHour> = []
     
+    lazy var initialStartWorkHour: Date = {
+      let calendar = Calendar.current
+      
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+      components.hour = 8
+      components.minute = 0
+      
+      return calendar.date(from: components)!
+    }()
+    
+    lazy var initialEndWorkHour: Date = {
+      initialStartWorkHour.addingTimeInterval(30 * 60)
+    }()
+    
     internal let reminder30MinutesButton = CLPickerButton(
         title: "30",
         backgroundColor: .white,
@@ -303,7 +317,7 @@ class SettingVC: NSViewController {
       guard let userPreferenceData else { return }
       
       workHourItemView.isHidden = userPreferenceData.isFlexibleWorkHour
-      let workingHour = userPreferenceData.workingHours.first
+        let workingHour = userPreferenceData.workingHours.first(where: {$0.day == Weekday.sunday.rawValue})
       
       if let workingHour {
         workHourItemView.setInitialValue(workingHour.startHour, workingHour.endHour)
@@ -351,6 +365,14 @@ class SettingVC: NSViewController {
         dayPreference?.setInitialValue(workingHour.startHour, workingHour.endHour)
           workingHours.update(with: workingHour)
       }
+        
+        for workingHour in userPreferenceData.workingHours where !workingHour.isEnabled {
+          let dayPreference: DayTimePreferenceView? = getDayPreference(for: workingHour.day)
+          
+            dayPreference?.isHidden = true
+            dayPreference?.setInitialValue(initialStartWorkHour, initialEndWorkHour)
+            workingHours.update(with: workingHour)
+        }
       
       for workingHour in userPreferenceData.workingHours {
         guard let dayName = Weekday(rawValue: workingHour.day) else { return }

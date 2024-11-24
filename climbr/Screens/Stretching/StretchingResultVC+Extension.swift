@@ -124,6 +124,11 @@ extension StretchingResultVC {
         
         if armTotal == 2 && neckTotal == 2 && backTotal == 2 {
             DispatchQueue.main.async {
+                var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+                if count > 0 {
+                    count -= 1
+                    UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+                }
                 self.updateProgress()
                 progress = Int(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))
                 self.greetingLabel.setText("\(progress < 4 ? "You did a great stretching session! Only \(progress) more to go to hit your daily goal!" : "Fantastic! You hit your daily goal! Keep your streak going!")")
@@ -134,6 +139,11 @@ extension StretchingResultVC {
             
         } else if (armTotal ==  1 || neckTotal ==  1 || backTotal == 1) && (armTotal > 0 && neckTotal > 0 && backTotal > 0) {
             DispatchQueue.main.async {
+                var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+                if count > 0 {
+                    count -= 1
+                    UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
+                }
                 self.updateProgress()
                 progress = Int(UserDefaults.standard.double(forKey: UserDefaultsKey.kProgressSession))
                 self.greetingLabel.setText("\(progress < 4 ? "You almost missed your streak! Let’s try to finish the whole sequence next time" : "Great! You hit your daily goal! Don't forget to finish the whole sequence next time")")

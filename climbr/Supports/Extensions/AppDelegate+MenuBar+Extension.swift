@@ -10,6 +10,7 @@ import AppKit
 import Swinject
 
 extension AppDelegate {
+    
     internal func createStatusBar() {
         statusBar = NSStatusBar.system
         statusBarItem = statusBar?.statusItem(withLength: NSStatusItem.variableLength)
@@ -48,10 +49,34 @@ extension AppDelegate {
             // Close the popover if is shown
             if let popOver = statusBarPopOver, popOver.isShown {
                 statusBarPopOver?.performClose(sender)
+                stopEventMonitor()
             } else {
                 // Otherwise show popover relative to button/icon location
                 statusBarPopOver?.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+                startEventMonitor()
             }
+        }
+    }
+    
+    // Menangkap klik di luar popover
+    internal func startEventMonitor() {
+        stopEventMonitor() // Pastikan monitor tidak duplikat
+        
+        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+            guard let self = self else { return }
+            
+            if let popOver = self.statusBarPopOver, popOver.isShown {
+                popOver.performClose(nil)
+                self.stopEventMonitor()
+            }
+        }
+    }
+
+    // Hentikan monitor saat tidak lagi diperlukan
+    internal func stopEventMonitor() {
+        if let monitor = eventMonitor {
+            NSEvent.removeMonitor(monitor)
+            eventMonitor = nil
         }
     }
     

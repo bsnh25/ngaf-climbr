@@ -44,14 +44,7 @@ extension HomeVC {
     }
     
     @objc
-    func actionStartSession(){
-        var count = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        
-        if count > 0 {
-            count -= 1
-            UserDefaults.standard.setValue(count, forKey: UserDefaultsKey.kNotificationCount)
-        }
-        
+    func actionStartSession(){  
         if let vc = Container.shared.resolve(StretchingVC.self) {
             
             if UserDefaults.standard.bool(forKey: UserDefaultsKey.kTutorial) == true {
@@ -105,6 +98,7 @@ extension HomeVC {
     
     @objc
     func validateYesterday(){
+        observeAnimation()
         let date = UserDefaults.standard.object(forKey: UserDefaultsKey.kDateNow) as! Date
         if Calendar.current.isDateInYesterday(date) {
             print("Date param : \(date)")
@@ -128,9 +122,6 @@ extension HomeVC {
     
     
     func observeTimer(){
-        //gaperlu sedetik sekali , ganti aja per di notification center menjadi .calendarChange
-        //        observeNotif()
-        //        checkInRange()
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(validateYesterday), userInfo: nil, repeats: true)
         
     }
@@ -140,89 +131,69 @@ extension HomeVC {
         points.setAccessibilityValue("\(character?.point ?? 0) coins")
     }
     
-    func observeNotif(){
-        //        UNUserNotificationCenter.current().getDeliveredNotifications { notif in
-        //            guard var identifier = notif.first?.request.identifier else {return}
-        //            self.arrNotif.append(identifier)
-        //            print("Ini identifier yang masuk : \(identifier)")
-        //        }
-        
-        let progress = UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession)
+    func observeAnimation() {
+        ///get notification count and current progress
         let notificationCount = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        print("Notif count:", notificationCount)
-        print("Progress count:", progress)
+        let progress = UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession)
+        let calendar = Calendar.current
+        let now = Date()
         
-        //        if count == progress {
-        //            animationMain?.setInput("WalkingStyle", value: 0.0)
-        //        } else if count - progress <= 2 {
-        //            animationMain?.setInput("WalkingStyle", value: 1.0)
-        //        } else {
-        //            animationMain?.setInput("WalkingStyle", value: 2.0)
-        //        }
-        
-        /// Notification count state
-        /// - state = notificationCount - progress
-        ///
-        /// state 0: walk
-        /// state 1: tired/fatigue
-        /// state 2: death
-        /// state 3...n: walk
-        let state = notificationCount - progress
+        /// Mendapatkan komponen hari dan waktu saat ini
+        let currentDay = calendar.component(.weekday, from: now) - 1
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
         
         /// State for default walk
         var characterState: Double = 0
         var backgroundState: Double = character?.locationEquipment == .jungleJumble ? 0 : 1
         
-        /// State for tored
-        if state == 1 || state == 2 {
-            characterState = 1
-            backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
-        } else if state == 3 {
-            /// State for collapsed
-            characterState = 2
-            backgroundState = character?.locationEquipment == .jungleJumble ? 4 : 5
-        } else {
+        guard let userPreference = charService.getPreferences() else { return }
+        /// state 0: walk
+        /// state 1: tired/fatigue
+        /// state 2: death
+        /// state 3...n: walk
+        for workingHour in userPreference.workingHours {
+            guard workingHour.isEnabled && workingHour.day == currentDay else {
+                print("Hari \(workingHour.day) \(workingHour.isEnabled ? "aktif" : "tidak aktif") ")
+                continue
+            }
             
-            /// State for out of working hours
-            let prefs = charService.getPreferences()
-//            let startWorkingHour = prefs?.startWorkingHour ?? .now
-//            let endWorkingHour = prefs?.endWorkingHour ?? .now
+            let startComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: workingHour.startHour)
+            let endComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: workingHour.endHour)
             
-            //            if Date.now >= startWorkingHour && Date.now <= endWorkingHour && progress == 4 {
-            //                characterState = 3
-            //                backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
-            //            } else {
-            //                /// State for default walk
-            //                characterState = 0
-            //                backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
-            //            }
+            print("Ini start hour \(workingHour.startHour) dan ini end hour \(workingHour.endHour) untuk hari \(workingHour.day)")
+            
+            guard let startHour = startComponents.hour, let startMinute = startComponents.minute,
+                  let endHour = endComponents.hour, let endMinute = endComponents.minute else {
+                continue
+            }
+            
+            if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
+                (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
+                if notificationCount > 0 {
+                    characterState = 1
+                    backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
+                } else {
+                    characterState = 0
+                    backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
+                }
+            } else {
+                if progress < 4 {
+                    characterState = 4
+                    backgroundState = character?.locationEquipment == .jungleJumble ? 6 : 7
+                } else if progress >= 4 {
+                    characterState = 4
+                    backgroundState = character?.locationEquipment == .jungleJumble ? 2 : 3
+                }
+            }
         }
         
         animationMain?.setInput("WalkingStyle", value: characterState)
         animationMain?.setInput("Background", value: backgroundState)
+        print("Ini walking style => \(characterState)")
+        print("Ini background state => \(backgroundState)")
+        updateProgressData()
     }
-    
-    //    func checkInRange(){
-    //        let calendar = Calendar.current
-    //        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
-    //        if let date = calendar.date(from: components) {
-    //            if let char = Container.shared.resolve(CharacterService.self) {
-    //                guard let getPreference = char.getPreferences() else {return}
-    //                guard let start = getPreference.startWorkingHour else {return}
-    //                guard let end = getPreference.endWorkingHour else {return}
-    //
-    //                print("start : \(start)")
-    //                print("date : \(date)")
-    //                print("end : \(end)")
-    //
-    //                if date > start && date < end {
-    //                    showCharSakit()
-    //                } else {
-    //                    UserDefaults.standard.integer(forKey: UserDefaultsKey.kProgressSession) == 4 ? animationMain?.setInput("WalkingStyle", value: 3.0) : animationMain?.setInput("WalkingStyle", value: 2.0)
-    //                }
-    //            }
-    //        }
-    //    }
     
     func updateCharacter() {
         guard let character else { return }
@@ -238,9 +209,7 @@ extension HomeVC {
         
         animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
         animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
-        
-        animationMain!.setInput("Background", value: Double(character.locationEquipment.itemID))
-        
+        print()
     }
 }
 
@@ -261,10 +230,12 @@ extension HomeVC : ChooseCaraterDelegate {
                 print("Error")
             }
         }
+        observeAnimation()
     }
     
     func characterDidUpdate() {
         character = self.charService.getCharacterData()
+        observeAnimation()
         updatePoint()
         updateCharacter()
     }
