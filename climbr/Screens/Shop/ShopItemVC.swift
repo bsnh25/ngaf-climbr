@@ -58,7 +58,7 @@ class ShopItemVC: NSViewController {
     
 //    var simpleVM = RiveViewModel(fileName: "climbr")
     var animationShop : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr_adjust")
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr2")
         anima.fit = .fill
         let riveView = anima.createRiveView()
         return anima
