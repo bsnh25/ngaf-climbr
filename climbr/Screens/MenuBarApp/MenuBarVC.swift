@@ -12,10 +12,7 @@ import RiveRuntime
 
 class MenuBarVC: NSViewController, NotificationDelegate {
     
-    let climbrVmMaleHappy = RiveViewModel(fileName: "overlay_notification", artboardName: "maleHappy")
-    let climbrVmMaleCry = RiveViewModel(fileName: "overlay_notification", artboardName: "maleCry")
-    let climbrVmFemaleHappy = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleHappy")
-    let climbrVmFemaleCry = RiveViewModel(fileName: "overlay_notification", artboardName: "femaleCry")
+    let climbrVm = RiveViewModel(fileName: "overlay_notification")
     
     var riveView = RiveView()
     
@@ -137,7 +134,7 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.updateRiveAnimation()
+//        self.updateRiveAnimation()
         self.observeNotification()
     }
   
@@ -159,11 +156,13 @@ class MenuBarVC: NSViewController, NotificationDelegate {
             DispatchQueue.main.async {
                 self.userPreference = self.userManager.getPreferences()
                 self.observeNotification()
-//                self.riveView.removeFromSuperview()
-//                self.configureRiveView()
-//                self.configureRiveConstraints()
-                self.updateRiveAnimation()
                 self.updateSessionTime()
+                self.riveView.removeFromSuperview()
+                self.climbrVm.resetToDefaultModel()
+                self.riveView = RiveView()
+                self.configureRiveView()
+                self.configureRiveConstraints()
+//                self.updateRiveAnimation()
             }
         }
   }
@@ -291,24 +290,40 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     
     func configureRiveView() {
         let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        riveView = getRiveViewModel(for: notifCount).createRiveView()
-        view.addSubview(riveView)
-    }
-
-    func updateRiveAnimation() {
-        let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        let riveViewModel = getRiveViewModel(for: notifCount)
         
-        riveView.playerDelegate = riveViewModel
-    }
-
-    private func getRiveViewModel(for notifCount: Int) -> RiveViewModel {
         if notifCount > 0 {
-            return (userCharacterData?.gender == .male) ? climbrVmMaleCry : climbrVmFemaleCry
-        } else {
-            return (userCharacterData?.gender == .male) ? climbrVmMaleHappy : climbrVmFemaleHappy
+            do {
+                try climbrVm.configureModel(artboardName: userCharacterData?.gender == .male ? "maleCry" : "femaleCry")
+            } catch {
+                print(error.localizedDescription)
+            }
+            riveView = climbrVm.createRiveView()
+            view.addSubview(riveView)
+        }else {
+            do {
+                try climbrVm.configureModel(artboardName: userCharacterData?.gender == .male ? "maleHappy" : "femaleHappy")
+            } catch {
+                print(error.localizedDescription)
+            }
+            riveView = climbrVm.createRiveView()
+            view.addSubview(riveView)
         }
     }
+
+//    func updateRiveAnimation() {
+//        let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+//        let riveViewModel = getRiveViewModel(for: notifCount)
+//        
+//        riveView.playerDelegate = riveViewModel
+//    }
+
+//    private func getRiveViewModel(for notifCount: Int) -> RiveViewModel {
+//        if notifCount > 0 {
+//            return (userCharacterData?.gender == .male) ? climbrVm: climbrVmFemaleCry
+//        } else {
+//            return (userCharacterData?.gender == .male) ? climbrVmMaleHappy : climbrVmFemaleHappy
+//        }
+//    }
     func configureRiveConstraints(){
         riveView.snp.makeConstraints { make in
         make.width.height.equalTo(116)
