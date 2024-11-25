@@ -178,6 +178,7 @@ class HomeVC: NSViewController {
         
         DispatchQueue.main.async {
             self.updateProgressData()
+            print("Ini value progress : \(self.progressValue)" )
         }
     }
   

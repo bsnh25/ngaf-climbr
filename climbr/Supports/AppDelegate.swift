@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   var bag: AnyCancellable?
   var mainWindow: MainWindow?
   var statusBarWindow: NSWindow!
+  var eventMonitor: Any?
   var statusBar: NSStatusBar?
   var statusBarItem: NSStatusItem?
   var statusBarPopOver: NSPopover?

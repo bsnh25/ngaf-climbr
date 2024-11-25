@@ -192,6 +192,7 @@ extension HomeVC {
         animationMain?.setInput("Background", value: backgroundState)
         print("Ini walking style => \(characterState)")
         print("Ini background state => \(backgroundState)")
+        updateProgressData()
     }
     
     func updateCharacter() {

@@ -142,7 +142,6 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     configureRiveView()
     configureConstraints()
     configureRiveConstraints()
-      
     resetSessionAfterStretching()
       
     
@@ -154,15 +153,13 @@ class MenuBarVC: NSViewController, NotificationDelegate {
             DispatchQueue.main.async {
                 self.userPreference = self.userManager.getPreferences()
                 self.observeNotification()
-                self.riveView.removeFromSuperview()
-                self.configureRiveView()
-                self.configureRiveConstraints()
+//                self.riveView.removeFromSuperview()
+//                self.configureRiveView()
+//                self.configureRiveConstraints()
+                self.updateRiveAnimation()
                 self.updateSessionTime()
             }
         }
-    
-    
-    
   }
   
   private func observeNotification() {
@@ -285,26 +282,27 @@ class MenuBarVC: NSViewController, NotificationDelegate {
     view.wantsLayer = true
     view.layer?.backgroundColor = .white
   }
-  
-    func configureRiveView(){
+    
+    func configureRiveView() {
         let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
-        
-        if notifCount > 0 {
-            if userCharacterData?.gender == .male {
-                riveView = climbrVmMaleCry.createRiveView()
-            }else {
-                riveView = climbrVmFemaleCry.createRiveView()
-            }
-        } else {
-            if userCharacterData?.gender == .male {
-                riveView = climbrVmMaleHappy.createRiveView()
-            }else {
-                riveView = climbrVmFemaleHappy.createRiveView()
-            }
-        }
+        riveView = getRiveViewModel(for: notifCount).createRiveView()
         view.addSubview(riveView)
     }
-    
+
+    func updateRiveAnimation() {
+        let notifCount: Int = UserDefaults.standard.integer(forKey: UserDefaultsKey.kNotificationCount)
+        let riveViewModel = getRiveViewModel(for: notifCount)
+        
+        riveView.playerDelegate = riveViewModel
+    }
+
+    private func getRiveViewModel(for notifCount: Int) -> RiveViewModel {
+        if notifCount > 0 {
+            return (userCharacterData?.gender == .male) ? climbrVmMaleCry : climbrVmFemaleCry
+        } else {
+            return (userCharacterData?.gender == .male) ? climbrVmMaleHappy : climbrVmFemaleHappy
+        }
+    }
     func configureRiveConstraints(){
         riveView.snp.makeConstraints { make in
         make.width.height.equalTo(116)
