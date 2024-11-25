@@ -134,6 +134,12 @@ class MenuBarVC: NSViewController, NotificationDelegate {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.updateRiveAnimation()
+        self.observeNotification()
+    }
   
   override func viewDidLoad() {
     super.viewDidLoad()
