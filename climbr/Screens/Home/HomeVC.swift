@@ -81,9 +81,10 @@ class HomeVC: NSViewController {
     var bagss: Set<AnyCancellable> = []
     var arrNotif: [String] = []
     var character: CharacterModel?
+    var isShowTent: Bool = false
     
     var animationMain : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr2")
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr3")
       anima.fit = .cover
         return anima
     }()
@@ -310,7 +311,7 @@ class HomeVC: NSViewController {
         containerView.addSubview(blurEffect, positioned: .below, relativeTo: nil)
         
         containerView.wantsLayer = true
-        containerView.layer?.backgroundColor = .white.copy(alpha: 0.72)
+        containerView.layer?.backgroundColor = .white.copy(alpha: 1)
         containerView.layer?.opacity = 1
         containerView.layer?.cornerRadius = 20
         
@@ -335,12 +336,12 @@ class HomeVC: NSViewController {
     
     func setupPointsLabel() {
         
-        let icon = CLSFSymbol(symbolName: "c.circle", description: "coins")
-        icon.setConfiguration(size: 22, weight: .bold)
-        icon.contentTintColor = .black
+        let icon = CLSFSymbol(symbolName: "centsign.circle", description: "coins")
+        icon.setConfiguration(size: 28, weight: .bold)
+        icon.contentTintColor = .darkGray
         
         points.backgroundColor = .clear
-        points.setTextColor(.black)
+        points.setTextColor(.darkGray)
         points.setText("\(0)")
         
         pointsView.wantsLayer = true
@@ -350,9 +351,9 @@ class HomeVC: NSViewController {
         pointsView.orientation = .horizontal
         pointsView.alignment = .centerY
         pointsView.distribution = .equalSpacing
-        pointsView.layer?.backgroundColor = .white.copy(alpha: 0.7)
+        pointsView.layer?.backgroundColor = .white
         pointsView.layer?.cornerRadius = 10
-        pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        pointsView.edgeInsets = NSEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
       
         pointsView.setAccessibilityTitle("Coins")
         pointsView.setAccessibilityLabel("View your balance")
@@ -360,11 +361,12 @@ class HomeVC: NSViewController {
         
 //        view.addSubview(pointsView)
         
-        let blur = CLBlurEffectView(frame: pointsView.bounds)
-        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
+//        let blur = CLBlurEffectView(frame: pointsView.bounds)
+//        pointsView.addSubview(blur, positioned: .below, relativeTo: nil)
         
         NSLayoutConstraint.activate([
             pointsView.widthAnchor.constraint(equalToConstant: 137),
+            pointsView.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     

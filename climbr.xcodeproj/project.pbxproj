@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030B13652CF4744F005362DA /* climbr3.riv in Resources */ = {isa = PBXBuildFile; fileRef = 030B13642CF4744F005362DA /* climbr3.riv */; };
 		034C71652C64FAFF0040AD4F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 034C71642C64FAFF0040AD4F /* SnapKit */; };
 		034EADDF2CC78654006C0C9C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034EADDE2CC78654006C0C9C /* ServiceManagement.framework */; };
 		038CFB7B2CEB171400E3BCA8 /* TutorialShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */; };
 		038CFB7F2CEB175100E3BCA8 /* TutorialShopVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */; };
-		0397D8382CF46686009BEC1C /* climbr2.riv in Resources */ = {isa = PBXBuildFile; fileRef = 0397D8372CF46686009BEC1C /* climbr2.riv */; };
 		03EB35032CE3344200DDF4E4 /* AboutAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EB35022CE3344100DDF4E4 /* AboutAlert.swift */; };
-		03F420E32CF17BD400686F9A /* climbr_adjust.riv in Resources */ = {isa = PBXBuildFile; fileRef = 03F420E22CF17BD400686F9A /* climbr_adjust.riv */; };
 		8A2368292CEB4A60005953FE /* overlay_notification.riv in Resources */ = {isa = PBXBuildFile; fileRef = 8A2368282CEB4A60005953FE /* overlay_notification.riv */; };
 		8A6FF3272CD6828900E8E5EC /* OverlayNotifServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */; };
 		8A6FF3292CD682C700E8E5EC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FF3282CD682C700E8E5EC /* OverlayView.swift */; };
@@ -137,18 +136,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030B13642CF4744F005362DA /* climbr3.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr3.riv; sourceTree = "<group>"; };
 		034EADCD2CC78493006C0C9C /* climbrHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = climbrHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		034EADDE2CC78654006C0C9C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		0367F5AE2C720A5300938747 /* Character+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0367F5AF2C720A5300938747 /* Character+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		038CFB7A2CEB170F00E3BCA8 /* TutorialShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialShopVC.swift; sourceTree = "<group>"; };
 		038CFB7E2CEB174A00E3BCA8 /* TutorialShopVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TutorialShopVC+Extension.swift"; sourceTree = "<group>"; };
-		0397D8372CF46686009BEC1C /* climbr2.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr2.riv; sourceTree = "<group>"; };
 		03CD09BF2C6EEEF100BEEE8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03CD0A122C6FA8BD00BEEE8B /* Equipment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		03CD0A132C6FA8BD00BEEE8B /* Equipment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equipment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03EB35022CE3344100DDF4E4 /* AboutAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAlert.swift; sourceTree = "<group>"; };
-		03F420E22CF17BD400686F9A /* climbr_adjust.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = climbr_adjust.riv; sourceTree = "<group>"; };
 		8A2368282CEB4A60005953FE /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8A60B2E62CE790A10085462E /* overlay_notification.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_notification.riv; sourceTree = "<group>"; };
 		8A6FF3262CD6828900E8E5EC /* OverlayNotifServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNotifServices.swift; sourceTree = "<group>"; };
@@ -540,8 +538,7 @@
 		9095E0282CD6684800280F13 /* Rive */ = {
 			isa = PBXGroup;
 			children = (
-				0397D8372CF46686009BEC1C /* climbr2.riv */,
-				03F420E22CF17BD400686F9A /* climbr_adjust.riv */,
+				030B13642CF4744F005362DA /* climbr3.riv */,
 				8A2368282CEB4A60005953FE /* overlay_notification.riv */,
 				900852922CDA679500317C4F /* splash_screen.riv */,
 			);
@@ -920,8 +917,8 @@
 				9095E06D2CD6684900280F13 /* crossBodyShoulder-Left.mp4 in Resources */,
 				9095E06E2CD6684900280F13 /* tricepStatic-Left.mp4 in Resources */,
 				9095E06F2CD6684900280F13 /* snow.mp3 in Resources */,
+				030B13652CF4744F005362DA /* climbr3.riv in Resources */,
 				9095E0702CD6684900280F13 /* crossBodyShoulder-Right.mp4 in Resources */,
-				03F420E32CF17BD400686F9A /* climbr_adjust.riv in Resources */,
 				9095E0712CD6684900280F13 /* next-move.mp3 in Resources */,
 				9095E0722CD6684900280F13 /* summer.mp3 in Resources */,
 				9095E0732CD6684900280F13 /* frontShoulderStatic-Left.mp4 in Resources */,
@@ -936,7 +933,6 @@
 				9095E07B2CD6684900280F13 /* neckRotation-Left.mp4 in Resources */,
 				9095E07C2CD6684900280F13 /* upperBackStretch-Right.mp4 in Resources */,
 				9095E07D2CD6684900280F13 /* upperBackStretch-Front.mp4 in Resources */,
-				0397D8382CF46686009BEC1C /* climbr2.riv in Resources */,
 				9095E07E2CD6684900280F13 /* upperBackStretch-Left.mp4 in Resources */,
 				9095E07F2CD6684900280F13 /* frontShoulderStatic-Right.mp4 in Resources */,
 				9095E0802CD6684900280F13 /* tricepStatic-Right.mp4 in Resources */,
@@ -1070,10 +1066,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbrHelper/climbrHelper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbrHelper/Info.plist;
@@ -1105,10 +1102,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbrHelper/climbrHelper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbrHelper/Info.plist;
@@ -1260,11 +1258,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbr/climbr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;
@@ -1295,11 +1294,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = climbr/climbr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = P5G5Z7L546;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = climbr/Info.plist;

@@ -58,7 +58,7 @@ class ShopItemVC: NSViewController {
     
 //    var simpleVM = RiveViewModel(fileName: "climbr")
     var animationShop : RiveViewModel? = {
-        var anima: RiveViewModel = RiveViewModel(fileName: "climbr2")
+        var anima: RiveViewModel = RiveViewModel(fileName: "climbr3")
         anima.fit = .fill
         let riveView = anima.createRiveView()
         return anima
@@ -251,8 +251,8 @@ class ShopItemVC: NSViewController {
     
     func setupPointsLabel() {
         
-        let icon = CLSFSymbol(symbolName: "c.circle", description: "coins")
-        icon.setConfiguration(size: 24, weight: .bold)
+        let icon = CLSFSymbol(symbolName: "centsign.circle", description: "coins")
+        icon.setConfiguration(size: 26, weight: .bold)
         icon.contentTintColor = .black
         
         points.backgroundColor = .clear

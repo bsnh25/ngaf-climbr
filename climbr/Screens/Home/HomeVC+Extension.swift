@@ -170,6 +170,7 @@ extension HomeVC {
             
             if (currentHour > startHour || (currentHour == startHour && currentMinute >= startMinute)) &&
                 (currentHour < endHour || (currentHour == endHour && currentMinute <= endMinute)) {
+                isShowTent = true
                 if notificationCount > 0 {
                     characterState = 1
                     backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
@@ -178,6 +179,7 @@ extension HomeVC {
                     backgroundState = character?.locationEquipment == .jungleJumble ? 0 : 1
                 }
             } else {
+                isShowTent = false
                 if progress < 4 {
                     characterState = 4
                     backgroundState = character?.locationEquipment == .jungleJumble ? 6 : 7
@@ -193,6 +195,7 @@ extension HomeVC {
         print("Ini walking style => \(characterState)")
         print("Ini background state => \(backgroundState)")
         updateProgressData()
+        updateCharacter()
     }
     
     func updateCharacter() {
@@ -207,9 +210,15 @@ extension HomeVC {
         animationMain!.setInput("RightShin", value: Double(character.handEquipment.itemID))
         animationMain!.setInput("LeftShin", value: Double(character.handEquipment.itemID))
         
-        animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
-        animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
-        print()
+        if isShowTent {
+            animationMain!.setInput("Backpack", value: Double(character.backEquipment.itemID))
+            animationMain!.setInput("Tent", value: Double(0))
+        } else {
+            animationMain!.setInput("Backpack", value: Double(0))
+            animationMain!.setInput("Tent", value: Double(character.backEquipment.itemID))
+        }
+        
+        print("tent state == \(isShowTent)")
     }
 }
 
@@ -231,6 +240,7 @@ extension HomeVC : ChooseCaraterDelegate {
             }
         }
         observeAnimation()
+        updateCharacter()
     }
     
     func characterDidUpdate() {

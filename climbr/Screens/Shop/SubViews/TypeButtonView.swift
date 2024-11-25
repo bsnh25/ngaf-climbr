@@ -32,7 +32,7 @@ class TypeButton: NSButton {
         label.setTextColor(.darkGray)
         label.setFont(ofSize: 17, weight: .bold)
         
-        icon.setConfiguration(size: 24, weight: .bold)
+        icon.setConfiguration(size: 28, weight: .bold)
         
         stack.setViews([icon, label], in: .center)
         stack.orientation = .vertical
@@ -41,7 +41,7 @@ class TypeButton: NSButton {
         title = ""
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.6)
+        layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 1)
         layer?.cornerRadius = 10
         bezelStyle = .flexiblePush
         isBordered = false
@@ -81,11 +81,12 @@ class TypeButton: NSButton {
             layer?.backgroundColor = NSColor.cButton.cgColor.copy(alpha: 1)
         }else{
             icon.contentTintColor = .darkGray
-            layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 0.6)
+            layer?.backgroundColor = NSColor.white.cgColor.copy(alpha: 1)
         }
     }
     
     func updateImage(_ imageName: String){
         icon.image = NSImage(systemSymbolName: imageName, accessibilityDescription: imageName)
+        icon.setConfiguration(size: 28, weight: .bold)
     }
 }
